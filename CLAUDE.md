@@ -37,11 +37,13 @@ Manual FTP upload of `dist/` to shared hosting. No CI/CD at v1.
 
 ## Architecture
 
-Single Astro project, no monorepo. One page (`src/pages/index.astro`) with three sections composed from components.
+Single Astro project, no monorepo. One logical single-page site served in two static routes: English at `/` and Polish at `/pl/`.
 
 ```
 src/
-  pages/index.astro     ← the only page
+  pages/index.astro     ← English version
+  pages/pl/index.astro  ← Polish version
+  i18n/                 ← centralized EN/PL strings
   components/           ← Hero, Projects, ProjectCard, Contact
   layouts/Base.astro    ← <html>, <head>, fonts, global meta
   styles/global.css     ← Tailwind base + CSS custom properties
@@ -54,9 +56,10 @@ docs/                   ← spec documents
 - `docs/PRODUCT.md` — scope, visitor flows, launch criteria, non-goals
 - `docs/ARCH.md` — stack decisions, structure, infrastructure
 - `docs/DECISIONS.md` — ADR log (read before changing any architectural decision)
+- `docs/QUESTIONS.md` — unresolved product/design choices that are not accepted decisions yet
 - `docs/STYLE.md` — Tailwind conventions, component rules, visual direction
 - `docs/COPY.md` — voice, tone, content for each section, lines to use/avoid
-- `docs/BACKLOG.md` — what's next, open questions, rejected ideas (versioned in repo, not in memory)
+- `docs/BACKLOG.md` — executable work, follow-up tasks, rejected ideas
 
 ## Code Style
 
@@ -72,3 +75,5 @@ Commits are public and are part of the portfolio. Write them accordingly:
 - Describe intent: `add projects section with narrative arc` not `update Projects.astro`
 - Active voice, present tense
 - No `wip`, no `fix #123` alone, no conventional commit prefixes unless they genuinely add clarity
+- Do not use `Co-authored-by` for AI agents
+- If agent involvement should be visible in history, use explicit trailers such as `Assisted-by: Claude Code` or `Assisted-by: Codex`

@@ -148,9 +148,22 @@ A visitor who only reads the site gets a profile. A visitor who opens the repo g
 
 ---
 
-## Open Questions
+## ADR-010 — Separate pending questions from backlog and ADR log
 
-- Domain name — not yet decided
-- Visual design direction (minimal typographic? light colour accent? dark background?) — TBD before implementation
-- Whether to show a photo
-- Whether to link to specific commits or the repo root for the "process" narrative
+**Date:** 2026-04-07
+**Status:** Accepted
+
+**Context:**
+The repository needs a clear place for unresolved choices. `BACKLOG.md` should track work to do, while `DECISIONS.md` is an append-only log of accepted decisions. Mixing pending questions into either file creates drift and blurs document responsibilities.
+
+**Decision:**
+Track unresolved choices in a dedicated `docs/QUESTIONS.md` file. `BACKLOG.md` contains executable tasks only. `DECISIONS.md` contains accepted ADRs only.
+
+**Reasoning:**
+These are three different states: undecided, decided, and actionable. Giving each state a separate document keeps the workflow readable in a public repo, prevents "open questions" from lingering inside the accepted decision log, and makes it easier for agents to know where to read and where to write.
+
+---
+
+## Superseded Open Questions Note
+
+Open questions are now tracked in `docs/QUESTIONS.md`, not here.

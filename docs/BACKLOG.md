@@ -1,25 +1,22 @@
 # Backlog
 
-Versioned record of tasks, decisions pending, and ideas. This file is the source of truth for what's next — not memory, not chat history.
+Versioned record of executable work, follow-up tasks, and ideas. This file is the source of truth for what needs doing next — not memory, not chat history.
 
 **Rules:**
 - Move completed items to the Done section with a date, don't delete them.
 - Ideas that are explicitly rejected go to Rejected with a reason — so they don't resurface.
-- Open questions that need a decision go here before becoming ADRs.
+- Unresolved choices do not live here; keep them in `QUESTIONS.md`.
 
 ---
 
 ## Now — before any code
 
-- [ ] Decide visual direction (light/dark, accent color, typography feel) — see STYLE.md open questions
-- [ ] Decide on domain name
-- [ ] Decide on photo: yes or no
-- [ ] Define page layout (spatial arrangement of sections, alignment, spacing rhythm) — write into STYLE.md or a separate LAYOUT.md
-- [ ] Define SEO and social meta: `<title>`, meta description, OG tags (title, description, image) — this is content, not a technical detail
 - [ ] Write the actual positioning text (headline expansion, 4–6 sentences) in both EN and PL
 - [ ] Write project descriptions in both EN and PL (raw content exists in COPY.md)
-- [ ] Decide: link to repo root from site, or link to specific commits to show process?
 - [ ] Initialize Astro project (`npm create astro@latest`)
+- [ ] Once visual direction is decided, write it into `STYLE.md`
+- [ ] Once page layout direction is decided, write it into `STYLE.md` or a separate `LAYOUT.md`
+- [ ] Once SEO/social meta direction is decided, write final values into the site copy/spec
 
 ## Next — first implementation
 
@@ -38,6 +35,7 @@ Versioned record of tasks, decisions pending, and ideas. This file is the source
 - [ ] Analytics (Plausible or similar — privacy-friendly, no cookie banner needed)
 - [ ] OG image for social sharing
 - [ ] Polish the repo for public readability: check commit history reads as a story, not a work log
+- [ ] Review dated project metrics before any copy refresh or relaunch
 
 ## Ideas — not decided
 
