@@ -77,3 +77,4 @@ Commits are public and are part of the portfolio. Write them accordingly:
 - No `wip`, no `fix #123` alone, no conventional commit prefixes unless they genuinely add clarity
 - Do not use `Co-authored-by` for AI agents
 - If agent involvement should be visible in history, use explicit trailers such as `Assisted-by: Claude Code` or `Assisted-by: Codex`
+- Only include `Assisted-by` trailers for agents that materially contributed to the changes in that specific commit
