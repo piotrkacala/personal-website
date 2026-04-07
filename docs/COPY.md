@@ -60,6 +60,8 @@ Direct and precise. No marketing language, no LinkedIn corporate fluff, no buzzw
 
 **Translation approach:** all strings centralized in `src/i18n/en.ts` and `src/i18n/pl.ts`. No hardcoded UI text in components. Polish IT terms (agent, framework, commit, deploy) stay in English within Polish text — this is standard Polish IT writing convention.
 
+**Numeric claims:** project metrics are maintained manually, not generated automatically. Any quantitative claim shown on the site should be dated inline ("as of April 2026") and refreshed manually after material project changes or before a major copy refresh.
+
 ---
 
 ## Section 1 — Positioning
