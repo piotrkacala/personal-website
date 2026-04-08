@@ -16,7 +16,6 @@ Unresolved choices that still need a decision. This file exists to keep pending 
 
 ## Resolved
 
-- ~~SEO and social meta direction~~ → recorded in `COPY.md` under "Metadata — v1"
 - ~~Visual direction~~ → ADR-011
 - ~~Whether to use a photo~~ → ADR-011
 - ~~Page layout direction~~ → ADR-011

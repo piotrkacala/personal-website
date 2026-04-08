@@ -197,6 +197,8 @@ Kontakt: kontakt@piotrkacala.pl
 
 - Light editorial image that feels like a cropped extension of the site, not a promo banner
 - Primary content: `Piotr Kacała` and `Product Builder`, with one short supporting line localized per language
+- Supporting line (EN): `Across product, design, QA, and development.`
+- Supporting line (PL): `Na styku produktu, designu, QA i developmentu.`
 - Same visual language as the page: restrained typography, off-white background, thin rule, minimal accent color
 - No portrait, no screenshots, no logos, no device mockups, no decorative AI imagery
 - The image should communicate calm clarity and document-like credibility before it communicates "personal brand"

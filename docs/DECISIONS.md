@@ -200,6 +200,22 @@ Recorded in `docs/STYLE.md` under "Stack" and "Typography."
 
 ---
 
+## ADR-013 — Metadata and social meta direction
+
+**Date:** 2026-04-08
+**Status:** Accepted
+
+**Context:**
+The site needs finalized metadata for search and link previews, plus a clear v1 direction for the Open Graph image. This was previously tracked as an open content question and is now resolved.
+
+**Decision:**
+Use the finalized `<title>`, `meta description`, `og:title`, and `og:description` values recorded in `docs/COPY.md` under "Metadata — v1" for both English and Polish. For the OG image, use a light editorial composition aligned with the site visual system, with `Piotr Kacała`, `Product Builder`, and a short localized supporting line.
+
+**Reasoning:**
+Metadata is content, but it is also an accepted repository-level decision because it defines how the site appears in search and social previews. Recording the direction here closes the open question under the repo rules, while keeping the exact strings and localized OG image copy in `docs/COPY.md`, which is the source of truth for content.
+
+---
+
 ## Superseded Open Questions Note
 
 Open questions are now tracked in `docs/QUESTIONS.md`, not here.
