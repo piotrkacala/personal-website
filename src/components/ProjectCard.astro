@@ -40,7 +40,7 @@ const titleId = `project-${order}`;
     <h3 id={titleId} class="project-title">{title}</h3>
 
     {
-      blocks.map((block) => {
+      blocks.map((block, index) => {
         if (block.type === "paragraph") {
           return (
             <p class:list={["project-paragraph", { "project-paragraph--aside": block.tone === "aside" }]}>
@@ -50,9 +50,13 @@ const titleId = `project-${order}`;
         }
 
         if (block.type === "metrics") {
+          const metricsHeadingId = `${titleId}-metrics-${index}`;
+
           return (
-            <div class="project-metrics-block" aria-label={`${title} metrics`}>
-              <p class="project-metrics-heading ui-text">{block.heading}</p>
+            <section class="project-metrics-block" aria-labelledby={metricsHeadingId}>
+              <h4 id={metricsHeadingId} class="project-metrics-heading ui-text">
+                {block.heading}
+              </h4>
 
               <dl class="project-metrics">
                 {block.items.map((item) => (
@@ -62,7 +66,7 @@ const titleId = `project-${order}`;
                   </div>
                 ))}
               </dl>
-            </div>
+            </section>
           );
         }
 
@@ -70,10 +74,12 @@ const titleId = `project-${order}`;
           <p class="project-link">
             <a
               href={block.href}
-              rel={block.external ? "noreferrer" : undefined}
+              class="project-link-anchor"
+              rel={block.external ? "noopener noreferrer" : undefined}
               target={block.external ? "_blank" : undefined}
             >
               {block.label}
+              {block.external ? <span class="project-link-note"> (opens in a new tab)</span> : null}
             </a>
           </p>
         );
@@ -131,6 +137,7 @@ const titleId = `project-${order}`;
   .project-metrics-heading {
     margin: 0 0 calc(var(--spacing-rhythm) * 0.32);
     color: rgb(23 20 18 / 72%);
+    font-family: var(--font-body);
     font-weight: 600;
   }
 
@@ -169,6 +176,10 @@ const titleId = `project-${order}`;
     max-width: 62ch;
   }
 
+  .project-link-note {
+    color: rgb(23 20 18 / 72%);
+  }
+
   @media (max-width: 39.99rem) {
     .project-entry {
       grid-template-columns: 1fr;
@@ -178,6 +189,13 @@ const titleId = `project-${order}`;
     .project-metric-row {
       grid-template-columns: 1fr;
       gap: 0.15rem;
+    }
+
+    .project-link-anchor {
+      display: inline-block;
+      min-block-size: 2.75rem;
+      max-width: 100%;
+      padding-block: 0.5rem;
     }
   }
 </style>
