@@ -35,7 +35,7 @@ export const en = {
   },
   projects: {
     heading: "Projects",
-    arc: "Each project, a deliberate next step. Testing AI on an existing codebase. Building from scratch, docs-first, zero-code. A full product for a real customer. Then this site.",
+    arc: "Each project marks a deliberate next step. Testing AI on an existing codebase. Building from scratch, docs-first, zero-code. Delivering a full product for a real customer. Then building this site.",
     items: [
       {
         title: "Phonetic Alphabet Trainer",
