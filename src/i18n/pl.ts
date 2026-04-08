@@ -72,22 +72,6 @@ export const pl = {
         ],
       },
       {
-        title: "Ta strona",
-        blocks: [
-          {
-            type: "paragraph",
-            text: "Zbudowana tak samo — spec-first, docs-driven, zero-code — ale z jednym dodatkiem: agent orchestrator, który samodzielnie przechodził przez plan implementacji, generował prompty, czytał wyniki, obsługiwał review. Pierwszy projekt, w którym workflow zarządzał samym sobą. Repo jest publiczne i celowo czytelne: CLAUDE.md, pełny katalog docs, czysta historia commitów.",
-          },
-          {
-            type: "link",
-            href: "https://github.com/piotrkacala/personal-website",
-            label: "Repo: github.com/piotrkacala/personal-website",
-            external: true,
-            externalLabel: "(otwiera się w nowej karcie)",
-          },
-        ],
-      },
-      {
         title: "mojeaudyty.pl",
         blocks: [
           {
@@ -116,6 +100,22 @@ export const pl = {
             type: "paragraph",
             text: "Tylko na zaproszenie — bez publicznego linku.",
             tone: "aside",
+          },
+        ],
+      },
+      {
+        title: "Ta strona",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Zbudowana tak samo — spec-first, docs-driven, zero-code — ale z jednym dodatkiem: agent orchestrator, który samodzielnie przechodził przez plan implementacji, generował prompty, czytał wyniki, obsługiwał review. Pierwszy projekt, w którym workflow zarządzał samym sobą. Repo jest publiczne i celowo czytelne: CLAUDE.md, pełny katalog docs, czysta historia commitów.",
+          },
+          {
+            type: "link",
+            href: "https://github.com/piotrkacala/personal-website",
+            label: "Repo: github.com/piotrkacala/personal-website",
+            external: true,
+            externalLabel: "(otwiera się w nowej karcie)",
           },
         ],
       },

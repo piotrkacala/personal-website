@@ -70,22 +70,6 @@ export const en = {
         ],
       },
       {
-        title: "This site",
-        blocks: [
-          {
-            type: "paragraph",
-            text: "Built the same way — spec-first, docs-driven, zero-code — but with one addition: an orchestrator agent that stepped through the implementation plan autonomously, generating prompts, reading results, handling review. The first project where the workflow managed itself. The repo is public and intentionally readable: CLAUDE.md, full docs directory, clean commit history.",
-          },
-          {
-            type: "link",
-            href: "https://github.com/piotrkacala/personal-website",
-            label: "Repo: github.com/piotrkacala/personal-website",
-            external: true,
-            externalLabel: "(opens in a new tab)",
-          },
-        ],
-      },
-      {
         title: "mojeaudyty.pl",
         blocks: [
           {
@@ -114,6 +98,22 @@ export const en = {
             type: "paragraph",
             text: "Invite-only — no public link.",
             tone: "aside",
+          },
+        ],
+      },
+      {
+        title: "This site",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Built the same way — spec-first, docs-driven, zero-code — but with one addition: an orchestrator agent that stepped through the implementation plan autonomously, generating prompts, reading results, handling review. The first project where the workflow managed itself. The repo is public and intentionally readable: CLAUDE.md, full docs directory, clean commit history.",
+          },
+          {
+            type: "link",
+            href: "https://github.com/piotrkacala/personal-website",
+            label: "Repo: github.com/piotrkacala/personal-website",
+            external: true,
+            externalLabel: "(opens in a new tab)",
           },
         ],
       },
