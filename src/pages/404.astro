@@ -1,0 +1,53 @@
+---
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>404 — Page Not Found</title>
+    <meta name="robots" content="noindex" />
+  </head>
+  <body class="site-body">
+    <main class="site-shell" id="content">
+      <div class="page-column">
+        <section class="document-section error-page" aria-labelledby="error-heading">
+          <p class="ui-text error-code">404</p>
+          <h1 id="error-heading">Page not found</h1>
+          <p>
+            This page does not exist, or the link is outdated. You can go back to the English or
+            Polish version of the site.
+          </p>
+          <nav aria-label="404 recovery links" class="error-links">
+            <a href="/">EN home</a>
+            <a href="/pl/">PL home</a>
+          </nav>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
+
+<style>
+  .error-page > * {
+    margin: 0;
+  }
+
+  .error-page > * + * {
+    margin-top: calc(var(--spacing-rhythm) * 0.72);
+  }
+
+  .error-code {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .error-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+  }
+</style>
