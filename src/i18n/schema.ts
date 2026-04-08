@@ -25,6 +25,7 @@ export type ProjectBlock = ParagraphBlock | MetricsBlock | LinkBlock;
 
 export interface ProjectEntry {
   title: string;
+  titleLang?: "en" | "pl";
   blocks: readonly ProjectBlock[];
 }
 

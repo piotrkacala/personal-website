@@ -23,6 +23,7 @@ const { heading, arc, projects } = Astro.props;
         <ProjectCard
           order={String(index + 1).padStart(2, "0")}
           title={project.title}
+          titleLang={project.titleLang}
           blocks={project.blocks}
         />
       </li>
