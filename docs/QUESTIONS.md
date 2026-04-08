@@ -11,9 +11,13 @@ Unresolved choices that still need a decision. This file exists to keep pending 
 
 ## Current
 
-- Domain name
-- Visual direction: light/dark, accent role, typography feel, spacing rhythm
-- Whether to use a photo
-- Page layout direction: spatial arrangement of sections, alignment, overall rhythm
 - SEO and social meta direction: final `<title>`, meta description, OG title, OG description, OG image
 - Whether the site should link to the repo root or to specific commits for the process narrative
+- Font pairing: specific typefaces for headline and body text
+
+## Resolved (moved to DECISIONS.md)
+
+- ~~Visual direction~~ → ADR-011
+- ~~Whether to use a photo~~ → ADR-011
+- ~~Page layout direction~~ → ADR-011
+- ~~Domain name~~ → piotrkacala.pl (recorded in COPY.md, not an architectural decision)
