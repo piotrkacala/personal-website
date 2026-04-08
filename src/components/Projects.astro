@@ -1,34 +1,11 @@
 ---
 import ProjectCard from "./ProjectCard.astro";
-
-type ProjectBlock =
-  | {
-      type: "paragraph";
-      text: string;
-      tone?: "default" | "aside";
-    }
-  | {
-      type: "metrics";
-      heading: string;
-      items: readonly {
-        label: string;
-        value: string;
-      }[];
-    }
-  | {
-      type: "link";
-      href: string;
-      label: string;
-      external?: boolean;
-    };
+import type { ProjectEntry } from "../i18n/schema";
 
 interface Props {
   heading: string;
   arc: string;
-  projects: readonly {
-    title: string;
-    blocks: readonly ProjectBlock[];
-  }[];
+  projects: readonly ProjectEntry[];
 }
 
 const { heading, arc, projects } = Astro.props;
