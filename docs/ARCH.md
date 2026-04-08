@@ -41,16 +41,16 @@ A static single-page personal website built with Astro. No backend, no database,
 
 ## Frontend
 
-| Concern | Choice |
-|---|---|
-| Framework | Astro 5 (static output mode) |
-| Styling | Tailwind CSS v4 |
-| Components | Astro native components — no React, no shadcn |
-| Icons | Inline SVG or a lightweight icon set (TBD at design time) |
-| Fonts | TBD at design time |
-| JS | Zero JS by default; add only if interaction requires it |
-| i18n | Astro built-in i18n routing — `/` (EN) and `/pl/` (PL) |
-| Deployment | FTP upload of `dist/` to shared hosting |
+| Concern    | Choice                                                    |
+| ---------- | --------------------------------------------------------- |
+| Framework  | Astro 5 (static output mode)                              |
+| Styling    | Tailwind CSS v4                                           |
+| Components | Astro native components — no React, no shadcn             |
+| Icons      | Inline SVG or a lightweight icon set (TBD at design time) |
+| Fonts      | TBD at design time                                        |
+| JS         | Zero JS by default; add only if interaction requires it   |
+| i18n       | Astro built-in i18n routing — `/` (EN) and `/pl/` (PL)    |
+| Deployment | FTP upload of `dist/` to shared hosting                   |
 
 No client-side routing. No state management. No API calls. The page is a document.
 
@@ -58,24 +58,24 @@ No client-side routing. No state management. No API calls. The page is a documen
 
 ## Infrastructure
 
-| Component | Tool |
-|---|---|
-| Hosting | Classic shared hosting (FTP) |
-| Build | `astro build` → produces `dist/` |
-| Deploy | Manual FTP upload of `dist/` |
-| CI/CD | None at launch — manual deploy is sufficient |
-| Domain | TBD |
+| Component | Tool                                         |
+| --------- | -------------------------------------------- |
+| Hosting   | Classic shared hosting (FTP)                 |
+| Build     | `astro build` → produces `dist/`             |
+| Deploy    | Manual FTP upload of `dist/`                 |
+| CI/CD     | None at launch — manual deploy is sufficient |
+| Domain    | TBD                                          |
 
 ---
 
 ## Quality Rails
 
-| Concern | Tool |
-|---|---|
-| Formatting | Prettier |
-| Linting | ESLint (Astro plugin) |
-| Typecheck | TypeScript (Astro built-in) |
-| Tests | None at v1 — static site, no logic to unit test |
+| Concern    | Tool                                            |
+| ---------- | ----------------------------------------------- |
+| Formatting | Prettier                                        |
+| Linting    | ESLint (Astro plugin)                           |
+| Typecheck  | TypeScript (Astro built-in)                     |
+| Tests      | None at v1 — static site, no logic to unit test |
 
 ---
 

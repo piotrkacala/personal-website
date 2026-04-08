@@ -3,6 +3,7 @@
 Unresolved choices that still need a decision. This file exists to keep pending decisions out of the backlog and out of the accepted ADR log.
 
 **Rules:**
+
 - Put undecided product, content, UX, and architecture choices here.
 - When a choice is accepted, record it in `DECISIONS.md` and remove it from here.
 - If a question creates follow-up work, track that work in `BACKLOG.md` as tasks.

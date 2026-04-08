@@ -7,6 +7,7 @@ This file provides guidance to Claude Code when working in this repository.
 Personal website for Piotr Kacała — a static single-page site serving as the third career surface (after CV and LinkedIn). Built with Astro and deployed via FTP to classic shared hosting.
 
 **Key invariants:**
+
 - Static output only. No SSR, no server-side logic, no API routes.
 - Zero JavaScript by default. Add JS only when interaction explicitly requires it.
 - The repo is public. Commit messages, CLAUDE.md, and docs structure are part of the portfolio.
@@ -14,18 +15,21 @@ Personal website for Piotr Kacała — a static single-page site serving as the 
 ## Commands
 
 ### Development
+
 ```bash
 npm install
 npm run dev
 ```
 
 ### Build
+
 ```bash
 npm run build        # produces dist/
 npm run preview      # preview the built output locally
 ```
 
 ### Quality
+
 ```bash
 npm run typecheck
 npm run lint
@@ -33,6 +37,7 @@ npm run format:check
 ```
 
 ### Deploy
+
 Manual FTP upload of `dist/` to shared hosting. No CI/CD at v1.
 
 ## Architecture
@@ -72,6 +77,7 @@ docs/                   ← spec documents
 ## Commit Style
 
 Commits are public and are part of the portfolio. Write them accordingly:
+
 - Describe intent: `add projects section with narrative arc` not `update Projects.astro`
 - Active voice, present tense
 - No `wip`, no `fix #123` alone, no conventional commit prefixes unless they genuinely add clarity

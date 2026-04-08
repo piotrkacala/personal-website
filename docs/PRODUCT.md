@@ -18,6 +18,7 @@ Single user type: someone evaluating Piotr as a developer, consultant, or potent
 **Flow:** Visitor arrives → reads positioning statement and expansion → reads project narrative → optionally contacts.
 
 **Acceptance criteria:**
+
 - Visitor can understand what Piotr does and why it's unusual within 10 seconds of landing.
 - Projects section conveys a deliberate arc, not a random collection.
 - mojeaudyty.pl productivity numbers are present, specific, and readable.
