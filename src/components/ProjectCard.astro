@@ -1,0 +1,183 @@
+---
+type ParagraphBlock = {
+  type: "paragraph";
+  text: string;
+  tone?: "default" | "aside";
+};
+
+type MetricsBlock = {
+  type: "metrics";
+  heading: string;
+  items: readonly {
+    label: string;
+    value: string;
+  }[];
+};
+
+type LinkBlock = {
+  type: "link";
+  href: string;
+  label: string;
+  external?: boolean;
+};
+
+type ProjectBlock = ParagraphBlock | MetricsBlock | LinkBlock;
+
+interface Props {
+  order: string;
+  title: string;
+  blocks: readonly ProjectBlock[];
+}
+
+const { order, title, blocks } = Astro.props;
+const titleId = `project-${order}`;
+---
+
+<article class="project-entry" aria-labelledby={titleId}>
+  <p class="project-order ui-text" aria-hidden="true">{order}</p>
+
+  <div class="project-content">
+    <h3 id={titleId} class="project-title">{title}</h3>
+
+    {
+      blocks.map((block) => {
+        if (block.type === "paragraph") {
+          return (
+            <p class:list={["project-paragraph", { "project-paragraph--aside": block.tone === "aside" }]}>
+              {block.text}
+            </p>
+          );
+        }
+
+        if (block.type === "metrics") {
+          return (
+            <div class="project-metrics-block" aria-label={`${title} metrics`}>
+              <p class="project-metrics-heading ui-text">{block.heading}</p>
+
+              <dl class="project-metrics">
+                {block.items.map((item) => (
+                  <div class="project-metric-row">
+                    <dt>{item.label}</dt>
+                    <dd>{item.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          );
+        }
+
+        return (
+          <p class="project-link">
+            <a
+              href={block.href}
+              rel={block.external ? "noreferrer" : undefined}
+              target={block.external ? "_blank" : undefined}
+            >
+              {block.label}
+            </a>
+          </p>
+        );
+      })
+    }
+  </div>
+</article>
+
+<style>
+  .project-entry {
+    display: grid;
+    grid-template-columns: minmax(2.75rem, auto) minmax(0, 1fr);
+    gap: 0.9rem;
+    align-items: start;
+  }
+
+  .project-order {
+    margin: 0;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .project-content > * {
+    margin: 0;
+  }
+
+  .project-content > * + * {
+    margin-top: calc(var(--spacing-rhythm) * 0.7);
+  }
+
+  .project-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 1.22rem + 0.35vw, 1.55rem);
+    font-weight: 600;
+    line-height: 1.16;
+    letter-spacing: -0.015em;
+  }
+
+  .project-paragraph {
+    max-width: 62ch;
+  }
+
+  .project-paragraph--aside {
+    max-width: 52ch;
+    font-size: 0.98em;
+  }
+
+  .project-metrics-block {
+    max-width: 62ch;
+    padding-block: calc(var(--spacing-rhythm) * 0.45);
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .project-metrics-heading {
+    margin: 0 0 calc(var(--spacing-rhythm) * 0.32);
+    color: rgb(23 20 18 / 72%);
+    font-weight: 600;
+  }
+
+  .project-metrics {
+    margin: 0;
+  }
+
+  .project-metric-row {
+    display: grid;
+    grid-template-columns: minmax(0, 10.5rem) minmax(0, 1fr);
+    gap: 0.35rem 1rem;
+    padding-block: 0.42rem;
+  }
+
+  .project-metric-row + .project-metric-row {
+    border-top: 1px solid rgb(23 20 18 / 10%);
+  }
+
+  .project-metric-row dt {
+    margin: 0;
+    font-size: var(--text-ui);
+    line-height: 1.35;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: rgb(23 20 18 / 72%);
+  }
+
+  .project-metric-row dd {
+    margin: 0;
+    color: var(--accent);
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .project-link {
+    max-width: 62ch;
+  }
+
+  @media (max-width: 39.99rem) {
+    .project-entry {
+      grid-template-columns: 1fr;
+      gap: 0.45rem;
+    }
+
+    .project-metric-row {
+      grid-template-columns: 1fr;
+      gap: 0.15rem;
+    }
+  }
+</style>
