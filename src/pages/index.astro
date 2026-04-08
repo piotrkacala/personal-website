@@ -1,11 +1,15 @@
 ---
+import Hero from "../components/Hero.astro";
 import Base from "../layouts/Base.astro";
 import { en } from "../i18n/en";
+
+const heroContent = {
+  headline: "Product Builder",
+  expansion:
+    "In IT since 2013, across development, design, product, and QA — never tied to a single tool, always focused on output. Since early 2026, I build entirely through AI agents, zero-code. The competitive edge isn't the tooling — it's knowing which questions to ask before the problem surfaces, and being able to prompt in the language of the domain: like a developer, a QA engineer, a designer, or a product manager. AI performs best on exactly that kind of material. The interface became writing, and I've been text-native my whole career.",
+} as const;
 ---
 
 <Base lang={en.lang} title={en.title}>
-  <section class="document-section">
-    <h1>{en.heading}</h1>
-    <p>{en.body}</p>
-  </section>
+  <Hero headline={heroContent.headline} expansion={heroContent.expansion} />
 </Base>
