@@ -10,40 +10,21 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 
 ---
 
-## Now — before any code
+## Now — post-launch polish
 
-- [ ] Write the final Polish positioning text
-- [ ] Write the final Polish project descriptions
-- [ ] Write the final Polish contact copy
-- [ ] Initialize Astro project (`npm create astro@latest`)
-- [ ] Once SEO/social meta direction is decided, write final values into the site copy/spec
+- [ ] Move the Contact block into a semantic `<footer>` while preserving the current visual layout
+- [ ] Verify the custom `404.html` on production after the next upload
 
-## Next — first implementation
-
-- [ ] Configure Astro i18n routing in `astro.config.mjs`
-- [ ] Base layout (`Base.astro`) — fonts, meta, global styles
-- [ ] Self-host `Spectral` and `Source Sans 3`
-- [ ] Hero section — headline + expansion
-- [ ] Projects section — three entries with arc framing
-- [ ] Contact section — email link
-- [ ] Language switcher EN ↔ PL
-- [ ] Polish strings (`src/i18n/pl.ts`) filled in
-- [ ] Add `hreflang` tags for EN/PL
-- [ ] Mobile layout tested at 375px
-- [ ] Build passes (`astro build`)
-- [ ] Deploy to FTP
-
-## Later — post-launch
+## Later
 
 - [ ] Analytics (Plausible or similar — privacy-friendly, no cookie banner needed)
-- [ ] OG image for social sharing
-- [ ] Polish the repo for public readability: check commit history reads as a story, not a work log
 - [ ] Review dated project metrics before any copy refresh or relaunch
+- [ ] Consider `sitemap.xml` only if the site grows beyond the current small set of routes
+- [ ] Keep polishing the public repo as a readable portfolio artifact when useful
 
 ## Ideas — not decided
 
 - Showing a timeline of the learning curve (Phonetic → Surfaced → mojeaudyty.pl) visually, not just textually
-- A small "built with" note that links to the repo — makes the two-layer concept explicit for visitors who might not think to check
 
 ## Rejected
 
@@ -56,6 +37,30 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 
 ## Done
 
+- [x] Final Polish positioning text written (2026-04-08)
+- [x] Final Polish project descriptions written (2026-04-08)
+- [x] Final Polish contact copy written (2026-04-08)
+- [x] Astro project initialized (2026-04-08)
+- [x] SEO/social meta values written into the site copy and implementation (2026-04-08)
 - [x] Visual direction decided and recorded in `STYLE.md` and `DECISIONS.md` (2026-04-08)
 - [x] Font pairing decided: `Spectral` + `Source Sans 3` (2026-04-08)
 - [x] Domain decision recorded: `piotrkacala.pl` (2026-04-08)
+- [x] Astro i18n routing configured in `astro.config.mjs` (2026-04-08)
+- [x] Base layout implemented with fonts, meta, and global styles (2026-04-08)
+- [x] `Spectral` and `Source Sans 3` self-hosted (2026-04-08)
+- [x] Hero section implemented (2026-04-08)
+- [x] Projects section implemented with arc framing (2026-04-08)
+- [x] Contact section implemented with email link (2026-04-08)
+- [x] Language switcher EN ↔ PL implemented without JS (2026-04-08)
+- [x] Polish strings filled in `src/i18n/pl.ts` (2026-04-08)
+- [x] `hreflang` tags added for EN/PL (2026-04-08)
+- [x] Mobile layout tested at 375px (2026-04-08)
+- [x] Clean production build confirmed (`astro build`) (2026-04-08)
+- [x] Site deployed to FTP hosting (2026-04-08)
+- [x] Localized OG images added for EN and PL (2026-04-08)
+- [x] Favicon added (2026-04-08)
+- [x] Public repo made more readable with `README.md` and project-level docs (2026-04-08)
+- [x] "This site" project entry added to make the repo/build process explicit on the site itself (2026-04-08)
+- [x] Minimal `404.html` added (2026-04-08)
+- [x] Unused `Spectral 400` font-face declarations removed from the stylesheet (2026-04-08)
+- [x] Small "built with" note linking back to the repo addressed through the site copy and `README.md` (2026-04-08)
