@@ -68,7 +68,13 @@ Direct and precise. No marketing language, no LinkedIn corporate fluff, no buzzw
 
 **Headline:** Product Builder
 
-Short expansion (4–6 sentences). Should convey:
+**Finalized expansion (EN, April 2026):**
+
+In IT since 2013, across development, design, product, and QA — never tied to a single tool, always focused on output. Since early 2026, I build entirely through AI agents, zero-code. The competitive edge isn't the tooling — it's knowing which questions to ask before the problem surfaces, and being able to prompt in the language of the domain: like a developer, a QA engineer, a designer, or a product manager. AI performs best on exactly that kind of material. The interface became writing, and I've been text-native my whole career.
+
+> Note: "Since early 2026" is time-relative — review and update annually.
+
+**Original brief — should convey:**
 - In IT since 2013, zero-code AI development since early 2026
 - The core edge: judgment, mental models, and vocabulary built over 13 years — not syntax
 - The prompting vocabulary point: can write in the register of a developer, a QA engineer, a designer, a product manager — and AI was trained on exactly that data
@@ -92,43 +98,45 @@ Short expansion (4–6 sentences). Should convey:
 
 ## Section 2 — Projects
 
-Three projects, presented in deliberate arc order. The arc is explicit, not implied.
+**Finalized arc framing (EN, April 2026):**
 
-### Arc framing (opening or connecting sentence)
-Phonetic = testing whether AI understands an existing codebase.
-Surfaced = first docs-driven build from scratch.
-mojeaudyty.pl = validation on a real product for a real customer.
-This is a deliberate, documented progression — not a random collection of side projects.
+Three projects, each a deliberate next step. Testing AI on an existing codebase. Building from scratch, docs-first, zero-code. Then a full product for a real customer.
+
+**Original brief:** Three projects, presented in deliberate arc order. The arc is explicit, not implied. Phonetic = testing whether AI understands an existing codebase. Surfaced = first docs-driven build from scratch. mojeaudyty.pl = validation on a real product for a real customer.
 
 ### Phonetic Alphabet Trainer
-- Existing React project reopened to test AI on a real codebase
-- Used to compare models and IDEs (Cursor, Windsurf, Copilot-style autocomplete)
-- Discovered a gap in Polish Ministry of Defence documentation (missing letters in official Polish phonetic alphabet)
-- Ships in English and Polish; scoring logic, two answer modes, time limits, streak tracking, tests, changelog
+
+**Finalized description (EN, April 2026):**
+
+An existing React project, reopened to test how AI handles a real codebase — and to compare models and IDEs. Along the way, discovered missing letters in the official Polish Ministry of Defence phonetic alphabet. Ships in English and Polish with scoring, two answer modes, and streak tracking.
+
 - Link: piotrkacala.github.io/phonetic/
 
 ### Surfaced
-- First project built docs-driven from scratch, zero-code
-- Firefox extension: tracks scroll depth, notifies when you've gone too far into infinite scroll — three depth zones with escalating urgency
-- Passed Mozilla public review; listed on Firefox Add-ons
-- The "why" is a product decision, not a technical one
+
+**Finalized description (EN, April 2026):**
+
+First project built from scratch, docs-driven, zero-code. A Firefox extension that tracks scroll depth and notifies you when you've gone too far — three depth zones with escalating urgency. Passed Mozilla's public review and is listed on Firefox Add-ons.
+
 - Link: addons.mozilla.org/firefox/addon/surfaced/
 
 ### mojeaudyty.pl
-- First full production project with the mature workflow
-- Built spec-first for a real customer
-- **Numbers (current as of April 2026):** ~21,000 lines of production code, ~9,400 lines of tests, 295 commits, 25 DB models, ~96 API routes, 37 pages, 50 components, full i18n (PL+EN)
-- **The validation story:** Before the project was done, asked both AI models and an experienced CEO to estimate the project. Both landed at 13–17 weeks for one developer. The CEO confirmed — and was visibly surprised when told the project was already finished.
-- Cumulative build time: ~25–30 days. Solo no-AI estimate: 5–8 months. Speedup ratio: ~15–20x.
+
+**Finalized description (EN, April 2026):**
+
+First full production project, built spec-first for a real customer. As of April 2026: ~21,000 lines of production code, ~9,400 lines of tests, 295 commits, 25 database models, ~96 API routes, 37 pages, 50 components, full i18n. Before it was finished, both AI models and an experienced CEO estimated 13–17 weeks for one developer. The CEO was visibly surprised when told it was already done. Cumulative build time: roughly 25–30 days. Invite-only — no public link.
+
+> Note: project metrics are dated "as of April 2026" — update before any copy refresh.
+
 - Site is invite-only; no public trace; no NDA issue; full numbers can be shown
 
 ---
 
 ## Section 3 — Contact
 
-Simple and direct. No explanation needed.
+**Finalized (EN, April 2026):**
 
-Something like: "Get in touch." followed by an email address or a mailto link.
+Get in touch: kontakt@piotrkacala.pl
 
 No contact form at v1. No "I'm open to opportunities" hedging — just the address.
 
