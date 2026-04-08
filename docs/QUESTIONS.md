@@ -21,3 +21,4 @@ Unresolved choices that still need a decision. This file exists to keep pending 
 - ~~Page layout direction~~ → ADR-011
 - ~~Domain name~~ → piotrkacala.pl (recorded in COPY.md, not an architectural decision)
 - ~~Font pairing~~ → ADR-012
+- ~~SEO and social meta direction~~ → ADR-013
