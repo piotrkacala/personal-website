@@ -7,9 +7,17 @@ interface Props {
 }
 
 const { lang, title } = Astro.props;
+const siteUrl = "https://piotrkacala.pl";
+const fontPreloads = [
+  "/fonts/source-sans-3-latin.woff2",
+  "/fonts/source-sans-3-latin-ext.woff2",
+  "/fonts/spectral-600-latin.woff2",
+  "/fonts/spectral-600-latin-ext.woff2",
+];
 const alternates = [
-  { lang: "en", href: "/" },
-  { lang: "pl", href: "/pl/" },
+  { lang: "en", href: new URL("/", siteUrl).toString() },
+  { lang: "pl", href: new URL("/pl/", siteUrl).toString() },
+  { lang: "x-default", href: new URL("/", siteUrl).toString() },
 ];
 ---
 
@@ -19,6 +27,9 @@ const alternates = [
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
+    {fontPreloads.map((href) => (
+      <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
+    ))}
     {alternates.map((alternate) => (
       <link rel="alternate" hreflang={alternate.lang} href={alternate.href} />
     ))}
