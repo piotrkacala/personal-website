@@ -4,9 +4,17 @@ import "../styles/global.css";
 interface Props {
   lang: "en" | "pl";
   title: string;
+  languageSwitcher: {
+    ariaLabel: string;
+    currentLabel: string;
+    currentLanguage: "en" | "pl";
+    alternateLabel: string;
+    alternateHref: string;
+    alternateLanguage: "en" | "pl";
+  };
 }
 
-const { lang, title } = Astro.props;
+const { lang, title, languageSwitcher } = Astro.props;
 const siteUrl = "https://piotrkacala.pl";
 const fontPreloads = [
   "/fonts/source-sans-3-latin.woff2",
@@ -36,8 +44,34 @@ const alternates = [
   </head>
   <body class="site-body">
     <main class="site-shell" id="content">
-      <div class="page-column document-flow">
-        <slot />
+      <div class="page-column">
+        <header class="mb-5 border-b pb-4" style="border-color: var(--divider);">
+          <nav
+            aria-label={languageSwitcher.ariaLabel}
+            class="ui-text flex min-h-11 items-center justify-end gap-3 uppercase"
+          >
+            <span
+              aria-current="page"
+              lang={languageSwitcher.currentLanguage}
+              class="inline-flex min-h-11 items-center border-b pb-0.5 font-semibold"
+              style="color: var(--text); border-color: currentColor;"
+            >
+              {languageSwitcher.currentLabel}
+            </span>
+            <span aria-hidden="true" style="color: var(--divider);">/</span>
+            <a
+              href={languageSwitcher.alternateHref}
+              hreflang={languageSwitcher.alternateLanguage}
+              lang={languageSwitcher.alternateLanguage}
+              class="inline-flex min-h-11 items-center"
+            >
+              {languageSwitcher.alternateLabel}
+            </a>
+          </nav>
+        </header>
+        <div class="document-flow">
+          <slot />
+        </div>
       </div>
     </main>
   </body>
