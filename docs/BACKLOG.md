@@ -12,8 +12,6 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 
 ## Now — post-launch polish
 
-- [ ] Verify the custom `404.html` on production after the next upload
-
 ## Later
 
 - [ ] Analytics (Plausible or similar — privacy-friendly, no cookie banner needed)
@@ -64,3 +62,4 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 - [x] Unused `Spectral 400` font-face declarations removed from the stylesheet (2026-04-08)
 - [x] Small "built with" note linking back to the repo addressed through the site copy and `README.md` (2026-04-08)
 - [x] Contact block moved into a semantic `<footer>` while preserving the current visual layout (2026-04-08)
+- [x] Custom `404.html` verified on production after upload (2026-04-08)
