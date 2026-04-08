@@ -19,6 +19,7 @@ export const pl = {
     items: [
       {
         title: "Phonetic Alphabet Trainer",
+        titleLang: "en",
         blocks: [
           {
             type: "paragraph",
@@ -35,6 +36,7 @@ export const pl = {
       },
       {
         title: "Surfaced",
+        titleLang: "en",
         blocks: [
           {
             type: "paragraph",
@@ -85,7 +87,7 @@ export const pl = {
   },
   contact: {
     heading: "Kontakt",
-    prompt: "Kontakt",
+    prompt: "Napisz do mnie",
     email: "kontakt@piotrkacala.pl",
   },
 } satisfies SiteCopy & {

@@ -4,10 +4,11 @@ import type { ProjectBlock } from "../i18n/schema";
 interface Props {
   order: string;
   title: string;
+  titleLang?: "en" | "pl";
   blocks: readonly ProjectBlock[];
 }
 
-const { order, title, blocks } = Astro.props;
+const { order, title, titleLang, blocks } = Astro.props;
 const titleId = `project-${order}`;
 ---
 
@@ -15,7 +16,9 @@ const titleId = `project-${order}`;
   <p class="project-order ui-text" aria-hidden="true">{order}</p>
 
   <div class="project-content">
-    <h3 id={titleId} class="project-title">{title}</h3>
+    <h3 id={titleId} class="project-title" lang={titleLang}>
+      {title}
+    </h3>
 
     {
       blocks.map((block, index) => {
