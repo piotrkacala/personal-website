@@ -15,6 +15,12 @@ export const pl = {
       locale: "pl_PL",
       siteName: "Piotr Kacała",
       url: "https://piotrkacala.pl/pl/",
+      image: {
+        url: "https://piotrkacala.pl/og/piotr-kacala-pl.png",
+        width: 1200,
+        height: 630,
+        alt: "Piotr Kacała — Product Builder. Na styku produktu, designu, QA i developmentu.",
+      },
     },
   },
   languageSwitcher: {

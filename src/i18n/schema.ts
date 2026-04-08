@@ -39,6 +39,12 @@ export interface SiteMetadata {
     locale: string;
     siteName: string;
     url: string;
+    image: {
+      url: string;
+      width: number;
+      height: number;
+      alt: string;
+    };
   };
 }
 
