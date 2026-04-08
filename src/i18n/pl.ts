@@ -3,6 +3,11 @@ import type { SiteCopy } from "./schema";
 export const pl = {
   lang: "pl",
   title: "Piotr Kacala",
+  languageSwitcher: {
+    ariaLabel: "Przełącznik języka",
+    en: "EN",
+    pl: "PL",
+  },
   hero: {
     headline: "Product Builder",
     expansion:
@@ -83,4 +88,10 @@ export const pl = {
     prompt: "Kontakt",
     email: "kontakt@piotrkacala.pl",
   },
-} satisfies SiteCopy;
+} satisfies SiteCopy & {
+  languageSwitcher: {
+    ariaLabel: string;
+    en: string;
+    pl: string;
+  };
+};

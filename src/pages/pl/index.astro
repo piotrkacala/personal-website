@@ -4,9 +4,18 @@ import Projects from "../../components/Projects.astro";
 import Contact from "../../components/Contact.astro";
 import Base from "../../layouts/Base.astro";
 import { pl } from "../../i18n/pl";
+
+const languageSwitcher = {
+  ariaLabel: pl.languageSwitcher.ariaLabel,
+  currentLabel: pl.languageSwitcher.pl,
+  currentLanguage: "pl" as const,
+  alternateLabel: pl.languageSwitcher.en,
+  alternateHref: "/",
+  alternateLanguage: "en" as const,
+};
 ---
 
-<Base lang={pl.lang} title={pl.title}>
+<Base lang={pl.lang} title={pl.title} languageSwitcher={languageSwitcher}>
   <Hero headline={pl.hero.headline} expansion={pl.hero.expansion} />
   <Projects heading={pl.projects.heading} arc={pl.projects.arc} projects={pl.projects.items} />
   <Contact heading={pl.contact.heading} prompt={pl.contact.prompt} email={pl.contact.email} />
