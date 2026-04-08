@@ -216,6 +216,22 @@ Metadata is content, but it is also an accepted repository-level decision becaus
 
 ---
 
+## ADR-014 — Link the process narrative to the repo root
+
+**Date:** 2026-04-08
+**Status:** Accepted
+
+**Context:**
+The site references its own implementation process as part of the portfolio. An open question remained whether this narrative should link visitors to the repository root or to hand-picked commits that illustrate the process.
+
+**Decision:**
+Link to the repository root, not to specific commits.
+
+**Reasoning:**
+The repository itself is the artifact: README, docs, commit history, and agent instructions all matter together. Linking to the root gives the visitor the full context and lets them browse naturally according to their interest. Deep-linking to specific commits would over-curate the reading path, age poorly as history grows, and create maintenance work every time the narrative evolves.
+
+---
+
 ## Superseded Open Questions Note
 
 Open questions are now tracked in `docs/QUESTIONS.md`, not here.

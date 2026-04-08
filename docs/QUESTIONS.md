@@ -12,10 +12,11 @@ Unresolved choices that still need a decision. This file exists to keep pending 
 
 ## Current
 
-- Whether the site should link to the repo root or to specific commits for the process narrative
+- None
 
 ## Resolved
 
+- ~~Whether the site should link to the repo root or to specific commits for the process narrative~~ → ADR-014
 - ~~Visual direction~~ → ADR-011
 - ~~Whether to use a photo~~ → ADR-011
 - ~~Page layout direction~~ → ADR-011
