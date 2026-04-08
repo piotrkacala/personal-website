@@ -3,6 +3,20 @@ import type { SiteCopy } from "./schema";
 export const en = {
   lang: "en",
   title: "Piotr Kacala",
+  metadata: {
+    title: "Piotr Kacała — Product Builder",
+    description:
+      "Personal website of Piotr Kacała. Product builder across product, design, QA, and development. Now building zero-code through AI agents.",
+    openGraph: {
+      title: "Piotr Kacała — Product Builder",
+      description:
+        "In IT since 2013. Now building zero-code through AI agents, across product, design, QA, and development.",
+      type: "website",
+      locale: "en_US",
+      siteName: "Piotr Kacała",
+      url: "https://piotrkacala.pl/",
+    },
+  },
   languageSwitcher: {
     ariaLabel: "Language switcher",
     en: "EN",
