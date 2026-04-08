@@ -108,7 +108,7 @@ export const pl = {
         blocks: [
           {
             type: "paragraph",
-            text: "Zbudowana tak samo — spec-first, docs-driven, zero-code — ale z jednym dodatkiem: agent orchestrator, który samodzielnie przechodził przez plan implementacji, generował prompty, czytał wyniki, obsługiwał review. Pierwszy projekt, w którym workflow zarządzał samym sobą. Repo jest publiczne i celowo czytelne: CLAUDE.md, pełny katalog docs, czysta historia commitów.",
+            text: "Zbudowana tak samo — spec-first, docs-driven, zero-code — ale z jednym dodatkiem: agent orkiestrujący, który samodzielnie przechodził przez plan implementacji, generował prompty, czytał wyniki i obsługiwał przegląd zmian. To pierwszy projekt, w którym workflow zarządzał samym sobą. Repo jest publiczne i celowo czytelne: CLAUDE.md, pełny katalog docs, czysta historia commitów.",
           },
           {
             type: "link",
