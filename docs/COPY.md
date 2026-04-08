@@ -15,6 +15,7 @@ Content guidelines for the personal website. This document is the reference for 
 **The core edge:** Judgment, mental models, and vocabulary built over 13 years across multiple disciplines. Can write a design brief, a QA report, a product requirement. Can context-switch prompting registers like talking to different people on a team — a wide prompting vocabulary most people don't have. Also text-native: consumes by reading, thinks in text, always reads docs over video. AI interfaces are text interfaces — this clicks naturally.
 
 **Key ideas (established, don't relitigate):**
+
 - The AI answers the question you ask. It won't tell you you're asking the wrong question. Experience knows which questions to ask before the problem surfaces.
 - Prompting mirrors leading a team. Prompt in the language of the domain — like writing a Slack message to a dev, a bug report to QA, a brief to a designer. Models were trained on exactly that data.
 - "The design is visually busy, relax it" lands in one pass. "Make it pretty" is a gamble. The prompt is only as good as the thinking behind it.
@@ -37,12 +38,14 @@ Content guidelines for the personal website. This document is the reference for 
 Direct and precise. No marketing language, no LinkedIn corporate fluff, no buzzword stacking. The writing reflects someone who thinks clearly and writes to be understood, not to impress.
 
 **Dos:**
+
 - Say what's true. Let the numbers and the output speak.
 - Active voice. "I built X" not "X was built."
 - Specific over general. "295 commits, 25 DB models" over "large-scale application."
 - Neutral register — readable by both a technical founder and a non-technical client.
 
 **Don'ts:**
+
 - "Passionate about", "results-driven", "leverage", "synergy", or any phrase that belongs on a bad LinkedIn profile
 - Explaining that AI is a tool (this is obvious)
 - Hedging or qualifying the productivity claims — they are documented and confirmed
@@ -75,6 +78,7 @@ In IT since 2013, across development, design, product, and QA — never tied to 
 > Note: "Since early 2026" is time-relative — review and update annually.
 
 **Original brief — should convey:**
+
 - In IT since 2013, zero-code AI development since early 2026
 - The core edge: judgment, mental models, and vocabulary built over 13 years — not syntax
 - The prompting vocabulary point: can write in the register of a developer, a QA engineer, a designer, a product manager — and AI was trained on exactly that data
@@ -82,17 +86,18 @@ In IT since 2013, across development, design, product, and QA — never tied to 
 - The competitive edge is knowing which questions to ask before the problem surfaces
 
 **Lines available as raw material (from positioning-context.md):**
-- *The AI answers the question you ask. Experience knows which questions to ask.*
-- *You can't prompt your way out of not knowing what to ask.*
-- *AI writes the code. Experience decides if it's worth shipping.*
-- *I write more now than I ever did when I was coding.*
-- *Technology changes, judgment doesn't.*
-- *I don't need to remember every command. I need to know which door to open. Experience built the map.*
-- *The prompt is only as good as the thinking behind it.*
-- *Using AI as autocomplete is like asking an elephant to carry a feather.*
-- *AI compressed the technical timeline. The human timeline stayed the same.*
-- *AI is the method, not the identity. I don't want to be the jQuery developer of 2030.*
-- *Prompt in the language of the domain. Jargon isn't gatekeeping — it's precision.*
+
+- _The AI answers the question you ask. Experience knows which questions to ask._
+- _You can't prompt your way out of not knowing what to ask._
+- _AI writes the code. Experience decides if it's worth shipping._
+- _I write more now than I ever did when I was coding._
+- _Technology changes, judgment doesn't._
+- _I don't need to remember every command. I need to know which door to open. Experience built the map._
+- _The prompt is only as good as the thinking behind it._
+- _Using AI as autocomplete is like asking an elephant to carry a feather._
+- _AI compressed the technical timeline. The human timeline stayed the same._
+- _AI is the method, not the identity. I don't want to be the jQuery developer of 2030._
+- _Prompt in the language of the domain. Jargon isn't gatekeeping — it's precision._
 
 ---
 

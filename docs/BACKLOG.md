@@ -3,6 +3,7 @@
 Versioned record of executable work, follow-up tasks, and ideas. This file is the source of truth for what needs doing next — not memory, not chat history.
 
 **Rules:**
+
 - Move completed items to the Done section with a date, don't delete them.
 - Ideas that are explicitly rejected go to Rejected with a reason — so they don't resurface.
 - Unresolved choices do not live here; keep them in `QUESTIONS.md`.
