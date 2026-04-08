@@ -7,7 +7,10 @@ export type ParagraphBlock = {
 export type MetricsBlock = {
   type: "metrics";
   heading: string;
-  items: readonly string[];
+  items: readonly {
+    label: string;
+    value: string;
+  }[];
 };
 
 export type LinkBlock = {
@@ -15,6 +18,7 @@ export type LinkBlock = {
   href: string;
   label: string;
   external?: boolean;
+  externalLabel?: string;
 };
 
 export type ProjectBlock = ParagraphBlock | MetricsBlock | LinkBlock;
