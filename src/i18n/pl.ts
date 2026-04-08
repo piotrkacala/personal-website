@@ -35,7 +35,7 @@ export const pl = {
   },
   projects: {
     heading: "Projekty",
-    arc: "Trzy projekty, każdy jako świadomie wybrany kolejny krok. Najpierw sprawdzenie AI na istniejącym codebase. Potem budowa od zera, docs-first, zero-code. Na końcu pełny produkt dla realnego klienta.",
+    arc: "Każdy projekt to świadomie wybrany kolejny krok. Sprawdzenie AI na istniejącym codebase. Budowa od zera, docs-first, zero-code. Pełny produkt dla realnego klienta. Potem ta strona.",
     items: [
       {
         title: "Phonetic Alphabet Trainer",
@@ -66,6 +66,22 @@ export const pl = {
             type: "link",
             href: "https://addons.mozilla.org/firefox/addon/surfaced/",
             label: "Link: addons.mozilla.org/firefox/addon/surfaced/",
+            external: true,
+            externalLabel: "(otwiera się w nowej karcie)",
+          },
+        ],
+      },
+      {
+        title: "Ta strona",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Zbudowana tak samo — spec-first, docs-driven, zero-code — ale z jednym dodatkiem: agent orchestrator, który samodzielnie przechodził przez plan implementacji, generował prompty, czytał wyniki, obsługiwał review. Pierwszy projekt, w którym workflow zarządzał samym sobą. Repo jest publiczne i celowo czytelne: CLAUDE.md, pełny katalog docs, czysta historia commitów.",
+          },
+          {
+            type: "link",
+            href: "https://github.com/piotrkacala/personal-website",
+            label: "Repo: github.com/piotrkacala/personal-website",
             external: true,
             externalLabel: "(otwiera się w nowej karcie)",
           },
