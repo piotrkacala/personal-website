@@ -79,7 +79,7 @@ In IT since 2013, across development, design, product, and QA — never tied to 
 
 **Finalized expansion (PL, April 2026):**
 
-W IT jestem od 2013 roku, na styku developmentu, designu, produktu i QA — nigdy przywiązany do jednego narzędzia, zawsze skupiony na efekcie. Od początku 2026 buduję w całości przez agenty AI, zero-code. Przewaga nie leży w toolingu, tylko w tym, że wiem, jakie pytania zadać, zanim problem w ogóle się ujawni, i potrafię promptować w języku danej domeny: jak developer, QA engineer, designer albo product manager. AI działa najlepiej właśnie na takim materiale. Interfejs stał się pisaniem, a ja przez całą karierę pracowałem przede wszystkim w tekście.
+W IT jestem od 2013 roku, na styku developmentu, designu, produktu i QA — nigdy przywiązany do jednego narzędzia, zawsze skupiony na rezultacie. Od początku 2026 buduję w całości przez agenty AI, zero-code. Przewaga nie leży w toolingu, tylko w tym, że wiem, jakie pytania zadać, zanim problem w ogóle się ujawni, i potrafię promptować w języku danej domeny: jak developer, QA engineer, designer albo product manager. AI działa najlepiej właśnie na takim materiale. Interfejs stał się pisaniem, a ja przez całą karierę pracowałem przede wszystkim w tekście.
 
 **Original brief — should convey:**
 
