@@ -9,7 +9,7 @@ const { heading, prompt, email } = Astro.props;
 const headingId = "contact-heading";
 ---
 
-<section class="document-section contact-section" aria-labelledby={headingId}>
+<footer class="document-section contact-section" aria-labelledby={headingId}>
   <h2 id={headingId}>{heading}</h2>
   <p class="contact-line">
     <span>{prompt}: </span>
@@ -17,9 +17,15 @@ const headingId = "contact-heading";
       {email}
     </a>
   </p>
-</section>
+</footer>
 
 <style>
+  .contact-section {
+    margin-top: calc(var(--spacing-rhythm) * 1.6);
+    padding-top: calc(var(--spacing-rhythm) * 1.6);
+    border-top: 1px solid var(--divider);
+  }
+
   .contact-line {
     max-width: 32ch;
   }
