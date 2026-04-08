@@ -1,27 +1,5 @@
 ---
-type ParagraphBlock = {
-  type: "paragraph";
-  text: string;
-  tone?: "default" | "aside";
-};
-
-type MetricsBlock = {
-  type: "metrics";
-  heading: string;
-  items: readonly {
-    label: string;
-    value: string;
-  }[];
-};
-
-type LinkBlock = {
-  type: "link";
-  href: string;
-  label: string;
-  external?: boolean;
-};
-
-type ProjectBlock = ParagraphBlock | MetricsBlock | LinkBlock;
+import type { ProjectBlock } from "../i18n/schema";
 
 interface Props {
   order: string;
@@ -55,17 +33,16 @@ const titleId = `project-${order}`;
           return (
             <section class="project-metrics-block" aria-labelledby={metricsHeadingId}>
               <h4 id={metricsHeadingId} class="project-metrics-heading ui-text">
-                {block.heading}
+                {block.heading}:
               </h4>
 
-              <dl class="project-metrics">
+              <ul class="project-metrics" role="list">
                 {block.items.map((item) => (
-                  <div class="project-metric-row">
-                    <dt>{item.label}</dt>
-                    <dd>{item.value}</dd>
-                  </div>
+                  <li class="project-metric-row">
+                    {item}
+                  </li>
                 ))}
-              </dl>
+              </ul>
             </section>
           );
         }
@@ -79,7 +56,6 @@ const titleId = `project-${order}`;
               target={block.external ? "_blank" : undefined}
             >
               {block.label}
-              {block.external ? <span class="project-link-note"> (opens in a new tab)</span> : null}
             </a>
           </p>
         );
@@ -143,52 +119,29 @@ const titleId = `project-${order}`;
 
   .project-metrics {
     margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
   .project-metric-row {
-    display: grid;
-    grid-template-columns: minmax(0, 10.5rem) minmax(0, 1fr);
-    gap: 0.35rem 1rem;
     padding-block: 0.42rem;
+    color: var(--accent);
+    font-weight: 600;
+    line-height: 1.4;
   }
 
   .project-metric-row + .project-metric-row {
     border-top: 1px solid rgb(23 20 18 / 10%);
   }
 
-  .project-metric-row dt {
-    margin: 0;
-    font-size: var(--text-ui);
-    line-height: 1.35;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    color: rgb(23 20 18 / 72%);
-  }
-
-  .project-metric-row dd {
-    margin: 0;
-    color: var(--accent);
-    font-weight: 600;
-    line-height: 1.4;
-  }
-
   .project-link {
     max-width: 62ch;
-  }
-
-  .project-link-note {
-    color: rgb(23 20 18 / 72%);
   }
 
   @media (max-width: 39.99rem) {
     .project-entry {
       grid-template-columns: 1fr;
       gap: 0.45rem;
-    }
-
-    .project-metric-row {
-      grid-template-columns: 1fr;
-      gap: 0.15rem;
     }
 
     .project-link-anchor {

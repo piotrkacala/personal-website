@@ -1,11 +1,13 @@
 ---
+import Hero from "../../components/Hero.astro";
+import Projects from "../../components/Projects.astro";
+import Contact from "../../components/Contact.astro";
 import Base from "../../layouts/Base.astro";
 import { pl } from "../../i18n/pl";
 ---
 
 <Base lang={pl.lang} title={pl.title}>
-  <section class="document-section">
-    <h1>{pl.heading}</h1>
-    <p>{pl.body}</p>
-  </section>
+  <Hero headline={pl.hero.headline} expansion={pl.hero.expansion} />
+  <Projects heading={pl.projects.heading} arc={pl.projects.arc} projects={pl.projects.items} />
+  <Contact heading={pl.contact.heading} prompt={pl.contact.prompt} email={pl.contact.email} />
 </Base>
