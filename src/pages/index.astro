@@ -1,6 +1,7 @@
 ---
 import Hero from "../components/Hero.astro";
 import Projects from "../components/Projects.astro";
+import Contact from "../components/Contact.astro";
 import Base from "../layouts/Base.astro";
 import { en } from "../i18n/en";
 
@@ -78,6 +79,12 @@ const projectsContent = {
     },
   ],
 } as const;
+
+const contactContent = {
+  heading: "Contact",
+  prompt: "Get in touch",
+  email: "kontakt@piotrkacala.pl",
+} as const;
 ---
 
 <Base lang={en.lang} title={en.title}>
@@ -86,5 +93,10 @@ const projectsContent = {
     heading={projectsContent.heading}
     arc={projectsContent.arc}
     projects={projectsContent.projects}
+  />
+  <Contact
+    heading={contactContent.heading}
+    prompt={contactContent.prompt}
+    email={contactContent.email}
   />
 </Base>

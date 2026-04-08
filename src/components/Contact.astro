@@ -1,0 +1,31 @@
+---
+interface Props {
+  heading: string;
+  prompt: string;
+  email: string;
+}
+
+const { heading, prompt, email } = Astro.props;
+const headingId = "contact-heading";
+---
+
+<section class="document-section contact-section" aria-labelledby={headingId}>
+  <h2 id={headingId}>{heading}</h2>
+  <p class="contact-line">
+    <span>{prompt}: </span>
+    <a class="contact-email" href={`mailto:${email}`}>
+      {email}
+    </a>
+  </p>
+</section>
+
+<style>
+  .contact-line {
+    max-width: 32ch;
+  }
+
+  .contact-email {
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+</style>
