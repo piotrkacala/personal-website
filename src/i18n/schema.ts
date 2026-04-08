@@ -29,9 +29,23 @@ export interface ProjectEntry {
   blocks: readonly ProjectBlock[];
 }
 
+export interface SiteMetadata {
+  title: string;
+  description: string;
+  openGraph: {
+    title: string;
+    description: string;
+    type: "website";
+    locale: string;
+    siteName: string;
+    url: string;
+  };
+}
+
 export interface SiteCopy {
   lang: "en" | "pl";
   title: string;
+  metadata: SiteMetadata;
   hero: {
     headline: string;
     expansion: string;
