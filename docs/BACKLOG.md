@@ -14,9 +14,6 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 
 ## Later
 
-- [ ] Analytics (Plausible or similar — privacy-friendly, no cookie banner needed)
-- [ ] Review dated project metrics before any copy refresh or relaunch
-- [ ] Consider `sitemap.xml` only if the site grows beyond the current small set of routes
 - [ ] Keep polishing the public repo as a readable portfolio artifact when useful
 
 ## Ideas — not decided
@@ -25,10 +22,12 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 
 ## Rejected
 
+- Analytics — intentionally omitted for now; the site is small, privacy-friendly by default, and does not need visitor tracking at this stage
 - Blog — ongoing commitment, content maintenance cost, not needed at launch (see ADR-005)
 - CMS — unjustified complexity for one-author static site (see ADR-006)
 - Skills/tech list — belongs on CV, not here
 - Contact form with backend — email link is sufficient for v1
+- `sitemap.xml` — not justified for the current tiny route set; reconsider only if the site grows beyond the current pages
 
 ---
 
@@ -63,3 +62,4 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 - [x] Small "built with" note linking back to the repo addressed through the site copy and `README.md` (2026-04-08)
 - [x] Contact block moved into a semantic `<footer>` while preserving the current visual layout (2026-04-08)
 - [x] Custom `404.html` verified on production after upload (2026-04-08)
+- [x] Project metrics reviewed and confirmed current (2026-04-08)
