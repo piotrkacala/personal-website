@@ -13,7 +13,6 @@ Unresolved choices that still need a decision. This file exists to keep pending 
 
 - SEO and social meta direction: final `<title>`, meta description, OG title, OG description, OG image
 - Whether the site should link to the repo root or to specific commits for the process narrative
-- Font pairing: specific typefaces for headline and body text
 
 ## Resolved (moved to DECISIONS.md)
 
@@ -21,3 +20,4 @@ Unresolved choices that still need a decision. This file exists to keep pending 
 - ~~Whether to use a photo~~ → ADR-011
 - ~~Page layout direction~~ → ADR-011
 - ~~Domain name~~ → piotrkacala.pl (recorded in COPY.md, not an architectural decision)
+- ~~Font pairing~~ → ADR-012

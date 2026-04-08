@@ -182,6 +182,24 @@ Full visual spec recorded in `docs/STYLE.md` under "Visual Direction."
 
 ---
 
+## ADR-012 — Font pairing: Spectral + Source Sans 3
+
+**Date:** 2026-04-08
+**Status:** Accepted
+
+**Context:**
+The visual direction is already set: light, editorial, restrained, document-like. The font system needs to reinforce that tone while staying highly readable in both English and Polish. The headline should carry presence and confidence without feeling like a startup hero; body text should stay neutral and easy to read.
+
+**Decision:**
+Use `Spectral` for headlines and project titles. Use `Source Sans 3` for body text and UI.
+
+**Reasoning:**
+`Spectral` gives the main headings editorial character and weight, which supports the dossier-like direction. `Source Sans 3` is a humanist sans with strong legibility and a neutral tone, which keeps longer passages calm and readable. This pairing avoids both the coder/monospace look and the generic startup-sans look. Both fonts are open-source and support Polish diacritics.
+
+Recorded in `docs/STYLE.md` under "Stack" and "Typography."
+
+---
+
 ## Superseded Open Questions Note
 
 Open questions are now tracked in `docs/QUESTIONS.md`, not here.

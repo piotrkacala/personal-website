@@ -10,7 +10,7 @@ UI conventions for the personal website. Claude follows these when writing any f
 - **Styling:** Tailwind CSS v4
 - **Components:** Native `.astro` components only — no React, no Vue
 - **Icons:** Inline SVG preferred (no icon library dependency)
-- **Fonts:** TBD at design time — defined in `Base.astro` layout
+- **Fonts:** `Spectral` for headlines, `Source Sans 3` for body/UI — defined in `Base.astro` layout
 
 ---
 
@@ -80,7 +80,9 @@ Generous whitespace, editorial feel. Sections breathe. Not cramped, not wasteful
 No photo at v1. The page should establish presence through typography, copy, spacing, and proof of work rather than portrait photography.
 
 ### Typography
-TBD — font pairing is a design-time decision. The character should be: precise, readable, slightly editorial. Not monospace (signals "coder"), not geometric sans (signals "startup").
+Final pairing: `Spectral` for `h1`, `h2`, and project titles; `Source Sans 3` for body copy, supporting text, links, and UI elements such as the language switcher.
+
+Reasoning: `Spectral` adds editorial weight and presence without pushing the site into a startup or coder aesthetic. `Source Sans 3` keeps longer reading comfortable, neutral, and highly legible in both English and Polish. Together they support the "document / dossier" direction already defined above.
 
 ### Interaction details
 Links should feel deliberate and editorial, not app-like. Underlines, offset underlines, or other restrained text-link treatments are preferred over button styling for in-flow links. Any focus and hover treatment should be clearly visible but quiet.
