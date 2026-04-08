@@ -1,0 +1,80 @@
+---
+import ProjectCard from "./ProjectCard.astro";
+
+type ProjectBlock =
+  | {
+      type: "paragraph";
+      text: string;
+      tone?: "default" | "aside";
+    }
+  | {
+      type: "metrics";
+      heading: string;
+      items: readonly {
+        label: string;
+        value: string;
+      }[];
+    }
+  | {
+      type: "link";
+      href: string;
+      label: string;
+      external?: boolean;
+    };
+
+interface Props {
+  heading: string;
+  arc: string;
+  projects: readonly {
+    title: string;
+    blocks: readonly ProjectBlock[];
+  }[];
+}
+
+const { heading, arc, projects } = Astro.props;
+---
+
+<section class="document-section projects-section" aria-labelledby="projects-heading">
+  <div class="projects-intro">
+    <h2 id="projects-heading">{heading}</h2>
+    <p class="projects-arc">{arc}</p>
+  </div>
+
+  <ol class="projects-list">
+    {projects.map((project, index) => (
+      <li>
+        <ProjectCard
+          order={String(index + 1).padStart(2, "0")}
+          title={project.title}
+          blocks={project.blocks}
+        />
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .projects-intro > * {
+    margin: 0;
+  }
+
+  .projects-intro > * + * {
+    margin-top: calc(var(--spacing-rhythm) * 0.72);
+  }
+
+  .projects-arc {
+    max-width: 62ch;
+  }
+
+  .projects-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .projects-list > li + li {
+    margin-top: calc(var(--spacing-rhythm) * 1.45);
+    padding-top: calc(var(--spacing-rhythm) * 1.45);
+    border-top: 1px solid var(--divider);
+  }
+</style>
