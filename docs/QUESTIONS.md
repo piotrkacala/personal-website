@@ -12,11 +12,11 @@ Unresolved choices that still need a decision. This file exists to keep pending 
 
 ## Current
 
-- SEO and social meta direction: final `<title>`, meta description, OG title, OG description, OG image
 - Whether the site should link to the repo root or to specific commits for the process narrative
 
-## Resolved (moved to DECISIONS.md)
+## Resolved
 
+- ~~SEO and social meta direction~~ → recorded in `COPY.md` under "Metadata — v1"
 - ~~Visual direction~~ → ADR-011
 - ~~Whether to use a photo~~ → ADR-011
 - ~~Page layout direction~~ → ADR-011

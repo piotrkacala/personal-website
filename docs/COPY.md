@@ -177,6 +177,32 @@ Kontakt: kontakt@piotrkacala.pl
 
 ---
 
+## Metadata — v1
+
+**Finalized values (EN, April 2026):**
+
+- `<title>`: `Piotr Kacała — Product Builder`
+- `meta description`: `Personal website of Piotr Kacała. Product builder across product, design, QA, and development. Now building zero-code through AI agents.`
+- `og:title`: `Piotr Kacała — Product Builder`
+- `og:description`: `In IT since 2013. Now building zero-code through AI agents, across product, design, QA, and development.`
+
+**Finalized values (PL, April 2026):**
+
+- `<title>`: `Piotr Kacała — Product Builder`
+- `meta description`: `Strona Piotra Kacały. Product Builder na styku produktu, designu, QA i developmentu. Dziś buduje zero-code przez agenty AI.`
+- `og:title`: `Piotr Kacała — Product Builder`
+- `og:description`: `W IT od 2013 roku. Dziś buduje zero-code przez agenty AI, na styku produktu, designu, QA i developmentu.`
+
+**OG image direction (v1):**
+
+- Light editorial image that feels like a cropped extension of the site, not a promo banner
+- Primary content: `Piotr Kacała` and `Product Builder`, with one short supporting line localized per language
+- Same visual language as the page: restrained typography, off-white background, thin rule, minimal accent color
+- No portrait, no screenshots, no logos, no device mockups, no decorative AI imagery
+- The image should communicate calm clarity and document-like credibility before it communicates "personal brand"
+
+---
+
 ## What to Avoid Across All Sections
 
 - "AI enthusiast" or "AI-first developer" — too generic
