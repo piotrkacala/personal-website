@@ -77,6 +77,10 @@ In IT since 2013, across development, design, product, and QA — never tied to 
 
 > Note: "Since early 2026" is time-relative — review and update annually.
 
+**Finalized expansion (PL, April 2026):**
+
+W IT jestem od 2013 roku, na styku developmentu, designu, produktu i QA — nigdy przywiązany do jednego narzędzia, zawsze skupiony na efekcie. Od początku 2026 buduję w całości przez agenty AI, zero-code. Przewaga nie leży w toolingu, tylko w tym, że wiem, jakie pytania zadać, zanim problem w ogóle się ujawni, i potrafię promptować w języku danej domeny: jak developer, QA engineer, designer albo product manager. AI działa najlepiej właśnie na takim materiale. Interfejs stał się pisaniem, a ja przez całą karierę pracowałem przede wszystkim w tekście.
+
 **Original brief — should convey:**
 
 - In IT since 2013, zero-code AI development since early 2026
@@ -107,6 +111,10 @@ In IT since 2013, across development, design, product, and QA — never tied to 
 
 Three projects, each a deliberate next step. Testing AI on an existing codebase. Building from scratch, docs-first, zero-code. Then a full product for a real customer.
 
+**Finalized arc framing (PL, April 2026):**
+
+Trzy projekty, każdy jako świadomie wybrany kolejny krok. Najpierw sprawdzenie AI na istniejącym codebase. Potem budowa od zera, docs-first, zero-code. Na końcu pełny produkt dla realnego klienta.
+
 **Original brief:** Three projects, presented in deliberate arc order. The arc is explicit, not implied. Phonetic = testing whether AI understands an existing codebase. Surfaced = first docs-driven build from scratch. mojeaudyty.pl = validation on a real product for a real customer.
 
 ### Phonetic Alphabet Trainer
@@ -117,11 +125,23 @@ An existing React project, reopened to test how AI handles a real codebase — a
 
 - Link: piotrkacala.github.io/phonetic/
 
+**Finalized description (PL, April 2026):**
+
+Istniejący projekt w React, otwarty ponownie, żeby sprawdzić, jak AI radzi sobie z istniejącym codebase — i porównać modele oraz IDE. Po drodze wyszły na jaw brakujące litery w oficjalnym alfabecie fonetycznym Ministerstwa Obrony Narodowej. Działa po angielsku i po polsku, ma scoring, dwa tryby odpowiedzi i śledzenie serii.
+
+- Link: piotrkacala.github.io/phonetic/
+
 ### Surfaced
 
 **Finalized description (EN, April 2026):**
 
 First project built from scratch, docs-driven, zero-code. A Firefox extension that tracks scroll depth and notifies you when you've gone too far — three depth zones with escalating urgency. Passed Mozilla's public review and is listed on Firefox Add-ons.
+
+- Link: addons.mozilla.org/firefox/addon/surfaced/
+
+**Finalized description (PL, April 2026):**
+
+Pierwszy projekt zbudowany od zera, docs-driven, zero-code. Rozszerzenie do Firefoksa, które śledzi głębokość scrolla i powiadamia, gdy zajdziesz za daleko — trzy strefy głębokości i rosnący poziom pilności. Przeszło publiczny review Mozilli i jest opublikowane w Firefox Add-ons.
 
 - Link: addons.mozilla.org/firefox/addon/surfaced/
 
@@ -135,6 +155,12 @@ First full production project, built spec-first for a real customer. As of April
 
 - Site is invite-only; no public trace; no NDA issue; full numbers can be shown
 
+**Finalized description (PL, April 2026):**
+
+Pierwszy pełny projekt produkcyjny, zbudowany spec-first dla realnego klienta. Stan na kwiecień 2026: ~21,000 linii kodu produkcyjnego, ~9,400 linii testów, 295 commitów, 25 modeli bazy danych, ~96 endpointów API, 37 stron, 50 komponentów, pełne i18n. Zanim projekt był skończony, zarówno modele AI, jak i doświadczony CEO szacowali 13–17 tygodni pracy dla jednego developera. CEO był wyraźnie zaskoczony, kiedy usłyszał, że to już jest gotowe. Łączny czas budowy: około 25–30 dni. Tylko na zaproszenie — bez publicznego linku.
+
+- Strona działa tylko na zaproszenie; nie ma publicznego śladu; nie ma problemu z NDA; pełne liczby mogą być pokazane
+
 ---
 
 ## Section 3 — Contact
@@ -144,6 +170,10 @@ First full production project, built spec-first for a real customer. As of April
 Get in touch: kontakt@piotrkacala.pl
 
 No contact form at v1. No "I'm open to opportunities" hedging — just the address.
+
+**Finalized (PL, April 2026):**
+
+Kontakt: kontakt@piotrkacala.pl
 
 ---
 
