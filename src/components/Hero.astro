@@ -1,0 +1,15 @@
+---
+interface Props {
+  headline: string;
+  expansion: string;
+}
+
+const { headline, expansion } = Astro.props;
+---
+
+<section class="document-section" aria-labelledby="hero-heading">
+  <header class="document-section">
+    <h1 id="hero-heading">{headline}</h1>
+  </header>
+  <p>{expansion}</p>
+</section>
