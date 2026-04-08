@@ -49,14 +49,50 @@ src/components/
 
 ## Visual Direction
 
-*(To be defined before implementation starts. Record the decision here once made.)*
+**Decided April 2026.** Light, editorial, restrained, confident. The site reads like a well-designed document or dossier — not a landing page, not a startup hero.
 
-Key questions to answer before writing a line of CSS:
-- Background: light or dark?
-- Accent color: yes or no? If yes, what role does it play?
-- Typography scale: how big is the headline relative to body text?
-- Spacing rhythm: generous whitespace (editorial feel) or compact?
-- Whether to use a photo
+### Background
+Light. Not pure white — slightly warm or slightly cool/technical. The exact tone is a design-time decision, but the feel is "quality paper" not "browser default."
+
+### Text
+Dark, dense. High contrast against the background. Body text is readable and tight — no airy line heights, no light font weights.
+
+### Headline (h1)
+Large but not startup-hero large. Feels like an essay title or a dossier heading. Confident scale, not shouting.
+
+### Layout
+Single-column, document-like grid anchored to one clear left edge. The page should read top-to-bottom as a composed document, not as a set of independent blocks. Thin rules or subtle dividers between sections are welcome if they clarify structure. Zero decorative elements without function. The structure should feel like a well-typeset page — alignment, rhythm, restraint.
+
+Projects may introduce a secondary internal structure (for example numbering, a narrow metadata column, or a visible step-by-step rhythm), but the overall page should still feel like one document, not a card layout.
+
+### Accent color
+One color only. Used sparingly and with clear functional purpose:
+- Links
+- Language switcher
+- Possibly metrics/numbers in the mojeaudyty.pl section
+
+Not used for large backgrounds, decorative surfaces, or branding-heavy gestures. It may appear in small borders, rules, or emphasis details only if that use improves orientation. The accent highlights interactive or notable elements and must never compete with the main text color for visual dominance.
+
+### Spacing
+Generous whitespace, editorial feel. Sections breathe. Not cramped, not wasteful — the spacing rhythm signals confidence and clarity.
+
+### Photo
+No photo at v1. The page should establish presence through typography, copy, spacing, and proof of work rather than portrait photography.
+
+### Typography
+TBD — font pairing is a design-time decision. The character should be: precise, readable, slightly editorial. Not monospace (signals "coder"), not geometric sans (signals "startup").
+
+### Interaction details
+Links should feel deliberate and editorial, not app-like. Underlines, offset underlines, or other restrained text-link treatments are preferred over button styling for in-flow links. Any focus and hover treatment should be clearly visible but quiet.
+
+### Project presentation
+Do not render projects as isolated marketing cards. They should read as entries in a deliberate sequence with a clear narrative arc from Phonetic to Surfaced to mojeaudyty.pl. The mojeaudyty.pl metrics should be scannable at a glance and visually distinct from the surrounding prose without becoming infographic-style decoration.
+
+### Density
+Keep the interface visually calm but not sparse to the point of feeling empty. This is not a luxury-brand layout with huge dead zones. The density should suggest a serious reader-facing document: enough air to feel controlled, enough content presence to feel substantive.
+
+### Surfaces and effects
+Avoid shadows, glassmorphism, glow effects, tinted panels, and soft UI treatment. If any surface distinction is needed, prefer contrast through spacing, rules, background tone shifts, or typography rather than raised-card metaphors.
 
 ---
 

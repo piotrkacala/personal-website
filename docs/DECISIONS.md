@@ -164,6 +164,24 @@ These are three different states: undecided, decided, and actionable. Giving eac
 
 ---
 
+## ADR-011 — Visual direction: light editorial minimal
+
+**Date:** 2026-04-08
+**Status:** Accepted
+
+**Context:**
+Choosing the visual language for the site. The positioning is "product builder" not "coder" — the design should match the tone of the copy: direct, precise, confident, no fluff.
+
+**Decision:**
+Light, editorial, restrained. Single-column document-like layout. No photo. One accent color used sparingly (links, language switcher, possibly metrics). Generous whitespace. Thin rules between sections. Zero decorative elements without function. Headline is large but essay-title scale, not startup-hero scale. Background is light but not pure white — slightly warm or slightly cool/technical.
+
+**Reasoning:**
+The content is text-heavy and strong — the design should frame it, not compete. No photo and no project screenshots means the site must work purely on typography and spacing. Terminal/monospace aesthetic signals "coder" which contradicts the positioning. Startup landing page aesthetic signals hype which contradicts the tone. A well-typeset document is the natural visual equivalent of "direct, precise, no marketing language." Simple code in the repo is also part of the portfolio.
+
+Full visual spec recorded in `docs/STYLE.md` under "Visual Direction."
+
+---
+
 ## Superseded Open Questions Note
 
 Open questions are now tracked in `docs/QUESTIONS.md`, not here.
