@@ -11,21 +11,23 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 
 ## Now — before any code
 
-- [ ] Write the actual positioning text (headline expansion, 4–6 sentences) in both EN and PL
-- [ ] Write project descriptions in both EN and PL (raw content exists in COPY.md)
+- [ ] Write the final Polish positioning text
+- [ ] Write the final Polish project descriptions
+- [ ] Write the final Polish contact copy
 - [ ] Initialize Astro project (`npm create astro@latest`)
-- [ ] Once visual direction is decided, write it into `STYLE.md`
-- [ ] Once page layout direction is decided, write it into `STYLE.md` or a separate `LAYOUT.md`
 - [ ] Once SEO/social meta direction is decided, write final values into the site copy/spec
 
 ## Next — first implementation
 
+- [ ] Configure Astro i18n routing in `astro.config.mjs`
 - [ ] Base layout (`Base.astro`) — fonts, meta, global styles
+- [ ] Self-host `Spectral` and `Source Sans 3`
 - [ ] Hero section — headline + expansion
 - [ ] Projects section — three entries with arc framing
 - [ ] Contact section — email link
 - [ ] Language switcher EN ↔ PL
 - [ ] Polish strings (`src/i18n/pl.ts`) filled in
+- [ ] Add `hreflang` tags for EN/PL
 - [ ] Mobile layout tested at 375px
 - [ ] Build passes (`astro build`)
 - [ ] Deploy to FTP
@@ -53,4 +55,6 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 
 ## Done
 
-*(Nothing yet — project just started)*
+- [x] Visual direction decided and recorded in `STYLE.md` and `DECISIONS.md` (2026-04-08)
+- [x] Font pairing decided: `Spectral` + `Source Sans 3` (2026-04-08)
+- [x] Domain decision recorded: `piotrkacala.pl` (2026-04-08)
