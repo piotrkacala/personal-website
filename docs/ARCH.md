@@ -18,22 +18,20 @@ A static single-page personal website built with Astro. No backend, no database,
 │   ├── i18n/
 │   │   ├── en.ts              ← English strings
 │   │   └── pl.ts              ← Polish strings
-│   ├── components/
-│   │   ├── Hero.astro         ← positioning section
-│   │   ├── Projects.astro     ← projects section
-│   │   ├── ProjectCard.astro  ← individual project
-│   │   └── Contact.astro      ← contact section
+│   ├── env.d.ts               ← Astro type declarations
 │   ├── layouts/
-│   │   └── Base.astro         ← <html>, <head>, fonts, global styles
+│   │   └── Base.astro         ← shared document shell
 │   └── styles/
-│       └── global.css         ← Tailwind base + any CSS custom properties
-├── public/                    ← static assets (favicon, OG image, etc.)
+│       └── global.css         ← Tailwind entrypoint + global CSS custom properties
 ├── docs/                      ← spec docs
 ├── CLAUDE.md
 ├── astro.config.mjs
-├── tailwind.config.mjs
+├── eslint.config.mjs
+├── tsconfig.json
 └── package.json
 ```
+
+`public/` does not exist yet in Phase 1. It will be introduced once the project adds static assets such as fonts, favicon, or OG images.
 
 **Tooling:** npm, single package (no monorepo, no workspaces)
 
@@ -44,7 +42,7 @@ A static single-page personal website built with Astro. No backend, no database,
 | Concern    | Choice                                                    |
 | ---------- | --------------------------------------------------------- |
 | Framework  | Astro 5 (static output mode)                              |
-| Styling    | Tailwind CSS v4                                           |
+| Styling    | Tailwind CSS v4 via `@tailwindcss/vite`                   |
 | Components | Astro native components — no React, no shadcn             |
 | Icons      | Inline SVG or a lightweight icon set (TBD at design time) |
 | Fonts      | TBD at design time                                        |
