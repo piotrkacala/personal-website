@@ -56,6 +56,7 @@
   --spacing-rhythm: clamp(1.25rem, 1.05rem + 0.9vw, 1.875rem);
   --page-inline: clamp(1.25rem, 4vw, 4.5rem);
   --page-block: clamp(3rem, 6vw, 5.5rem);
+  --site-max-width: 96rem;
   --page-measure: 42rem;
   --font-body: "Source Sans 3", sans-serif;
   --font-display: "Spectral", serif;
@@ -100,12 +101,15 @@ svg {
 }
 
 .site-shell {
+  width: min(100%, var(--site-max-width));
+  margin-inline: auto;
   padding-block: var(--page-block);
   padding-inline: var(--page-inline);
 }
 
 .page-column {
   width: min(100%, var(--page-measure));
+  max-width: 100%;
   margin-inline-end: auto;
 }
 
