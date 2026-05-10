@@ -106,7 +106,7 @@ export const en = {
         blocks: [
           {
             type: "paragraph",
-            text: "Built the same way — spec-first, docs-driven, zero-code — but with one addition: an orchestrator agent that stepped through the implementation plan autonomously, generating prompts, reading results, handling review. The first project where the workflow managed itself. The repo is public and intentionally readable: CLAUDE.md, full docs directory, clean commit history.",
+            text: "Built the same way — spec-first, docs-driven, zero-code — but with one addition: an orchestrator agent that stepped through the implementation plan autonomously, generating prompts, reading results, handling review. The first project where the workflow managed itself. The repo is public and intentionally readable: AGENTS.md, full docs directory, clean commit history.",
           },
           {
             type: "link",

@@ -35,8 +35,8 @@ A static single-page personal website built with Astro. No backend, no database,
 │   └── styles/
 │       └── global.css        ← Tailwind entrypoint + global CSS custom properties
 ├── docs/                      ← spec docs
-├── CODEX.md                   ← repo instructions for Codex
-├── CLAUDE.md
+├── AGENTS.md                  ← shared repo instructions for coding agents
+├── CODEX.md                   ← Codex-specific wrapper over AGENTS.md
 ├── astro.config.mjs
 ├── eslint.config.mjs
 ├── README.md

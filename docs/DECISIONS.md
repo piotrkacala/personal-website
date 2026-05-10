@@ -64,7 +64,7 @@ Whether the GitHub repository should be public or private.
 Public repository.
 
 **Reasoning:**
-The repo is itself part of the portfolio. A public repo with visible commit history, a real CLAUDE.md, and a docs-driven workflow is direct evidence of how the work is done — not just that it was done. This is especially relevant for a site positioned around AI-assisted development methodology. No sensitive content in the repo; no reason to hide it.
+The repo is itself part of the portfolio. A public repo with visible commit history, a real `AGENTS.md`, and a docs-driven workflow is direct evidence of how the work is done — not just that it was done. This is especially relevant for a site positioned around AI-assisted development methodology. No sensitive content in the repo; no reason to hide it.
 
 ---
 
@@ -141,10 +141,10 @@ A Polish version is a different audience segment, not just a translation. Polish
 The site is being built to demonstrate AI-assisted zero-code development methodology, not just to present a personal profile.
 
 **Decision:**
-The site and its repo are both intentionally public-facing portfolio artifacts. The repo is designed to be read: public commit history, CLAUDE.md, spec docs in `docs/`, meaningful commit messages. The site content references the methodology; the repo shows the methodology in practice.
+The site and its repo are both intentionally public-facing portfolio artifacts. The repo is designed to be read: public commit history, `AGENTS.md`, spec docs in `docs/`, meaningful commit messages. The site content references the methodology; the repo shows the methodology in practice.
 
 **Reasoning:**
-A visitor who only reads the site gets a profile. A visitor who opens the repo gets a demonstration of how the work was done — docs-driven, agent-assisted, zero-code. These two layers reinforce each other. The repo must therefore be maintained to the same quality standard as the site: no `wip` commits, no placeholder files left in, CLAUDE.md kept accurate.
+A visitor who only reads the site gets a profile. A visitor who opens the repo gets a demonstration of how the work was done — docs-driven, agent-assisted, zero-code. These two layers reinforce each other. The repo must therefore be maintained to the same quality standard as the site: no `wip` commits, no placeholder files left in, `AGENTS.md` kept accurate.
 
 ---
 

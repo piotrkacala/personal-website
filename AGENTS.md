@@ -1,16 +1,16 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code when working in this repository.
+This file provides guidance to coding agents working in this repository.
 
 ## Project Overview
 
 Personal website for Piotr Kacała — a static single-page site serving as the third career surface (after CV and LinkedIn). Built with Astro and deployed via FTP to classic shared hosting.
 
-**Key invariants:**
+## Key Invariants
 
 - Static output only. No SSR, no server-side logic, no API routes.
 - Zero JavaScript by default. Add JS only when interaction explicitly requires it.
-- The repo is public. Commit messages, CLAUDE.md, and docs structure are part of the portfolio.
+- The repo is public. Commit messages, `AGENTS.md`, and docs structure are part of the portfolio.
 
 ## Commands
 
@@ -24,8 +24,8 @@ npm run dev
 ### Build
 
 ```bash
-npm run build        # produces dist/
-npm run preview      # preview the built output locally
+npm run build
+npm run preview
 ```
 
 ### Quality
@@ -44,7 +44,7 @@ Manual FTP upload of `dist/` to shared hosting. No CI/CD at v1.
 
 Single Astro project, no monorepo. One logical single-page site served in two static routes: English at `/` and Polish at `/pl/`.
 
-```
+```text
 src/
   pages/index.astro     ← English version
   pages/pl/index.astro  ← Polish version
@@ -82,5 +82,5 @@ Commits are public and are part of the portfolio. Write them accordingly:
 - Active voice, present tense
 - No `wip`, no `fix #123` alone, no conventional commit prefixes unless they genuinely add clarity
 - Do not use `Co-authored-by` for AI agents
-- If agent involvement should be visible in history, use explicit trailers such as `Assisted-by: Claude Code` or `Assisted-by: Codex`
+- If agent involvement should be visible in history, use explicit trailers such as `Assisted-by: Codex`
 - Only include `Assisted-by` trailers for agents that materially contributed to the changes in that specific commit

@@ -4,7 +4,7 @@ Personal website for Piotr Kacała — the third career surface (after CV and Li
 
 ## Core Principles
 
-- **Two-layer portfolio.** The site works on two levels simultaneously: the content (who Piotr is, what he's built) and the code (how the site was built — public repo, commit history, CLAUDE.md, docs-driven workflow, zero-code methodology). A visitor who only reads the site gets one picture; a visitor who opens the repo gets the full one.
+- **Two-layer portfolio.** The site works on two levels simultaneously: the content (who Piotr is, what he's built) and the code (how the site was built — public repo, commit history, `AGENTS.md`, docs-driven workflow, zero-code methodology). A visitor who only reads the site gets one picture; a visitor who opens the repo gets the full one.
 - The site is a controlled space, not a pitch letter. Tone is neutral — works for both employer and consulting reader.
 - Output speaks first. The Private client audit platform productivity story is the strongest proof point — it must be prominent and specific, not buried.
 - No separate sections for skills, about, or bio. Who you are is demonstrated by what you've built, not listed.
