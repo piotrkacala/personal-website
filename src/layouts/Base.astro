@@ -54,6 +54,12 @@ const alternates = [
     {alternates.map((alternate) => (
       <link rel="alternate" hreflang={alternate.lang} href={alternate.href} />
     ))}
+    <link
+      rel="alternate"
+      type="text/markdown"
+      href="/llms.txt"
+      title="LLM-readable profile context"
+    />
   </head>
   <body class="site-body">
     <div class="site-shell">
