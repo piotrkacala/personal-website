@@ -12,8 +12,12 @@ A static single-page personal website built with Astro. No backend, no database,
 /
 ├── public/
 │   ├── favicon.svg           ← favicon
+│   ├── favicon.ico           ← fallback favicon for legacy clients and direct `/favicon.ico` requests
 │   ├── fonts/                ← self-hosted Source Sans 3 and Spectral subsets
-│   └── og/                   ← localized Open Graph images
+│   ├── llms.txt              ← LLM-readable profile context
+│   ├── robots.txt            ← crawl policy for search engines and bots
+│   ├── og/                   ← localized Open Graph images
+│   └── sitemap.xml           ← static sitemap for EN and PL routes
 ├── src/
 │   ├── pages/
 │   │   ├── 404.astro         ← custom 404 page
@@ -55,7 +59,7 @@ A static single-page personal website built with Astro. No backend, no database,
 | Framework  | Astro 5 (static output mode)                                     |
 | Styling    | Tailwind CSS v4 via `@tailwindcss/vite`                          |
 | Components | Astro native components — no React, no shadcn                    |
-| Icons      | Hand-authored SVG favicon; no icon library dependency            |
+| Icons      | Hand-authored SVG favicon with generated `.ico` fallback         |
 | Fonts      | Self-hosted `Spectral` + `Source Sans 3` in `public/fonts/`      |
 | JS         | Zero JS by default; add only if interaction requires it          |
 | i18n       | Astro built-in i18n routing — `/` (EN) and `/pl/` (PL)           |
@@ -77,6 +81,8 @@ No client-side routing. No state management. No API calls. The page is a documen
 | CI/CD      | None at launch — manual deploy is sufficient |
 | Domain     | `piotrkacala.pl`                             |
 | Error page | Custom static `404.html`                     |
+
+Static discovery files such as `robots.txt`, `sitemap.xml`, and `llms.txt` live in `public/` and are copied 1:1 into the final build.
 
 ---
 

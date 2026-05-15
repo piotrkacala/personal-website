@@ -27,12 +27,13 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 - CMS — unjustified complexity for one-author static site (see ADR-006)
 - Skills/tech list — belongs on CV, not here
 - Contact form with backend — email link is sufficient for v1
-- `sitemap.xml` — not justified for the current tiny route set; reconsider only if the site grows beyond the current pages
 
 ---
 
 ## Done
 
+- [x] `robots.txt` added to the static output and allows crawling (2026-05-15)
+- [x] `sitemap.xml` added for EN and PL routes and linked from `robots.txt` (2026-05-15)
 - [x] Final Polish positioning text written (2026-04-08)
 - [x] Final Polish project descriptions written (2026-04-08)
 - [x] Final Polish contact copy written (2026-04-08)
