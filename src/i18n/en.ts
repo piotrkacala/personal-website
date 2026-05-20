@@ -109,6 +109,17 @@ export const en = {
             text: "Built the same way — spec-first, docs-driven, zero-code — but with one addition: an orchestrator agent that stepped through the implementation plan autonomously, generating prompts, reading results, handling review. The first project where the workflow managed itself. The repo is public and intentionally readable: AGENTS.md, full docs directory, clean commit history.",
           },
           {
+            type: "paragraph",
+            text: "It now also hosts small public utilities. The first one is 400m, a local-first GPX track tool for runners that estimates corrected distance from lap progress instead of raw GPS length.",
+          },
+          {
+            type: "link",
+            href: "https://piotrkacala.pl/400m/",
+            label: "Tool: piotrkacala.pl/400m/",
+            external: true,
+            externalLabel: "(opens in a new tab)",
+          },
+          {
             type: "link",
             href: "https://github.com/piotrkacala/personal-website",
             label: "Repo: github.com/piotrkacala/personal-website",

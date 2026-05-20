@@ -111,6 +111,17 @@ export const pl = {
             text: "Zbudowana tak samo — spec-first, docs-driven, zero-code — ale z jednym dodatkiem: agent orkiestrujący, który samodzielnie przechodził przez plan implementacji, generował prompty, czytał wyniki i obsługiwał przegląd zmian. To pierwszy projekt, w którym workflow zarządzał samym sobą. Repo jest publiczne i celowo czytelne: AGENTS.md, pełny katalog docs, czysta historia commitów.",
           },
           {
+            type: "paragraph",
+            text: "Strona hostuje teraz także niewielkie publiczne narzędzia. Pierwszym z nich jest 400m: local-first narzędzie do analizy GPX z bieżni, które szacuje skorygowany dystans z postępu po okrążeniach zamiast z surowej długości śladu GPS.",
+          },
+          {
+            type: "link",
+            href: "https://piotrkacala.pl/400m/",
+            label: "Narzędzie: piotrkacala.pl/400m/",
+            external: true,
+            externalLabel: "(otwiera się w nowej karcie)",
+          },
+          {
             type: "link",
             href: "https://github.com/piotrkacala/personal-website",
             label: "Repo: github.com/piotrkacala/personal-website",

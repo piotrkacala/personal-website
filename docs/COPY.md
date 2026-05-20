@@ -109,13 +109,13 @@ W IT jestem od 2013 roku, na styku developmentu, designu, produktu i QA — nigd
 
 **Finalized arc framing (EN, April 2026):**
 
-Three projects, each a deliberate next step. Testing AI on an existing codebase. Building from scratch, docs-first, zero-code. Then a full product for a real customer.
+Each entry marks a deliberate next step. Testing AI on an existing codebase. Building from scratch, docs-first, zero-code. Delivering a full product for a real customer. Then building the site itself as a public artifact.
 
 **Finalized arc framing (PL, April 2026):**
 
-Trzy projekty, każdy jako świadomie wybrany kolejny krok. Najpierw sprawdzenie AI na istniejącym codebase. Potem budowa od zera, docs-first, zero-code. Na końcu pełny produkt dla realnego klienta.
+Każdy wpis oznacza świadomie wybrany kolejny krok. Najpierw sprawdzenie AI na istniejącym codebase. Potem budowa od zera, docs-first, zero-code. Następnie pełny produkt dla realnego klienta. Na końcu sama strona jako publiczny artifact.
 
-**Original brief:** Three projects, presented in deliberate arc order. The arc is explicit, not implied. Phonetic = testing whether AI understands an existing codebase. Surfaced = first docs-driven build from scratch. Private client audit platform = validation on a real product for a real customer.
+**Original brief:** The core arc must stay explicit, not implied. Phonetic = testing whether AI understands an existing codebase. Surfaced = first docs-driven build from scratch. Private client audit platform = validation on a real product for a real customer. The site itself can appear as a final meta-entry because the repo is part of the proof.
 
 ### Phonetic Alphabet Trainer
 
@@ -160,6 +160,26 @@ First full production project, built spec-first for a real customer. As of April
 Pierwszy pełny projekt produkcyjny, zbudowany spec-first dla realnego klienta. Stan na kwiecień 2026: ~21,000 linii kodu produkcyjnego, ~9,400 linii testów, 295 commitów, 25 modeli bazy danych, ~96 endpointów API, 37 stron, 50 komponentów, pełne i18n. Zanim projekt był skończony, zarówno modele AI, jak i doświadczony CEO szacowali 13–17 tygodni pracy dla jednego developera. CEO był wyraźnie zaskoczony, kiedy usłyszał, że to już jest gotowe. Łączny czas budowy: około 25–30 dni. Tylko na zaproszenie — bez publicznego linku.
 
 - Strona działa tylko na zaproszenie; nie ma publicznego śladu; nie ma problemu z NDA; pełne liczby mogą być pokazane
+
+### This site
+
+**Finalized description (EN, May 2026):**
+
+Built the same way — spec-first, docs-driven, zero-code — but with one addition: an orchestrator agent that stepped through the implementation plan autonomously, generating prompts, reading results, handling review. The first project where the workflow managed itself. The repo is public and intentionally readable: AGENTS.md, full docs directory, clean commit history.
+
+The site now also hosts small public utilities. The first one is `400m`, a local-first GPX track tool for runners that estimates corrected distance from lap progress instead of raw GPS length.
+
+- Repo: github.com/piotrkacala/personal-website
+- Tool: piotrkacala.pl/400m/
+
+**Finalized description (PL, May 2026):**
+
+Zbudowana tak samo — spec-first, docs-driven, zero-code — ale z jednym dodatkiem: agent orkiestrujący, który samodzielnie przechodził przez plan implementacji, generował prompty, czytał wyniki i obsługiwał przegląd zmian. To pierwszy projekt, w którym workflow zarządzał samym sobą. Repo jest publiczne i celowo czytelne: AGENTS.md, pełny katalog docs, czysta historia commitów.
+
+Strona hostuje teraz także niewielkie publiczne narzędzia. Pierwszym z nich jest `400m`: local-first narzędzie do analizy GPX z bieżni, które szacuje skorygowany dystans z postępu po okrążeniach zamiast z surowej długości śladu GPS.
+
+- Repo: github.com/piotrkacala/personal-website
+- Narzędzie: piotrkacala.pl/400m/
 
 ---
 
