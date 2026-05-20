@@ -1,3 +1,63 @@
+# robots.txt for https://piotrkacala.pl/
+#
+# Policy:
+# - Allow search indexing.
+# - Allow AI systems to fetch pages for user-requested answers, search grounding,
+#   retrieval, summaries, and real-time context.
+# - Do not allow use of this content for AI model training or fine-tuning.
+#
+# Note:
+# - `Content-signal` is a Cloudflare-documented extension, not a universal standard.
+# - Where vendors document dedicated training bots, explicit user-agent rules below
+#   are the primary control.
+
 User-agent: *
+Content-signal: search=yes, ai-input=yes, ai-train=no
 Allow: /
+
+# OpenAI: allow search/retrieval, block training.
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Disallow: /
+
+# Anthropic: allow user/search access, block training.
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+# Perplexity: allow search crawler. Its user-triggered fetcher is documented
+# separately and may be governed at the product or WAF layer.
+User-agent: PerplexityBot
+Allow: /
+
+# Google / Apple: allow classic search, block generative training controls.
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+# Other crawlers to keep blocked unless explicitly needed later.
+User-agent: Bytespider
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
 Sitemap: https://piotrkacala.pl/sitemap.xml
