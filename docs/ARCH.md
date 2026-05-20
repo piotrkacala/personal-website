@@ -17,7 +17,7 @@ A static single-page personal website built with Astro. No backend, no database,
 │   ├── llms.txt              ← LLM-readable profile context
 │   ├── robots.txt            ← crawl policy for search engines and bots
 │   ├── og/                   ← localized Open Graph images
-│   └── sitemap.xml           ← static sitemap for EN and PL routes
+│   └── sitemap.xml           ← static sitemap for root public routes
 ├── src/
 │   ├── pages/
 │   │   ├── 404.astro         ← custom 404 page
