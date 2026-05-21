@@ -12,6 +12,9 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 
 ## Now — post-launch polish
 
+- [ ] Remove markdown-generation dependence on parsing `LinkBlock.label`
+- [ ] Add lightweight regression tests for machine-readable artifact generation
+
 ## Later
 
 - [ ] Keep polishing the public repo as a readable portfolio artifact when useful
