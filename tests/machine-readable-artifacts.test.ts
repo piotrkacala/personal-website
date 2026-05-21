@@ -46,7 +46,7 @@ test("getMachineReadableArtifacts returns the expected artifact inventory", () =
     .map((artifact) => artifact.pathname)
     .sort();
 
-  assert.deepEqual(paths, ["/index.md", "/llms-full.txt", "/pl/index.md"]);
+  assert.deepEqual(paths, ["/index.md", "/llms-full.txt", "/pl/index.md", "/projects/400m.md"]);
 });
 
 test("English homepage markdown keeps its key structure and references", () => {
@@ -102,10 +102,33 @@ test("llms-full.txt carries the consolidated public references", () => {
     /^- This site — Repo: https:\/\/github\.com\/piotrkacala\/personal-website$/m,
   );
   assert.match(content, /^- This site — Tool: https:\/\/piotrkacala\.pl\/400m\/$/m);
+  assert.match(content, /^- 400m — Companion profile: https:\/\/piotrkacala\.pl\/projects\/400m\.md$/m);
   assert.match(
     content,
     /^- Phonetic Alphabet Trainer — Link: https:\/\/piotrkacala\.github\.io\/phonetic\/$/m,
   );
+});
+
+test("400m companion profile is generated with high-signal operating details", () => {
+  const content = getArtifactContent("/projects/400m.md");
+
+  assert.match(content, /^# 400m$/m);
+  assert.match(content, /^> Companion machine-readable profile for the public 400m tool linked from https:\/\/piotrkacala\.pl\/\.$/m);
+  assert.match(content, /^## Summary$/m);
+  assert.match(content, /^400m is a free local-first GPX analyzer for runners on standard athletics tracks\./m);
+  assert.match(content, /^## Live tool$/m);
+  assert.match(content, /^- URL: https:\/\/piotrkacala\.pl\/400m\/$/m);
+  assert.match(content, /^- Type: Browser-based GPX analyzer$/m);
+  assert.match(content, /^## What it does$/m);
+  assert.match(content, /^- Calculates corrected distance from lap count and official lane length\.$/m);
+  assert.match(content, /^## Intended input$/m);
+  assert.match(content, /^- GPX file recorded during a run\.$/m);
+  assert.match(content, /^## Privacy and runtime$/m);
+  assert.match(content, /^- No GPX file, coordinates, or telemetry are sent to a server for the calculation\.$/m);
+  assert.match(content, /^## Constraints$/m);
+  assert.match(content, /^- Designed for track sessions, not general route analysis\.$/m);
+  assert.match(content, /^## Discovery note$/m);
+  assert.match(content, /^- The interactive analyzer itself lives at https:\/\/piotrkacala\.pl\/400m\/$/m);
 });
 
 test("machine-readable links do not depend on visible label punctuation", () => {

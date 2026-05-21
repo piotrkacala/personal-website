@@ -18,7 +18,6 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 ## Later
 
 - [ ] Keep polishing the public repo as a readable portfolio artifact when useful
-- [ ] Add the first companion machine-readable project profile under `/projects/400m.md` and wire it into public discovery where appropriate
 
 ## Ideas — not decided
 
@@ -36,6 +35,7 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 
 ## Done
 
+- [x] First companion machine-readable project profile added under `/projects/400m.md` and linked into public discovery (2026-05-21)
 - [x] `robots.txt` added to the static output and allows crawling (2026-05-15)
 - [x] `sitemap.xml` added for EN and PL routes and linked from `robots.txt` (2026-05-15)
 - [x] Agent-readiness Phase 1 shipped with generated markdown assets, `llms.txt` refresh, and JSON-LD profile metadata (2026-05-21)

@@ -40,6 +40,7 @@ A static single-page personal website built with Astro. No backend, no database,
 │   ├── layouts/
 │   │   └── Base.astro        ← shared document shell
 │   ├── site/
+│   │   ├── external-projects.ts ← companion markdown profiles for separately deployed tools
 │   │   └── profile.ts        ← shared public profile/discovery metadata
 │   └── styles/
 │       └── global.css        ← Tailwind entrypoint + global CSS custom properties
@@ -83,6 +84,7 @@ Build output now includes:
 
 - `/index.md` ← generated English markdown version of the homepage
 - `/pl/index.md` ← generated Polish markdown version of the homepage
+- `/projects/<slug>.md` ← companion markdown profiles for separately deployed tools
 - `/llms-full.txt` ← compact single-file public context resource
 - `/llms.txt` ← concise directory for agents, copied from `public/`
 

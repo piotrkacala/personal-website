@@ -8,6 +8,7 @@
 - Polish homepage: https://piotrkacala.pl/pl/
 - Markdown homepage: https://piotrkacala.pl/index.md
 - Polish markdown homepage: https://piotrkacala.pl/pl/index.md
+- 400m companion profile: https://piotrkacala.pl/projects/400m.md
 - Full public context: https://piotrkacala.pl/llms-full.txt
 - Contact: mailto:kontakt@piotrkacala.pl
 

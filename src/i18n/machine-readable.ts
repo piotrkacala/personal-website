@@ -1,6 +1,11 @@
 import { en } from "./en.ts";
 import { pl } from "./pl.ts";
 import type { LinkBlock, ProjectBlock, SiteCopy } from "./schema.ts";
+import {
+  externalProjectProfiles,
+  getExternalProjectMarkdownUrl,
+  type ExternalProjectProfile,
+} from "../site/external-projects.ts";
 
 export interface MachineReadableArtifact {
   pathname: `/${string}`;
@@ -73,6 +78,44 @@ function renderHomepageMarkdown(copy: SiteCopy): string {
   return `${heading(1, copy.metadata.title)}\n\n${renderHomepageBody(copy, 2)}`;
 }
 
+function renderBulletSection(title: string, items: readonly string[]): string[] {
+  return [heading(2, title), "", ...items.map((item) => `- ${item}`)];
+}
+
+function renderExternalProjectProfile(profile: ExternalProjectProfile): string {
+  const lines = [
+    heading(1, profile.title),
+    "",
+    `> Companion machine-readable profile for the public ${profile.title} tool linked from ${en.metadata.openGraph.url}.`,
+    "",
+    heading(2, "Summary"),
+    "",
+    profile.summary,
+    "",
+    heading(2, "Live tool"),
+    "",
+    `- URL: ${profile.liveUrl}`,
+    `- Type: ${profile.type}`,
+    `- Status: ${profile.status}`,
+    "",
+    ...renderBulletSection("What it does", profile.whatItDoes),
+    "",
+    ...renderBulletSection("Intended input", profile.intendedInput),
+    "",
+    ...renderBulletSection("Privacy and runtime", profile.privacyAndRuntime),
+    "",
+    ...renderBulletSection("Constraints", profile.constraints),
+    "",
+    heading(2, "Discovery note"),
+    "",
+    "- This markdown file is a companion profile owned by the public personal-site repo.",
+    `- The interactive analyzer itself lives at ${profile.liveUrl}`,
+    "",
+  ];
+
+  return lines.join("\n");
+}
+
 function collectPublicReferences(): readonly string[] {
   const references = [
     "English homepage: https://piotrkacala.pl/",
@@ -86,7 +129,11 @@ function collectPublicReferences(): readonly string[] {
     ),
   );
 
-  return [...references, ...projectLinks];
+  const companionProfiles = externalProjectProfiles.map(
+    (profile) => `${profile.title} — Companion profile: ${getExternalProjectMarkdownUrl(profile)}`,
+  );
+
+  return [...references, ...projectLinks, ...companionProfiles];
 }
 
 function renderLlmsFull(): string {
@@ -120,8 +167,14 @@ export function getMachineReadableArtifacts(): readonly MachineReadableArtifact[
     content: renderHomepageMarkdown(copy),
   }));
 
+  const externalProjectArtifacts: MachineReadableArtifact[] = externalProjectProfiles.map((profile) => ({
+    pathname: profile.companionPath,
+    content: renderExternalProjectProfile(profile),
+  }));
+
   return [
     ...homepageArtifacts,
+    ...externalProjectArtifacts,
     {
       pathname: "/llms-full.txt",
       content: renderLlmsFull(),
