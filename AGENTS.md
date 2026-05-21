@@ -60,11 +60,18 @@ docs/                   ← spec documents
 
 - `docs/PRODUCT.md` — scope, visitor flows, launch criteria, non-goals
 - `docs/ARCH.md` — stack decisions, structure, infrastructure
+- `docs/007-external-project-machine-readable-profiles.md` — workflow for companion markdown profiles for external or separately deployed project surfaces
 - `docs/DECISIONS.md` — ADR log (read before changing any architectural decision)
 - `docs/QUESTIONS.md` — unresolved product/design choices that are not accepted decisions yet
 - `docs/STYLE.md` — Tailwind conventions, component rules, visual direction
 - `docs/COPY.md` — voice, tone, content for each section, lines to use/avoid
 - `docs/BACKLOG.md` — executable work, follow-up tasks, rejected ideas
+
+## Machine-readable Workflow
+
+- If a new project or tool is added to the homepage, `llms.txt`, or another public discovery surface, add a companion markdown profile for it in this repo as well.
+- For tools or projects that live on the same domain but are deployed separately, do not create an Astro route that would take over their production path. Publish a companion profile under a non-conflicting path such as `/projects/<slug>.md`.
+- Keep the public site, `llms.txt`, `llms-full.txt`, and companion markdown profiles aligned so project discovery does not depend on HTML alone.
 
 ## Code Style
 

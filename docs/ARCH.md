@@ -91,6 +91,18 @@ The markdown artifacts are generated at build time by an Astro build hook. They 
 
 The shared layout also emits factual `Person` JSON-LD and page-level `rel="alternate" type="text/markdown"` links so the discovery layer stays tied to the actual public pages.
 
+### External project surfaces
+
+Some public projects or tools may be linked from this site while being deployed outside this Astro app's route tree, including tools that live under the same domain on separately managed paths.
+
+For those cases, this repo acts as a discovery and metadata layer, not as the runtime owner of the tool path. The correct pattern is:
+
+- keep the live project URL as the canonical runtime location
+- expose a repo-controlled companion markdown profile under a non-conflicting path such as `/projects/<slug>.md`
+- avoid creating Astro routes that would shadow separately deployed paths like `/400m/`
+
+This keeps machine-readable discovery inside the public repo without creating deploy collisions between the personal site and linked tools.
+
 ---
 
 ## Infrastructure
@@ -106,6 +118,8 @@ The shared layout also emits factual `Person` JSON-LD and page-level `rel="alter
 | Error page | Custom static `404.html`                     |
 
 Static discovery files such as `robots.txt`, `sitemap.xml`, and `llms.txt` live in `public/` and are copied into the final build. Generated machine-readable files such as `index.md`, `pl/index.md`, and `llms-full.txt` are written into `dist/` during `astro build` and should be deployed together with the HTML output.
+
+Companion markdown profiles for external project surfaces should follow the same deploy rule once implemented: they are static artifacts owned by this repo and must not conflict with separately deployed application paths on the same domain.
 
 ---
 

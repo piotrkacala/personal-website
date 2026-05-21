@@ -18,6 +18,7 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 ## Later
 
 - [ ] Keep polishing the public repo as a readable portfolio artifact when useful
+- [ ] Add the first companion machine-readable project profile under `/projects/400m.md` and wire it into public discovery where appropriate
 
 ## Ideas — not decided
 
