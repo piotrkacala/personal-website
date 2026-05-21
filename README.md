@@ -18,6 +18,13 @@ The site was implemented through AI agents from a docs-first spec. The repo is p
 - Polish at `/pl/`
 - Manual deploy via FTP
 
+## Machine-readable output
+
+- `public/llms.txt` is the concise directory entry point for agents
+- `index.md`, `pl/index.md`, and `llms-full.txt` are generated during `npm run build`
+- those generated text artifacts ship from the same EN/PL source content as the site, so update `src/i18n/en.ts` and `src/i18n/pl.ts` rather than editing generated output
+- deploy the full `dist/` contents via FTP, including the generated markdown and text files
+
 ## Scripts
 
 - `npm run dev`

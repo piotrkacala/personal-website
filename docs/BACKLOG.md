@@ -34,6 +34,7 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 
 - [x] `robots.txt` added to the static output and allows crawling (2026-05-15)
 - [x] `sitemap.xml` added for EN and PL routes and linked from `robots.txt` (2026-05-15)
+- [x] Agent-readiness Phase 1 shipped with generated markdown assets, `llms.txt` refresh, and JSON-LD profile metadata (2026-05-21)
 - [x] Final Polish positioning text written (2026-04-08)
 - [x] Final Polish project descriptions written (2026-04-08)
 - [x] Final Polish contact copy written (2026-04-08)

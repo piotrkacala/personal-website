@@ -14,7 +14,7 @@ A static single-page personal website built with Astro. No backend, no database,
 │   ├── favicon.svg           ← favicon
 │   ├── favicon.ico           ← fallback favicon for legacy clients and direct `/favicon.ico` requests
 │   ├── fonts/                ← self-hosted Source Sans 3 and Spectral subsets
-│   ├── llms.txt              ← LLM-readable profile context
+│   ├── llms.txt              ← concise agent-facing directory copied from `public/`
 │   ├── robots.txt            ← crawl policy for search engines and bots
 │   ├── og/                   ← localized Open Graph images
 │   └── sitemap.xml           ← static sitemap for root public routes
@@ -31,11 +31,16 @@ A static single-page personal website built with Astro. No backend, no database,
 │   │   └── Projects.astro    ← projects section wrapper
 │   ├── i18n/
 │   │   ├── en.ts             ← English strings
+│   │   ├── machine-readable.ts ← markdown/LLM artifact renderer from shared copy
 │   │   ├── pl.ts             ← Polish strings
 │   │   └── schema.ts         ← shared copy schema
+│   ├── integrations/
+│   │   └── machine-readable-artifacts.mjs ← build hook that writes markdown assets into `dist/`
 │   ├── env.d.ts              ← Astro type declarations
 │   ├── layouts/
 │   │   └── Base.astro        ← shared document shell
+│   ├── site/
+│   │   └── profile.ts        ← shared public profile/discovery metadata
 │   └── styles/
 │       └── global.css        ← Tailwind entrypoint + global CSS custom properties
 ├── docs/                      ← spec docs
@@ -70,6 +75,24 @@ No client-side routing. No state management. No API calls. The page is a documen
 
 ---
 
+## Machine-readable layer
+
+Phase 1 adds a small static machine-readable layer without introducing a second content system.
+
+Build output now includes:
+
+- `/index.md` ← generated English markdown version of the homepage
+- `/pl/index.md` ← generated Polish markdown version of the homepage
+- `/llms-full.txt` ← compact single-file public context resource
+- `/llms.txt` ← concise directory for agents, copied from `public/`
+
+Source of truth remains the existing EN/PL copy in `src/i18n/en.ts` and `src/i18n/pl.ts`.
+The markdown artifacts are generated at build time by an Astro build hook. They are not edited manually.
+
+The shared layout also emits factual `Person` JSON-LD and page-level `rel="alternate" type="text/markdown"` links so the discovery layer stays tied to the actual public pages.
+
+---
+
 ## Infrastructure
 
 | Component  | Tool / Status                                |
@@ -82,7 +105,7 @@ No client-side routing. No state management. No API calls. The page is a documen
 | Domain     | `piotrkacala.pl`                             |
 | Error page | Custom static `404.html`                     |
 
-Static discovery files such as `robots.txt`, `sitemap.xml`, and `llms.txt` live in `public/` and are copied 1:1 into the final build.
+Static discovery files such as `robots.txt`, `sitemap.xml`, and `llms.txt` live in `public/` and are copied into the final build. Generated machine-readable files such as `index.md`, `pl/index.md`, and `llms-full.txt` are written into `dist/` during `astro build` and should be deployed together with the HTML output.
 
 ---
 
