@@ -12,6 +12,12 @@ Read first:
 
 This prompt assumes markdown assets already exist.
 
+Current content-model note from Prompt 002:
+
+- the generated markdown summary currently reuses `metadata.description` from the existing i18n source
+- keep that coupling unless Prompt 003 has a clear reason to introduce a dedicated machine-readable summary field
+- do not fork summary copy casually between page metadata, markdown artifacts, and discovery files
+
 ---
 
 ## Goal

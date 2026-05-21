@@ -1,4 +1,4 @@
-import type { SiteCopy } from "./schema";
+import type { SiteCopy } from "./schema.ts";
 
 export const en = {
   lang: "en",
