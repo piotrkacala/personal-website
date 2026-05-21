@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import type { SiteMetadata } from "../i18n/schema";
+import { getMarkdownUrl, siteProfile } from "../site/profile";
 
 interface Props {
   lang: "en" | "pl";
@@ -17,8 +18,9 @@ interface Props {
 
 const { lang, metadata, languageSwitcher } = Astro.props;
 const hasFooter = Astro.slots.has("footer");
-const siteUrl = "https://piotrkacala.pl";
+const siteUrl = siteProfile.siteUrl;
 const canonicalUrl = metadata.openGraph.url;
+const markdownUrl = getMarkdownUrl(lang);
 const fontPreloads = [
   "/fonts/source-sans-3-latin.woff2",
   "/fonts/source-sans-3-latin-ext.woff2",
@@ -29,6 +31,16 @@ const alternates = [
   { lang: "pl", href: new URL("/pl/", siteUrl).toString() },
   { lang: "x-default", href: new URL("/", siteUrl).toString() },
 ];
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: siteProfile.name,
+  url: siteProfile.siteUrl,
+  jobTitle: siteProfile.jobTitle,
+  email: siteProfile.email,
+  description: metadata.description,
+  knowsAbout: siteProfile.knowsAbout,
+};
 ---
 
 <!doctype html>
@@ -60,9 +72,10 @@ const alternates = [
     <link
       rel="alternate"
       type="text/markdown"
-      href="/llms.txt"
-      title="LLM-readable profile context"
+      href={markdownUrl}
+      title={lang === "en" ? "Markdown version of this page" : "Wersja markdown tej strony"}
     />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(personSchema)} />
   </head>
   <body class="site-body">
     <!-- LLM-readable profile context: https://piotrkacala.pl/llms.txt -->
