@@ -232,6 +232,33 @@ The repository itself is the artifact: README, docs, commit history, and agent i
 
 ---
 
+## ADR-015 — Agent-readiness Phase 1 stays repo-controlled and keeps `.well-known` blocked
+
+**Date:** 2026-05-21
+**Status:** Accepted
+
+**Context:**
+The site is considering an agent-readiness upgrade inspired by Cloudflare's 2026 scanner and related emerging conventions. The project runs as a static site deployed by FTP, with Cloudflare only acting as a proxy layer in production. The repository and its public git history are part of the portfolio, so invisible infrastructure dependencies and scanner-driven additions need to be treated carefully.
+
+Two implementation questions needed a decision before Phase 1 work could begin:
+
+- whether the first implementation round should include Cloudflare-managed features such as markdown negotiation or response headers
+- whether `.well-known` should be opened during this phase for anticipated future standards
+
+**Decision:**
+Agent-readiness Phase 1 is repo-controlled only.
+
+Cloudflare-specific enhancements may be discussed separately and applied manually outside the repo, but they are not part of the committed implementation scope for this phase.
+
+`.well-known` remains blocked until the site has a real resource worth exposing there. It will not be opened preemptively for scanner compatibility.
+
+**Reasoning:**
+The first phase is meant to improve real machine readability of the public site, not to simulate product capabilities that do not exist. Repo-controlled artifacts are reviewable, portable, and visible in public history. This matches the project's two-layer portfolio model better than relying on hidden edge configuration for the core implementation story.
+
+Keeping `.well-known` blocked avoids performative adoption. Discovery endpoints should only be published when they describe an actual supported capability or standard-compliant resource. Exposing empty or speculative endpoints would add maintenance burden and weaken the credibility of the repo as a public artifact.
+
+---
+
 ## Superseded Open Questions Note
 
 Open questions are now tracked in `docs/QUESTIONS.md`, not here.

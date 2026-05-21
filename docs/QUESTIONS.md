@@ -16,6 +16,8 @@ Unresolved choices that still need a decision. This file exists to keep pending 
 
 ## Resolved
 
+- ~~Whether agent-readiness Phase 1 should stay strictly repo-controlled or also include Cloudflare-managed markdown negotiation and response headers in the same implementation round~~ → ADR-015
+- ~~Whether `.well-known` should remain blocked until a real resource exists there, or be opened during Phase 1 for anticipated future standards~~ → ADR-015
 - ~~Whether the site should link to the repo root or to specific commits for the process narrative~~ → ADR-014
 - ~~Visual direction~~ → ADR-011
 - ~~Whether to use a photo~~ → ADR-011
