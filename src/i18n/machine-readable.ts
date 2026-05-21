@@ -14,14 +14,7 @@ function heading(level: number, text: string): string {
 }
 
 function formatProjectLink(block: LinkBlock): string {
-  const separatorIndex = block.label.indexOf(":");
-
-  if (separatorIndex === -1) {
-    return `${block.label}: ${block.href}`;
-  }
-
-  const prefix = block.label.slice(0, separatorIndex);
-  return `${prefix}: ${block.href}`;
+  return `${block.machineLabel}: ${block.href}`;
 }
 
 function renderProjectBlock(block: ProjectBlock, sectionLevel: number): string[] {

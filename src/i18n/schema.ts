@@ -17,6 +17,7 @@ export type LinkBlock = {
   type: "link";
   href: string;
   label: string;
+  machineLabel: string;
   external?: boolean;
   externalLabel?: string;
 };
