@@ -31,6 +31,7 @@ npm run preview
 ### Quality
 
 ```bash
+npm test
 npm run typecheck
 npm run lint
 npm run format:check

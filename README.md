@@ -29,6 +29,7 @@ The site was implemented through AI agents from a docs-first spec. The repo is p
 
 - `npm run dev`
 - `npm run build`
+- `npm test`
 - `npm run typecheck`
 - `npm run lint`
 - `npm run format:check`

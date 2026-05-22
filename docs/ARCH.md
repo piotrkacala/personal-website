@@ -134,7 +134,7 @@ Production currently uses a thin Cloudflare-only layer for route-scoped markdown
 | Formatting | Prettier                                        |
 | Linting    | ESLint (Astro plugin)                           |
 | Typecheck  | TypeScript (Astro built-in)                     |
-| Tests      | None at v1 — static site, no logic to unit test |
+| Tests      | Node test runner for machine-readable artifact generation |
 
 ---
 
