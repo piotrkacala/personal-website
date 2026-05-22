@@ -123,6 +123,8 @@ Static discovery files such as `robots.txt`, `sitemap.xml`, and `llms.txt` live 
 
 Companion markdown profiles for external project surfaces should follow the same deploy rule once implemented: they are static artifacts owned by this repo and must not conflict with separately deployed application paths on the same domain.
 
+Production currently uses a thin Cloudflare-only layer for route-scoped markdown negotiation on `/` and `/pl/`, returning markdown for clients that explicitly send `Accept: text/markdown`. That same edge layer also adds route-scoped `Link` alternate headers and keeps markdown-negotiated requests out of edge cache as a simple correctness guardrail. It remains intentionally separate from the repo-controlled artifact generation and should stay narrow: preserve `Vary: Accept`, expose markdown alternates where useful, and avoid taking ownership of external tool routes. See `docs/008-cloudflare-markdown-edge-follow-up.md` for the repo-safe operational scope and current state.
+
 ---
 
 ## Quality Rails

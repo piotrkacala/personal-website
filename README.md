@@ -44,6 +44,7 @@ Specs and implementation notes live in [`docs/`](./docs/).
 - [`docs/DECISIONS.md`](./docs/DECISIONS.md): accepted ADR-style decisions
 - [`docs/ARCH.md`](./docs/ARCH.md): current technical shape of the site
 - [`docs/IMPLEMENTATION.md`](./docs/IMPLEMENTATION.md): implementation plan and build notes
+- [`docs/008-cloudflare-markdown-edge-follow-up.md`](./docs/008-cloudflare-markdown-edge-follow-up.md): current Cloudflare markdown edge behavior for negotiation, alternate headers, and cache boundaries
 - [`docs/BACKLOG.md`](./docs/BACKLOG.md): follow-up work, rejected ideas, and completed items
 - [`src/i18n/en.ts`](./src/i18n/en.ts) and [`src/i18n/pl.ts`](./src/i18n/pl.ts): the actual shipped EN/PL content
 

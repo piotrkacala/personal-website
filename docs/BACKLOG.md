@@ -35,6 +35,8 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 
 ## Done
 
+- [x] Cloudflare homepage markdown edge layer documented with route-scoped negotiation, `Link` alternates, and markdown cache bypass on `/` and `/pl/` (2026-05-22)
+- [x] Cloudflare homepage markdown negotiation enabled for `/` and `/pl/` with `Accept: text/markdown` and `Vary: Accept` (2026-05-21)
 - [x] First companion machine-readable project profile added under `/projects/400m.md` and linked into public discovery (2026-05-21)
 - [x] `robots.txt` added to the static output and allows crawling (2026-05-15)
 - [x] `sitemap.xml` added for EN and PL routes and linked from `robots.txt` (2026-05-15)
