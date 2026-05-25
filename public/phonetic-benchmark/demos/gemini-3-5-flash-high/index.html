@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="head-title">Phonetic Alphabet Trainer</title>
+  <meta name="description" content="A premium, highly interactive browser-based phonetic alphabet trainer. Practice NATO and Polish phonetic spelling with full English and Polish localization.">
+  <script type="module" crossorigin src="./assets/index-DPJALjen.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CKancDz3.css">
+</head>
+<body>
+
+  <!-- Top bar containing Branding, Language switches, and reset controls -->
+  <header>
+    <div class="brand-section">
+      <h1 id="app-logo-title">Phonetic Trainer</h1>
+    </div>
+    
+    <div class="header-controls">
+      <!-- Language controls -->
+      <button id="lang-en" class="btn-lang active" aria-label="Switch interface language to English">EN</button>
+      <button id="lang-pl" class="btn-lang" aria-label="Przełącz język interfejsu na polski">PL</button>
+      
+      <!-- Session Reset tool (hidden during setup or results states) -->
+      <button id="btn-reset-session" class="btn-reset hidden" aria-label="Reset practice session">Reset</button>
+    </div>
+  </header>
+
+  <!-- Main interactive viewport -->
+  <main class="app-container" id="app-container-view">
+
+    <!-- SCREEN 1: Setup/Onboarding -->
+    <section id="setup-screen" class="setup-box">
+      <h2 id="setup-heading">Start New Practice Session</h2>
+      
+      <!-- Alphabet selection -->
+      <div class="option-group">
+        <label id="label-select-alphabet">Phonetic Alphabet</label>
+        <div class="grid-2">
+          <div class="card-option selected" id="opt-alpha-nato" role="radio" aria-checked="true" tabindex="0">
+            <h3 id="title-alpha-nato">NATO Phonetic Alphabet</h3>
+            <p id="desc-alpha-nato">Practise international aviation codewords: Alfa, Bravo, Charlie, etc.</p>
+          </div>
+          <div class="card-option" id="opt-alpha-polish" role="radio" aria-checked="false" tabindex="0">
+            <h3 id="title-alpha-polish">Polish Phonetic Alphabet</h3>
+            <p id="desc-alpha-polish">Practise classic Polish spelling codewords: Adam, Barbara, Celina, etc.</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Interaction Mode selection -->
+      <div class="option-group">
+        <label id="label-select-mode">Exercise Mode</label>
+        <div class="grid-2">
+          <div class="card-option selected" id="opt-mode-keyboard" role="radio" aria-checked="true" tabindex="0">
+            <h3 id="title-mode-keyboard">Keyboard Mode</h3>
+            <p id="desc-mode-keyboard">Answer by typing the exact codeword for each letter symbol.</p>
+          </div>
+          <div class="card-option" id="opt-mode-suggestion" role="radio" aria-checked="false" tabindex="0">
+            <h3 id="title-mode-suggestion">Suggestion Mode</h3>
+            <p id="desc-mode-suggestion">Answer by selecting the correct option from four possibilities.</p>
+          </div>
+        </div>
+      </div>
+      
+      <button id="btn-start-training" class="action-btn">Start Training</button>
+    </section>
+
+    <!-- SCREEN 2: Active Run -->
+    <section id="run-screen" class="run-box hidden">
+      <!-- Session tags and active progress -->
+      <div class="run-meta">
+        <div class="meta-tags">
+          <span class="meta-tag" id="tag-alphabet">NATO</span>
+          <span class="meta-tag" id="tag-mode">Keyboard</span>
+        </div>
+        <div class="progress-section">
+          <div class="progress-info">
+            <span id="label-progress">Question Progress</span>
+            <span id="progress-fraction">1 / 26</span>
+          </div>
+          <div class="progress-bar-outer">
+            <div class="progress-bar-inner" id="progress-bar-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active symbol display card -->
+      <div class="symbol-card">
+        <h3 id="label-question-title">What is the codeword for this letter?</h3>
+        <span class="symbol-letter" id="active-symbol">A</span>
+      </div>
+
+      <!-- Answering Controls Area -->
+      <div class="input-area">
+        
+        <!-- Interactive feedback alerts -->
+        <div id="feedback-alert" class="feedback-msg hidden">Correct! Advancing...</div>
+
+        <!-- Mode A: Keyboard form -->
+        <form id="keyboard-form-element" class="keyboard-form" onsubmit="return false;">
+          <input type="text" id="keyboard-input-box" class="keyboard-input" autocomplete="off" placeholder="Type matching codeword..." aria-label="Codeword answer input">
+          <button type="submit" id="btn-submit-answer" class="keyboard-submit">Submit Answer</button>
+        </form>
+
+        <!-- Mode B: Suggestion grid -->
+        <div id="suggestion-buttons-grid" class="suggestions-grid hidden">
+          <button class="suggestion-btn" id="sug-btn-0">Option 1</button>
+          <button class="suggestion-btn" id="sug-btn-1">Option 2</button>
+          <button class="suggestion-btn" id="sug-btn-2">Option 3</button>
+          <button class="suggestion-btn" id="sug-btn-3">Option 4</button>
+        </div>
+
+        <!-- Hint Controls -->
+        <div class="hint-section">
+          <button id="btn-trigger-hint" class="btn-hint">
+            <span id="label-hint-icon">💡</span>
+            <span id="btn-label-hint">Show Hint</span>
+          </button>
+          <div id="hint-display-panel" class="hint-box hidden">
+            <h4 id="label-hint-heading">Revealed Codeword</h4>
+            <span class="hint-word" id="revealed-codeword-text">ALFA</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SCREEN 3: Result -->
+    <section id="result-screen" class="result-box hidden">
+      <h2 id="result-heading">Training Session Completed!</h2>
+      
+      <!-- Score Presentation -->
+      <div class="score-circle-container">
+        <div class="score-circle-bg"></div>
+        <div class="score-circle-fill" id="score-ring-fill"></div>
+        <div class="score-text">
+          <span class="score-num" id="result-percentage">100</span>
+          <span class="score-percent-sign">%</span>
+        </div>
+      </div>
+
+      <!-- Run breakdown metrics -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <span id="lbl-result-alpha">Alphabet</span>
+          <span id="val-result-alpha">NATO</span>
+        </div>
+        <div class="metric-card">
+          <span id="lbl-result-mode">Exercise Mode</span>
+          <span id="val-result-mode">Keyboard Mode</span>
+        </div>
+        <div class="metric-card">
+          <span id="lbl-result-clean">Clean Answers</span>
+          <span id="val-result-clean">26 / 26</span>
+        </div>
+        <div class="metric-card">
+          <span id="lbl-result-hinted">Hinted Answers</span>
+          <span id="val-result-hinted">0</span>
+        </div>
+      </div>
+
+      <p class="congrats-message" id="result-congrats-msg">Flawless training! You've mastered this alphabet!</p>
+
+      <button id="btn-restart-training" class="action-btn">New Training Session</button>
+    </section>
+
+  </main>
+
+  <!-- Required Attribution Footer -->
+  <footer id="app-footer">
+    <p id="footer-attribution-text">
+      Phonetic Benchmark by Piotr Kacała (<a href="https://piotrkacala.pl" target="_blank" rel="noopener">piotrkacala.pl</a>). 
+      Developed by Antigravity (Gemini 3.5 Flash High) on May 25, 2026.
+    </p>
+  </footer>
+
+  <!-- Script mounts -->
+</body>
+</html>
