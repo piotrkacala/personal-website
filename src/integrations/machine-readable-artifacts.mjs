@@ -7,12 +7,16 @@ export function machineReadableArtifacts() {
     name: "machine-readable-artifacts",
     hooks: {
       "astro:build:done": async ({ dir, logger }) => {
-        const { getMachineReadableArtifacts } = await import("../i18n/machine-readable.ts");
+        const { getMachineReadableArtifacts } =
+          await import("../i18n/machine-readable.ts");
         const distDir = fileURLToPath(dir);
 
         await Promise.all(
           getMachineReadableArtifacts().map(async (artifact) => {
-            const targetPath = join(distDir, artifact.pathname.replace(/^\//u, ""));
+            const targetPath = join(
+              distDir,
+              artifact.pathname.replace(/^\//u, ""),
+            );
 
             await mkdir(dirname(targetPath), { recursive: true });
             await writeFile(targetPath, artifact.content, "utf8");

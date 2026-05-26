@@ -22,6 +22,11 @@ export const siteProfile = {
       url: "https://piotrkacala.github.io/phonetic/",
     },
     {
+      label: "Phonetic Benchmark Report",
+      summary: "qualitative AI-agent output review with archived static demos",
+      url: "https://piotrkacala.pl/phonetic-benchmark/",
+    },
+    {
       label: "Surfaced",
       summary: "docs-first zero-code Firefox extension",
       url: "https://addons.mozilla.org/firefox/addon/surfaced/",
@@ -40,7 +45,10 @@ export const siteProfile = {
 } as const;
 
 export function getMarkdownUrl(lang: "en" | "pl"): string {
-  return new URL(lang === "en" ? "/index.md" : "/pl/index.md", siteProfile.siteUrl).toString();
+  return new URL(
+    lang === "en" ? "/index.md" : "/pl/index.md",
+    siteProfile.siteUrl,
+  ).toString();
 }
 
 export function getLlmsFullUrl(): string {

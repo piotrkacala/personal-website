@@ -1,0 +1,27 @@
+---
+import PhoneticBenchmarkReport from "../../../components/PhoneticBenchmarkReport.astro";
+import Base from "../../../layouts/Base.astro";
+import {
+  getPhoneticBenchmarkMarkdownUrl,
+  phoneticBenchmarkReports,
+} from "../../../site/phonetic-benchmark";
+
+const report = phoneticBenchmarkReports.pl;
+const alternates = {
+  en: phoneticBenchmarkReports.en.metadata.openGraph.url,
+  pl: report.metadata.openGraph.url,
+  default: phoneticBenchmarkReports.en.metadata.openGraph.url,
+};
+---
+
+<Base
+  lang={report.lang}
+  metadata={report.metadata}
+  languageSwitcher={report.languageSwitcher}
+  markdownUrl={getPhoneticBenchmarkMarkdownUrl(report.lang)}
+  alternates={alternates}
+  homeLink={{ href: report.homeHref, ariaLabel: report.homeLabel }}
+  contentWidth="wide"
+>
+  <PhoneticBenchmarkReport report={report} />
+</Base>

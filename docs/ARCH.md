@@ -129,11 +129,11 @@ Production currently uses a thin Cloudflare-only layer for route-scoped markdown
 
 ## Quality Rails
 
-| Concern    | Tool                                            |
-| ---------- | ----------------------------------------------- |
-| Formatting | Prettier                                        |
-| Linting    | ESLint (Astro plugin)                           |
-| Typecheck  | TypeScript (Astro built-in)                     |
+| Concern    | Tool                                                      |
+| ---------- | --------------------------------------------------------- |
+| Formatting | Prettier                                                  |
+| Linting    | ESLint (Astro plugin)                                     |
+| Typecheck  | TypeScript (Astro built-in)                               |
 | Tests      | Node test runner for machine-readable artifact generation |
 
 ---

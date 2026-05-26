@@ -5,7 +5,13 @@ import tseslint from "typescript-eslint";
 
 export default [
   {
-    ignores: ["dist/", ".astro/", "node_modules/", ".codex/"],
+    ignores: [
+      "dist/",
+      ".astro/",
+      "node_modules/",
+      ".codex/",
+      "public/phonetic-benchmark/demos/",
+    ],
   },
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts,astro}"],

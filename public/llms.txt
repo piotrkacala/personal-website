@@ -8,6 +8,10 @@
 - Polish homepage: https://piotrkacala.pl/pl/
 - Markdown homepage: https://piotrkacala.pl/index.md
 - Polish markdown homepage: https://piotrkacala.pl/pl/index.md
+- Phonetic Benchmark report: https://piotrkacala.pl/phonetic-benchmark/
+- Polish Phonetic Benchmark report: https://piotrkacala.pl/pl/phonetic-benchmark/
+- Phonetic Benchmark markdown report: https://piotrkacala.pl/phonetic-benchmark/index.md
+- Polish Phonetic Benchmark markdown report: https://piotrkacala.pl/pl/phonetic-benchmark/index.md
 - 400m companion profile: https://piotrkacala.pl/projects/400m.md
 - Full public context: https://piotrkacala.pl/llms-full.txt
 - Contact: mailto:kontakt@piotrkacala.pl
@@ -16,6 +20,7 @@
 
 - Public repo: https://github.com/piotrkacala/personal-website
 - Phonetic Alphabet Trainer: https://piotrkacala.github.io/phonetic/
+- Phonetic Benchmark Report: https://piotrkacala.pl/phonetic-benchmark/
 - Surfaced: https://addons.mozilla.org/firefox/addon/surfaced/
 - 400m: https://piotrkacala.pl/400m/
 - Private client audit platform: no public link, invite-only access

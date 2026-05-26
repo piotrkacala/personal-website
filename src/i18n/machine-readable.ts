@@ -6,6 +6,11 @@ import {
   getExternalProjectMarkdownUrl,
   type ExternalProjectProfile,
 } from "../site/external-projects.ts";
+import {
+  getPhoneticBenchmarkMarkdownUrl,
+  phoneticBenchmarkReports,
+  type BenchmarkReportCopy,
+} from "../site/phonetic-benchmark.ts";
 
 export interface MachineReadableArtifact {
   pathname: `/${string}`;
@@ -22,7 +27,10 @@ function formatProjectLink(block: LinkBlock): string {
   return `${block.machineLabel}: ${block.href}`;
 }
 
-function renderProjectBlock(block: ProjectBlock, sectionLevel: number): string[] {
+function renderProjectBlock(
+  block: ProjectBlock,
+  sectionLevel: number,
+): string[] {
   if (block.type === "paragraph") {
     return [block.text];
   }
@@ -78,7 +86,10 @@ function renderHomepageMarkdown(copy: SiteCopy): string {
   return `${heading(1, copy.metadata.title)}\n\n${renderHomepageBody(copy, 2)}`;
 }
 
-function renderBulletSection(title: string, items: readonly string[]): string[] {
+function renderBulletSection(
+  title: string,
+  items: readonly string[],
+): string[] {
   return [heading(2, title), "", ...items.map((item) => `- ${item}`)];
 }
 
@@ -116,21 +127,103 @@ function renderExternalProjectProfile(profile: ExternalProjectProfile): string {
   return lines.join("\n");
 }
 
+function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
+  const runs = [...report.runs].sort(
+    (firstRun, secondRun) => firstRun.executionOrder - secondRun.executionOrder,
+  );
+  const lines: string[] = [
+    heading(1, report.title),
+    "",
+    `> ${report.metadata.description}`,
+    "",
+    report.summary,
+    "",
+    `Report URL: ${report.metadata.openGraph.url}`,
+    `Markdown URL: ${getPhoneticBenchmarkMarkdownUrl(report.lang)}`,
+    `Homepage: ${new URL(report.homeHref, report.metadata.openGraph.url).toString()}`,
+  ];
+  lines.push("");
+  lines.push(heading(2, report.resultsHeading));
+  lines.push("");
+  lines.push(report.resultsIntro);
+  lines.push("");
+
+  runs.forEach((run) => {
+    lines.push(heading(3, `${run.model} ${run.effort}`));
+    lines.push("");
+    lines.push(
+      `- ${report.markdownRunLabels.executionOrder}: ${run.executionOrder}`,
+    );
+    lines.push(`- ${report.tableLabels.promptCount}: ${run.promptCount}`);
+    lines.push(`- ${report.tableLabels.elapsed}: ${run.elapsed}`);
+    lines.push(`- ${report.tableLabels.sourceLoc}: ${run.sourceLoc}`);
+    lines.push(`- ${report.tableLabels.stack}: ${run.stack}`);
+    lines.push(`- ${report.tableLabels.verdict}: ${run.verdict}`);
+    lines.push(
+      `- ${report.markdownRunLabels.primaryFinding}: ${run.primaryFinding}`,
+    );
+    lines.push(
+      `- ${report.markdownRunLabels.notesDiscipline}: ${run.notesDiscipline}`,
+    );
+    lines.push(`- ${report.markdownRunLabels.gitUse}: ${run.gitUse}`);
+    lines.push(
+      `- ${report.markdownRunLabels.screenshot}: ${new URL(run.screenshotPath, report.metadata.openGraph.url).toString()}`,
+    );
+    lines.push(`- ${report.markdownRunLabels.demo}: ${run.demoUrl}`);
+    lines.push("");
+  });
+
+  lines.push(heading(2, report.currentBestHeading));
+  lines.push("");
+  lines.push(report.currentBestText);
+  lines.push("");
+  lines.push(heading(2, report.findingsHeading));
+  lines.push("");
+  lines.push(report.findingsIntro);
+  lines.push("");
+  lines.push(heading(2, report.protocolHeading));
+  lines.push("");
+  report.protocol.forEach((item) => {
+    lines.push(`- ${item}`);
+  });
+  lines.push("");
+  lines.push(heading(2, report.artifactHeading));
+  lines.push("");
+  lines.push(report.artifactIntro);
+  lines.push("");
+  runs.forEach((run) => {
+    lines.push(`- ${run.model} ${run.effort}: ${run.demoUrl}`);
+  });
+  lines.push("");
+  lines.push(heading(2, report.closingHeading));
+  lines.push("");
+  lines.push(report.closingText);
+  lines.push("");
+
+  return lines.join("\n");
+}
 function collectPublicReferences(): readonly string[] {
   const references = [
     "English homepage: https://piotrkacala.pl/",
     "Polish homepage: https://piotrkacala.pl/pl/",
+    "Phonetic Benchmark report: https://piotrkacala.pl/phonetic-benchmark/",
+    "Polish Phonetic Benchmark report: https://piotrkacala.pl/pl/phonetic-benchmark/",
+    `Phonetic Benchmark markdown report: ${getPhoneticBenchmarkMarkdownUrl("en")}`,
+    `Polish Phonetic Benchmark markdown report: ${getPhoneticBenchmarkMarkdownUrl("pl")}`,
     `Contact: mailto:${en.contact.email}`,
   ];
 
   const projectLinks = en.projects.items.flatMap((project) =>
     project.blocks.flatMap((block) =>
-      block.type === "link" ? [`${project.title} — ${formatProjectLink(block)}`] : [],
+      block.type === "link"
+        ? [`${project.title} — ${formatProjectLink(block)}`]
+        : [],
     ),
   );
 
   const companionProfiles = externalProjectProfiles.map(
-    (profile) => `${profile.title} — Companion profile: ${getExternalProjectMarkdownUrl(profile)}`,
+    (profile) =>
+      `${profile.title} — Companion profile: ${getExternalProjectMarkdownUrl(profile)}`,
   );
 
   return [...references, ...projectLinks, ...companionProfiles];
@@ -154,6 +247,14 @@ function renderLlmsFull(): string {
     "",
     renderHomepageBody(pl, 3).trimEnd(),
     "",
+    "## English Phonetic Benchmark report",
+    "",
+    renderBenchmarkReportMarkdown(phoneticBenchmarkReports.en).trimEnd(),
+    "",
+    "## Polish Phonetic Benchmark report",
+    "",
+    renderBenchmarkReportMarkdown(phoneticBenchmarkReports.pl).trimEnd(),
+    "",
     "## Public references",
     "",
     ...collectPublicReferences().map((reference) => `- ${reference}`),
@@ -162,19 +263,32 @@ function renderLlmsFull(): string {
 }
 
 export function getMachineReadableArtifacts(): readonly MachineReadableArtifact[] {
-  const homepageArtifacts: MachineReadableArtifact[] = siteCopies.map((copy) => ({
-    pathname: copy.lang === "en" ? ("/index.md" as const) : ("/pl/index.md" as const),
-    content: renderHomepageMarkdown(copy),
-  }));
+  const homepageArtifacts: MachineReadableArtifact[] = siteCopies.map(
+    (copy) => ({
+      pathname:
+        copy.lang === "en" ? ("/index.md" as const) : ("/pl/index.md" as const),
+      content: renderHomepageMarkdown(copy),
+    }),
+  );
 
-  const externalProjectArtifacts: MachineReadableArtifact[] = externalProjectProfiles.map((profile) => ({
-    pathname: profile.companionPath,
-    content: renderExternalProjectProfile(profile),
+  const externalProjectArtifacts: MachineReadableArtifact[] =
+    externalProjectProfiles.map((profile) => ({
+      pathname: profile.companionPath,
+      content: renderExternalProjectProfile(profile),
+    }));
+
+  const benchmarkReportArtifacts: MachineReadableArtifact[] = [
+    phoneticBenchmarkReports.en,
+    phoneticBenchmarkReports.pl,
+  ].map((report) => ({
+    pathname: report.markdownPath,
+    content: renderBenchmarkReportMarkdown(report),
   }));
 
   return [
     ...homepageArtifacts,
     ...externalProjectArtifacts,
+    ...benchmarkReportArtifacts,
     {
       pathname: "/llms-full.txt",
       content: renderLlmsFull(),

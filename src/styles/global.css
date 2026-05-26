@@ -113,6 +113,10 @@ svg {
   margin-inline-end: auto;
 }
 
+.page-column--wide {
+  width: min(100%, 72rem);
+}
+
 .document-flow > * {
   margin: 0;
 }

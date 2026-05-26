@@ -6,6 +6,17 @@ import { getMarkdownUrl, siteProfile } from "../site/profile";
 interface Props {
   lang: "en" | "pl";
   metadata: SiteMetadata;
+  markdownUrl?: string;
+  contentWidth?: "default" | "wide";
+  alternates?: {
+    en: string;
+    pl: string;
+    default: string;
+  };
+  homeLink?: {
+    href: string;
+    ariaLabel: string;
+  };
   languageSwitcher: {
     ariaLabel: string;
     currentLabel: string;
@@ -17,19 +28,26 @@ interface Props {
 }
 
 const { lang, metadata, languageSwitcher } = Astro.props;
+const contentWidth = Astro.props.contentWidth ?? "default";
+const homeLink = Astro.props.homeLink;
 const hasFooter = Astro.slots.has("footer");
 const siteUrl = siteProfile.siteUrl;
 const canonicalUrl = metadata.openGraph.url;
-const markdownUrl = getMarkdownUrl(lang);
+const markdownUrl = Astro.props.markdownUrl ?? getMarkdownUrl(lang);
 const fontPreloads = [
   "/fonts/source-sans-3-latin.woff2",
   "/fonts/source-sans-3-latin-ext.woff2",
   "/fonts/spectral-600-latin.woff2",
 ];
+const alternateUrls = Astro.props.alternates ?? {
+  en: new URL("/", siteUrl).toString(),
+  pl: new URL("/pl/", siteUrl).toString(),
+  default: new URL("/", siteUrl).toString(),
+};
 const alternates = [
-  { lang: "en", href: new URL("/", siteUrl).toString() },
-  { lang: "pl", href: new URL("/pl/", siteUrl).toString() },
-  { lang: "x-default", href: new URL("/", siteUrl).toString() },
+  { lang: "en", href: alternateUrls.en },
+  { lang: "pl", href: alternateUrls.pl },
+  { lang: "x-default", href: alternateUrls.default },
 ];
 const personSchema = {
   "@context": "https://schema.org",
@@ -80,30 +98,46 @@ const personSchema = {
   <body class="site-body">
     <!-- LLM-readable profile context: https://piotrkacala.pl/llms.txt -->
     <div class="site-shell">
-      <div class="page-column">
+      <div class:list={["page-column", { "page-column--wide": contentWidth === "wide" }]}>
         <header class="mb-5 border-b pb-4" style="border-color: var(--divider);">
-          <nav
-            aria-label={languageSwitcher.ariaLabel}
-            class="ui-text flex min-h-11 items-center justify-end gap-3 uppercase"
+          <div
+            class:list={[
+              "flex min-h-11 items-center gap-4",
+              homeLink ? "justify-between" : "justify-end",
+            ]}
           >
-            <span
-              aria-current="page"
-              lang={languageSwitcher.currentLanguage}
-              class="inline-flex min-h-11 items-center border-b pb-0.5 font-semibold"
-              style="color: var(--text); border-color: currentColor;"
+            {homeLink && (
+              <a
+                href={homeLink.href}
+                aria-label={homeLink.ariaLabel}
+                class="ui-text inline-flex min-h-11 items-center font-semibold"
+              >
+                {siteProfile.name}
+              </a>
+            )}
+            <nav
+              aria-label={languageSwitcher.ariaLabel}
+              class="ui-text flex min-h-11 items-center justify-end gap-3 uppercase"
             >
-              {languageSwitcher.currentLabel}
-            </span>
-            <span aria-hidden="true" style="color: var(--divider);">/</span>
-            <a
-              href={languageSwitcher.alternateHref}
-              hreflang={languageSwitcher.alternateLanguage}
-              lang={languageSwitcher.alternateLanguage}
-              class="inline-flex min-h-11 items-center px-3"
-            >
-              {languageSwitcher.alternateLabel}
-            </a>
-          </nav>
+              <span
+                aria-current="page"
+                lang={languageSwitcher.currentLanguage}
+                class="inline-flex min-h-11 items-center border-b pb-0.5 font-semibold"
+                style="color: var(--text); border-color: currentColor;"
+              >
+                {languageSwitcher.currentLabel}
+              </span>
+              <span aria-hidden="true" style="color: var(--divider);">/</span>
+              <a
+                href={languageSwitcher.alternateHref}
+                hreflang={languageSwitcher.alternateLanguage}
+                lang={languageSwitcher.alternateLanguage}
+                class="inline-flex min-h-11 items-center px-3"
+              >
+                {languageSwitcher.alternateLabel}
+              </a>
+            </nav>
+          </div>
         </header>
         <main id="content">
           <div class="document-flow">

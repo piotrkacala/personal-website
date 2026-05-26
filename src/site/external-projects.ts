@@ -49,6 +49,8 @@ export const externalProjectProfiles = [
   },
 ] as const satisfies readonly ExternalProjectProfile[];
 
-export function getExternalProjectMarkdownUrl(profile: Pick<ExternalProjectProfile, "companionPath">): string {
+export function getExternalProjectMarkdownUrl(
+  profile: Pick<ExternalProjectProfile, "companionPath">,
+): string {
   return new URL(profile.companionPath, siteProfile.siteUrl).toString();
 }

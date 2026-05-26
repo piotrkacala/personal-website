@@ -1,0 +1,422 @@
+---
+import type { BenchmarkReportCopy } from "../site/phonetic-benchmark";
+
+interface Props {
+  report: BenchmarkReportCopy;
+}
+
+const { report } = Astro.props;
+const runs = [...report.runs].sort(
+  (firstRun, secondRun) => firstRun.executionOrder - secondRun.executionOrder,
+);
+const findingRuns = [...report.runs].sort(
+  (firstRun, secondRun) => secondRun.executionOrder - firstRun.executionOrder,
+);
+const protocolHeadingId = "benchmark-protocol";
+const resultsHeadingId = "benchmark-results";
+const currentBestHeadingId = "benchmark-current-best";
+const findingsHeadingId = "benchmark-findings";
+const closingHeadingId = "benchmark-closing";
+
+function getFindingId(runId: string): string {
+  return `benchmark-finding-${runId}`;
+}
+---
+
+<article class="report">
+  <header class="report-header">
+    <p class="report-eyebrow ui-text">{report.eyebrow}</p>
+    <h1>{report.title}</h1>
+    <p class="report-summary">{report.summary}</p>
+    <p class="report-home-link">
+      <a href={report.homeHref}>{report.homeLabel}</a>
+    </p>
+  </header>
+
+  <section class="report-section" aria-labelledby={resultsHeadingId}>
+    <h2 id={resultsHeadingId}>{report.resultsHeading}</h2>
+    <p>{report.resultsIntro}</p>
+    <div class="results-table-wrap">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th scope="col">{report.tableLabels.executionOrder}</th>
+            <th scope="col">{report.tableLabels.model}</th>
+            <th scope="col">{report.tableLabels.effort}</th>
+            <th scope="col">{report.tableLabels.promptCount}</th>
+            <th scope="col">{report.tableLabels.elapsed}</th>
+            <th scope="col">{report.tableLabels.sourceLoc}</th>
+            <th scope="col">{report.tableLabels.stack}</th>
+            <th scope="col">{report.tableLabels.verdict}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            runs.map((run) => (
+              <tr>
+                <td data-label={report.tableLabels.executionOrder}>
+                  {run.executionOrder}
+                </td>
+                <th scope="row">
+                  <a href={`#${getFindingId(run.id)}`}>{run.model}</a>
+                </th>
+                <td data-label={report.tableLabels.effort}>{run.effort}</td>
+                <td data-label={report.tableLabels.promptCount}>
+                  {run.promptCount}
+                </td>
+                <td data-label={report.tableLabels.elapsed}>{run.elapsed}</td>
+                <td data-label={report.tableLabels.sourceLoc}>
+                  {run.sourceLoc}
+                </td>
+                <td data-label={report.tableLabels.stack}>{run.stack}</td>
+                <td data-label={report.tableLabels.verdict}>{run.verdict}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="report-section" aria-labelledby={currentBestHeadingId}>
+    <h2 id={currentBestHeadingId}>{report.currentBestHeading}</h2>
+    <p>{report.currentBestText}</p>
+  </section>
+
+  <section class="report-section" aria-labelledby={findingsHeadingId}>
+    <h2 id={findingsHeadingId}>{report.findingsHeading}</h2>
+    <p>{report.findingsIntro}</p>
+    <ul class="finding-list">
+      {
+        findingRuns.map((run) => (
+          <li>
+            <article class="finding-entry" id={getFindingId(run.id)}>
+              <div class="finding-copy">
+                <h3>
+                  <span>
+                    {report.tableLabels.executionOrder} {run.executionOrder}
+                  </span>
+                  <span>
+                    {run.model} {run.effort}
+                  </span>
+                </h3>
+                <p>{run.primaryFinding}</p>
+                <dl>
+                  <div>
+                    <dt>{report.findingLabels.notes}</dt>
+                    <dd>{run.notesDiscipline}</dd>
+                  </div>
+                  <div>
+                    <dt>{report.findingLabels.git}</dt>
+                    <dd>{run.gitUse}</dd>
+                  </div>
+                </dl>
+              </div>
+              <figure class="finding-screenshot">
+                <img
+                  src={run.screenshotPath}
+                  alt={run.screenshotAlt}
+                  width="1440"
+                  height="900"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption>
+                  <span>{run.screenshotCaption}</span>
+                  <a href={run.demoUrl}>{report.demoLabel}</a>
+                </figcaption>
+              </figure>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="report-section" aria-labelledby={protocolHeadingId}>
+    <h2 id={protocolHeadingId}>{report.protocolHeading}</h2>
+    <ul class="report-list">
+      {report.protocol.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+
+  <section class="report-section" aria-labelledby={closingHeadingId}>
+    <h2 id={closingHeadingId}>{report.closingHeading}</h2>
+    <p>{report.closingText}</p>
+  </section>
+</article>
+
+<style>
+  .report > * {
+    margin: 0;
+  }
+
+  .report > * + * {
+    margin-top: calc(var(--spacing-rhythm) * 1.45);
+    padding-top: calc(var(--spacing-rhythm) * 1.45);
+    border-top: 1px solid var(--divider);
+  }
+
+  .report-header > * {
+    margin: 0;
+  }
+
+  .report-header > * + * {
+    margin-top: calc(var(--spacing-rhythm) * 0.72);
+  }
+
+  .report-eyebrow {
+    color: var(--accent);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .report-summary {
+    max-width: 62ch;
+    font-size: clamp(1.12rem, 1.06rem + 0.2vw, 1.22rem);
+    line-height: 1.5;
+  }
+
+  .report-home-link a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    font-weight: 600;
+  }
+
+  .report-section > * {
+    margin: 0;
+  }
+
+  .report-section > * + * {
+    margin-top: calc(var(--spacing-rhythm) * 0.75);
+  }
+
+  .report-list {
+    max-width: 62ch;
+    margin-inline: 0;
+    padding-inline-start: 0;
+    list-style: none;
+  }
+
+  .report-list > li + li {
+    margin-top: calc(var(--spacing-rhythm) * 0.42);
+  }
+
+  .finding-list {
+    margin-inline: 0;
+    padding-inline-start: 0;
+    list-style: none;
+  }
+
+  .finding-list > li + li {
+    margin-top: calc(var(--spacing-rhythm) * 1.05);
+  }
+
+  .results-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+  }
+
+  .results-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-ui);
+    line-height: 1.38;
+    table-layout: fixed;
+  }
+
+  .results-table th,
+  .results-table td {
+    padding: 0.62rem 0.72rem;
+    text-align: start;
+    vertical-align: top;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .results-table thead th {
+    color: rgb(23 20 18 / 72%);
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .results-table thead th:nth-child(1) {
+    width: 6%;
+  }
+
+  .results-table thead th:nth-child(3),
+  .results-table thead th:nth-child(4),
+  .results-table thead th:nth-child(5),
+  .results-table thead th:nth-child(6) {
+    width: 7.5%;
+  }
+
+  .results-table thead th:nth-child(2) {
+    width: 10%;
+  }
+
+  .results-table thead th:nth-child(7) {
+    width: 32%;
+  }
+
+  .results-table thead th:nth-child(8) {
+    width: 22%;
+  }
+
+  .results-table tbody th {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .finding-entry {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(18rem, 1.1fr);
+    gap: calc(var(--spacing-rhythm) * 0.82);
+    align-items: start;
+    scroll-margin-top: calc(var(--spacing-rhythm) * 0.8);
+  }
+
+  .finding-copy {
+    max-width: 62ch;
+  }
+
+  .finding-entry > * {
+    min-width: 0;
+  }
+
+  .finding-copy > * {
+    margin: 0;
+  }
+
+  .finding-copy > * + * {
+    margin-top: calc(var(--spacing-rhythm) * 0.42);
+  }
+
+  .finding-copy h3 {
+    display: grid;
+    gap: 0.16rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.18rem, 1.1rem + 0.28vw, 1.35rem);
+    line-height: 1.16;
+  }
+
+  .finding-copy h3 span:first-child {
+    color: rgb(23 20 18 / 72%);
+    font-family: var(--font-body);
+    font-size: var(--text-ui);
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .finding-copy dl {
+    margin: 0;
+    padding-block: calc(var(--spacing-rhythm) * 0.2);
+    border-top: 1px solid rgb(23 20 18 / 10%);
+  }
+
+  .finding-copy dl > div {
+    display: grid;
+    grid-template-columns: minmax(0, 5rem) minmax(0, 1fr);
+    gap: 0.35rem 1rem;
+    padding-block: 0.28rem;
+  }
+
+  .finding-copy dt {
+    margin: 0;
+    color: rgb(23 20 18 / 72%);
+    font-size: var(--text-ui);
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .finding-copy dd {
+    margin: 0;
+  }
+
+  .finding-screenshot {
+    margin: 0;
+  }
+
+  .finding-screenshot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--divider);
+  }
+
+  .finding-screenshot figcaption {
+    display: grid;
+    gap: 0.22rem;
+    margin-top: calc(var(--spacing-rhythm) * 0.3);
+    color: rgb(23 20 18 / 72%);
+    font-size: var(--text-ui);
+    line-height: 1.38;
+  }
+
+  .finding-screenshot a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    width: fit-content;
+    font-weight: 600;
+  }
+
+  @media (max-width: 39.99rem) {
+    .results-table-wrap {
+      overflow-x: visible;
+      padding-bottom: 0;
+    }
+
+    .results-table,
+    .results-table tbody,
+    .results-table tr,
+    .results-table th,
+    .results-table td {
+      display: block;
+      width: 100%;
+    }
+
+    .results-table thead {
+      display: none;
+    }
+
+    .results-table tr {
+      padding-block: calc(var(--spacing-rhythm) * 0.48);
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .results-table tbody th,
+    .results-table td {
+      padding: 0.28rem 0;
+      border-bottom: 0;
+    }
+
+    .results-table td {
+      display: grid;
+      grid-template-columns: minmax(6.8rem, 36%) minmax(0, 1fr);
+      gap: 0.45rem;
+    }
+
+    .results-table td::before {
+      content: attr(data-label);
+      color: rgb(23 20 18 / 72%);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .finding-entry {
+      grid-template-columns: 1fr;
+      gap: calc(var(--spacing-rhythm) * 0.55);
+    }
+
+    .finding-copy dl > div {
+      grid-template-columns: 1fr;
+      gap: 0.1rem;
+    }
+  }
+</style>

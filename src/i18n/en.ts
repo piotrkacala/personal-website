@@ -45,12 +45,22 @@ export const en = {
             text: "An existing React project, reopened to test how AI handles a real codebase — and to compare models and IDEs. Along the way, discovered missing letters in the official Polish Ministry of Defence phonetic alphabet. Ships in English and Polish with scoring, two answer modes, and streak tracking.",
           },
           {
+            type: "paragraph",
+            text: "A companion benchmark report reviews archived AI-agent outputs for the same product brief, focusing on user-path quality, UX failures, and implementation tradeoffs rather than a model leaderboard.",
+          },
+          {
             type: "link",
             href: "https://piotrkacala.github.io/phonetic/",
             label: "Link: piotrkacala.github.io/phonetic/",
             machineLabel: "Link",
             external: true,
             externalLabel: "(opens in a new tab)",
+          },
+          {
+            type: "link",
+            href: "https://piotrkacala.pl/phonetic-benchmark/",
+            label: "Report: piotrkacala.pl/phonetic-benchmark/",
+            machineLabel: "Report",
           },
         ],
       },

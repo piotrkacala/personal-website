@@ -40,6 +40,48 @@
     />
   </url>
   <url>
+    <loc>https://piotrkacala.pl/phonetic-benchmark/</loc>
+    <xhtml:link
+      rel="alternate"
+      hreflang="en"
+      href="https://piotrkacala.pl/phonetic-benchmark/"
+    />
+    <xhtml:link
+      rel="alternate"
+      hreflang="pl"
+      href="https://piotrkacala.pl/pl/phonetic-benchmark/"
+    />
+    <xhtml:link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://piotrkacala.pl/phonetic-benchmark/"
+    />
+  </url>
+  <url>
+    <loc>https://piotrkacala.pl/pl/phonetic-benchmark/</loc>
+    <xhtml:link
+      rel="alternate"
+      hreflang="en"
+      href="https://piotrkacala.pl/phonetic-benchmark/"
+    />
+    <xhtml:link
+      rel="alternate"
+      hreflang="pl"
+      href="https://piotrkacala.pl/pl/phonetic-benchmark/"
+    />
+    <xhtml:link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://piotrkacala.pl/phonetic-benchmark/"
+    />
+  </url>
+  <url>
+    <loc>https://piotrkacala.pl/phonetic-benchmark/index.md</loc>
+  </url>
+  <url>
+    <loc>https://piotrkacala.pl/pl/phonetic-benchmark/index.md</loc>
+  </url>
+  <url>
     <loc>https://piotrkacala.pl/400m/</loc>
   </url>
   <url>

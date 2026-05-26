@@ -46,12 +46,22 @@ export const pl = {
             text: "Istniejący projekt w React, otwarty ponownie, żeby sprawdzić, jak AI radzi sobie z istniejącym codebase — i porównać modele oraz IDE. Po drodze wyszły na jaw brakujące litery w oficjalnym alfabecie fonetycznym Ministerstwa Obrony Narodowej. Działa po angielsku i po polsku, ma scoring, dwa tryby odpowiedzi i śledzenie serii.",
           },
           {
+            type: "paragraph",
+            text: "Towarzyszący raport benchmarku omawia archiwalne outputy agentów AI dla tego samego briefu produktowego. Akcent jest na jakości ścieżki użytkownika, awariach UX i tradeoffach implementacyjnych, a nie na rankingu modeli.",
+          },
+          {
             type: "link",
             href: "https://piotrkacala.github.io/phonetic/",
             label: "Link: piotrkacala.github.io/phonetic/",
             machineLabel: "Link",
             external: true,
             externalLabel: "(otwiera się w nowej karcie)",
+          },
+          {
+            type: "link",
+            href: "https://piotrkacala.pl/pl/phonetic-benchmark/",
+            label: "Raport: piotrkacala.pl/pl/phonetic-benchmark/",
+            machineLabel: "Raport",
           },
         ],
       },
