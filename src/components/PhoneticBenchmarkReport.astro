@@ -16,6 +16,7 @@ const protocolHeadingId = "benchmark-protocol";
 const resultsHeadingId = "benchmark-results";
 const currentBestHeadingId = "benchmark-current-best";
 const findingsHeadingId = "benchmark-findings";
+const artifactHeadingId = "benchmark-artifacts";
 const closingHeadingId = "benchmark-closing";
 
 function getFindingId(runId: string): string {
@@ -61,7 +62,7 @@ function getRunLabel(run: BenchmarkReportCopy["runs"][number]): string {
                 <td data-label={report.tableLabels.executionOrder}>
                   {run.executionOrder}
                 </td>
-                <th scope="row">
+                <th scope="row" data-label={report.tableLabels.model}>
                   <a href={`#${getFindingId(run.id)}`}>{run.model}</a>
                 </th>
                 <td data-label={report.tableLabels.effort}>
@@ -144,6 +145,20 @@ function getRunLabel(run: BenchmarkReportCopy["runs"][number]): string {
     </ul>
   </section>
 
+  <section class="report-section" aria-labelledby={artifactHeadingId}>
+    <h2 id={artifactHeadingId}>{report.artifactHeading}</h2>
+    <p>{report.artifactIntro}</p>
+    <ul class="artifact-list">
+      {
+        runs.map((run) => (
+          <li>
+            <a href={run.demoUrl}>{getRunLabel(run)}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
   <section class="report-section" aria-labelledby={closingHeadingId}>
     <h2 id={closingHeadingId}>{report.closingHeading}</h2>
     <p>{report.closingText}</p>
@@ -205,6 +220,22 @@ function getRunLabel(run: BenchmarkReportCopy["runs"][number]): string {
 
   .report-list > li + li {
     margin-top: calc(var(--spacing-rhythm) * 0.42);
+  }
+
+  .artifact-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: 0.35rem 1.1rem;
+    margin-inline: 0;
+    padding-inline-start: 0;
+    list-style: none;
+  }
+
+  .artifact-list a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.5rem;
+    font-weight: 600;
   }
 
   .finding-list {
@@ -399,12 +430,14 @@ function getRunLabel(run: BenchmarkReportCopy["runs"][number]): string {
       border-bottom: 0;
     }
 
+    .results-table tbody th,
     .results-table td {
       display: grid;
       grid-template-columns: minmax(6.8rem, 36%) minmax(0, 1fr);
       gap: 0.45rem;
     }
 
+    .results-table tbody th::before,
     .results-table td::before {
       content: attr(data-label);
       color: rgb(23 20 18 / 72%);

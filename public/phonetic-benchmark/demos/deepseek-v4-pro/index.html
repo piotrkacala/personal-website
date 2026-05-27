@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phonetic Trainer</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <h1 data-i18n="appTitle">Phonetic Trainer</h1>
+  <nav class="lang-switch">
+    <button id="lang-pl" class="lang-btn">PL</button>
+    <button id="lang-en" class="lang-btn active">EN</button>
+  </nav>
+</header>
+
+<main>
+  <!-- SETUP SCREEN -->
+  <section id="setup" class="screen">
+
+    <div class="setup-card">
+      <h2 data-i18n="setupHeading">Start a practice run</h2>
+
+      <fieldset class="setup-group">
+        <legend data-i18n="chooseAlphabet">Choose alphabet</legend>
+        <div class="option-row">
+          <label class="radio-label">
+            <input type="radio" name="alphabet" value="polish" checked>
+            <span class="radio-text" data-i18n="polishAlphabet">Polish</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="alphabet" value="nato">
+            <span class="radio-text" data-i18n="natoAlphabet">NATO</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="setup-group">
+        <legend data-i18n="chooseMode">Choose mode</legend>
+        <div class="option-row">
+          <label class="radio-label">
+            <input type="radio" name="mode" value="keyboard" checked>
+            <span class="radio-text" data-i18n="modeKeyboard">Keyboard</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="mode" value="suggestion">
+            <span class="radio-text" data-i18n="modeSuggestion">Suggestion (4 options)</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <button id="startBtn" class="btn btn-primary" data-i18n="startRun">Start Run</button>
+    </div>
+
+  </section>
+
+  <!-- EXERCISE SCREEN -->
+  <section id="exercise" class="screen hidden">
+
+    <div class="run-info">
+      <span id="runAlphabet" class="badge"></span>
+      <span id="runMode" class="badge"></span>
+      <span id="progress" class="progress-text" data-i18n-template="progress">
+        Question {current} of {total}
+      </span>
+    </div>
+
+    <div class="question-card">
+      <div class="symbol-display" id="symbolDisplay"></div>
+
+      <!-- Keyboard mode -->
+      <div id="keyboardInput" class="hidden">
+        <input type="text" id="answerInput" class="text-input" autocomplete="off" autocapitalize="off" spellcheck="false"
+               data-i18n-placeholder="typeAnswer">
+        <button id="submitAnswer" class="btn btn-submit" data-i18n="submit">Submit</button>
+      </div>
+
+      <!-- Suggestion mode -->
+      <div id="suggestionInput" class="hidden">
+        <div id="optionButtons" class="option-grid"></div>
+      </div>
+
+      <div class="feedback-row">
+        <span id="feedback" class="feedback hidden"></span>
+      </div>
+
+      <div class="hint-row">
+        <button id="hintBtn" class="btn btn-hint" data-i18n="showHint">Show Hint</button>
+        <span id="hintText" class="hint-text hidden"></span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- RESULT SCREEN -->
+  <section id="result" class="screen hidden">
+
+    <div class="result-card">
+      <h2 data-i18n="resultHeading">Run Complete</h2>
+
+      <div class="score-circle" id="scoreCircle">100%</div>
+
+      <div class="result-details">
+        <p>
+          <span data-i18n="resultAlphabet">Alphabet:</span>
+          <strong id="resultAlphabet"></strong>
+        </p>
+        <p>
+          <span data-i18n="resultMode">Mode:</span>
+          <strong id="resultMode"></strong>
+        </p>
+        <p>
+          <span data-i18n="resultQuestions">Questions:</span>
+          <strong id="resultTotal"></strong>
+        </p>
+        <p>
+          <span data-i18n="resultHinted">Hinted:</span>
+          <strong id="resultHinted"></strong>
+        </p>
+        <p>
+          <span data-i18n="resultClean">Clean:</span>
+          <strong id="resultClean"></strong>
+        </p>
+      </div>
+
+      <button id="restartBtn" class="btn btn-primary" data-i18n="newRun">New Run</button>
+    </div>
+
+  </section>
+</main>
+
+<footer>
+  <p class="attribution">
+    Phonetic Benchmark by Piotr Kacała (<a href="https://piotrkacala.pl" target="_blank" rel="noopener">piotrkacala.pl</a>).
+    Developed by DeepSeek V4 Pro on 2026-05-27.
+  </p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

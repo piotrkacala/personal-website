@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phonetic Training</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Language Selection -->
+        <div id="language-selection" class="screen">
+            <h1>Select Language</h1>
+            <button id="lang-en">English</button>
+            <button id="lang-pl">Polski</button>
+        </div>
+
+        <!-- Alphabet Selection -->
+        <div id="alphabet-selection" class="screen">
+            <h1>Select Alphabet</h1>
+            <button id="alphabet-nato">NATO</button>
+            <button id="alphabet-polish">Polish</button>
+        </div>
+
+        <!-- Mode Selection -->
+        <div id="mode-selection" class="screen">
+            <h1>Select Mode</h1>
+            <button id="mode-keyboard">Keyboard Mode</button>
+            <button id="mode-suggestion">Suggestion Mode</button>
+        </div>
+
+        <!-- Exercise Screen -->
+        <div id="exercise" class="screen">
+            <div id="hint-container" class="hidden">
+                <p>Hint: <span id="hint-text"></span></p>
+                <button id="hide-hint">Hide Hint</button>
+            </div>
+            <div id="question">
+                <p id="symbol-display"></p>
+            </div>
+            <div id="answer-input">
+                <!-- Keyboard mode input -->
+                <input type="text" id="keyboard-input" autocomplete="off" placeholder="Type your answer">
+                <!-- Suggestion mode buttons -->
+                <div id="suggestion-buttons"></div>
+            </div>
+            <div id="controls">
+                <button id="hint-button">Hint</button>
+                <button id="next-button" class="hidden">Next</button>
+            </div>
+            <p id="feedback"></p>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result" class="screen">
+            <h1>Exercise Complete</h1>
+            <p id="result-summary"></p>
+            <p id="result-score"></p>
+            <button id="restart-button">Restart</button>
+            <div id="attribution">
+                Phonetic Benchmark by Piotr Kacała (piotrkacala.pl). Developed by {model_name_and_version} on {implementation_date}.
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
