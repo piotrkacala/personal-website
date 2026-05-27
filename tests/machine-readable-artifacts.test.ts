@@ -228,7 +228,7 @@ test("English Phonetic Benchmark report markdown carries run labels, protocol, a
     assert.match(
       content,
       new RegExp(
-        `^- Demo: https:\\/\\/piotrkacala\\.pl\\/phonetic-benchmark\\/demos\\/${runId}\\/$`,
+        `^- Demo: https:\\/\\/piotrkacala\\.pl\\/phonetic-benchmark\\/demos\\/${runId}\\/index\\.html$`,
         "m",
       ),
     );
@@ -268,9 +268,32 @@ test("Polish Phonetic Benchmark report markdown carries localized protocol and d
     assert.match(
       content,
       new RegExp(
-        `^- Demo: https:\\/\\/piotrkacala\\.pl\\/phonetic-benchmark\\/demos\\/${runId}\\/$`,
+        `^- Demo: https:\\/\\/piotrkacala\\.pl\\/phonetic-benchmark\\/demos\\/${runId}\\/index\\.html$`,
         "m",
       ),
+    );
+  });
+});
+
+test("machine-readable demo links point at explicit static index files", () => {
+  const artifacts = getMachineReadableArtifacts();
+  const demoUrlPattern =
+    /https:\/\/piotrkacala\.pl\/phonetic-benchmark\/demos\/[a-z0-9-]+\/[^\s)>\]]*/gu;
+
+  const demoUrls = artifacts.flatMap((artifact) =>
+    [...artifact.content.matchAll(demoUrlPattern)].map((match) => ({
+      pathname: artifact.pathname,
+      url: match[0],
+    })),
+  );
+
+  assert.ok(demoUrls.length > 0);
+
+  demoUrls.forEach(({ pathname, url }) => {
+    assert.match(
+      url,
+      /\/index\.html$/,
+      `${pathname} contains a directory-style demo URL: ${url}`,
     );
   });
 });

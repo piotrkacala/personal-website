@@ -139,9 +139,9 @@ profile. Companion profiles remain for externally deployed tools or surfaces.
 Use the already archived demo paths:
 
 ```text
-/phonetic-benchmark/demos/gpt-5-4-high/
-/phonetic-benchmark/demos/gpt-5-5-high/
-/phonetic-benchmark/demos/gemini-3-5-flash-high/
+/phonetic-benchmark/demos/gpt-5-4-high/index.html
+/phonetic-benchmark/demos/gpt-5-5-high/index.html
+/phonetic-benchmark/demos/gemini-3-5-flash-high/index.html
 ```
 
 These are static artifacts. The report should describe them as archived outputs, not as live

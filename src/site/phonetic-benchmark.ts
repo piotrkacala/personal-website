@@ -85,17 +85,23 @@ function url(pathname: string): string {
 }
 
 const demoUrls = {
-  gpt54: url("/phonetic-benchmark/demos/gpt-5-4-high/"),
-  gpt55: url("/phonetic-benchmark/demos/gpt-5-5-high/"),
-  gemini35: url("/phonetic-benchmark/demos/gemini-3-5-flash-high/"),
-  gemini31: url("/phonetic-benchmark/demos/gemini-3-1-pro-high/"),
-  sonnet46: url("/phonetic-benchmark/demos/sonnet-4-6-thinking/"),
-  owlAlpha: url("/phonetic-benchmark/demos/owl-alpha/"),
-  gemma426b: url("/phonetic-benchmark/demos/gemma-4-26b/"),
-  nemotron3Super: url("/phonetic-benchmark/demos/nemotron-3-super/"),
-  lagunaM1: url("/phonetic-benchmark/demos/laguna-m-1/"),
-  deepseekV4Pro: url("/phonetic-benchmark/demos/deepseek-v4-pro/"),
-  gptOss120b: url("/phonetic-benchmark/demos/gpt-oss-120b/"),
+  gpt54: url("/phonetic-benchmark/demos/gpt-5-4-high/index.html"),
+  gpt55: url("/phonetic-benchmark/demos/gpt-5-5-high/index.html"),
+  gemini35: url(
+    "/phonetic-benchmark/demos/gemini-3-5-flash-high/index.html",
+  ),
+  gemini31: url(
+    "/phonetic-benchmark/demos/gemini-3-1-pro-high/index.html",
+  ),
+  sonnet46: url("/phonetic-benchmark/demos/sonnet-4-6-thinking/index.html"),
+  owlAlpha: url("/phonetic-benchmark/demos/owl-alpha/index.html"),
+  gemma426b: url("/phonetic-benchmark/demos/gemma-4-26b/index.html"),
+  nemotron3Super: url(
+    "/phonetic-benchmark/demos/nemotron-3-super/index.html",
+  ),
+  lagunaM1: url("/phonetic-benchmark/demos/laguna-m-1/index.html"),
+  deepseekV4Pro: url("/phonetic-benchmark/demos/deepseek-v4-pro/index.html"),
+  gptOss120b: url("/phonetic-benchmark/demos/gpt-oss-120b/index.html"),
 } as const;
 
 const screenshotPaths = {
