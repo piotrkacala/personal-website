@@ -53,6 +53,7 @@ export interface BenchmarkReportCopy {
     stack: string;
     verdict: string;
   };
+  unspecifiedEffortLabel: string;
   markdownRunLabels: {
     executionOrder: string;
     primaryFinding: string;
@@ -87,12 +88,20 @@ const demoUrls = {
   gpt54: url("/phonetic-benchmark/demos/gpt-5-4-high/"),
   gpt55: url("/phonetic-benchmark/demos/gpt-5-5-high/"),
   gemini35: url("/phonetic-benchmark/demos/gemini-3-5-flash-high/"),
+  gemini31: url("/phonetic-benchmark/demos/gemini-3-1-pro-high/"),
+  sonnet46: url("/phonetic-benchmark/demos/sonnet-4-6-thinking/"),
+  owlAlpha: url("/phonetic-benchmark/demos/owl-alpha/"),
+  gemma426b: url("/phonetic-benchmark/demos/gemma-4-26b/"),
 } as const;
 
 const screenshotPaths = {
   gpt54: "/phonetic-benchmark/screenshots/gpt-5-4-high-quiz.png",
   gpt55: "/phonetic-benchmark/screenshots/gpt-5-5-high-quiz.png",
   gemini35: "/phonetic-benchmark/screenshots/gemini-3-5-flash-high-quiz.png",
+  gemini31: "/phonetic-benchmark/screenshots/gemini-3-1-pro-high-quiz.png",
+  sonnet46: "/phonetic-benchmark/screenshots/sonnet-4-6-thinking-quiz.png",
+  owlAlpha: "/phonetic-benchmark/screenshots/owl-alpha-quiz.png",
+  gemma426b: "/phonetic-benchmark/screenshots/gemma-4-26b-quiz.png",
 } as const;
 
 export const phoneticBenchmarkReports = {
@@ -101,7 +110,7 @@ export const phoneticBenchmarkReports = {
     metadata: {
       title: "Phonetic Benchmark Report — Piotr Kacała",
       description:
-        "Static qualitative benchmark report reviewing archived Phonetic Alphabet Trainer outputs from GPT 5.4 High, GPT 5.5 High, and Gemini 3.5 Flash High.",
+        "Static qualitative benchmark report reviewing archived Phonetic Alphabet Trainer outputs from seven AI model runs.",
       openGraph: {
         title: "Phonetic Benchmark Report",
         description:
@@ -132,7 +141,7 @@ export const phoneticBenchmarkReports = {
     eyebrow: "AI agent development benchmark",
     title: "Phonetic Benchmark Report",
     summary:
-      "A static qualitative report reviewing three archived outputs for the same Phonetic Alphabet Trainer specification. The point is not a numeric leaderboard. The useful signal is whether the output is usable, where it breaks, and what that says about AI-assisted product work.",
+      "A static qualitative report reviewing seven archived outputs for the same Phonetic Alphabet Trainer specification. The point is not a numeric leaderboard. The useful signal is whether the output is usable, where it breaks, and what that says about AI-assisted product work.",
     protocolHeading: "Benchmark Protocol",
     protocol: [
       "Each model receives the same project specification and one implementation prompt.",
@@ -153,6 +162,7 @@ export const phoneticBenchmarkReports = {
       stack: "Stack",
       verdict: "Review note",
     },
+    unspecifiedEffortLabel: "Not specified",
     markdownRunLabels: {
       executionOrder: "Execution order",
       primaryFinding: "Primary finding",
@@ -222,10 +232,94 @@ export const phoneticBenchmarkReports = {
         screenshotCaption: "Archived quiz state for Gemini 3.5 Flash High.",
         demoUrl: demoUrls.gemini35,
       },
+      {
+        id: "gemini-3-1-pro-high",
+        executionOrder: 4,
+        model: "Gemini 3.1 Pro",
+        effort: "High",
+        promptCount: "1",
+        elapsed: "4 minutes",
+        sourceLoc: "857",
+        stack: "Vite, TypeScript, browser DOM APIs",
+        notesDiscipline: "No implementation notes found.",
+        gitUse: "No model-authored git workflow observed.",
+        primaryFinding:
+          "The hint action only refreshed the interface instead of revealing the current answer.",
+        verdict:
+          "Contract-failing run because required hint behavior is broken.",
+        screenshotPath: screenshotPaths.gemini31,
+        screenshotAlt:
+          "Archived quiz state from the Gemini 3.1 Pro High Phonetic Alphabet Trainer output.",
+        screenshotCaption: "Archived quiz state for Gemini 3.1 Pro High.",
+        demoUrl: demoUrls.gemini31,
+      },
+      {
+        id: "sonnet-4-6-thinking",
+        executionOrder: 5,
+        model: "Claude Sonnet 4.6",
+        effort: "Thinking",
+        promptCount: "1",
+        elapsed: "7 minutes",
+        sourceLoc: "1,235",
+        stack: "Vite, vanilla JavaScript, browser DOM APIs, Vitest",
+        notesDiscipline: "Left implementation notes in app/README.md.",
+        gitUse: "No model-authored git workflow observed.",
+        primaryFinding:
+          "No open manual-review issues were reported for the intended flow.",
+        verdict: "Fast comparable run with tests and no open objections.",
+        screenshotPath: screenshotPaths.sonnet46,
+        screenshotAlt:
+          "Archived quiz state from the Claude Sonnet 4.6 Thinking Phonetic Alphabet Trainer output.",
+        screenshotCaption:
+          "Archived quiz state for Claude Sonnet 4.6 Thinking.",
+        demoUrl: demoUrls.sonnet46,
+      },
+      {
+        id: "owl-alpha",
+        executionOrder: 6,
+        model: "Owl Alpha",
+        effort: "",
+        promptCount: "2",
+        elapsed: "20 minutes",
+        sourceLoc: "1,137",
+        stack: "Vite, vanilla JavaScript, browser DOM APIs, Vitest",
+        notesDiscipline: "No implementation notes found.",
+        gitUse: "No model-authored git workflow observed.",
+        primaryFinding:
+          "The run started by challenging the benchmark scope, and the exercise loop adds friction: no keyboard advance after correct answers, no reset path, and focus loss after wrong keyboard answers.",
+        verdict:
+          "Comparable run with strong tests but several workflow and interaction issues.",
+        screenshotPath: screenshotPaths.owlAlpha,
+        screenshotAlt:
+          "Archived quiz state from the Owl Alpha Phonetic Alphabet Trainer output.",
+        screenshotCaption: "Archived quiz state for Owl Alpha.",
+        demoUrl: demoUrls.owlAlpha,
+      },
+      {
+        id: "gemma-4-26b",
+        executionOrder: 7,
+        model: "Gemma 4 26B",
+        effort: "",
+        promptCount: "4",
+        elapsed: "35 minutes",
+        sourceLoc: "635",
+        stack: "Vite, vanilla JavaScript, browser DOM APIs",
+        notesDiscipline: "No implementation notes found.",
+        gitUse: "No model-authored git workflow observed.",
+        primaryFinding:
+          "Output-limit recovery failed during the run, and the final app still loses input focus between questions in keyboard mode.",
+        verdict:
+          "Comparable final app with workflow fragility and a keyboard UX issue.",
+        screenshotPath: screenshotPaths.gemma426b,
+        screenshotAlt:
+          "Archived quiz state from the Gemma 4 26B Phonetic Alphabet Trainer output.",
+        screenshotCaption: "Archived quiz state for Gemma 4 26B.",
+        demoUrl: demoUrls.gemma426b,
+      },
     ],
     currentBestHeading: "Best Current Read",
     currentBestText:
-      "With only three runs, this is still a provisional read rather than a stable best-model section. For now, GPT 5.5 High is the only archived output with no open objections from the manual review pass. As the list grows, this section should summarize which models look strongest for product-quality agent work without replacing the chronological run log.",
+      "With seven runs, this is still a provisional read rather than a stable best-model section. GPT 5.5 High and Claude Sonnet 4.6 Thinking are the archived outputs with no open objections from the manual review pass. GPT 5.5 High remains the strongest reference candidate because it delivered that result as a simple static page with a small source footprint.",
     findingsHeading: "Qualitative Findings",
     findingsIntro:
       "The benchmark is useful because the failures are concrete. A missing focus behavior changes whether the quiz is comfortable to use. A layout jump changes whether the interface feels stable. A slower build can still be the better product artifact if it preserves the intended flow. The review notes below are shown newest first, while execution order remains the stable run identifier. Screenshots and demo links sit with each run as archived evidence, not live benchmark infrastructure.",
@@ -246,11 +340,11 @@ export const phoneticBenchmarkReports = {
     metadata: {
       title: "Phonetic Benchmark Report — Piotr Kacała",
       description:
-        "Statyczny raport jakościowy o archiwalnych wersjach Phonetic Alphabet Trainer przygotowanych przez GPT 5.4 High, GPT 5.5 High i Gemini 3.5 Flash High.",
+        "Statyczny raport jakościowy o archiwalnych wersjach Phonetic Alphabet Trainer przygotowanych w siedmiu próbach modeli AI.",
       openGraph: {
         title: "Phonetic Benchmark Report",
         description:
-          "Jakościowy przegląd trzech wersji przygotowanych przez modele AI na podstawie tej samej specyfikacji Phonetic Alphabet Trainer, z archiwalnymi demo.",
+          "Jakościowy przegląd siedmiu wersji przygotowanych przez modele AI na podstawie tej samej specyfikacji Phonetic Alphabet Trainer, z archiwalnymi demo.",
         type: "website",
         locale: "pl_PL",
         siteName: "Piotr Kacała",
@@ -277,7 +371,7 @@ export const phoneticBenchmarkReports = {
     eyebrow: "Benchmark pracy agentów AI",
     title: "Phonetic Benchmark Report",
     summary:
-      "Statyczny raport jakościowy o trzech archiwalnych wersjach przygotowanych na podstawie tej samej specyfikacji Phonetic Alphabet Trainer. To nie jest ranking punktowy. Ważne jest to, czy dana wersja da się wygodnie używać, gdzie się psuje i co mówi o pracy produktowej z AI.",
+      "Statyczny raport jakościowy o siedmiu archiwalnych wersjach przygotowanych na podstawie tej samej specyfikacji Phonetic Alphabet Trainer. To nie jest ranking punktowy. Ważne jest to, czy dana wersja da się wygodnie używać, gdzie się psuje i co mówi o pracy produktowej z AI.",
     protocolHeading: "Protokół benchmarku",
     protocol: [
       "Każdy model dostaje tę samą specyfikację projektu i jedno polecenie zbudowania aplikacji.",
@@ -298,6 +392,7 @@ export const phoneticBenchmarkReports = {
       stack: "Technologie",
       verdict: "Notatka z przeglądu",
     },
+    unspecifiedEffortLabel: "Nie podano",
     markdownRunLabels: {
       executionOrder: "Kolejność wykonania",
       primaryFinding: "Główny wniosek",
@@ -369,10 +464,95 @@ export const phoneticBenchmarkReports = {
         screenshotCaption: "Archiwalny stan quizu dla Gemini 3.5 Flash High.",
         demoUrl: demoUrls.gemini35,
       },
+      {
+        id: "gemini-3-1-pro-high",
+        executionOrder: 4,
+        model: "Gemini 3.1 Pro",
+        effort: "High",
+        promptCount: "1",
+        elapsed: "4 minuty",
+        sourceLoc: "857",
+        stack: "Vite, TypeScript, browser DOM APIs",
+        notesDiscipline: "Nie znaleziono notatek z implementacji.",
+        gitUse: "Nie widać, żeby model sam prowadził pracę w git.",
+        primaryFinding:
+          "Akcja podpowiedzi tylko odświeżała interfejs zamiast ujawniać bieżącą odpowiedź.",
+        verdict:
+          "Próba niespełniająca kontraktu, bo wymagane zachowanie podpowiedzi jest zepsute.",
+        screenshotPath: screenshotPaths.gemini31,
+        screenshotAlt:
+          "Archiwalny stan quizu Phonetic Alphabet Trainer przygotowanego przez Gemini 3.1 Pro High.",
+        screenshotCaption: "Archiwalny stan quizu dla Gemini 3.1 Pro High.",
+        demoUrl: demoUrls.gemini31,
+      },
+      {
+        id: "sonnet-4-6-thinking",
+        executionOrder: 5,
+        model: "Claude Sonnet 4.6",
+        effort: "Thinking",
+        promptCount: "1",
+        elapsed: "7 minut",
+        sourceLoc: "1,235",
+        stack: "Vite, vanilla JavaScript, browser DOM APIs, Vitest",
+        notesDiscipline: "Zostawił notatki z implementacji w app/README.md.",
+        gitUse: "Nie widać, żeby model sam prowadził pracę w git.",
+        primaryFinding:
+          "Nie zgłoszono ręcznie znalezionych problemów w zakładanej ścieżce.",
+        verdict:
+          "Szybka porównywalna próba z testami i bez otwartych zastrzeżeń.",
+        screenshotPath: screenshotPaths.sonnet46,
+        screenshotAlt:
+          "Archiwalny stan quizu Phonetic Alphabet Trainer przygotowanego przez Claude Sonnet 4.6 Thinking.",
+        screenshotCaption:
+          "Archiwalny stan quizu dla Claude Sonnet 4.6 Thinking.",
+        demoUrl: demoUrls.sonnet46,
+      },
+      {
+        id: "owl-alpha",
+        executionOrder: 6,
+        model: "Owl Alpha",
+        effort: "",
+        promptCount: "2",
+        elapsed: "20 minut",
+        sourceLoc: "1,137",
+        stack: "Vite, vanilla JavaScript, browser DOM APIs, Vitest",
+        notesDiscipline: "Nie znaleziono notatek z implementacji.",
+        gitUse: "Nie widać, żeby model sam prowadził pracę w git.",
+        primaryFinding:
+          "Próba zaczęła się od zakwestionowania zakresu benchmarku, a pętla ćwiczenia ma tarcie: brak przejścia klawiaturą po poprawnej odpowiedzi, brak resetu i utrata fokusu po błędnej odpowiedzi z klawiatury.",
+        verdict:
+          "Porównywalna próba z mocnymi testami, ale kilkoma problemami przebiegu i interakcji.",
+        screenshotPath: screenshotPaths.owlAlpha,
+        screenshotAlt:
+          "Archiwalny stan quizu Phonetic Alphabet Trainer przygotowanego przez Owl Alpha.",
+        screenshotCaption: "Archiwalny stan quizu dla Owl Alpha.",
+        demoUrl: demoUrls.owlAlpha,
+      },
+      {
+        id: "gemma-4-26b",
+        executionOrder: 7,
+        model: "Gemma 4 26B",
+        effort: "",
+        promptCount: "4",
+        elapsed: "35 minut",
+        sourceLoc: "635",
+        stack: "Vite, vanilla JavaScript, browser DOM APIs",
+        notesDiscipline: "Nie znaleziono notatek z implementacji.",
+        gitUse: "Nie widać, żeby model sam prowadził pracę w git.",
+        primaryFinding:
+          "Odzyskanie pracy po limicie odpowiedzi się nie udało, a finalna aplikacja nadal traci fokus pola odpowiedzi między pytaniami w trybie klawiatury.",
+        verdict:
+          "Porównywalna finalna aplikacja z kruchością przebiegu i problemem keyboard UX.",
+        screenshotPath: screenshotPaths.gemma426b,
+        screenshotAlt:
+          "Archiwalny stan quizu Phonetic Alphabet Trainer przygotowanego przez Gemma 4 26B.",
+        screenshotCaption: "Archiwalny stan quizu dla Gemma 4 26B.",
+        demoUrl: demoUrls.gemma426b,
+      },
     ],
     currentBestHeading: "Najlepszy odczyt na teraz",
     currentBestText:
-      "Przy trzech próbach to nadal tymczasowy odczyt, a nie stabilna sekcja najlepszych modeli. Na teraz GPT 5.5 High jest jedyną archiwalną wersją bez otwartych zastrzeżeń po ręcznym sprawdzeniu. Gdy lista urośnie, ta sekcja powinna krótko podsumowywać, które modele wyglądają najmocniej w pracy agentowej nad jakością produktu, bez zastępowania chronologicznego zapisu prób.",
+      "Przy siedmiu próbach to nadal tymczasowy odczyt, a nie stabilna sekcja najlepszych modeli. GPT 5.5 High i Claude Sonnet 4.6 Thinking to archiwalne wersje bez otwartych zastrzeżeń po ręcznym sprawdzeniu. GPT 5.5 High pozostaje najmocniejszym kandydatem referencyjnym, bo dowiózł taki wynik jako prostą statyczną stronę z niewielką liczbą linii kodu.",
     findingsHeading: "Wnioski jakościowe",
     findingsIntro:
       "Benchmark jest użyteczny dlatego, że problemy są konkretne. Utrata aktywnego pola zmienia komfort korzystania z quizu. Przesuwający się układ zmienia poczucie stabilności interfejsu. Wolniejsza wersja nadal może być lepszym materiałem produktowym, jeśli zachowuje zakładaną ścieżkę użytkownika. Poniższe notatki są pokazane od najnowszych, a kolejność wykonania pozostaje stałym identyfikatorem próby. Screenshoty i linki do demo są przy każdej próbie jako archiwalny materiał, a nie żywa infrastruktura benchmarku.",

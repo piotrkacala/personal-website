@@ -21,6 +21,10 @@ const closingHeadingId = "benchmark-closing";
 function getFindingId(runId: string): string {
   return `benchmark-finding-${runId}`;
 }
+
+function getRunLabel(run: BenchmarkReportCopy["runs"][number]): string {
+  return `${run.model} ${run.effort}`.trim();
+}
 ---
 
 <article class="report">
@@ -60,7 +64,9 @@ function getFindingId(runId: string): string {
                 <th scope="row">
                   <a href={`#${getFindingId(run.id)}`}>{run.model}</a>
                 </th>
-                <td data-label={report.tableLabels.effort}>{run.effort}</td>
+                <td data-label={report.tableLabels.effort}>
+                  {run.effort || report.unspecifiedEffortLabel}
+                </td>
                 <td data-label={report.tableLabels.promptCount}>
                   {run.promptCount}
                 </td>
@@ -96,9 +102,7 @@ function getFindingId(runId: string): string {
                   <span>
                     {report.tableLabels.executionOrder} {run.executionOrder}
                   </span>
-                  <span>
-                    {run.model} {run.effort}
-                  </span>
+                  <span>{getRunLabel(run)}</span>
                 </h3>
                 <p>{run.primaryFinding}</p>
                 <dl>

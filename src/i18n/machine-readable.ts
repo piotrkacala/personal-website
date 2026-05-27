@@ -131,6 +131,8 @@ function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
   const runs = [...report.runs].sort(
     (firstRun, secondRun) => firstRun.executionOrder - secondRun.executionOrder,
   );
+  const runLabel = (run: BenchmarkReportCopy["runs"][number]): string =>
+    `${run.model} ${run.effort}`.trim();
   const lines: string[] = [
     heading(1, report.title),
     "",
@@ -149,7 +151,7 @@ function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
   lines.push("");
 
   runs.forEach((run) => {
-    lines.push(heading(3, `${run.model} ${run.effort}`));
+    lines.push(heading(3, runLabel(run)));
     lines.push("");
     lines.push(
       `- ${report.markdownRunLabels.executionOrder}: ${run.executionOrder}`,
@@ -192,7 +194,7 @@ function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
   lines.push(report.artifactIntro);
   lines.push("");
   runs.forEach((run) => {
-    lines.push(`- ${run.model} ${run.effort}: ${run.demoUrl}`);
+    lines.push(`- ${runLabel(run)}: ${run.demoUrl}`);
   });
   lines.push("");
   lines.push(heading(2, report.closingHeading));

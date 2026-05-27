@@ -177,16 +177,26 @@ test("English Phonetic Benchmark report markdown carries run labels, protocol, a
   assert.match(content, /^### GPT 5\.4 High$/m);
   assert.match(content, /^### GPT 5\.5 High$/m);
   assert.match(content, /^### Gemini 3\.5 Flash High$/m);
-  assert.ok(
-    content.indexOf("### GPT 5.4 High") < content.indexOf("### GPT 5.5 High"),
-  );
-  assert.ok(
-    content.indexOf("### GPT 5.5 High") <
-      content.indexOf("### Gemini 3.5 Flash High"),
-  );
+  assert.match(content, /^### Gemini 3\.1 Pro High$/m);
+  assert.match(content, /^### Claude Sonnet 4\.6 Thinking$/m);
+  assert.match(content, /^### Owl Alpha$/m);
+  assert.match(content, /^### Gemma 4 26B$/m);
+  [
+    "### GPT 5.4 High",
+    "### GPT 5.5 High",
+    "### Gemini 3.5 Flash High",
+    "### Gemini 3.1 Pro High",
+    "### Claude Sonnet 4.6 Thinking",
+    "### Owl Alpha",
+    "### Gemma 4 26B",
+  ].reduce((previousIndex, heading) => {
+    const currentIndex = content.indexOf(heading);
+    assert.ok(currentIndex > previousIndex);
+    return currentIndex;
+  }, -1);
   assert.match(content, /^- Execution order: 1$/m);
   assert.match(content, /^## Best Current Read$/m);
-  assert.match(content, /GPT 5\.5 High is the only archived output/);
+  assert.match(content, /GPT 5\.5 High and Claude Sonnet 4\.6 Thinking/);
   assert.ok(
     content.indexOf("## Qualitative Findings") <
       content.indexOf("## Benchmark Protocol"),
@@ -195,30 +205,30 @@ test("English Phonetic Benchmark report markdown carries run labels, protocol, a
     content.indexOf("## Benchmark Protocol") <
       content.indexOf("## Archived Demos"),
   );
-  assert.match(
-    content,
-    /^- Screenshot: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/screenshots\/gpt-5-4-high-quiz\.png$/m,
-  );
-  assert.match(
-    content,
-    /^- Demo: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/demos\/gpt-5-4-high\/$/m,
-  );
-  assert.match(
-    content,
-    /^- Screenshot: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/screenshots\/gpt-5-5-high-quiz\.png$/m,
-  );
-  assert.match(
-    content,
-    /^- Demo: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/demos\/gpt-5-5-high\/$/m,
-  );
-  assert.match(
-    content,
-    /^- Screenshot: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/screenshots\/gemini-3-5-flash-high-quiz\.png$/m,
-  );
-  assert.match(
-    content,
-    /^- Demo: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/demos\/gemini-3-5-flash-high\/$/m,
-  );
+  [
+    "gpt-5-4-high",
+    "gpt-5-5-high",
+    "gemini-3-5-flash-high",
+    "gemini-3-1-pro-high",
+    "sonnet-4-6-thinking",
+    "owl-alpha",
+    "gemma-4-26b",
+  ].forEach((runId) => {
+    assert.match(
+      content,
+      new RegExp(
+        `^- Screenshot: https:\\/\\/piotrkacala\\.pl\\/phonetic-benchmark\\/screenshots\\/${runId}-quiz\\.png$`,
+        "m",
+      ),
+    );
+    assert.match(
+      content,
+      new RegExp(
+        `^- Demo: https:\\/\\/piotrkacala\\.pl\\/phonetic-benchmark\\/demos\\/${runId}\\/$`,
+        "m",
+      ),
+    );
+  });
 });
 
 test("Polish Phonetic Benchmark report markdown carries localized protocol and demo links", () => {
@@ -232,21 +242,41 @@ test("Polish Phonetic Benchmark report markdown carries localized protocol and d
   assert.match(content, /^### GPT 5\.4 High$/m);
   assert.match(content, /^### GPT 5\.5 High$/m);
   assert.match(content, /^### Gemini 3\.5 Flash High$/m);
+  assert.match(content, /^### Gemini 3\.1 Pro High$/m);
+  assert.match(content, /^### Claude Sonnet 4\.6 Thinking$/m);
+  assert.match(content, /^### Owl Alpha$/m);
+  assert.match(content, /^### Gemma 4 26B$/m);
   assert.match(content, /^- Kolejność wykonania: 1$/m);
   assert.match(content, /^## Najlepszy odczyt na teraz$/m);
-  assert.match(content, /GPT 5\.5 High jest jedyną archiwalną wersją/);
+  assert.match(content, /GPT 5\.5 High i Claude Sonnet 4\.6 Thinking/);
   assert.ok(
     content.indexOf("## Wnioski jakościowe") <
       content.indexOf("## Protokół benchmarku"),
   );
-  assert.match(
-    content,
-    /^- Zrzut ekranu: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/screenshots\/gpt-5-4-high-quiz\.png$/m,
-  );
-  assert.match(
-    content,
-    /^- Demo: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/demos\/gpt-5-4-high\/$/m,
-  );
+  [
+    "gpt-5-4-high",
+    "gpt-5-5-high",
+    "gemini-3-5-flash-high",
+    "gemini-3-1-pro-high",
+    "sonnet-4-6-thinking",
+    "owl-alpha",
+    "gemma-4-26b",
+  ].forEach((runId) => {
+    assert.match(
+      content,
+      new RegExp(
+        `^- Zrzut ekranu: https:\\/\\/piotrkacala\\.pl\\/phonetic-benchmark\\/screenshots\\/${runId}-quiz\\.png$`,
+        "m",
+      ),
+    );
+    assert.match(
+      content,
+      new RegExp(
+        `^- Demo: https:\\/\\/piotrkacala\\.pl\\/phonetic-benchmark\\/demos\\/${runId}\\/$`,
+        "m",
+      ),
+    );
+  });
 });
 
 test("static discovery files include report HTML and markdown paths", () => {
