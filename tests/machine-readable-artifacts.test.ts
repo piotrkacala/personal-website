@@ -502,7 +502,7 @@ test("gallery pages use the shared gallery data without claiming a duplicate mar
     assert.match(route, /markdownUrl=\{false\}/);
     assert.match(
       route,
-      /homeLink=\{\{ href: gallery\.reportHref, ariaLabel: gallery\.reportLabel \}\}/,
+      /homeLink=\{\{ href: gallery\.homeHref, ariaLabel: gallery\.homeLabel \}\}/,
     );
     assert.match(route, /contentWidth="wide"/);
   }
@@ -609,6 +609,10 @@ test("benchmark gallery component renders ordered screenshots and demos without 
   assert.match(component, /\{run\.testCount\}/);
   assert.doesNotMatch(component, /href=\{run\.screenshotPath\}/);
   assert.doesNotMatch(component, /<script/);
+  assert.ok(
+    component.indexOf("<figcaption>") <
+      component.indexOf("src={run.screenshotPath}"),
+  );
 });
 
 test("400m companion profile is generated with high-signal operating details", () => {

@@ -102,6 +102,8 @@ export interface BenchmarkReportCopy {
 export interface BenchmarkGalleryCopy {
   lang: BenchmarkReportLang;
   metadata: SiteMetadata;
+  homeHref: string;
+  homeLabel: string;
   reportHref: string;
   reportLabel: string;
   languageSwitcher: BenchmarkReportCopy["languageSwitcher"];
@@ -109,7 +111,6 @@ export interface BenchmarkGalleryCopy {
   title: string;
   introParagraphs: readonly string[];
   detailLabels: {
-    executionOrder: string;
     status: string;
     sourceLoc: string;
     testCount: string;
@@ -784,6 +785,8 @@ export const phoneticBenchmarkGalleries = {
         },
       },
     },
+    homeHref: "/",
+    homeLabel: "Back to homepage",
     reportHref: "/phonetic-benchmark/",
     reportLabel: "Back to Phonetic Benchmark report",
     languageSwitcher: {
@@ -795,13 +798,12 @@ export const phoneticBenchmarkGalleries = {
       alternateLanguage: "pl",
     },
     eyebrow: "Phonetic Benchmark screenshot archive",
-    title: "Screenshot Gallery",
+    title: "Phonetic Benchmark Screenshot Gallery",
     introParagraphs: [
       "These screenshots show how different models interpreted the same product brief. The differences in layout, color, density, and polish are part of the benchmark material.",
-      "The gallery keeps every run visible in execution order for direct visual comparison. It is not a ranking and does not identify a winner.",
+      "The gallery keeps every run visible in execution order for direct visual comparison. It is not a ranking and does not identify a winner. The status shown with each interface is the formal report status, not a visual score.",
     ],
     detailLabels: {
-      executionOrder: "Run",
       status: "Status",
       sourceLoc: "Source LoC",
       testCount: "Static automated tests",
@@ -832,6 +834,8 @@ export const phoneticBenchmarkGalleries = {
         },
       },
     },
+    homeHref: "/pl/",
+    homeLabel: "Wróć do strony głównej",
     reportHref: "/pl/phonetic-benchmark/",
     reportLabel: "Wróć do raportu Phonetic Benchmark",
     languageSwitcher: {
@@ -843,13 +847,12 @@ export const phoneticBenchmarkGalleries = {
       alternateLanguage: "en",
     },
     eyebrow: "Archiwum screenshotów Phonetic Benchmark",
-    title: "Galeria Screenshotów",
+    title: "Galeria Screenshotów Phonetic Benchmark",
     introParagraphs: [
       "Te screenshoty pokazują, jak różne modele zinterpretowały ten sam brief produktowy. Różnice w layoucie, kolorach, gęstości i poziomie dopracowania są częścią materiału benchmarkowego.",
-      "Galeria pokazuje każdą próbę w kolejności wykonania, żeby ułatwić bezpośrednie porównanie wizualne. To nie jest ranking i nie wskazuje zwycięzcy.",
+      "Galeria pokazuje każdą próbę w kolejności wykonania, żeby ułatwić bezpośrednie porównanie wizualne. To nie jest ranking i nie wskazuje zwycięzcy. Status przy interfejsie jest formalnym statusem z raportu, a nie oceną warstwy wizualnej.",
     ],
     detailLabels: {
-      executionOrder: "Próba",
       status: "Status",
       sourceLoc: "Linie kodu źródłowego",
       testCount: "Statycznie policzone testy automatyczne",

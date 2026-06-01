@@ -86,6 +86,9 @@ function getFailureTypes(run: BenchmarkRunCopy): string {
   <section class="report-section" aria-labelledby={resultsHeadingId}>
     <h2 id={resultsHeadingId}>{report.resultsHeading}</h2>
     <p>{report.resultsIntro}</p>
+    <p>
+      {report.galleryText} <a href={report.galleryHref}>{report.galleryLabel}</a>
+    </p>
     <div class="results-table-wrap">
       <table class="results-table">
         <thead>
