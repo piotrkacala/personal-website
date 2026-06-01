@@ -1,0 +1,188 @@
+---
+import type {
+  BenchmarkGalleryCopy,
+  BenchmarkStatus,
+} from "../site/phonetic-benchmark";
+
+interface Props {
+  gallery: BenchmarkGalleryCopy;
+}
+
+const { gallery } = Astro.props;
+const runs = [...gallery.runs].sort(
+  (firstRun, secondRun) => firstRun.executionOrder - secondRun.executionOrder,
+);
+
+function getStatusLabel(status: BenchmarkStatus): string {
+  return gallery.statusLabels[status];
+}
+---
+
+<article class="gallery">
+  <header class="gallery-header">
+    <p class="gallery-eyebrow ui-text">{gallery.eyebrow}</p>
+    <h1>{gallery.title}</h1>
+    {gallery.introParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+    <p class="gallery-report-link">
+      <a href={gallery.reportHref}>{gallery.reportLabel}</a>
+    </p>
+  </header>
+
+  <ol class="gallery-list">
+    {
+      runs.map((run) => (
+        <li class="gallery-item" data-run-id={run.id}>
+          <figure>
+            <img
+              src={run.screenshotPath}
+              alt={run.screenshotAlt}
+              width="1440"
+              height="900"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              <h2>
+                <span class="gallery-order">
+                  {String(run.executionOrder).padStart(2, "0")}.
+                </span>{" "}
+                {run.model}
+              </h2>
+              <dl>
+                <div>
+                  <dt>{gallery.detailLabels.executionOrder}</dt>
+                  <dd>{run.executionOrder}</dd>
+                </div>
+                <div>
+                  <dt>{gallery.detailLabels.status}</dt>
+                  <dd>
+                    <span class:list={["status", `status--${run.status}`]}>
+                      {getStatusLabel(run.status)}
+                    </span>
+                  </dd>
+                </div>
+                <div>
+                  <dt>{gallery.detailLabels.sourceLoc}</dt>
+                  <dd>{run.sourceLoc.toLocaleString(gallery.lang)}</dd>
+                </div>
+                <div>
+                  <dt>{gallery.detailLabels.testCount}</dt>
+                  <dd>{run.testCount}</dd>
+                </div>
+              </dl>
+              <a href={run.demoUrl}>{gallery.demoLabel}</a>
+            </figcaption>
+          </figure>
+        </li>
+      ))
+    }
+  </ol>
+
+  <p class="gallery-report-link">
+    <a href={gallery.reportHref}>{gallery.reportLabel}</a>
+  </p>
+</article>
+
+<style>
+  .gallery > *,
+  .gallery-header > *,
+  .gallery-item figure,
+  .gallery-item h2,
+  .gallery-item dl,
+  .gallery-item dd {
+    margin: 0;
+  }
+
+  .gallery-header > * + * {
+    margin-top: calc(var(--spacing-rhythm) * 0.72);
+  }
+
+  .gallery-eyebrow {
+    color: var(--accent);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .gallery-header p {
+    max-width: 66ch;
+  }
+
+  .gallery-report-link {
+    margin-top: calc(var(--spacing-rhythm) * 0.72);
+  }
+
+  .gallery-report-link a,
+  .gallery-item a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.5rem;
+    font-weight: 600;
+  }
+
+  .gallery-list {
+    margin: calc(var(--spacing-rhythm) * 1.45) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .gallery-item + .gallery-item {
+    margin-top: calc(var(--spacing-rhythm) * 1.45);
+    padding-top: calc(var(--spacing-rhythm) * 1.45);
+    border-top: 1px solid var(--divider);
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--divider);
+  }
+
+  .gallery-item figcaption {
+    margin-top: calc(var(--spacing-rhythm) * 0.48);
+  }
+
+  .gallery-item h2 {
+    max-width: none;
+    font-size: clamp(1.3rem, 1.18rem + 0.45vw, 1.62rem);
+  }
+
+  .gallery-order {
+    color: var(--accent);
+  }
+
+  .gallery-item dl {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.45rem 1rem;
+    margin-top: calc(var(--spacing-rhythm) * 0.42);
+    font-size: var(--text-ui);
+    line-height: 1.38;
+  }
+
+  .gallery-item dt {
+    color: rgb(23 20 18 / 72%);
+    font-weight: 700;
+  }
+
+  .status {
+    font-weight: 700;
+  }
+
+  .status--comparable {
+    color: #25613d;
+  }
+
+  .status--contract-failing {
+    color: #8a5618;
+  }
+
+  .status--unrunnable {
+    color: #9a332d;
+  }
+
+  @media (max-width: 39.99rem) {
+    .gallery-item dl {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

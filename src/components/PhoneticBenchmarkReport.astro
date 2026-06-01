@@ -203,6 +203,9 @@ function getFailureTypes(run: BenchmarkRunCopy): string {
   <section class="report-section" aria-labelledby={artifactHeadingId}>
     <h2 id={artifactHeadingId}>{report.artifactHeading}</h2>
     <p>{report.artifactIntro}</p>
+    <p>
+      {report.galleryText} <a href={report.galleryHref}>{report.galleryLabel}</a>
+    </p>
     <ul class="artifact-list">
       {
         runs.map((run) => (

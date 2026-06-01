@@ -6,7 +6,10 @@ import { en } from "../src/i18n/en.ts";
 import { getMachineReadableArtifacts } from "../src/i18n/machine-readable.ts";
 import { pl } from "../src/i18n/pl.ts";
 import type { LinkBlock } from "../src/i18n/schema.ts";
-import { phoneticBenchmarkReports } from "../src/site/phonetic-benchmark.ts";
+import {
+  phoneticBenchmarkGalleries,
+  phoneticBenchmarkReports,
+} from "../src/site/phonetic-benchmark.ts";
 
 type ArtifactPath = `/${string}`;
 
@@ -108,6 +111,10 @@ test("English homepage markdown keeps its key structure and references", () => {
     content,
     /^- Report: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/$/m,
   );
+  assert.match(
+    content,
+    /^- Gallery: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/gallery\/$/m,
+  );
   assert.match(content, /^#### As of April 2026$/m);
   assert.match(content, /^- Production code: ~21,000 lines$/m);
   assert.match(content, /^- Tool: https:\/\/piotrkacala\.pl\/400m\/$/m);
@@ -142,6 +149,10 @@ test("Polish homepage markdown keeps its key structure and references", () => {
     content,
     /^- Raport: https:\/\/piotrkacala\.pl\/pl\/phonetic-benchmark\/$/m,
   );
+  assert.match(
+    content,
+    /^- Galeria: https:\/\/piotrkacala\.pl\/pl\/phonetic-benchmark\/gallery\/$/m,
+  );
   assert.match(content, /^### 4\. Ta strona$/m);
   assert.match(content, /^#### Stan na kwiecień 2026$/m);
   assert.match(content, /^- Kod produkcyjny: ~21,000 linii$/m);
@@ -174,10 +185,18 @@ test("llms-full.txt carries the consolidated public references", () => {
     content,
     /^- Phonetic Benchmark markdown report: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/index\.md$/m,
   );
+  assert.match(
+    content,
+    /^- Phonetic Benchmark screenshot gallery: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/gallery\/$/m,
+  );
   assert.match(content, /^- Contact: mailto:kontakt@piotrkacala\.pl$/m);
   assert.match(
     content,
     /^- Phonetic Alphabet Trainer — Report: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/$/m,
+  );
+  assert.match(
+    content,
+    /^- Phonetic Alphabet Trainer — Gallery: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/gallery\/$/m,
   );
   assert.match(
     content,
@@ -250,6 +269,10 @@ test("English Phonetic Benchmark markdown publishes all runs without private wor
   assert.match(content, /^## What The Runs Show$/m);
   assert.match(content, /^## Selected Case Notes$/m);
   assert.match(content, /^## Archived Demos$/m);
+  assert.match(
+    content,
+    /Open screenshot gallery: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/gallery\/$/m,
+  );
   assert.doesNotMatch(content, /^- Prompts?:/m);
   assert.doesNotMatch(content, /^- Elapsed:/m);
   assert.doesNotMatch(content, /^- Git(?: use)?:/m);
@@ -387,7 +410,34 @@ test("benchmark structured data covers 15 archived runs and selected screenshot 
   );
 });
 
-test("static discovery files include report HTML and markdown paths", () => {
+test("benchmark galleries expose exactly 15 screenshots and explicit demo links in run order", () => {
+  const expectedRunIds = phoneticBenchmarkRuns.map((run) => run.id);
+
+  for (const gallery of Object.values(phoneticBenchmarkGalleries)) {
+    assert.equal(gallery.runs.length, 15);
+    assert.deepEqual(
+      gallery.runs.map((run) => run.id),
+      expectedRunIds,
+    );
+    assert.deepEqual(
+      gallery.runs.map((run) => run.executionOrder),
+      Array.from({ length: 15 }, (_, index) => index + 1),
+    );
+
+    gallery.runs.forEach((run) => {
+      assert.equal(
+        run.screenshotPath,
+        `/phonetic-benchmark/screenshots/${run.id}-quiz.png`,
+      );
+      assert.equal(
+        run.demoUrl,
+        `https://piotrkacala.pl/phonetic-benchmark/demos/${run.id}/index.html`,
+      );
+    });
+  }
+});
+
+test("static discovery files include report and gallery paths", () => {
   const llms = readFileSync("public/llms.txt", "utf8");
   const sitemap = readFileSync("public/sitemap.xml", "utf8");
 
@@ -398,6 +448,14 @@ test("static discovery files include report HTML and markdown paths", () => {
   assert.match(
     llms,
     /^- Polish Phonetic Benchmark markdown report: https:\/\/piotrkacala\.pl\/pl\/phonetic-benchmark\/index\.md$/m,
+  );
+  assert.match(
+    llms,
+    /^- Phonetic Benchmark screenshot gallery: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/gallery\/$/m,
+  );
+  assert.match(
+    llms,
+    /^- Polish Phonetic Benchmark screenshot gallery: https:\/\/piotrkacala\.pl\/pl\/phonetic-benchmark\/gallery\/$/m,
   );
   assert.match(
     llms,
@@ -415,6 +473,8 @@ test("static discovery files include report HTML and markdown paths", () => {
   for (const pathname of [
     "/phonetic-benchmark/",
     "/pl/phonetic-benchmark/",
+    "/phonetic-benchmark/gallery/",
+    "/pl/phonetic-benchmark/gallery/",
     "/phonetic-benchmark/index.md",
     "/pl/phonetic-benchmark/index.md",
   ]) {
@@ -424,6 +484,27 @@ test("static discovery files include report HTML and markdown paths", () => {
         `<loc>https://piotrkacala\\.pl${pathname.replaceAll("/", "\\/")}</loc>`,
       ),
     );
+  }
+});
+
+test("gallery pages use the shared gallery data without claiming a duplicate markdown export", () => {
+  const englishRoute = readFileSync(
+    "src/pages/phonetic-benchmark/gallery/index.astro",
+    "utf8",
+  );
+  const polishRoute = readFileSync(
+    "src/pages/pl/phonetic-benchmark/gallery/index.astro",
+    "utf8",
+  );
+
+  for (const route of [englishRoute, polishRoute]) {
+    assert.match(route, /phoneticBenchmarkGalleries/);
+    assert.match(route, /markdownUrl=\{false\}/);
+    assert.match(
+      route,
+      /homeLink=\{\{ href: gallery\.reportHref, ariaLabel: gallery\.reportLabel \}\}/,
+    );
+    assert.match(route, /contentWidth="wide"/);
   }
 });
 
@@ -477,6 +558,10 @@ test("benchmark report component keeps compact rows and selected screenshot case
   assert.match(component, /aria-labelledby=\{artifactHeadingId\}/);
   assert.match(component, /<h2 id=\{artifactHeadingId\}>/);
   assert.match(component, /<a href=\{run\.demoUrl\}>\{run\.model\}<\/a>/);
+  assert.match(
+    component,
+    /<a href=\{report\.galleryHref\}>\{report\.galleryLabel\}<\/a>/,
+  );
   assert.ok(
     component.indexOf("aria-labelledby={benchmarkHeadingId}") <
       component.indexOf("aria-labelledby={readingHeadingId}"),
@@ -501,6 +586,29 @@ test("benchmark report component keeps compact rows and selected screenshot case
     component.indexOf("aria-labelledby={artifactHeadingId}") <
       component.indexOf("aria-labelledby={closingHeadingId}"),
   );
+});
+
+test("benchmark gallery component renders ordered screenshots and demos without image interaction", () => {
+  const component = readFileSync(
+    "src/components/PhoneticBenchmarkGallery.astro",
+    "utf8",
+  );
+
+  assert.match(
+    component,
+    /firstRun\.executionOrder - secondRun\.executionOrder/,
+  );
+  assert.match(component, /runs\.map/);
+  assert.match(component, /data-run-id=\{run\.id\}/);
+  assert.match(component, /src=\{run\.screenshotPath\}/);
+  assert.match(
+    component,
+    /<a href=\{run\.demoUrl\}>\{gallery\.demoLabel\}<\/a>/,
+  );
+  assert.match(component, /run\.sourceLoc\.toLocaleString\(gallery\.lang\)/);
+  assert.match(component, /\{run\.testCount\}/);
+  assert.doesNotMatch(component, /href=\{run\.screenshotPath\}/);
+  assert.doesNotMatch(component, /<script/);
 });
 
 test("400m companion profile is generated with high-signal operating details", () => {

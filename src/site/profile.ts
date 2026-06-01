@@ -27,6 +27,11 @@ export const siteProfile = {
       url: "https://piotrkacala.pl/phonetic-benchmark/",
     },
     {
+      label: "Phonetic Benchmark Screenshot Gallery",
+      summary: "direct visual comparison of archived AI-agent outputs",
+      url: "https://piotrkacala.pl/phonetic-benchmark/gallery/",
+    },
+    {
       label: "Surfaced",
       summary: "docs-first zero-code browser extension",
       url: "https://addons.mozilla.org/firefox/addon/surfaced/",

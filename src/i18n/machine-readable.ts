@@ -212,6 +212,10 @@ function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
   lines.push("");
   lines.push(report.artifactIntro);
   lines.push("");
+  lines.push(
+    `${report.galleryText} ${report.galleryLabel}: ${new URL(report.galleryHref, report.metadata.openGraph.url).toString()}`,
+  );
+  lines.push("");
   runs.forEach((run) => {
     lines.push(`- ${run.model}: ${run.demoUrl}`);
   });
@@ -229,6 +233,8 @@ function collectPublicReferences(): readonly string[] {
     "Polish homepage: https://piotrkacala.pl/pl/",
     "Phonetic Benchmark report: https://piotrkacala.pl/phonetic-benchmark/",
     "Polish Phonetic Benchmark report: https://piotrkacala.pl/pl/phonetic-benchmark/",
+    "Phonetic Benchmark screenshot gallery: https://piotrkacala.pl/phonetic-benchmark/gallery/",
+    "Polish Phonetic Benchmark screenshot gallery: https://piotrkacala.pl/pl/phonetic-benchmark/gallery/",
     `Phonetic Benchmark markdown report: ${getPhoneticBenchmarkMarkdownUrl("en")}`,
     `Polish Phonetic Benchmark markdown report: ${getPhoneticBenchmarkMarkdownUrl("pl")}`,
     `Contact: mailto:${en.contact.email}`,

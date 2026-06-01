@@ -92,8 +92,31 @@ export interface BenchmarkReportCopy {
   caseNotes: readonly BenchmarkCaseNote[];
   artifactHeading: string;
   artifactIntro: string;
+  galleryText: string;
+  galleryHref: string;
+  galleryLabel: string;
   closingHeading: string;
   closingText: string;
+}
+
+export interface BenchmarkGalleryCopy {
+  lang: BenchmarkReportLang;
+  metadata: SiteMetadata;
+  reportHref: string;
+  reportLabel: string;
+  languageSwitcher: BenchmarkReportCopy["languageSwitcher"];
+  eyebrow: string;
+  title: string;
+  introParagraphs: readonly string[];
+  detailLabels: {
+    executionOrder: string;
+    status: string;
+    sourceLoc: string;
+    testCount: string;
+  };
+  statusLabels: Readonly<Record<BenchmarkStatus, string>>;
+  demoLabel: string;
+  runs: readonly BenchmarkRunCopy[];
 }
 
 const siteUrl = siteProfile.siteUrl;
@@ -551,6 +574,10 @@ export const phoneticBenchmarkReports = {
     artifactHeading: "Archived Demos",
     artifactIntro:
       "Each demo is a static snapshot preserved for this report. These are benchmark submissions, not maintained products. The archive is intentionally complete: even weak outputs are useful evidence when comparing model behavior.",
+    galleryText:
+      "The screenshot gallery places all 15 interfaces in execution order for direct visual comparison.",
+    galleryHref: "/phonetic-benchmark/gallery/",
+    galleryLabel: "Open screenshot gallery",
     closingHeading: "Closing",
     closingText:
       "The benchmark does not identify one universal winner. It shows a practical way to evaluate models for small zero-code product work: verify the contract, inspect the interaction loop, review the repository evidence, and click through the actual output. Model choice becomes easier when the comparison stays concrete.",
@@ -724,11 +751,114 @@ export const phoneticBenchmarkReports = {
     artifactHeading: "Archiwalne Demo",
     artifactIntro:
       "Każde demo jest statycznym snapshotem zachowanym dla tego raportu. To wynik benchmarku, a nie utrzymywany produkt. Archiwum jest celowo kompletne: także słabe wyniki są użytecznym materiałem przy porównywaniu zachowania modeli.",
+    galleryText:
+      "Galeria screenshotów pokazuje wszystkie 15 interfejsów w kolejności wykonania, żeby można było bezpośrednio porównać decyzje wizualne.",
+    galleryHref: "/pl/phonetic-benchmark/gallery/",
+    galleryLabel: "Otwórz galerię screenshotów",
     closingHeading: "Zakończenie",
     closingText:
       "Benchmark nie wskazuje jednego uniwersalnego zwycięzcy. Pokazuje praktyczny sposób oceny modeli do małych projektów zero-code: sprawdzić kontrakt, przejść główną pętlę interakcji, przejrzeć materiał w repozytorium i przeklikać faktyczny wynik. Wybór modelu staje się prostszy, gdy porównanie pozostaje konkretne.",
   },
 } as const satisfies Record<BenchmarkReportLang, BenchmarkReportCopy>;
+
+export const phoneticBenchmarkGalleries = {
+  en: {
+    lang: "en",
+    metadata: {
+      title: "Phonetic Benchmark Screenshot Gallery — Piotr Kacała",
+      description:
+        "Screenshot gallery of 15 archived web applications built from the same Phonetic Alphabet Trainer specification.",
+      openGraph: {
+        title: "Phonetic Benchmark Screenshot Gallery",
+        description:
+          "All 15 archived Phonetic Benchmark interfaces in execution order for direct visual comparison.",
+        type: "website",
+        locale: "en_US",
+        siteName: "Piotr Kacała",
+        url: url("/phonetic-benchmark/gallery/"),
+        image: {
+          url: "https://piotrkacala.pl/og/piotr-kacala-en.png",
+          width: 1200,
+          height: 630,
+          alt: "Phonetic Benchmark Screenshot Gallery — Piotr Kacała",
+        },
+      },
+    },
+    reportHref: "/phonetic-benchmark/",
+    reportLabel: "Back to Phonetic Benchmark report",
+    languageSwitcher: {
+      ariaLabel: "Language switcher",
+      currentLabel: "EN",
+      currentLanguage: "en",
+      alternateLabel: "PL",
+      alternateHref: "/pl/phonetic-benchmark/gallery/",
+      alternateLanguage: "pl",
+    },
+    eyebrow: "Phonetic Benchmark screenshot archive",
+    title: "Screenshot Gallery",
+    introParagraphs: [
+      "These screenshots show how different models interpreted the same product brief. The differences in layout, color, density, and polish are part of the benchmark material.",
+      "The gallery keeps every run visible in execution order for direct visual comparison. It is not a ranking and does not identify a winner.",
+    ],
+    detailLabels: {
+      executionOrder: "Run",
+      status: "Status",
+      sourceLoc: "Source LoC",
+      testCount: "Static automated tests",
+    },
+    statusLabels: phoneticBenchmarkReports.en.statusLabels,
+    demoLabel: "Open archived demo",
+    runs: englishRuns,
+  },
+  pl: {
+    lang: "pl",
+    metadata: {
+      title: "Galeria Screenshotów Phonetic Benchmark — Piotr Kacała",
+      description:
+        "Galeria screenshotów 15 archiwalnych aplikacji webowych zbudowanych na podstawie tej samej specyfikacji Phonetic Alphabet Trainer.",
+      openGraph: {
+        title: "Galeria Screenshotów Phonetic Benchmark",
+        description:
+          "Wszystkie 15 archiwalnych interfejsów Phonetic Benchmark w kolejności wykonania do bezpośredniego porównania wizualnego.",
+        type: "website",
+        locale: "pl_PL",
+        siteName: "Piotr Kacała",
+        url: url("/pl/phonetic-benchmark/gallery/"),
+        image: {
+          url: "https://piotrkacala.pl/og/piotr-kacala-pl.png",
+          width: 1200,
+          height: 630,
+          alt: "Galeria Screenshotów Phonetic Benchmark — Piotr Kacała",
+        },
+      },
+    },
+    reportHref: "/pl/phonetic-benchmark/",
+    reportLabel: "Wróć do raportu Phonetic Benchmark",
+    languageSwitcher: {
+      ariaLabel: "Przełącznik języka",
+      currentLabel: "PL",
+      currentLanguage: "pl",
+      alternateLabel: "EN",
+      alternateHref: "/phonetic-benchmark/gallery/",
+      alternateLanguage: "en",
+    },
+    eyebrow: "Archiwum screenshotów Phonetic Benchmark",
+    title: "Galeria Screenshotów",
+    introParagraphs: [
+      "Te screenshoty pokazują, jak różne modele zinterpretowały ten sam brief produktowy. Różnice w layoucie, kolorach, gęstości i poziomie dopracowania są częścią materiału benchmarkowego.",
+      "Galeria pokazuje każdą próbę w kolejności wykonania, żeby ułatwić bezpośrednie porównanie wizualne. To nie jest ranking i nie wskazuje zwycięzcy.",
+    ],
+    detailLabels: {
+      executionOrder: "Próba",
+      status: "Status",
+      sourceLoc: "Linie kodu źródłowego",
+      testCount: "Statycznie policzone testy automatyczne",
+    },
+    statusLabels: phoneticBenchmarkReports.pl.statusLabels,
+    demoLabel: "Otwórz archiwalne demo",
+    runs: polishRuns,
+  },
+} as const satisfies Record<BenchmarkReportLang, BenchmarkGalleryCopy>;
 
 export function getPhoneticBenchmarkMarkdownUrl(
   lang: BenchmarkReportLang,

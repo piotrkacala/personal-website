@@ -10,6 +10,8 @@
 - Polish markdown homepage: https://piotrkacala.pl/pl/index.md
 - Phonetic Benchmark report: https://piotrkacala.pl/phonetic-benchmark/
 - Polish Phonetic Benchmark report: https://piotrkacala.pl/pl/phonetic-benchmark/
+- Phonetic Benchmark screenshot gallery: https://piotrkacala.pl/phonetic-benchmark/gallery/
+- Polish Phonetic Benchmark screenshot gallery: https://piotrkacala.pl/pl/phonetic-benchmark/gallery/
 - Phonetic Benchmark markdown report: https://piotrkacala.pl/phonetic-benchmark/index.md
 - Polish Phonetic Benchmark markdown report: https://piotrkacala.pl/pl/phonetic-benchmark/index.md
 - 400m companion profile: https://piotrkacala.pl/projects/400m.md
@@ -21,6 +23,7 @@
 - Public repo: https://github.com/piotrkacala/personal-website
 - Phonetic Alphabet Trainer: https://piotrkacala.github.io/phonetic/
 - Phonetic Benchmark Report: https://piotrkacala.pl/phonetic-benchmark/
+- Phonetic Benchmark Screenshot Gallery: https://piotrkacala.pl/phonetic-benchmark/gallery/
 - Surfaced for Firefox: https://addons.mozilla.org/firefox/addon/surfaced/
 - Surfaced for Chrome: https://chromewebstore.google.com/detail/surfaced/bpbidikjpaffmpcbincadomhbfnoaaem
 - 400m: https://piotrkacala.pl/400m/

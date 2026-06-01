@@ -62,6 +62,12 @@ export const en = {
             label: "Report: piotrkacala.pl/phonetic-benchmark/",
             machineLabel: "Report",
           },
+          {
+            type: "link",
+            href: "https://piotrkacala.pl/phonetic-benchmark/gallery/",
+            label: "Gallery: piotrkacala.pl/phonetic-benchmark/gallery/",
+            machineLabel: "Gallery",
+          },
         ],
       },
       {

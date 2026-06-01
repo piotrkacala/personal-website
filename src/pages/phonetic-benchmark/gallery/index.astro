@@ -1,0 +1,24 @@
+---
+import PhoneticBenchmarkGallery from "../../../components/PhoneticBenchmarkGallery.astro";
+import Base from "../../../layouts/Base.astro";
+import { phoneticBenchmarkGalleries } from "../../../site/phonetic-benchmark";
+
+const gallery = phoneticBenchmarkGalleries.en;
+const alternates = {
+  en: gallery.metadata.openGraph.url,
+  pl: phoneticBenchmarkGalleries.pl.metadata.openGraph.url,
+  default: gallery.metadata.openGraph.url,
+};
+---
+
+<Base
+  lang={gallery.lang}
+  metadata={gallery.metadata}
+  languageSwitcher={gallery.languageSwitcher}
+  markdownUrl={false}
+  alternates={alternates}
+  homeLink={{ href: gallery.reportHref, ariaLabel: gallery.reportLabel }}
+  contentWidth="wide"
+>
+  <PhoneticBenchmarkGallery gallery={gallery} />
+</Base>
