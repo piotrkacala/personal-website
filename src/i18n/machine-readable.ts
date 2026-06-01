@@ -131,8 +131,12 @@ function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
   const runs = [...report.runs].sort(
     (firstRun, secondRun) => firstRun.executionOrder - secondRun.executionOrder,
   );
-  const runLabel = (run: BenchmarkReportCopy["runs"][number]): string =>
-    `${run.model} ${run.effort}`.trim();
+  const renderParagraphs = (paragraphs: readonly string[]): void => {
+    paragraphs.forEach((paragraph) => {
+      lines.push(paragraph);
+      lines.push("");
+    });
+  };
   const lines: string[] = [
     heading(1, report.title),
     "",
@@ -145,56 +149,71 @@ function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
     `Homepage: ${new URL(report.homeHref, report.metadata.openGraph.url).toString()}`,
   ];
   lines.push("");
+  lines.push(heading(2, report.benchmarkHeading));
+  lines.push("");
+  renderParagraphs(report.benchmarkParagraphs);
+  lines.push(heading(2, report.readingHeading));
+  lines.push("");
+  lines.push(report.readingIntro);
+  lines.push("");
+  Object.entries(report.statusDescriptions).forEach(([status, description]) => {
+    lines.push(`- \`${status}\`: ${description}`);
+  });
+  lines.push("");
+  lines.push(report.evidenceText);
+  lines.push("");
   lines.push(heading(2, report.resultsHeading));
   lines.push("");
   lines.push(report.resultsIntro);
   lines.push("");
 
   runs.forEach((run) => {
-    lines.push(heading(3, runLabel(run)));
+    lines.push(heading(3, run.model));
     lines.push("");
+    lines.push(`- ID: ${run.id}`);
+    lines.push(`- Benchmark version: ${run.benchmarkVersion}`);
+    lines.push(`- Status: ${run.status}`);
     lines.push(
-      `- ${report.markdownRunLabels.executionOrder}: ${run.executionOrder}`,
+      `- ${report.tableLabels.failureTypes}: ${
+        run.failureTypes.length > 0
+          ? run.failureTypes
+              .map((failureType) => report.failureTypeLabels[failureType])
+              .join(", ")
+          : report.noneLabel
+      }`,
     );
-    lines.push(`- ${report.tableLabels.promptCount}: ${run.promptCount}`);
-    lines.push(`- ${report.tableLabels.elapsed}: ${run.elapsed}`);
+    lines.push(`- ${report.detailLabels.runDate}: ${run.runDate}`);
     lines.push(`- ${report.tableLabels.sourceLoc}: ${run.sourceLoc}`);
-    lines.push(`- ${report.tableLabels.stack}: ${run.stack}`);
-    lines.push(`- ${report.tableLabels.verdict}: ${run.verdict}`);
+    lines.push(`- ${report.tableLabels.testCount}: ${run.testCount}`);
+    lines.push(`- ${report.detailLabels.stack}: ${run.stack}`);
+    lines.push(`- ${report.tableLabels.functionalRead}: ${run.functionalRead}`);
     lines.push(
-      `- ${report.markdownRunLabels.primaryFinding}: ${run.primaryFinding}`,
+      `- Screenshot: ${new URL(run.screenshotPath, report.metadata.openGraph.url).toString()}`,
     );
-    lines.push(
-      `- ${report.markdownRunLabels.notesDiscipline}: ${run.notesDiscipline}`,
-    );
-    lines.push(`- ${report.markdownRunLabels.gitUse}: ${run.gitUse}`);
-    lines.push(
-      `- ${report.markdownRunLabels.screenshot}: ${new URL(run.screenshotPath, report.metadata.openGraph.url).toString()}`,
-    );
-    lines.push(`- ${report.markdownRunLabels.demo}: ${run.demoUrl}`);
+    lines.push(`- Demo: ${run.demoUrl}`);
     lines.push("");
   });
 
-  lines.push(heading(2, report.currentBestHeading));
-  lines.push("");
-  lines.push(report.currentBestText);
-  lines.push("");
   lines.push(heading(2, report.findingsHeading));
   lines.push("");
-  lines.push(report.findingsIntro);
-  lines.push("");
-  lines.push(heading(2, report.protocolHeading));
-  lines.push("");
-  report.protocol.forEach((item) => {
-    lines.push(`- ${item}`);
+  report.findings.forEach((finding) => {
+    lines.push(heading(3, finding.heading));
+    lines.push("");
+    renderParagraphs(finding.paragraphs);
   });
+  lines.push(heading(2, report.caseNotesHeading));
   lines.push("");
+  report.caseNotes.forEach((caseNote) => {
+    lines.push(heading(3, caseNote.heading));
+    lines.push("");
+    renderParagraphs(caseNote.paragraphs);
+  });
   lines.push(heading(2, report.artifactHeading));
   lines.push("");
   lines.push(report.artifactIntro);
   lines.push("");
   runs.forEach((run) => {
-    lines.push(`- ${runLabel(run)}: ${run.demoUrl}`);
+    lines.push(`- ${run.model}: ${run.demoUrl}`);
   });
   lines.push("");
   lines.push(heading(2, report.closingHeading));

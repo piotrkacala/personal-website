@@ -1,5 +1,10 @@
 ---
-import type { BenchmarkReportCopy } from "../site/phonetic-benchmark";
+import type {
+  BenchmarkFailureType,
+  BenchmarkReportCopy,
+  BenchmarkRunCopy,
+  BenchmarkStatus,
+} from "../site/phonetic-benchmark";
 
 interface Props {
   report: BenchmarkReportCopy;
@@ -9,22 +14,41 @@ const { report } = Astro.props;
 const runs = [...report.runs].sort(
   (firstRun, secondRun) => firstRun.executionOrder - secondRun.executionOrder,
 );
-const findingRuns = [...report.runs].sort(
-  (firstRun, secondRun) => secondRun.executionOrder - firstRun.executionOrder,
-);
-const protocolHeadingId = "benchmark-protocol";
+const statusOrder = [
+  "comparable",
+  "contract-failing",
+  "unrunnable",
+] as const satisfies readonly BenchmarkStatus[];
+const benchmarkHeadingId = "benchmark-overview";
+const readingHeadingId = "benchmark-reading";
 const resultsHeadingId = "benchmark-results";
-const currentBestHeadingId = "benchmark-current-best";
 const findingsHeadingId = "benchmark-findings";
+const caseNotesHeadingId = "benchmark-case-notes";
 const artifactHeadingId = "benchmark-artifacts";
 const closingHeadingId = "benchmark-closing";
 
-function getFindingId(runId: string): string {
-  return `benchmark-finding-${runId}`;
+function getRun(runId: string): BenchmarkRunCopy {
+  const run = runs.find((candidate) => candidate.id === runId);
+
+  if (!run) {
+    throw new Error(`Missing benchmark run: ${runId}`);
+  }
+
+  return run;
 }
 
-function getRunLabel(run: BenchmarkReportCopy["runs"][number]): string {
-  return `${run.model} ${run.effort}`.trim();
+function getStatusLabel(status: BenchmarkStatus): string {
+  return report.statusLabels[status];
+}
+
+function getFailureTypeLabel(failureType: BenchmarkFailureType): string {
+  return report.failureTypeLabels[failureType];
+}
+
+function getFailureTypes(run: BenchmarkRunCopy): string {
+  return run.failureTypes.length > 0
+    ? run.failureTypes.map(getFailureTypeLabel).join(", ")
+    : report.noneLabel;
 }
 ---
 
@@ -38,6 +62,27 @@ function getRunLabel(run: BenchmarkReportCopy["runs"][number]): string {
     </p>
   </header>
 
+  <section class="report-section" aria-labelledby={benchmarkHeadingId}>
+    <h2 id={benchmarkHeadingId}>{report.benchmarkHeading}</h2>
+    {report.benchmarkParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+  </section>
+
+  <section class="report-section" aria-labelledby={readingHeadingId}>
+    <h2 id={readingHeadingId}>{report.readingHeading}</h2>
+    <p>{report.readingIntro}</p>
+    <ul class="status-list">
+      {
+        statusOrder.map((status) => (
+          <li>
+            <strong>{getStatusLabel(status)}:</strong>{" "}
+            {report.statusDescriptions[status]}
+          </li>
+        ))
+      }
+    </ul>
+    <p>{report.evidenceText}</p>
+  </section>
+
   <section class="report-section" aria-labelledby={resultsHeadingId}>
     <h2 id={resultsHeadingId}>{report.resultsHeading}</h2>
     <p>{report.resultsIntro}</p>
@@ -45,38 +90,46 @@ function getRunLabel(run: BenchmarkReportCopy["runs"][number]): string {
       <table class="results-table">
         <thead>
           <tr>
-            <th scope="col">{report.tableLabels.executionOrder}</th>
             <th scope="col">{report.tableLabels.model}</th>
-            <th scope="col">{report.tableLabels.effort}</th>
-            <th scope="col">{report.tableLabels.promptCount}</th>
-            <th scope="col">{report.tableLabels.elapsed}</th>
+            <th scope="col">{report.tableLabels.status}</th>
+            <th scope="col">{report.tableLabels.failureTypes}</th>
             <th scope="col">{report.tableLabels.sourceLoc}</th>
-            <th scope="col">{report.tableLabels.stack}</th>
-            <th scope="col">{report.tableLabels.verdict}</th>
+            <th scope="col">{report.tableLabels.testCount}</th>
+            <th scope="col">{report.tableLabels.functionalRead}</th>
+            <th scope="col">{report.tableLabels.demo}</th>
           </tr>
         </thead>
         <tbody>
           {
             runs.map((run) => (
-              <tr>
-                <td data-label={report.tableLabels.executionOrder}>
-                  {run.executionOrder}
-                </td>
+              <tr
+                data-status={run.status}
+                data-run-date={run.runDate}
+                data-stack={run.stack}
+              >
                 <th scope="row" data-label={report.tableLabels.model}>
-                  <a href={`#${getFindingId(run.id)}`}>{run.model}</a>
+                  {run.model}
                 </th>
-                <td data-label={report.tableLabels.effort}>
-                  {run.effort || report.unspecifiedEffortLabel}
+                <td data-label={report.tableLabels.status}>
+                  <span class:list={["status", `status--${run.status}`]}>
+                    {getStatusLabel(run.status)}
+                  </span>
                 </td>
-                <td data-label={report.tableLabels.promptCount}>
-                  {run.promptCount}
+                <td data-label={report.tableLabels.failureTypes}>
+                  {getFailureTypes(run)}
                 </td>
-                <td data-label={report.tableLabels.elapsed}>{run.elapsed}</td>
                 <td data-label={report.tableLabels.sourceLoc}>
-                  {run.sourceLoc}
+                  {run.sourceLoc.toLocaleString(report.lang)}
                 </td>
-                <td data-label={report.tableLabels.stack}>{run.stack}</td>
-                <td data-label={report.tableLabels.verdict}>{run.verdict}</td>
+                <td data-label={report.tableLabels.testCount}>
+                  {run.testCount}
+                </td>
+                <td data-label={report.tableLabels.functionalRead}>
+                  {run.functionalRead}
+                </td>
+                <td data-label={report.tableLabels.demo}>
+                  <a href={run.demoUrl}>{report.demoLabel}</a>
+                </td>
               </tr>
             ))
           }
@@ -85,64 +138,66 @@ function getRunLabel(run: BenchmarkReportCopy["runs"][number]): string {
     </div>
   </section>
 
-  <section class="report-section" aria-labelledby={currentBestHeadingId}>
-    <h2 id={currentBestHeadingId}>{report.currentBestHeading}</h2>
-    <p>{report.currentBestText}</p>
-  </section>
-
   <section class="report-section" aria-labelledby={findingsHeadingId}>
     <h2 id={findingsHeadingId}>{report.findingsHeading}</h2>
-    <p>{report.findingsIntro}</p>
-    <ul class="finding-list">
+    <div class="narrative-list">
       {
-        findingRuns.map((run) => (
-          <li>
-            <article class="finding-entry" id={getFindingId(run.id)}>
-              <div class="finding-copy">
-                <h3>
-                  <span>
-                    {report.tableLabels.executionOrder} {run.executionOrder}
-                  </span>
-                  <span>{getRunLabel(run)}</span>
-                </h3>
-                <p>{run.primaryFinding}</p>
-                <dl>
-                  <div>
-                    <dt>{report.findingLabels.notes}</dt>
-                    <dd>{run.notesDiscipline}</dd>
-                  </div>
-                  <div>
-                    <dt>{report.findingLabels.git}</dt>
-                    <dd>{run.gitUse}</dd>
-                  </div>
-                </dl>
-              </div>
-              <figure class="finding-screenshot">
-                <img
-                  src={run.screenshotPath}
-                  alt={run.screenshotAlt}
-                  width="1440"
-                  height="900"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <figcaption>
-                  <span>{run.screenshotCaption}</span>
-                  <a href={run.demoUrl}>{report.demoLabel}</a>
-                </figcaption>
-              </figure>
-            </article>
-          </li>
+        report.findings.map((finding) => (
+          <section>
+            <h3>{finding.heading}</h3>
+            {finding.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          </section>
         ))
       }
-    </ul>
+    </div>
   </section>
 
-  <section class="report-section" aria-labelledby={protocolHeadingId}>
-    <h2 id={protocolHeadingId}>{report.protocolHeading}</h2>
-    <ul class="report-list">
-      {report.protocol.map((item) => <li>{item}</li>)}
-    </ul>
+  <section class="report-section" aria-labelledby={caseNotesHeadingId}>
+    <h2 id={caseNotesHeadingId}>{report.caseNotesHeading}</h2>
+    <div class="case-note-list">
+      {
+        report.caseNotes.map((caseNote) => (
+          <article class="case-note" id={`case-${caseNote.id}`}>
+            <div class="case-note-copy">
+              <h3>{caseNote.heading}</h3>
+              {caseNote.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+            <div class="case-note-media">
+              {caseNote.runIds.map((runId) => {
+                const run = getRun(runId);
+
+                return (
+                  <figure class="case-screenshot">
+                    <img
+                      src={run.screenshotPath}
+                      alt={run.screenshotAlt}
+                      width="1440"
+                      height="900"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <figcaption>
+                      <strong>{run.screenshotCaption}</strong>
+                      <dl>
+                        <div>
+                          <dt>{report.detailLabels.runDate}</dt>
+                          <dd>{run.runDate}</dd>
+                        </div>
+                        <div>
+                          <dt>{report.detailLabels.stack}</dt>
+                          <dd>{run.stack}</dd>
+                        </div>
+                      </dl>
+                      <a href={run.demoUrl}>{report.demoLabel}</a>
+                    </figcaption>
+                  </figure>
+                );
+              })}
+            </div>
+          </article>
+        ))
+      }
+    </div>
   </section>
 
   <section class="report-section" aria-labelledby={artifactHeadingId}>
@@ -152,7 +207,7 @@ function getRunLabel(run: BenchmarkReportCopy["runs"][number]): string {
       {
         runs.map((run) => (
           <li>
-            <a href={run.demoUrl}>{getRunLabel(run)}</a>
+            <a href={run.demoUrl}>{run.model}</a>
           </li>
         ))
       }
@@ -176,11 +231,17 @@ function getRunLabel(run: BenchmarkReportCopy["runs"][number]): string {
     border-top: 1px solid var(--divider);
   }
 
-  .report-header > * {
+  .report-header > *,
+  .report-section > *,
+  .narrative-list section > *,
+  .case-note-copy > * {
     margin: 0;
   }
 
-  .report-header > * + * {
+  .report-header > * + *,
+  .report-section > * + *,
+  .narrative-list section > * + *,
+  .case-note-copy > * + * {
     margin-top: calc(var(--spacing-rhythm) * 0.72);
   }
 
@@ -191,46 +252,13 @@ function getRunLabel(run: BenchmarkReportCopy["runs"][number]): string {
   }
 
   .report-summary {
-    max-width: 62ch;
+    max-width: 66ch;
     font-size: clamp(1.12rem, 1.06rem + 0.2vw, 1.22rem);
     line-height: 1.5;
   }
 
-  .report-home-link a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 2.75rem;
-    font-weight: 600;
-  }
-
-  .report-section > * {
-    margin: 0;
-  }
-
-  .report-section > * + * {
-    margin-top: calc(var(--spacing-rhythm) * 0.75);
-  }
-
-  .report-list {
-    max-width: 62ch;
-    margin-inline: 0;
-    padding-inline-start: 0;
-    list-style: none;
-  }
-
-  .report-list > li + li {
-    margin-top: calc(var(--spacing-rhythm) * 0.42);
-  }
-
-  .artifact-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
-    gap: 0.35rem 1.1rem;
-    margin-inline: 0;
-    padding-inline-start: 0;
-    list-style: none;
-  }
-
+  .report-home-link a,
+  .case-screenshot a,
   .artifact-list a {
     display: inline-flex;
     align-items: center;
@@ -238,14 +266,13 @@ function getRunLabel(run: BenchmarkReportCopy["runs"][number]): string {
     font-weight: 600;
   }
 
-  .finding-list {
-    margin-inline: 0;
-    padding-inline-start: 0;
-    list-style: none;
+  .status-list {
+    max-width: 66ch;
+    padding-inline-start: 1.3rem;
   }
 
-  .finding-list > li + li {
-    margin-top: calc(var(--spacing-rhythm) * 1.05);
+  .status-list > li + li {
+    margin-top: calc(var(--spacing-rhythm) * 0.28);
   }
 
   .results-table-wrap {
@@ -256,15 +283,15 @@ function getRunLabel(run: BenchmarkReportCopy["runs"][number]): string {
 
   .results-table {
     width: 100%;
+    min-width: 68rem;
     border-collapse: collapse;
     font-size: var(--text-ui);
     line-height: 1.38;
-    table-layout: fixed;
   }
 
   .results-table th,
   .results-table td {
-    padding: 0.62rem 0.72rem;
+    padding: 0.62rem 0.68rem;
     text-align: start;
     vertical-align: top;
     border-bottom: 1px solid var(--divider);
@@ -278,126 +305,117 @@ function getRunLabel(run: BenchmarkReportCopy["runs"][number]): string {
   }
 
   .results-table thead th:nth-child(1) {
-    width: 6%;
-  }
-
-  .results-table thead th:nth-child(3),
-  .results-table thead th:nth-child(4),
-  .results-table thead th:nth-child(5),
-  .results-table thead th:nth-child(6) {
-    width: 7.5%;
+    width: 12%;
   }
 
   .results-table thead th:nth-child(2) {
-    width: 10%;
+    width: 12%;
+  }
+
+  .results-table thead th:nth-child(3) {
+    width: 15%;
+  }
+
+  .results-table thead th:nth-child(4),
+  .results-table thead th:nth-child(5) {
+    width: 8%;
+  }
+
+  .results-table thead th:nth-child(6) {
+    width: 35%;
   }
 
   .results-table thead th:nth-child(7) {
-    width: 32%;
-  }
-
-  .results-table thead th:nth-child(8) {
-    width: 22%;
+    width: 10%;
   }
 
   .results-table tbody th {
-    color: var(--accent);
     font-weight: 700;
   }
 
-  .finding-entry {
-    display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(18rem, 1.1fr);
-    gap: calc(var(--spacing-rhythm) * 0.82);
-    align-items: start;
-    scroll-margin-top: calc(var(--spacing-rhythm) * 0.8);
+  .status {
+    font-weight: 700;
   }
 
-  .finding-copy {
-    max-width: 62ch;
+  .status--comparable {
+    color: #25613d;
   }
 
-  .finding-entry > * {
-    min-width: 0;
+  .status--contract-failing {
+    color: #8a5618;
   }
 
-  .finding-copy > * {
-    margin: 0;
+  .status--unrunnable {
+    color: #9a332d;
   }
 
-  .finding-copy > * + * {
-    margin-top: calc(var(--spacing-rhythm) * 0.42);
+  .narrative-list > section + section,
+  .case-note-list > article + article {
+    margin-top: calc(var(--spacing-rhythm) * 1.1);
+    padding-top: calc(var(--spacing-rhythm) * 1.1);
+    border-top: 1px solid rgb(23 20 18 / 10%);
   }
 
-  .finding-copy h3 {
-    display: grid;
-    gap: 0.16rem;
+  .narrative-list h3,
+  .case-note h3 {
+    max-width: 36ch;
     font-family: var(--font-display);
     font-size: clamp(1.18rem, 1.1rem + 0.28vw, 1.35rem);
     line-height: 1.16;
   }
 
-  .finding-copy h3 span:first-child {
-    color: rgb(23 20 18 / 72%);
-    font-family: var(--font-body);
-    font-size: var(--text-ui);
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-  }
-
-  .finding-copy dl {
-    margin: 0;
-    padding-block: calc(var(--spacing-rhythm) * 0.2);
-    border-top: 1px solid rgb(23 20 18 / 10%);
-  }
-
-  .finding-copy dl > div {
+  .case-note-media {
     display: grid;
-    grid-template-columns: minmax(0, 5rem) minmax(0, 1fr);
-    gap: 0.35rem 1rem;
-    padding-block: 0.28rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+    gap: calc(var(--spacing-rhythm) * 0.82);
+    margin-top: calc(var(--spacing-rhythm) * 0.72);
   }
 
-  .finding-copy dt {
-    margin: 0;
-    color: rgb(23 20 18 / 72%);
-    font-size: var(--text-ui);
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-  }
-
-  .finding-copy dd {
+  .case-screenshot {
     margin: 0;
   }
 
-  .finding-screenshot {
-    margin: 0;
-  }
-
-  .finding-screenshot img {
+  .case-screenshot img {
     display: block;
     width: 100%;
     height: auto;
     border: 1px solid var(--divider);
   }
 
-  .finding-screenshot figcaption {
+  .case-screenshot figcaption {
     display: grid;
-    gap: 0.22rem;
+    gap: 0.2rem;
     margin-top: calc(var(--spacing-rhythm) * 0.3);
     color: rgb(23 20 18 / 72%);
     font-size: var(--text-ui);
     line-height: 1.38;
   }
 
-  .finding-screenshot a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 2.75rem;
-    width: fit-content;
-    font-weight: 600;
+  .case-screenshot dl {
+    margin: 0;
+  }
+
+  .case-screenshot dl > div {
+    display: grid;
+    grid-template-columns: minmax(0, 4.5rem) minmax(0, 1fr);
+    gap: 0.35rem;
+  }
+
+  .case-screenshot dt {
+    font-weight: 700;
+  }
+
+  .case-screenshot dd {
+    margin: 0;
+  }
+
+  .artifact-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: 0.35rem 1.1rem;
+    margin-inline: 0;
+    padding-inline-start: 0;
+    list-style: none;
   }
 
   @media (max-width: 39.99rem) {
@@ -413,6 +431,7 @@ function getRunLabel(run: BenchmarkReportCopy["runs"][number]): string {
     .results-table td {
       display: block;
       width: 100%;
+      min-width: 0;
     }
 
     .results-table thead {
@@ -426,15 +445,11 @@ function getRunLabel(run: BenchmarkReportCopy["runs"][number]): string {
 
     .results-table tbody th,
     .results-table td {
+      display: grid;
+      grid-template-columns: minmax(7rem, 38%) minmax(0, 1fr);
+      gap: 0.45rem;
       padding: 0.28rem 0;
       border-bottom: 0;
-    }
-
-    .results-table tbody th,
-    .results-table td {
-      display: grid;
-      grid-template-columns: minmax(6.8rem, 36%) minmax(0, 1fr);
-      gap: 0.45rem;
     }
 
     .results-table tbody th::before,
@@ -446,14 +461,9 @@ function getRunLabel(run: BenchmarkReportCopy["runs"][number]): string {
       text-transform: uppercase;
     }
 
-    .finding-entry {
+    .case-screenshot dl > div {
       grid-template-columns: 1fr;
-      gap: calc(var(--spacing-rhythm) * 0.55);
-    }
-
-    .finding-copy dl > div {
-      grid-template-columns: 1fr;
-      gap: 0.1rem;
+      gap: 0.05rem;
     }
   }
 </style>

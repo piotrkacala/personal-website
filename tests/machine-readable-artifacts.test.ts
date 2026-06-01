@@ -1,11 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 
 import { en } from "../src/i18n/en.ts";
 import { getMachineReadableArtifacts } from "../src/i18n/machine-readable.ts";
 import { pl } from "../src/i18n/pl.ts";
 import type { LinkBlock } from "../src/i18n/schema.ts";
+import { phoneticBenchmarkReports } from "../src/site/phonetic-benchmark.ts";
 
 type ArtifactPath = `/${string}`;
 
@@ -21,6 +22,10 @@ const phoneticBenchmarkRuns = [
   { heading: "Laguna M.1", id: "laguna-m-1" },
   { heading: "DeepSeek V4 Pro", id: "deepseek-v4-pro" },
   { heading: "gpt-oss-120b", id: "gpt-oss-120b" },
+  { heading: "Hy3 Preview", id: "hy3-preview" },
+  { heading: "MiMo V2.5 Pro", id: "mimo-v2-5-pro" },
+  { heading: "MiniMax M3", id: "minimax-m3" },
+  { heading: "Kimi K2.6", id: "kimi-k2-6" },
 ] as const;
 
 function escapeRegExp(value: string): string {
@@ -200,7 +205,7 @@ test("llms-full.txt carries the consolidated public references", () => {
   );
 });
 
-test("English Phonetic Benchmark report markdown carries run labels, protocol, and demo links", () => {
+test("English Phonetic Benchmark markdown publishes all runs without private workflow metrics", () => {
   const content = getArtifactContent("/phonetic-benchmark/index.md");
 
   assert.match(content, /^# Phonetic Benchmark Report$/m);
@@ -212,10 +217,14 @@ test("English Phonetic Benchmark report markdown carries run labels, protocol, a
     content,
     /^Markdown URL: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/index\.md$/m,
   );
-  assert.match(content, /^## Benchmark Protocol$/m);
-  assert.match(content, /working project that matches the specification/);
-  assert.match(content, /^## Run Review Matrix$/m);
-  assert.match(content, /oldest to newest by execution order/);
+  assert.match(content, /^## What This Benchmark Is$/m);
+  assert.match(content, /same docs-first package/);
+  assert.match(content, /^## How To Read The Results$/m);
+  assert.match(content, /^- `comparable`:/m);
+  assert.match(content, /^- `contract-failing`:/m);
+  assert.match(content, /^- `unrunnable`:/m);
+  assert.match(content, /^## Results$/m);
+  assert.match(content, /table keeps every run visible/);
   phoneticBenchmarkRuns.forEach((run) => {
     assert.match(
       content,
@@ -229,16 +238,28 @@ test("English Phonetic Benchmark report markdown carries run labels, protocol, a
       assert.ok(currentIndex > previousIndex);
       return currentIndex;
     }, -1);
-  assert.match(content, /^- Execution order: 1$/m);
-  assert.match(content, /^- Execution order: 11$/m);
-  assert.match(content, /^## Best Current Read$/m);
-  assert.match(content, /GPT 5\.5 High and Claude Sonnet 4\.6 Thinking/);
+  assert.match(content, /^- ID: gpt-5-4-high$/m);
+  assert.match(content, /^- ID: kimi-k2-6$/m);
+  assert.match(content, /^- Benchmark version: v1$/m);
+  assert.match(content, /^- Status: contract-failing$/m);
+  assert.match(content, /^- Failure types: attribution, test workflow$/m);
+  assert.match(content, /^- Run date: 2026-06-01$/m);
+  assert.match(content, /^- Source LoC: 2314$/m);
+  assert.match(content, /^- Static automated tests: 43$/m);
+  assert.match(content, /^- Stack: /m);
+  assert.match(content, /^## What The Runs Show$/m);
+  assert.match(content, /^## Selected Case Notes$/m);
+  assert.match(content, /^## Archived Demos$/m);
+  assert.doesNotMatch(content, /^- Prompts?:/m);
+  assert.doesNotMatch(content, /^- Elapsed:/m);
+  assert.doesNotMatch(content, /^- Git(?: use)?:/m);
+  assert.doesNotMatch(content, /token usage/i);
   assert.ok(
-    content.indexOf("## Qualitative Findings") <
-      content.indexOf("## Benchmark Protocol"),
+    content.indexOf("## What The Runs Show") <
+      content.indexOf("## Selected Case Notes"),
   );
   assert.ok(
-    content.indexOf("## Benchmark Protocol") <
+    content.indexOf("## Selected Case Notes") <
       content.indexOf("## Archived Demos"),
   );
   phoneticBenchmarkRuns.forEach(({ id: runId }) => {
@@ -259,33 +280,41 @@ test("English Phonetic Benchmark report markdown carries run labels, protocol, a
   });
 });
 
-test("Polish Phonetic Benchmark report markdown carries localized protocol and demo links", () => {
+test("Polish Phonetic Benchmark markdown carries localized narrative and all demo links", () => {
   const content = getArtifactContent("/pl/phonetic-benchmark/index.md");
 
   assert.match(content, /^# Phonetic Benchmark Report$/m);
-  assert.match(content, /^## Protokół benchmarku$/m);
-  assert.match(content, /działający projekt zgodny ze specyfikacją/);
-  assert.match(content, /^## Tabela przeglądu prób$/m);
-  assert.match(content, /od najstarszej do najnowszej/);
+  assert.match(content, /^## Czym Jest Ten Benchmark$/m);
+  assert.match(content, /ten sam pakiet dokumentacji/);
+  assert.match(content, /^## Jak Czytać Wyniki$/m);
+  assert.match(content, /^- `comparable`:/m);
+  assert.match(content, /^- `contract-failing`:/m);
+  assert.match(content, /^- `unrunnable`:/m);
+  assert.match(content, /^## Wyniki$/m);
   phoneticBenchmarkRuns.forEach((run) => {
     assert.match(
       content,
       new RegExp(`^### ${escapeRegExp(run.heading)}$`, "m"),
     );
   });
-  assert.match(content, /^- Kolejność wykonania: 1$/m);
-  assert.match(content, /^- Kolejność wykonania: 11$/m);
-  assert.match(content, /^## Najlepszy odczyt na teraz$/m);
-  assert.match(content, /GPT 5\.5 High i Claude Sonnet 4\.6 Thinking/);
+  assert.match(content, /^- ID: gpt-5-4-high$/m);
+  assert.match(content, /^- ID: kimi-k2-6$/m);
+  assert.match(content, /^- Status: unrunnable$/m);
+  assert.match(content, /^- Typy problemów: atrybucja, workflow testów$/m);
+  assert.match(content, /^- Data próby: 2026-05-29$/m);
+  assert.match(content, /^- Statycznie policzone testy automatyczne: 40$/m);
+  assert.match(content, /^## Co Pokazują Próby$/m);
+  assert.match(content, /^## Wybrane Przypadki$/m);
+  assert.match(content, /^## Archiwalne Demo$/m);
   assert.ok(
-    content.indexOf("## Wnioski jakościowe") <
-      content.indexOf("## Protokół benchmarku"),
+    content.indexOf("## Co Pokazują Próby") <
+      content.indexOf("## Wybrane Przypadki"),
   );
   phoneticBenchmarkRuns.forEach(({ id: runId }) => {
     assert.match(
       content,
       new RegExp(
-        `^- Zrzut ekranu: https:\\/\\/piotrkacala\\.pl\\/phonetic-benchmark\\/screenshots\\/${runId}-quiz\\.png$`,
+        `^- Screenshot: https:\\/\\/piotrkacala\\.pl\\/phonetic-benchmark\\/screenshots\\/${runId}-quiz\\.png$`,
         "m",
       ),
     );
@@ -320,6 +349,42 @@ test("machine-readable demo links point at explicit static index files", () => {
       `${pathname} contains a directory-style demo URL: ${url}`,
     );
   });
+});
+
+test("benchmark structured data covers 15 archived runs and selected screenshot cases", () => {
+  const report = phoneticBenchmarkReports.en;
+  const statusCounts = new Map<string, number>();
+
+  assert.equal(report.runs.length, 15);
+
+  report.runs.forEach((run) => {
+    statusCounts.set(run.status, (statusCounts.get(run.status) ?? 0) + 1);
+    assert.match(run.runDate, /^\d{4}-\d{2}-\d{2}$/);
+    assert.ok(run.stack.length > 0);
+    assert.ok(existsSync(`public${run.screenshotPath}`), run.screenshotPath);
+    assert.ok(
+      existsSync(`public${new URL(run.demoUrl).pathname}`),
+      new URL(run.demoUrl).pathname,
+    );
+  });
+
+  assert.deepEqual(Object.fromEntries(statusCounts), {
+    comparable: 6,
+    "contract-failing": 8,
+    unrunnable: 1,
+  });
+  assert.deepEqual(
+    report.caseNotes.flatMap((caseNote) => caseNote.runIds).sort(),
+    [
+      "deepseek-v4-pro",
+      "gemini-3-1-pro-high",
+      "gpt-5-4-high",
+      "gpt-5-5-high",
+      "gpt-oss-120b",
+      "nemotron-3-super",
+      "sonnet-4-6-thinking",
+    ],
+  );
 });
 
 test("static discovery files include report HTML and markdown paths", () => {
@@ -385,7 +450,7 @@ test("report pages wire markdown alternate URLs through the shared layout", () =
   }
 });
 
-test("benchmark report component links table rows to newest-first findings", () => {
+test("benchmark report component keeps compact rows and selected screenshot case notes", () => {
   const component = readFileSync(
     "src/components/PhoneticBenchmarkReport.astro",
     "utf8",
@@ -393,42 +458,43 @@ test("benchmark report component links table rows to newest-first findings", () 
 
   assert.match(
     component,
-    /secondRun\.executionOrder - firstRun\.executionOrder/,
-  );
-  assert.match(component, /return `benchmark-finding-\$\{runId\}`;/);
-  assert.match(
-    component,
-    /<a href=\{`#\$\{getFindingId\(run\.id\)\}`\}>\{run\.model\}<\/a>/,
+    /firstRun\.executionOrder - secondRun\.executionOrder/,
   );
   assert.match(
     component,
     /<th scope="row" data-label=\{report\.tableLabels\.model\}>/,
   );
-  assert.match(
-    component,
-    /<article class="finding-entry" id=\{getFindingId\(run\.id\)\}>/,
-  );
+  assert.match(component, /data-run-date=\{run\.runDate\}/);
+  assert.match(component, /data-stack=\{run\.stack\}/);
+  assert.match(component, /report\.tableLabels\.failureTypes/);
+  assert.match(component, /report\.tableLabels\.testCount/);
+  assert.match(component, /report\.tableLabels\.functionalRead/);
+  assert.match(component, /report\.caseNotes\.map/);
+  assert.match(component, /caseNote\.runIds\.map/);
+  assert.match(component, /src=\{run\.screenshotPath\}/);
+  assert.doesNotMatch(component, /promptCount|elapsed|gitUse|notesDiscipline/);
   assert.match(component, /const artifactHeadingId = "benchmark-artifacts";/);
   assert.match(component, /aria-labelledby=\{artifactHeadingId\}/);
   assert.match(component, /<h2 id=\{artifactHeadingId\}>/);
-  assert.match(
-    component,
-    /<a href=\{run\.demoUrl\}>\{getRunLabel\(run\)\}<\/a>/,
+  assert.match(component, /<a href=\{run\.demoUrl\}>\{run\.model\}<\/a>/);
+  assert.ok(
+    component.indexOf("aria-labelledby={benchmarkHeadingId}") <
+      component.indexOf("aria-labelledby={readingHeadingId}"),
+  );
+  assert.ok(
+    component.indexOf("aria-labelledby={readingHeadingId}") <
+      component.indexOf("aria-labelledby={resultsHeadingId}"),
   );
   assert.ok(
     component.indexOf("aria-labelledby={resultsHeadingId}") <
-      component.indexOf("aria-labelledby={currentBestHeadingId}"),
-  );
-  assert.ok(
-    component.indexOf("aria-labelledby={currentBestHeadingId}") <
       component.indexOf("aria-labelledby={findingsHeadingId}"),
   );
   assert.ok(
     component.indexOf("aria-labelledby={findingsHeadingId}") <
-      component.indexOf("aria-labelledby={protocolHeadingId}"),
+      component.indexOf("aria-labelledby={caseNotesHeadingId}"),
   );
   assert.ok(
-    component.indexOf("aria-labelledby={protocolHeadingId}") <
+    component.indexOf("aria-labelledby={caseNotesHeadingId}") <
       component.indexOf("aria-labelledby={artifactHeadingId}"),
   );
   assert.ok(
