@@ -21,7 +21,8 @@
 - Public repo: https://github.com/piotrkacala/personal-website
 - Phonetic Alphabet Trainer: https://piotrkacala.github.io/phonetic/
 - Phonetic Benchmark Report: https://piotrkacala.pl/phonetic-benchmark/
-- Surfaced: https://addons.mozilla.org/firefox/addon/surfaced/
+- Surfaced for Firefox: https://addons.mozilla.org/firefox/addon/surfaced/
+- Surfaced for Chrome: https://chromewebstore.google.com/detail/surfaced/bpbidikjpaffmpcbincadomhbfnoaaem
 - 400m: https://piotrkacala.pl/400m/
 - Private client audit platform: no public link, invite-only access
 

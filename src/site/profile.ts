@@ -28,7 +28,7 @@ export const siteProfile = {
     },
     {
       label: "Surfaced",
-      summary: "docs-first zero-code Firefox extension",
+      summary: "docs-first zero-code browser extension",
       url: "https://addons.mozilla.org/firefox/addon/surfaced/",
     },
     {

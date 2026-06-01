@@ -135,15 +135,17 @@ Istniejący projekt w React, otwarty ponownie, żeby sprawdzić, jak AI radzi so
 
 **Finalized description (EN, April 2026):**
 
-First project built from scratch, docs-driven, zero-code. A Firefox extension that tracks scroll depth and notifies you when you've gone too far — three depth zones with escalating urgency. Passed Mozilla's public review and is listed on Firefox Add-ons.
+First project built from scratch, docs-driven, zero-code. A browser extension that tracks scroll depth and notifies you when you've gone too far — three depth zones with escalating urgency. Passed Mozilla's public review and is available from Firefox Add-ons and the Chrome Web Store.
 
-- Link: addons.mozilla.org/firefox/addon/surfaced/
+- Firefox: addons.mozilla.org/firefox/addon/surfaced/
+- Chrome: chromewebstore.google.com/detail/surfaced/bpbidikjpaffmpcbincadomhbfnoaaem
 
 **Finalized description (PL, April 2026):**
 
-Pierwszy projekt zbudowany od zera, docs-driven, zero-code. Rozszerzenie do Firefoksa, które śledzi głębokość scrolla i powiadamia, gdy zajdziesz za daleko — trzy strefy głębokości i rosnący poziom pilności. Przeszło publiczny review Mozilli i jest opublikowane w Firefox Add-ons.
+Pierwszy projekt zbudowany od zera, docs-driven, zero-code. Rozszerzenie do przeglądarki, które śledzi głębokość scrolla i powiadamia, gdy zajdziesz za daleko — trzy strefy głębokości i rosnący poziom pilności. Przeszło publiczny review Mozilli i jest dostępne w Firefox Add-ons oraz Chrome Web Store.
 
-- Link: addons.mozilla.org/firefox/addon/surfaced/
+- Firefox: addons.mozilla.org/firefox/addon/surfaced/
+- Chrome: chromewebstore.google.com/detail/surfaced/bpbidikjpaffmpcbincadomhbfnoaaem
 
 ### Private client audit platform
 

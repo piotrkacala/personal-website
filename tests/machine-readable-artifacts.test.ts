@@ -93,6 +93,14 @@ test("English homepage markdown keeps its key structure and references", () => {
   assert.match(content, /^### 2\. Surfaced$/m);
   assert.match(
     content,
+    /^- Firefox Add-ons: https:\/\/addons\.mozilla\.org\/firefox\/addon\/surfaced\/$/m,
+  );
+  assert.match(
+    content,
+    /^- Chrome Web Store: https:\/\/chromewebstore\.google\.com\/detail\/surfaced\/bpbidikjpaffmpcbincadomhbfnoaaem$/m,
+  );
+  assert.match(
+    content,
     /^- Report: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/$/m,
   );
   assert.match(content, /^#### As of April 2026$/m);
@@ -117,6 +125,14 @@ test("Polish homepage markdown keeps its key structure and references", () => {
   assert.match(content, /^## Product Builder$/m);
   assert.match(content, /^## Projekty$/m);
   assert.match(content, /^### 2\. Surfaced$/m);
+  assert.match(
+    content,
+    /^- Firefox Add-ons: https:\/\/addons\.mozilla\.org\/firefox\/addon\/surfaced\/$/m,
+  );
+  assert.match(
+    content,
+    /^- Chrome Web Store: https:\/\/chromewebstore\.google\.com\/detail\/surfaced\/bpbidikjpaffmpcbincadomhbfnoaaem$/m,
+  );
   assert.match(
     content,
     /^- Raport: https:\/\/piotrkacala\.pl\/pl\/phonetic-benchmark\/$/m,
@@ -173,6 +189,14 @@ test("llms-full.txt carries the consolidated public references", () => {
   assert.match(
     content,
     /^- Phonetic Alphabet Trainer — Link: https:\/\/piotrkacala\.github\.io\/phonetic\/$/m,
+  );
+  assert.match(
+    content,
+    /^- Surfaced — Firefox Add-ons: https:\/\/addons\.mozilla\.org\/firefox\/addon\/surfaced\/$/m,
+  );
+  assert.match(
+    content,
+    /^- Surfaced — Chrome Web Store: https:\/\/chromewebstore\.google\.com\/detail\/surfaced\/bpbidikjpaffmpcbincadomhbfnoaaem$/m,
   );
 });
 
@@ -313,6 +337,14 @@ test("static discovery files include report HTML and markdown paths", () => {
   assert.match(
     llms,
     /^- Phonetic Benchmark Report: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/$/m,
+  );
+  assert.match(
+    llms,
+    /^- Surfaced for Firefox: https:\/\/addons\.mozilla\.org\/firefox\/addon\/surfaced\/$/m,
+  );
+  assert.match(
+    llms,
+    /^- Surfaced for Chrome: https:\/\/chromewebstore\.google\.com\/detail\/surfaced\/bpbidikjpaffmpcbincadomhbfnoaaem$/m,
   );
 
   for (const pathname of [

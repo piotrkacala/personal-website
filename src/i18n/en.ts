@@ -69,13 +69,22 @@ export const en = {
         blocks: [
           {
             type: "paragraph",
-            text: "First project built from scratch, docs-driven, zero-code. A Firefox extension that tracks scroll depth and notifies you when you've gone too far — three depth zones with escalating urgency. Passed Mozilla's public review and is listed on Firefox Add-ons.",
+            text: "First project built from scratch, docs-driven, zero-code. A browser extension that tracks scroll depth and notifies you when you've gone too far — three depth zones with escalating urgency. Passed Mozilla's public review and is available from Firefox Add-ons and the Chrome Web Store.",
           },
           {
             type: "link",
             href: "https://addons.mozilla.org/firefox/addon/surfaced/",
-            label: "Link: addons.mozilla.org/firefox/addon/surfaced/",
-            machineLabel: "Link",
+            label: "Firefox: addons.mozilla.org/firefox/addon/surfaced/",
+            machineLabel: "Firefox Add-ons",
+            external: true,
+            externalLabel: "(opens in a new tab)",
+          },
+          {
+            type: "link",
+            href: "https://chromewebstore.google.com/detail/surfaced/bpbidikjpaffmpcbincadomhbfnoaaem",
+            label:
+              "Chrome: chromewebstore.google.com/detail/surfaced/bpbidikjpaffmpcbincadomhbfnoaaem",
+            machineLabel: "Chrome Web Store",
             external: true,
             externalLabel: "(opens in a new tab)",
           },

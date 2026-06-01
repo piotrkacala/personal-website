@@ -71,13 +71,22 @@ export const pl = {
         blocks: [
           {
             type: "paragraph",
-            text: "Pierwszy projekt zbudowany od zera, docs-driven, zero-code. Rozszerzenie do Firefoksa, które śledzi głębokość scrolla i powiadamia, gdy zajdziesz za daleko — trzy strefy głębokości i rosnący poziom pilności. Przeszło publiczny review Mozilli i jest opublikowane w Firefox Add-ons.",
+            text: "Pierwszy projekt zbudowany od zera, docs-driven, zero-code. Rozszerzenie do przeglądarki, które śledzi głębokość scrolla i powiadamia, gdy zajdziesz za daleko — trzy strefy głębokości i rosnący poziom pilności. Przeszło publiczny review Mozilli i jest dostępne w Firefox Add-ons oraz Chrome Web Store.",
           },
           {
             type: "link",
             href: "https://addons.mozilla.org/firefox/addon/surfaced/",
-            label: "Link: addons.mozilla.org/firefox/addon/surfaced/",
-            machineLabel: "Link",
+            label: "Firefox: addons.mozilla.org/firefox/addon/surfaced/",
+            machineLabel: "Firefox Add-ons",
+            external: true,
+            externalLabel: "(otwiera się w nowej karcie)",
+          },
+          {
+            type: "link",
+            href: "https://chromewebstore.google.com/detail/surfaced/bpbidikjpaffmpcbincadomhbfnoaaem",
+            label:
+              "Chrome: chromewebstore.google.com/detail/surfaced/bpbidikjpaffmpcbincadomhbfnoaaem",
+            machineLabel: "Chrome Web Store",
             external: true,
             externalLabel: "(otwiera się w nowej karcie)",
           },
