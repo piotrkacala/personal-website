@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Phonetic Trainer</title>
+        <link rel="stylesheet" href="css/style.css" />
+    </head>
+    <body>
+        <div id="app">
+            <!-- Setup Screen -->
+            <div id="screen-setup" class="screen active">
+                <h1 id="setup-title"></h1>
+
+                <div class="form-group">
+                    <label id="label-language" for="select-language"></label>
+                    <select id="select-language">
+                        <option value="en">English</option>
+                        <option value="pl">Polski</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label id="label-alphabet" for="select-alphabet"></label>
+                    <select id="select-alphabet">
+                        <option value="nato">NATO</option>
+                        <option value="polish">Polish</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label id="label-mode" for="select-mode"></label>
+                    <select id="select-mode">
+                        <option
+                            value="keyboard"
+                            data-i18n="modeKeyboard"
+                        ></option>
+                        <option
+                            value="suggestion"
+                            data-i18n="modeSuggestion"
+                        ></option>
+                    </select>
+                </div>
+
+                <button id="btn-start" class="btn-primary"></button>
+            </div>
+
+            <!-- Run Screen -->
+            <div id="screen-run" class="screen">
+                <div class="run-header">
+                    <span id="progress-text"></span>
+                    <button id="btn-hint" class="btn-hint"></button>
+                </div>
+
+                <div class="symbol-display">
+                    <span id="current-symbol"></span>
+                </div>
+
+                <div id="hint-text" class="hint-text hidden"></div>
+
+                <!-- Keyboard mode input -->
+                <div id="keyboard-area" class="answer-area">
+                    <input
+                        type="text"
+                        id="answer-input"
+                        autocomplete="off"
+                        autocapitalize="off"
+                        spellcheck="false"
+                    />
+                    <button id="btn-submit" class="btn-primary"></button>
+                </div>
+
+                <!-- Suggestion mode buttons -->
+                <div id="suggestion-area" class="answer-area hidden">
+                    <div id="suggestion-buttons" class="suggestion-grid"></div>
+                </div>
+
+                <div id="feedback" class="feedback hidden"></div>
+            </div>
+
+            <!-- Result Screen -->
+            <div id="screen-result" class="screen">
+                <h1 id="result-title"></h1>
+                <div class="result-details">
+                    <p id="result-alphabet"></p>
+                    <p id="result-mode"></p>
+                    <p id="result-score"></p>
+                </div>
+                <div class="result-score-display">
+                    <span id="result-percent"></span>
+                </div>
+                <button id="btn-restart" class="btn-primary"></button>
+            </div>
+        </div>
+
+        <footer id="attribution">
+            Phonetic Benchmark by Piotr Kacała (<a
+                href="https://piotrkacala.pl"
+                target="_blank"
+                rel="noopener"
+                >piotrkacala.pl</a
+            >). Developed by MiMo-V2.5-Pro on 2026-06-01.
+        </footer>
+
+        <script type="module" src="js/app.js"></script>
+    </body>
+</html>
