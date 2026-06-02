@@ -117,6 +117,8 @@ function renderConsultingMarkdown(copy: ConsultingCopy): string {
     "",
     `> ${copy.metadata.description}`,
     "",
+    heading(2, copy.title),
+    "",
     copy.intro,
     "",
     heading(2, copy.scope.heading),

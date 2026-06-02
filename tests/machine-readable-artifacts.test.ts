@@ -220,6 +220,7 @@ test("consulting markdown publishes the localized offer from shared copy", () =>
   const polish = getArtifactContent("/pl/consulting.md");
 
   assert.match(english, /^# Consulting \| Piotr Kacała$/m);
+  assert.match(english, /^## From rough product idea to shipped software\.$/m);
   assert.match(english, /^## Start with the scope$/m);
   assert.match(english, /^- practical product brief$/m);
   assert.match(english, /^## From scope to delivery$/m);
@@ -235,6 +236,10 @@ test("consulting markdown publishes the localized offer from shared copy", () =>
   assert.match(english, /^Email: kontakt@piotrkacala\.pl$/m);
 
   assert.match(polish, /^# Consulting \| Piotr Kacała$/m);
+  assert.match(
+    polish,
+    /^## Od niejasnego pomysłu do działającego produktu\.$/m,
+  );
   assert.match(polish, /^## Zacznijmy od zakresu$/m);
   assert.match(polish, /^- praktyczny brief produktowy$/m);
   assert.match(polish, /^## Od zakresu do wdrożenia$/m);
