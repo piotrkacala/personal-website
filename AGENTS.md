@@ -4,7 +4,9 @@ This file provides guidance to coding agents working in this repository.
 
 ## Project Overview
 
-Personal website for Piotr Kacała — a static single-page site serving as the third career surface (after CV and LinkedIn). Built with Astro and deployed via FTP to classic shared hosting.
+Personal website for Piotr Kacała — a static portfolio and public proof-artifact site. The primary
+visitor flow remains a bilingual homepage, with durable static report and machine-readable routes
+for public evidence. Built with Astro and deployed via FTP to classic shared hosting.
 
 ## Key Invariants
 
@@ -41,19 +43,32 @@ npm run format:check
 
 Manual FTP upload of `dist/` to shared hosting. No CI/CD at v1.
 
+After deploy:
+
+```bash
+npm run smoke:production
+```
+
 ## Architecture
 
-Single Astro project, no monorepo. One logical single-page site served in two static routes: English at `/` and Polish at `/pl/`.
+Single Astro project, no monorepo. The bilingual homepage lives at `/` and `/pl/`. Static proof
+artifacts, generated markdown, and discovery routes extend that primary flow without introducing a
+blog, CMS, SSR, or API layer.
 
 ```text
 src/
   pages/index.astro     ← English version
   pages/pl/index.astro  ← Polish version
+  pages/phonetic-benchmark/ ← report, gallery, methodology, run details
   i18n/                 ← centralized EN/PL strings
-  components/           ← Hero, Projects, ProjectCard, Contact
+  site/                 ← public profile, benchmark data, companion profiles
+  integrations/         ← build-time machine-readable artifact generation
+  components/           ← homepage and proof-artifact components
   layouts/Base.astro    ← <html>, <head>, fonts, global meta
   styles/global.css     ← Tailwind base + CSS custom properties
-public/                 ← favicon, OG image, static assets
+public/                 ← favicon, OG image, llms.txt, archived benchmark assets
+tools/                  ← post-deploy production smoke checks
+tests/                  ← machine-readable regression coverage
 docs/                   ← spec documents
 ```
 

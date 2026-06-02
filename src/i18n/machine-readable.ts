@@ -23,6 +23,7 @@ import {
   type BenchmarkReportCopy,
   type BenchmarkRunCopy,
 } from "../site/phonetic-benchmark.ts";
+import { siteProfile } from "../site/profile.ts";
 
 export interface MachineReadableArtifact {
   pathname: `/${string}`;
@@ -109,30 +110,27 @@ function renderExternalProjectProfile(profile: ExternalProjectProfile): string {
   const lines = [
     heading(1, profile.title),
     "",
-    `> Companion machine-readable profile for the public ${profile.title} tool linked from ${en.metadata.openGraph.url}.`,
+    `> Companion machine-readable profile for ${profile.title}, linked from ${en.metadata.openGraph.url}.`,
     "",
     heading(2, "Summary"),
     "",
     profile.summary,
     "",
-    heading(2, "Live tool"),
+    heading(2, profile.linksHeading),
     "",
-    `- URL: ${profile.liveUrl}`,
+    ...profile.publicLinks.map(
+      (link) => `- ${link.label}: ${link.url ?? link.note}`,
+    ),
     `- Type: ${profile.type}`,
     `- Status: ${profile.status}`,
-    "",
-    ...renderBulletSection("What it does", profile.whatItDoes),
-    "",
-    ...renderBulletSection("Intended input", profile.intendedInput),
-    "",
-    ...renderBulletSection("Privacy and runtime", profile.privacyAndRuntime),
-    "",
-    ...renderBulletSection("Constraints", profile.constraints),
+    ...profile.sections.flatMap((section) => [
+      "",
+      ...renderBulletSection(section.heading, section.items),
+    ]),
     "",
     heading(2, "Discovery note"),
     "",
-    "- This markdown file is a companion profile owned by the public personal-site repo.",
-    `- The interactive analyzer itself lives at ${profile.liveUrl}`,
+    ...profile.discoveryNotes.map((note) => `- ${note}`),
     "",
   ];
 
@@ -483,8 +481,10 @@ function renderSitemap(): string {
       { loc: run.detailsUrl, lastmod: benchmarkLastmod },
       { loc: run.markdownUrl, lastmod: benchmarkLastmod },
     ]),
-    { loc: "https://piotrkacala.pl/400m/" },
-    { loc: "https://piotrkacala.pl/projects/400m.md" },
+    ...externalProjectProfiles.flatMap((profile) => [
+      ...(profile.sitemapUrls ?? []).map((loc) => ({ loc })),
+      { loc: getExternalProjectMarkdownUrl(profile) },
+    ]),
   ];
   const lines = [
     '<?xml version="1.0" encoding="UTF-8"?>',
@@ -551,6 +551,10 @@ function renderLlmsFull(): string {
     "# Piotr Kacała — Full Public Site Context",
     "",
     "> Compact public context generated from the same source content as https://piotrkacala.pl/ and https://piotrkacala.pl/pl/.",
+    "",
+    "## Canonical summary",
+    "",
+    siteProfile.canonicalSummary,
     "",
     "## English homepage",
     "",

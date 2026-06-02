@@ -11,7 +11,8 @@
     "astro": "astro",
     "typecheck": "ASTRO_TELEMETRY_DISABLED=1 astro check",
     "lint": "eslint .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "smoke:production": "tools/smoke-production.sh"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.3",

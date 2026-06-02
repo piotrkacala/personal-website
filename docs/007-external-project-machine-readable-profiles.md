@@ -1,6 +1,7 @@
 # External Project Machine-readable Profiles
 
-Procedure for handling public projects or tools that are linked from the personal site but do not belong to this Astro app's route tree.
+Procedure for handling linked projects or tools that need stable repo-controlled discovery without
+belonging to this Astro app's primary route tree.
 
 This exists to prevent a recurring failure mode:
 
@@ -14,7 +15,8 @@ This exists to prevent a recurring failure mode:
 
 Keep the personal site as the public discovery layer for Piotr's projects while avoiding route ownership conflicts with separately deployed tools.
 
-The Astro repo should expose machine-readable companion profiles for these projects without pretending to own their runtime path.
+The Astro repo should expose machine-readable companion profiles for these projects without
+pretending to own a runtime path that does not exist or belongs elsewhere.
 
 ---
 
@@ -26,6 +28,7 @@ Use this procedure whenever a project or tool is:
 - added to `llms.txt` or `llms-full.txt`
 - linked from another public discovery surface in this repo
 - hosted outside this Astro app's route tree, even if it shares the same domain
+- a private-project record with no public runtime link
 
 Examples:
 
@@ -44,7 +47,9 @@ For separately deployed tools, the profile must live under a non-conflicting pat
 - `/projects/400m.md`
 - `/projects/<slug>.md`
 
-Do not create Astro routes that would take over the runtime path of the actual tool, such as `/400m/`, if that path belongs to a separate deploy.
+Do not create Astro routes that would take over the runtime path of the actual tool, such as
+`/400m/`, if that path belongs to a separate deploy. If there is intentionally no public runtime,
+state that boundary explicitly in the profile.
 
 ---
 
@@ -60,7 +65,7 @@ This repo owns:
 
 The external project or tool owns:
 
-- its live runtime path
+- its live runtime path, when one exists
 - its own HTML and application behavior
 - its own future markdown negotiation, if added later
 
@@ -89,7 +94,7 @@ Minimum recommended fields:
 
 - project name
 - one-sentence summary
-- live URL
+- live URL, or an explicit statement that no public runtime link exists
 - repo URL if public
 - status or maturity note if relevant
 - what the tool does

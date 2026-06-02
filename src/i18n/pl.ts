@@ -6,11 +6,11 @@ export const pl = {
   metadata: {
     title: "Piotr Kacała — Product Builder",
     description:
-      "Strona Piotra Kacały. Product Builder na styku produktu, designu, QA i developmentu. Dziś buduje zero-code przez agenty AI.",
+      "Strona Piotra Kacały. Agenty AI są interfejsem budowy. Wyróżnikiem są ocena i decyzje na styku produktu, designu, QA i developmentu.",
     openGraph: {
       title: "Piotr Kacała — Product Builder",
       description:
-        "W IT od 2013 roku. Dziś buduje zero-code przez agenty AI, na styku produktu, designu, QA i developmentu.",
+        "Agenty AI są interfejsem budowy. Wyróżnikiem są ocena i decyzje na styku produktu, designu, QA i developmentu.",
       type: "website",
       locale: "pl_PL",
       siteName: "Piotr Kacała",
@@ -35,7 +35,7 @@ export const pl = {
   },
   projects: {
     heading: "Projekty",
-    arc: "Każdy projekt to świadomie wybrany kolejny krok. Sprawdzenie AI na istniejącym codebase. Budowa od zera, docs-first, zero-code. Pełny produkt dla realnego klienta. Potem ta strona.",
+    arc: "Każdy projekt to świadomie wybrany kolejny krok. Sprawdzenie AI na istniejącym codebase. Budowa od zera, docs-first, zero-code. Pełny produkt dla realnego klienta. Ta strona jako publiczny artifact. Potem publiczna ewaluacja agentów programistycznych.",
     items: [
       {
         title: "Phonetic Alphabet Trainer",
@@ -47,7 +47,7 @@ export const pl = {
           },
           {
             type: "paragraph",
-            text: "Towarzyszący raport benchmarku omawia archiwalne outputy agentów AI dla tego samego briefu produktowego. Akcent jest na jakości ścieżki użytkownika, awariach UX i tradeoffach implementacyjnych, a nie na rankingu modeli.",
+            text: "Projekt stał się później bazą briefu produktowego dla Phonetic Benchmark.",
           },
           {
             type: "link",
@@ -56,18 +56,6 @@ export const pl = {
             machineLabel: "Link",
             external: true,
             externalLabel: "(otwiera się w nowej karcie)",
-          },
-          {
-            type: "link",
-            href: "https://piotrkacala.pl/pl/phonetic-benchmark/",
-            label: "Raport: piotrkacala.pl/pl/phonetic-benchmark/",
-            machineLabel: "Raport",
-          },
-          {
-            type: "link",
-            href: "https://piotrkacala.pl/pl/phonetic-benchmark/gallery/",
-            label: "Galeria: piotrkacala.pl/pl/phonetic-benchmark/gallery/",
-            machineLabel: "Galeria",
           },
         ],
       },
@@ -103,29 +91,11 @@ export const pl = {
         blocks: [
           {
             type: "paragraph",
-            text: "Pierwszy pełny projekt produkcyjny, zbudowany spec-first dla realnego klienta.",
-          },
-          {
-            type: "metrics",
-            heading: "Stan na kwiecień 2026",
-            items: [
-              { label: "Kod produkcyjny", value: "~21,000 linii" },
-              { label: "Testy", value: "~9,400 linii" },
-              { label: "Commity", value: "295" },
-              { label: "Modele bazy danych", value: "25" },
-              { label: "Endpointy API", value: "~96" },
-              { label: "Strony", value: "37" },
-              { label: "Komponenty", value: "50" },
-              { label: "Internacjonalizacja", value: "Pełne i18n" },
-            ],
+            text: "Pierwszy pełny projekt produkcyjny, zbudowany spec-first dla realnego klienta. Stan na kwiecień 2026: ~21,000 linii kodu produkcyjnego, ~9,400 linii testów i 295 commitów.",
           },
           {
             type: "paragraph",
-            text: "Zanim projekt był skończony, zarówno modele AI, jak i doświadczony CEO szacowali 13–17 tygodni pracy dla jednego developera. CEO był wyraźnie zaskoczony, kiedy usłyszał, że to już jest gotowe. Łączny czas budowy: około 25–30 dni.",
-          },
-          {
-            type: "paragraph",
-            text: "Tylko na zaproszenie — bez publicznego linku.",
+            text: "Prywatny projekt kliencki — bez publicznego linku do działającej aplikacji.",
             tone: "aside",
           },
         ],
@@ -154,6 +124,43 @@ export const pl = {
             href: "https://github.com/piotrkacala/personal-website",
             label: "Repo: github.com/piotrkacala/personal-website",
             machineLabel: "Repo",
+            external: true,
+            externalLabel: "(otwiera się w nowej karcie)",
+          },
+        ],
+      },
+      {
+        title: "Phonetic Benchmark",
+        titleLang: "en",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Praktyczna, zadaniowa ewaluacja outputów agentów programistycznych. Piętnaście modeli dostało ten sam docs-first brief małej aplikacji webowej. Każdy wynik zarchiwizowałem i sprawdziłem pod kątem zgodności z kontraktem, UX, testów i jakości dostarczenia. To nie jest uniwersalny ranking modeli, tylko udokumentowane porównanie zachowania workflow agentów na tym samym zadaniu produktowym.",
+          },
+          {
+            type: "link",
+            href: "https://piotrkacala.pl/pl/phonetic-benchmark/",
+            label: "Raport: piotrkacala.pl/pl/phonetic-benchmark/",
+            machineLabel: "Raport",
+          },
+          {
+            type: "link",
+            href: "https://piotrkacala.pl/pl/phonetic-benchmark/gallery/",
+            label: "Galeria: piotrkacala.pl/pl/phonetic-benchmark/gallery/",
+            machineLabel: "Galeria",
+          },
+          {
+            type: "link",
+            href: "https://piotrkacala.pl/phonetic-benchmark/methodology/",
+            label:
+              "Metodologia (EN): piotrkacala.pl/phonetic-benchmark/methodology/",
+            machineLabel: "Metodologia (EN)",
+          },
+          {
+            type: "link",
+            href: "https://github.com/piotrkacala/phonetic-benchmark",
+            label: "Pakiet: github.com/piotrkacala/phonetic-benchmark",
+            machineLabel: "Publiczny pakiet benchmarku",
             external: true,
             externalLabel: "(otwiera się w nowej karcie)",
           },

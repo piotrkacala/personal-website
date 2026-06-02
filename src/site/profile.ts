@@ -5,8 +5,10 @@ export const siteProfile = {
   email: "kontakt@piotrkacala.pl",
   jobTitle: "Product Builder",
   repoUrl: "https://github.com/piotrkacala/personal-website",
+  canonicalSummary:
+    "AI agents are the build interface. The differentiator is judgment across product, design, QA, and development.",
   description:
-    "Personal website of Piotr Kacała. Product builder across product, design, QA, and development. Now building zero-code through AI agents.",
+    "Personal website of Piotr Kacała. AI agents are the build interface. The differentiator is judgment across product, design, QA, and development.",
   knowsAbout: [
     "AI agent development",
     "Product development",

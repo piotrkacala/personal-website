@@ -98,6 +98,9 @@ test("getMachineReadableArtifacts returns the expected artifact inventory", () =
       "/pl/index.md",
       "/pl/phonetic-benchmark/index.md",
       "/projects/400m.md",
+      "/projects/client-audit-platform.md",
+      "/projects/phonetic-alphabet-trainer.md",
+      "/projects/surfaced.md",
       "/sitemap.xml",
     ].sort(),
   );
@@ -109,7 +112,7 @@ test("English homepage markdown keeps its key structure and references", () => {
   assert.match(content, /^# Piotr Kacała — Product Builder$/m);
   assert.match(
     content,
-    /^> Personal website of Piotr Kacała\. Product builder across product, design, QA, and development\./m,
+    /^> Personal website of Piotr Kacała\. AI agents are the build interface\. The differentiator is judgment across product, design, QA, and development\.$/m,
   );
   assert.match(content, /^## Product Builder$/m);
   assert.match(content, /^## Projects$/m);
@@ -131,8 +134,17 @@ test("English homepage markdown keeps its key structure and references", () => {
     content,
     /^- Gallery: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/gallery\/$/m,
   );
-  assert.match(content, /^#### As of April 2026$/m);
-  assert.match(content, /^- Production code: ~21,000 lines$/m);
+  assert.match(content, /^### 5\. Phonetic Benchmark$/m);
+  assert.match(content, /^Private client project — no public runtime link\.$/m);
+  assert.match(
+    content,
+    /^- Methodology: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/methodology\/$/m,
+  );
+  assert.match(
+    content,
+    /^- Public benchmark package: https:\/\/github\.com\/piotrkacala\/phonetic-benchmark$/m,
+  );
+  assert.doesNotMatch(content, /experienced CEO|#### As of April 2026/);
   assert.match(content, /^- Tool: https:\/\/piotrkacala\.pl\/400m\/$/m);
   assert.match(
     content,
@@ -148,7 +160,7 @@ test("Polish homepage markdown keeps its key structure and references", () => {
   assert.match(content, /^# Piotr Kacała — Product Builder$/m);
   assert.match(
     content,
-    /^> Strona Piotra Kacały\. Product Builder na styku produktu, designu, QA i developmentu\./m,
+    /^> Strona Piotra Kacały\. Agenty AI są interfejsem budowy\. Wyróżnikiem są ocena i decyzje na styku produktu, designu, QA i developmentu\.$/m,
   );
   assert.match(content, /^## Product Builder$/m);
   assert.match(content, /^## Projekty$/m);
@@ -170,8 +182,20 @@ test("Polish homepage markdown keeps its key structure and references", () => {
     /^- Galeria: https:\/\/piotrkacala\.pl\/pl\/phonetic-benchmark\/gallery\/$/m,
   );
   assert.match(content, /^### 4\. Ta strona$/m);
-  assert.match(content, /^#### Stan na kwiecień 2026$/m);
-  assert.match(content, /^- Kod produkcyjny: ~21,000 linii$/m);
+  assert.match(content, /^### 5\. Phonetic Benchmark$/m);
+  assert.match(
+    content,
+    /^Prywatny projekt kliencki — bez publicznego linku do działającej aplikacji\.$/m,
+  );
+  assert.match(
+    content,
+    /^- Metodologia \(EN\): https:\/\/piotrkacala\.pl\/phonetic-benchmark\/methodology\/$/m,
+  );
+  assert.match(
+    content,
+    /^- Publiczny pakiet benchmarku: https:\/\/github\.com\/piotrkacala\/phonetic-benchmark$/m,
+  );
+  assert.doesNotMatch(content, /doświadczony CEO|#### Stan na kwiecień 2026/);
   assert.match(content, /^- Narzędzie: https:\/\/piotrkacala\.pl\/400m\/$/m);
   assert.match(
     content,
@@ -188,6 +212,11 @@ test("llms-full.txt carries the consolidated public references", () => {
   assert.match(content, /^## English homepage$/m);
   assert.match(content, /^## Polish homepage$/m);
   assert.match(content, /^## Public references$/m);
+  assert.match(content, /^## Canonical summary$/m);
+  assert.match(
+    content,
+    /^AI agents are the build interface\. The differentiator is judgment across product, design, QA, and development\.$/m,
+  );
   assert.match(content, /^- English homepage: https:\/\/piotrkacala\.pl\/$/m);
   assert.match(
     content,
@@ -213,11 +242,11 @@ test("llms-full.txt carries the consolidated public references", () => {
   assert.match(content, /^- Contact: mailto:kontakt@piotrkacala\.pl$/m);
   assert.match(
     content,
-    /^- Phonetic Alphabet Trainer — Report: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/$/m,
+    /^- Phonetic Benchmark — Report: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/$/m,
   );
   assert.match(
     content,
-    /^- Phonetic Alphabet Trainer — Gallery: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/gallery\/$/m,
+    /^- Phonetic Benchmark — Gallery: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/gallery\/$/m,
   );
   assert.match(
     content,
@@ -230,6 +259,18 @@ test("llms-full.txt carries the consolidated public references", () => {
   assert.match(
     content,
     /^- 400m — Companion profile: https:\/\/piotrkacala\.pl\/projects\/400m\.md$/m,
+  );
+  assert.match(
+    content,
+    /^- Phonetic Alphabet Trainer — Companion profile: https:\/\/piotrkacala\.pl\/projects\/phonetic-alphabet-trainer\.md$/m,
+  );
+  assert.match(
+    content,
+    /^- Surfaced — Companion profile: https:\/\/piotrkacala\.pl\/projects\/surfaced\.md$/m,
+  );
+  assert.match(
+    content,
+    /^- client-audit-platform\.pl — Companion profile: https:\/\/piotrkacala\.pl\/projects\/client-audit-platform\.md$/m,
   );
   assert.match(
     content,
@@ -674,6 +715,26 @@ test("static discovery files include report and gallery paths", () => {
     llms,
     /^- Surfaced for Chrome: https:\/\/chromewebstore\.google\.com\/detail\/surfaced\/bpbidikjpaffmpcbincadomhbfnoaaem$/m,
   );
+  for (const pathname of [
+    "/projects/400m.md",
+    "/projects/phonetic-alphabet-trainer.md",
+    "/projects/surfaced.md",
+    "/projects/client-audit-platform.md",
+  ]) {
+    assert.match(
+      llms,
+      new RegExp(
+        `^- .+ companion profile: https:\\/\\/piotrkacala\\.pl${pathname.replaceAll("/", "\\/")}$`,
+        "m",
+      ),
+    );
+    assert.match(
+      sitemap,
+      new RegExp(
+        `<loc>https://piotrkacala\\.pl${pathname.replaceAll("/", "\\/")}</loc>`,
+      ),
+    );
+  }
 
   for (const pathname of [
     "/phonetic-benchmark/",
@@ -849,7 +910,7 @@ test("400m companion profile is generated with high-signal operating details", (
   assert.match(content, /^# 400m$/m);
   assert.match(
     content,
-    /^> Companion machine-readable profile for the public 400m tool linked from https:\/\/piotrkacala\.pl\/\.$/m,
+    /^> Companion machine-readable profile for 400m, linked from https:\/\/piotrkacala\.pl\/\.$/m,
   );
   assert.match(content, /^## Summary$/m);
   assert.match(
@@ -881,6 +942,41 @@ test("400m companion profile is generated with high-signal operating details", (
     content,
     /^- The interactive analyzer itself lives at https:\/\/piotrkacala\.pl\/400m\/$/m,
   );
+});
+
+test("project companion profiles publish public-safe discovery records", () => {
+  const phonetic = getArtifactContent("/projects/phonetic-alphabet-trainer.md");
+  const surfaced = getArtifactContent("/projects/surfaced.md");
+  const client-audit-platform = getArtifactContent("/projects/client-audit-platform.md");
+
+  assert.match(phonetic, /^# Phonetic Alphabet Trainer$/m);
+  assert.match(
+    phonetic,
+    /^- Live app: https:\/\/piotrkacala\.github\.io\/phonetic\/$/m,
+  );
+  assert.match(
+    phonetic,
+    /^- Later became the product brief for Phonetic Benchmark\.$/m,
+  );
+
+  assert.match(surfaced, /^# Surfaced$/m);
+  assert.match(
+    surfaced,
+    /^- Firefox Add-ons: https:\/\/addons\.mozilla\.org\/firefox\/addon\/surfaced\/$/m,
+  );
+  assert.match(surfaced, /^- Passed Mozilla's public add-on review\.$/m);
+
+  assert.match(client-audit-platform, /^# client-audit-platform\.pl$/m);
+  assert.match(client-audit-platform, /^- Runtime: No public runtime link\.$/m);
+  assert.match(
+    client-audit-platform,
+    /^- This profile is a dated private-project record, not a public runtime claim\.$/m,
+  );
+  assert.match(
+    client-audit-platform,
+    /^- Private customer data and implementation details are intentionally excluded\.$/m,
+  );
+  assert.doesNotMatch(client-audit-platform, /API routes|database models/i);
 });
 
 test("machine-readable links do not depend on visible label punctuation", () => {

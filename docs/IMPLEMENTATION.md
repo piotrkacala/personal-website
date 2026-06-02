@@ -1,8 +1,11 @@
-# Implementation Plan
+# Implementation Plan — Historical v1 Launch Record
 
-Execution plan for v1 of the personal website. This document turns the product, copy, style, and architecture decisions into an implementation sequence.
+Historical execution plan for v1 of the personal website. It records the original launch sequence.
+For the current public shape, including proof-artifact routes and machine-readable output, read
+`docs/PRODUCT.md` and `docs/ARCH.md`.
 
-During implementation, this file is the execution-order reference. `docs/BACKLOG.md` remains the broader task inventory.
+During the original implementation, this file was the execution-order reference. `docs/BACKLOG.md`
+is the current task inventory.
 
 ---
 
@@ -14,7 +17,7 @@ Build and ship a static bilingual personal website in Astro with three sections:
 - Projects
 - Contact
 
-The implementation should preserve the already accepted direction:
+The implementation preserved the already accepted direction:
 
 - light, editorial, restrained visual language
 - `Spectral` for headlines and project titles
@@ -147,7 +150,7 @@ Work:
 
 ## Content Dependencies
 
-Implementation can start now. Copy status at this point:
+At the start of the original implementation, the copy status was:
 
 Already finalized in `docs/COPY.md`:
 
@@ -156,7 +159,7 @@ Already finalized in `docs/COPY.md`:
 - EN project descriptions
 - EN contact copy
 
-Still needed during implementation:
+Still needed at that point:
 
 - PL positioning expansion
 - PL project descriptions
@@ -183,7 +186,7 @@ Source of truth:
 
 ## Definition of Done
 
-The implementation is ready for launch when:
+The original implementation was ready for launch when:
 
 - the site renders correctly in EN and PL
 - the visual system matches `docs/STYLE.md`

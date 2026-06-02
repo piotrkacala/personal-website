@@ -12,12 +12,12 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 
 ## Now — post-launch polish
 
-- [ ] Remove markdown-generation dependence on parsing `LinkBlock.label`
-- [ ] Add lightweight regression tests for machine-readable artifact generation
+- [ ] Run `npm run smoke:production` after each FTP deployment
 
 ## Later
 
 - [ ] Keep polishing the public repo as a readable portfolio artifact when useful
+- [ ] Explore a public `Private client audit platform` case-study page with a clearly scoped, publication-safe snapshot
 
 ## Ideas — not decided
 
@@ -35,6 +35,11 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 
 ## Done
 
+- [x] Homepage proof hierarchy refreshed with a dedicated Phonetic Benchmark entry and a compact private-project treatment for `Private client audit platform` (2026-06-02)
+- [x] Companion profiles added for Phonetic Alphabet Trainer, Surfaced, and `Private client audit platform` (2026-06-02)
+- [x] Production smoke-check script added for HTML, markdown negotiation, discovery files, and sitemap consistency (2026-06-02)
+- [x] Lightweight regression tests added for machine-readable artifact generation (2026-06-02)
+- [x] Markdown generation decoupled from presentation-label punctuation through explicit `LinkBlock.machineLabel` fields (2026-06-02)
 - [x] Cloudflare homepage markdown edge layer documented with route-scoped negotiation, `Link` alternates, and markdown cache bypass on `/` and `/pl/` (2026-05-22)
 - [x] Cloudflare homepage markdown negotiation enabled for `/` and `/pl/` with `Accept: text/markdown` and `Vary: Accept` (2026-05-21)
 - [x] First companion machine-readable project profile added under `/projects/400m.md` and linked into public discovery (2026-05-21)

@@ -6,11 +6,11 @@ export const en = {
   metadata: {
     title: "Piotr Kacała — Product Builder",
     description:
-      "Personal website of Piotr Kacała. Product builder across product, design, QA, and development. Now building zero-code through AI agents.",
+      "Personal website of Piotr Kacała. AI agents are the build interface. The differentiator is judgment across product, design, QA, and development.",
     openGraph: {
       title: "Piotr Kacała — Product Builder",
       description:
-        "In IT since 2013. Now building zero-code through AI agents, across product, design, QA, and development.",
+        "AI agents are the build interface. The differentiator is judgment across product, design, QA, and development.",
       type: "website",
       locale: "en_US",
       siteName: "Piotr Kacała",
@@ -35,7 +35,7 @@ export const en = {
   },
   projects: {
     heading: "Projects",
-    arc: "Each project marks a deliberate next step. Testing AI on an existing codebase. Building from scratch, docs-first, zero-code. Delivering a full product for a real customer. Then building this site.",
+    arc: "Each project marks a deliberate next step. Testing AI on an existing codebase. Building from scratch, docs-first, zero-code. Delivering a full product for a real customer. Building this site as a public artifact. Then making coding-agent evaluation public.",
     items: [
       {
         title: "Phonetic Alphabet Trainer",
@@ -46,7 +46,7 @@ export const en = {
           },
           {
             type: "paragraph",
-            text: "A companion benchmark report reviews archived AI-agent outputs for the same product brief, focusing on user-path quality, UX failures, and implementation tradeoffs rather than a model leaderboard.",
+            text: "The project later became the product brief for Phonetic Benchmark.",
           },
           {
             type: "link",
@@ -55,18 +55,6 @@ export const en = {
             machineLabel: "Link",
             external: true,
             externalLabel: "(opens in a new tab)",
-          },
-          {
-            type: "link",
-            href: "https://piotrkacala.pl/phonetic-benchmark/",
-            label: "Report: piotrkacala.pl/phonetic-benchmark/",
-            machineLabel: "Report",
-          },
-          {
-            type: "link",
-            href: "https://piotrkacala.pl/phonetic-benchmark/gallery/",
-            label: "Gallery: piotrkacala.pl/phonetic-benchmark/gallery/",
-            machineLabel: "Gallery",
           },
         ],
       },
@@ -101,29 +89,11 @@ export const en = {
         blocks: [
           {
             type: "paragraph",
-            text: "First full production project, built spec-first for a real customer.",
-          },
-          {
-            type: "metrics",
-            heading: "As of April 2026",
-            items: [
-              { label: "Production code", value: "~21,000 lines" },
-              { label: "Tests", value: "~9,400 lines" },
-              { label: "Commits", value: "295" },
-              { label: "Database models", value: "25" },
-              { label: "API routes", value: "~96" },
-              { label: "Pages", value: "37" },
-              { label: "Components", value: "50" },
-              { label: "Internationalization", value: "Full i18n" },
-            ],
+            text: "First full production project, built spec-first for a real customer. As of April 2026: ~21,000 lines of production code, ~9,400 lines of tests, and 295 commits.",
           },
           {
             type: "paragraph",
-            text: "Before it was finished, both AI models and an experienced CEO estimated 13–17 weeks for one developer. The CEO was visibly surprised when told it was already done. Cumulative build time: roughly 25–30 days.",
-          },
-          {
-            type: "paragraph",
-            text: "Invite-only — no public link.",
+            text: "Private client project — no public runtime link.",
             tone: "aside",
           },
         ],
@@ -152,6 +122,42 @@ export const en = {
             href: "https://github.com/piotrkacala/personal-website",
             label: "Repo: github.com/piotrkacala/personal-website",
             machineLabel: "Repo",
+            external: true,
+            externalLabel: "(opens in a new tab)",
+          },
+        ],
+      },
+      {
+        title: "Phonetic Benchmark",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "A practical, task-specific evaluation of coding-agent outputs. Fifteen models received the same docs-first brief for a small browser app. I archived every result and reviewed contract compliance, UX behavior, testing, and delivery quality. This is not a universal model ranking. It is a documented comparison of how coding-agent workflows behave on the same product task.",
+          },
+          {
+            type: "link",
+            href: "https://piotrkacala.pl/phonetic-benchmark/",
+            label: "Report: piotrkacala.pl/phonetic-benchmark/",
+            machineLabel: "Report",
+          },
+          {
+            type: "link",
+            href: "https://piotrkacala.pl/phonetic-benchmark/gallery/",
+            label: "Gallery: piotrkacala.pl/phonetic-benchmark/gallery/",
+            machineLabel: "Gallery",
+          },
+          {
+            type: "link",
+            href: "https://piotrkacala.pl/phonetic-benchmark/methodology/",
+            label:
+              "Methodology: piotrkacala.pl/phonetic-benchmark/methodology/",
+            machineLabel: "Methodology",
+          },
+          {
+            type: "link",
+            href: "https://github.com/piotrkacala/phonetic-benchmark",
+            label: "Package: github.com/piotrkacala/phonetic-benchmark",
+            machineLabel: "Public benchmark package",
             external: true,
             externalLabel: "(opens in a new tab)",
           },

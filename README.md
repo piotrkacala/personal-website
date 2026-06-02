@@ -7,8 +7,10 @@ Live:
 - https://piotrkacala.pl
 - https://piotrkacala.pl/pl/
 
-This repo is part of the portfolio itself. The site shows the output; the repo shows how it was built.
-The site was implemented through AI agents from a docs-first spec. The repo is public and intentionally readable, including the docs and commit history.
+This repo is part of the portfolio itself. The homepage shows the profile; the repo and durable
+proof-artifact routes show how the work was built and evaluated. The site was implemented through
+AI agents from a docs-first spec. The repo is public and intentionally readable, including the docs
+and commit history.
 
 ## Stack
 
@@ -21,7 +23,7 @@ The site was implemented through AI agents from a docs-first spec. The repo is p
 ## Machine-readable output
 
 - `public/llms.txt` is the concise directory entry point for agents
-- `index.md`, `pl/index.md`, and `llms-full.txt` are generated during `npm run build`
+- `index.md`, `pl/index.md`, `llms-full.txt`, `sitemap.xml`, benchmark markdown, and companion project profiles are generated during `npm run build`
 - those generated text artifacts ship from the same EN/PL source content as the site, so update `src/i18n/en.ts` and `src/i18n/pl.ts` rather than editing generated output
 - deploy the full `dist/` contents via FTP, including the generated markdown and text files
 
@@ -33,6 +35,7 @@ The site was implemented through AI agents from a docs-first spec. The repo is p
 - `npm run typecheck`
 - `npm run lint`
 - `npm run format:check`
+- `npm run smoke:production` after FTP deployment
 
 ## Project Docs
 

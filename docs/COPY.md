@@ -2,7 +2,8 @@
 
 Content guidelines for the personal website. This document is the reference for all text decisions.
 
-**Primary source:** `../personal-os/positioning/positioning-context.md` (private repo, not accessible during implementation). The summary below contains everything needed to write website copy.
+**Primary source:** private positioning context, intentionally not required during implementation.
+The summary below contains everything needed to write website copy.
 
 ---
 
@@ -24,6 +25,7 @@ Content guidelines for the personal website. This document is the reference for 
 - AI compressed the technical timeline by an order of magnitude. But the human timeline (decisions, feedback, priorities) stayed the same. The bottleneck is no longer technical.
 - Never been precious about tools. Never tied worth to syntax. Every technology shift confirmed the strategy: depth in judgment, not tools.
 - Writes more now than ever did when coding. The interface became writing.
+- AI agents are the build interface. The differentiator is judgment across product, design, QA, and development.
 
 **Career direction:** The natural profile is a "mini firm" — product decisions, real problem solving, UX, design, outcome delivery, without a team. Most probable trajectory: consulting as the base, own products as the long-term bet. Employment for the right early-stage startup (founding engineer, AI product role).
 
@@ -107,15 +109,15 @@ W IT jestem od 2013 roku, na styku developmentu, designu, produktu i QA — nigd
 
 ## Section 2 — Projects
 
-**Finalized arc framing (EN, April 2026):**
+**Finalized arc framing (EN, June 2026):**
 
-Each entry marks a deliberate next step. Testing AI on an existing codebase. Building from scratch, docs-first, zero-code. Delivering a full product for a real customer. Then building the site itself as a public artifact.
+Each project marks a deliberate next step. Testing AI on an existing codebase. Building from scratch, docs-first, zero-code. Delivering a full product for a real customer. Building this site as a public artifact. Then making coding-agent evaluation public.
 
-**Finalized arc framing (PL, April 2026):**
+**Finalized arc framing (PL, June 2026):**
 
-Każdy wpis oznacza świadomie wybrany kolejny krok. Najpierw sprawdzenie AI na istniejącym codebase. Potem budowa od zera, docs-first, zero-code. Następnie pełny produkt dla realnego klienta. Na końcu sama strona jako publiczny artifact.
+Każdy projekt to świadomie wybrany kolejny krok. Sprawdzenie AI na istniejącym codebase. Budowa od zera, docs-first, zero-code. Pełny produkt dla realnego klienta. Ta strona jako publiczny artifact. Potem publiczna ewaluacja agentów programistycznych.
 
-**Original brief:** The core arc must stay explicit, not implied. Phonetic = testing whether AI understands an existing codebase. Surfaced = first docs-driven build from scratch. Private client audit platform = validation on a real product for a real customer. The site itself can appear as a final meta-entry because the repo is part of the proof.
+**Current brief:** The core arc must stay explicit, not implied. Phonetic Alphabet Trainer = testing whether AI understands an existing codebase. Surfaced = first docs-driven build from scratch. `Private client audit platform` = validation on a real product for a real customer. The site itself = public workflow artifact. Phonetic Benchmark = public evidence of methodical coding-agent workflow evaluation.
 
 ### Phonetic Alphabet Trainer
 
@@ -123,11 +125,15 @@ Każdy wpis oznacza świadomie wybrany kolejny krok. Najpierw sprawdzenie AI na 
 
 An existing React project, reopened to test how AI handles a real codebase — and to compare models and IDEs. Along the way, discovered missing letters in the official Polish Ministry of Defence phonetic alphabet. Ships in English and Polish with scoring, two answer modes, and streak tracking.
 
+The project later became the product brief for Phonetic Benchmark.
+
 - Link: piotrkacala.github.io/phonetic/
 
 **Finalized description (PL, April 2026):**
 
 Istniejący projekt w React, otwarty ponownie, żeby sprawdzić, jak AI radzi sobie z istniejącym codebase — i porównać modele oraz IDE. Po drodze wyszły na jaw brakujące litery w oficjalnym alfabecie fonetycznym Ministerstwa Obrony Narodowej. Działa po angielsku i po polsku, ma scoring, dwa tryby odpowiedzi i śledzenie serii.
+
+Projekt stał się później bazą briefu produktowego dla Phonetic Benchmark.
 
 - Link: piotrkacala.github.io/phonetic/
 
@@ -149,19 +155,19 @@ Pierwszy projekt zbudowany od zera, docs-driven, zero-code. Rozszerzenie do prze
 
 ### Private client audit platform
 
-**Finalized description (EN, April 2026):**
+**Finalized description (EN, June 2026):**
 
-First full production project, built spec-first for a real customer. As of April 2026: ~21,000 lines of production code, ~9,400 lines of tests, 295 commits, 25 database models, ~96 API routes, 37 pages, 50 components, full i18n. Before it was finished, both AI models and an experienced CEO estimated 13–17 weeks for one developer. The CEO was visibly surprised when told it was already done. Cumulative build time: roughly 25–30 days. Invite-only — no public link.
+First full production project, built spec-first for a real customer. As of April 2026: ~21,000 lines of production code, ~9,400 lines of tests, and 295 commits.
 
-> Note: project metrics are dated "as of April 2026" — update before any copy refresh.
+Private client project — no public runtime link.
 
-- Site is invite-only; no public trace; no NDA issue; full numbers can be shown
+> Note: project metrics are a dated April 2026 snapshot. Review before a later copy refresh.
 
-**Finalized description (PL, April 2026):**
+**Finalized description (PL, June 2026):**
 
-Pierwszy pełny projekt produkcyjny, zbudowany spec-first dla realnego klienta. Stan na kwiecień 2026: ~21,000 linii kodu produkcyjnego, ~9,400 linii testów, 295 commitów, 25 modeli bazy danych, ~96 endpointów API, 37 stron, 50 komponentów, pełne i18n. Zanim projekt był skończony, zarówno modele AI, jak i doświadczony CEO szacowali 13–17 tygodni pracy dla jednego developera. CEO był wyraźnie zaskoczony, kiedy usłyszał, że to już jest gotowe. Łączny czas budowy: około 25–30 dni. Tylko na zaproszenie — bez publicznego linku.
+Pierwszy pełny projekt produkcyjny, zbudowany spec-first dla realnego klienta. Stan na kwiecień 2026: ~21,000 linii kodu produkcyjnego, ~9,400 linii testów i 295 commitów.
 
-- Strona działa tylko na zaproszenie; nie ma publicznego śladu; nie ma problemu z NDA; pełne liczby mogą być pokazane
+Prywatny projekt kliencki — bez publicznego linku do działającej aplikacji.
 
 ### This site
 
@@ -183,6 +189,26 @@ Strona hostuje teraz także niewielkie publiczne narzędzia. Pierwszym z nich je
 - Repo: github.com/piotrkacala/personal-website
 - Narzędzie: piotrkacala.pl/400m/
 
+### Phonetic Benchmark
+
+**Finalized description (EN, June 2026):**
+
+A practical, task-specific evaluation of coding-agent outputs. Fifteen models received the same docs-first brief for a small browser app. I archived every result and reviewed contract compliance, UX behavior, testing, and delivery quality. This is not a universal model ranking. It is a documented comparison of how coding-agent workflows behave on the same product task.
+
+- Report: piotrkacala.pl/phonetic-benchmark/
+- Gallery: piotrkacala.pl/phonetic-benchmark/gallery/
+- Methodology: piotrkacala.pl/phonetic-benchmark/methodology/
+- Public benchmark package: github.com/piotrkacala/phonetic-benchmark
+
+**Finalized description (PL, June 2026):**
+
+Praktyczna, zadaniowa ewaluacja outputów agentów programistycznych. Piętnaście modeli dostało ten sam docs-first brief małej aplikacji webowej. Każdy wynik zarchiwizowałem i sprawdziłem pod kątem zgodności z kontraktem, UX, testów i jakości dostarczenia. To nie jest uniwersalny ranking modeli, tylko udokumentowane porównanie zachowania workflow agentów na tym samym zadaniu produktowym.
+
+- Raport: piotrkacala.pl/pl/phonetic-benchmark/
+- Galeria: piotrkacala.pl/pl/phonetic-benchmark/gallery/
+- Metodologia (EN): piotrkacala.pl/phonetic-benchmark/methodology/
+- Publiczny pakiet benchmarku: github.com/piotrkacala/phonetic-benchmark
+
 ---
 
 ## Section 3 — Contact
@@ -199,21 +225,21 @@ Kontakt: kontakt@piotrkacala.pl
 
 ---
 
-## Metadata — v1
+## Metadata
 
-**Finalized values (EN, April 2026):**
-
-- `<title>`: `Piotr Kacała — Product Builder`
-- `meta description`: `Personal website of Piotr Kacała. Product builder across product, design, QA, and development. Now building zero-code through AI agents.`
-- `og:title`: `Piotr Kacała — Product Builder`
-- `og:description`: `In IT since 2013. Now building zero-code through AI agents, across product, design, QA, and development.`
-
-**Finalized values (PL, April 2026):**
+**Finalized values (EN, June 2026):**
 
 - `<title>`: `Piotr Kacała — Product Builder`
-- `meta description`: `Strona Piotra Kacały. Product Builder na styku produktu, designu, QA i developmentu. Dziś buduje zero-code przez agenty AI.`
+- `meta description`: `Personal website of Piotr Kacała. AI agents are the build interface. The differentiator is judgment across product, design, QA, and development.`
 - `og:title`: `Piotr Kacała — Product Builder`
-- `og:description`: `W IT od 2013 roku. Dziś buduje zero-code przez agenty AI, na styku produktu, designu, QA i developmentu.`
+- `og:description`: `AI agents are the build interface. The differentiator is judgment across product, design, QA, and development.`
+
+**Finalized values (PL, June 2026):**
+
+- `<title>`: `Piotr Kacała — Product Builder`
+- `meta description`: `Strona Piotra Kacały. Agenty AI są interfejsem budowy. Wyróżnikiem są ocena i decyzje na styku produktu, designu, QA i developmentu.`
+- `og:title`: `Piotr Kacała — Product Builder`
+- `og:description`: `Agenty AI są interfejsem budowy. Wyróżnikiem są ocena i decyzje na styku produktu, designu, QA i developmentu.`
 
 **OG image direction (v1):**
 

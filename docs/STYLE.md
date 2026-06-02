@@ -75,7 +75,7 @@ One color only. Used sparingly and with clear functional purpose:
 
 - Links
 - Language switcher
-- Possibly metrics/numbers in the Private client audit platform section
+- Small dated proof summaries where they improve credibility
 
 Not used for large backgrounds, decorative surfaces, or branding-heavy gestures. It may appear in small borders, rules, or emphasis details only if that use improves orientation. The accent highlights interactive or notable elements and must never compete with the main text color for visual dominance.
 
@@ -99,7 +99,9 @@ Links should feel deliberate and editorial, not app-like. Underlines, offset und
 
 ### Project presentation
 
-Do not render projects as isolated marketing cards. They should read as entries in a deliberate sequence with a clear narrative arc from Phonetic to Surfaced to Private client audit platform. The Private client audit platform metrics should be scannable at a glance and visually distinct from the surrounding prose without becoming infographic-style decoration.
+Do not render projects as isolated marketing cards. They should read as entries in a deliberate
+sequence with a clear narrative arc from Phonetic Alphabet Trainer through Phonetic Benchmark.
+Compact dated proof summaries should stay readable without becoming infographic-style decoration.
 
 ### Density
 
