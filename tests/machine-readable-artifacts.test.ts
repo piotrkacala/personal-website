@@ -399,6 +399,22 @@ test("machine-readable demo links point at explicit static index files", () => {
   });
 });
 
+test("Sonnet archived demo loads benchmark data relative to its index file", () => {
+  const demoRoot = "public/phonetic-benchmark/demos/sonnet-4-6-thinking";
+  const html = readFileSync(`${demoRoot}/index.html`, "utf8");
+  const scriptMatch = html.match(
+    /<script type="module" crossorigin src="(\.\/assets\/[^"]+\.js)"><\/script>/u,
+  );
+
+  assert.ok(scriptMatch, "Expected the Sonnet demo module script");
+
+  const bundle = readFileSync(`${demoRoot}/${scriptMatch[1]}`, "utf8");
+
+  assert.match(bundle, /fetch\("\.\/data\/alphabets\.json"\)/u);
+  assert.match(bundle, /fetch\("\.\/data\/multiple-choice-options\.json"\)/u);
+  assert.doesNotMatch(bundle, /fetch\("\/data\//u);
+});
+
 test("benchmark structured data covers 15 archived runs and selected screenshot cases", () => {
   const report = phoneticBenchmarkReports.en;
   const statusCounts = new Map<string, number>();
