@@ -330,7 +330,7 @@ test("llms-full.txt carries the consolidated public references", () => {
   );
   assert.match(
     content,
-    /^- client-audit-platform\.pl — Companion profile: https:\/\/piotrkacala\.pl\/projects\/client-audit-platform\.md$/m,
+    /^- Private client audit platform — Companion profile: https:\/\/piotrkacala\.pl\/projects\/client-audit-platform\.md$/m,
   );
   assert.match(
     content,
@@ -1042,7 +1042,9 @@ test("400m companion profile is generated with high-signal operating details", (
 test("project companion profiles publish public-safe discovery records", () => {
   const phonetic = getArtifactContent("/projects/phonetic-alphabet-trainer.md");
   const surfaced = getArtifactContent("/projects/surfaced.md");
-  const client-audit-platform = getArtifactContent("/projects/client-audit-platform.md");
+  const clientAuditPlatform = getArtifactContent(
+    "/projects/client-audit-platform.md",
+  );
 
   assert.match(phonetic, /^# Phonetic Alphabet Trainer$/m);
   assert.match(
@@ -1061,17 +1063,17 @@ test("project companion profiles publish public-safe discovery records", () => {
   );
   assert.match(surfaced, /^- Passed Mozilla's public add-on review\.$/m);
 
-  assert.match(client-audit-platform, /^# client-audit-platform\.pl$/m);
-  assert.match(client-audit-platform, /^- Runtime: No public runtime link\.$/m);
+  assert.match(clientAuditPlatform, /^# Private client audit platform$/m);
+  assert.match(clientAuditPlatform, /^- Runtime: No public runtime link\.$/m);
   assert.match(
-    client-audit-platform,
+    clientAuditPlatform,
     /^- This profile is a dated private-project record, not a public runtime claim\.$/m,
   );
   assert.match(
-    client-audit-platform,
+    clientAuditPlatform,
     /^- Private customer data and implementation details are intentionally excluded\.$/m,
   );
-  assert.doesNotMatch(client-audit-platform, /API routes|database models/i);
+  assert.doesNotMatch(clientAuditPlatform, /API routes|database models/i);
 });
 
 test("machine-readable links do not depend on visible label punctuation", () => {

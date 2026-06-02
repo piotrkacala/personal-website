@@ -21,7 +21,7 @@ The summary below contains everything needed to write website copy.
 - Prompting mirrors leading a team. Prompt in the language of the domain — like writing a Slack message to a dev, a bug report to QA, a brief to a designer. Models were trained on exactly that data.
 - "The design is visually busy, relax it" lands in one pass. "Make it pretty" is a gamble. The prompt is only as good as the thinking behind it.
 - Tool knowledge still matters — not for remembering commands, but for knowing which door to open. Experience built the map.
-- Bug rate on Private client audit platform felt the same as classically coded projects. The "AI code must be buggy" counter-argument doesn't hold.
+- Bug rate on the private client audit platform felt the same as classically coded projects. The "AI code must be buggy" counter-argument doesn't hold.
 - AI compressed the technical timeline by an order of magnitude. But the human timeline (decisions, feedback, priorities) stayed the same. The bottleneck is no longer technical.
 - Never been precious about tools. Never tied worth to syntax. Every technology shift confirmed the strategy: depth in judgment, not tools.
 - Writes more now than ever did when coding. The interface became writing.
@@ -117,7 +117,7 @@ Each project marks a deliberate next step. Testing AI on an existing codebase. B
 
 Każdy projekt to świadomie wybrany kolejny krok. Sprawdzenie AI na istniejącym codebase. Budowa od zera, docs-first, zero-code. Pełny produkt dla realnego klienta. Ta strona jako publiczny artifact. Potem publiczna ewaluacja agentów programistycznych.
 
-**Current brief:** The core arc must stay explicit, not implied. Phonetic Alphabet Trainer = testing whether AI understands an existing codebase. Surfaced = first docs-driven build from scratch. `Private client audit platform` = validation on a real product for a real customer. The site itself = public workflow artifact. Phonetic Benchmark = public evidence of methodical coding-agent workflow evaluation.
+**Current brief:** The core arc must stay explicit, not implied. Phonetic Alphabet Trainer = testing whether AI understands an existing codebase. Surfaced = first docs-driven build from scratch. Private client audit platform = validation on a real product for a real customer. The site itself = public workflow artifact. Phonetic Benchmark = public evidence of methodical coding-agent workflow evaluation.
 
 ### Phonetic Alphabet Trainer
 

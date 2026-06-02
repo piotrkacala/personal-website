@@ -323,3 +323,26 @@ pricing tables, a CMS, or a general content system.
 The consulting offer needs enough space to be concrete without changing the homepage visitor flow.
 A dedicated static route preserves the compact homepage, gives relevant visitors a clear next step,
 and fits the existing document-like architecture and machine-readable publication model.
+
+---
+
+## ADR-018 — Private client work uses a neutral public label
+
+**Date:** 2026-06-02
+**Status:** Accepted
+
+**Context:**
+The private client audit platform was previously identified by its product domain. That domain is
+not a durable project identity and is not expected to be renewed.
+
+**Decision:**
+Use `Private client audit platform` in English public surfaces and
+`Prywatna platforma do audytów` in Polish homepage copy.
+
+Publish its companion machine-readable profile at `/projects/client-audit-platform.md`. Do not
+preserve the former domain-based companion slug as a public alias.
+
+**Reasoning:**
+The project matters as evidence of production delivery, not as a brand or public runtime. A neutral
+label explains the project immediately and avoids coupling durable portfolio materials to an
+expiring domain.

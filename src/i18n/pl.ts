@@ -87,7 +87,7 @@ export const pl = {
         ],
       },
       {
-        title: "Private client audit platform",
+        title: "Prywatna platforma do audytów",
         blocks: [
           {
             type: "paragraph",

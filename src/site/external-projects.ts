@@ -154,9 +154,9 @@ export const externalProjectProfiles: readonly ExternalProjectProfile[] = [
     title: "Private client audit platform",
     companionPath: "/projects/client-audit-platform.md",
     summary:
-      "Private client audit platform is a private client audit platform and a dated record of the first full production project built spec-first for a real customer.",
+      "This private client audit platform is a dated record of the first full production project built spec-first for a real customer.",
     status: "Private client project. Snapshot dated April 2026.",
-    type: "Private client audit platform",
+    type: "Client audit platform",
     linksHeading: "Public runtime",
     publicLinks: [{ label: "Runtime", note: "No public runtime link." }],
     sections: [

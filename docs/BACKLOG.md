@@ -13,15 +13,16 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 ## Now — post-launch polish
 
 - [ ] Run `npm run smoke:production` after each FTP deployment
+- [ ] Remove the superseded domain-based companion profile file from FTP hosting during the next deploy
 
 ## Later
 
 - [ ] Keep polishing the public repo as a readable portfolio artifact when useful
-- [ ] Explore a public `Private client audit platform` case-study page with a clearly scoped, publication-safe snapshot
+- [ ] Explore a public private-client-audit-platform case-study page with a clearly scoped, publication-safe snapshot
 
 ## Ideas — not decided
 
-- Showing a timeline of the learning curve (Phonetic → Surfaced → Private client audit platform) visually, not just textually
+- Showing a timeline of the learning curve (Phonetic → Surfaced → private client audit platform) visually, not just textually
 
 ## Rejected
 
@@ -36,8 +37,8 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 ## Done
 
 - [x] Focused bilingual consulting surface added with generated markdown, discovery entries, sitemap coverage, and production smoke checks while keeping the homepage compact (2026-06-02)
-- [x] Homepage proof hierarchy refreshed with a dedicated Phonetic Benchmark entry and a compact private-project treatment for `Private client audit platform` (2026-06-02)
-- [x] Companion profiles added for Phonetic Alphabet Trainer, Surfaced, and `Private client audit platform` (2026-06-02)
+- [x] Homepage proof hierarchy refreshed with a dedicated Phonetic Benchmark entry and a compact private-project treatment for the private client audit platform (2026-06-02)
+- [x] Companion profiles added for Phonetic Alphabet Trainer, Surfaced, and the private client audit platform (2026-06-02)
 - [x] Production smoke-check script added for HTML, markdown negotiation, discovery files, and sitemap consistency (2026-06-02)
 - [x] Lightweight regression tests added for machine-readable artifact generation (2026-06-02)
 - [x] Markdown generation decoupled from presentation-label punctuation through explicit `LinkBlock.machineLabel` fields (2026-06-02)
