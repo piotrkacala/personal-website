@@ -1,0 +1,200 @@
+---
+import {
+  phoneticBenchmarkInterpretationLimitations,
+  phoneticBenchmarkMetadata,
+  type BenchmarkRunCopy,
+} from "../site/phonetic-benchmark";
+
+interface Props {
+  run: BenchmarkRunCopy;
+}
+
+const { run } = Astro.props;
+---
+
+<article class="run-details">
+  <header>
+    <p class="run-eyebrow ui-text">Phonetic Benchmark run details</p>
+    <h1>{run.model} — Phonetic Benchmark v1 run</h1>
+    <p>
+      One observed output from one small browser-app task. This is not a general
+      model review or universal ranking.
+    </p>
+    <p class="run-summary">{run.functionalRead}</p>
+    <p><a href="/phonetic-benchmark/">Back to Phonetic Benchmark report</a></p>
+  </header>
+
+  <section>
+    <h2>Run Record</h2>
+    <dl class="run-record">
+      <div><dt>Run ID</dt><dd>{run.id}</dd></div>
+      <div><dt>Benchmark version</dt><dd>{run.benchmarkVersion}</dd></div>
+      <div>
+        <dt>Run date</dt><dd>
+          <time datetime={run.runDate}>{run.runDate}</time>
+        </dd>
+      </div>
+      <div><dt>Status</dt><dd><code>{run.status}</code></dd></div>
+      <div>
+        <dt>Failure types</dt>
+        <dd>
+          {run.failureTypes.length > 0 ? run.failureTypes.join(", ") : "none"}
+        </dd>
+      </div>
+      <div><dt>Source LoC</dt><dd>{run.sourceLoc}</dd></div>
+      <div><dt>Static automated tests</dt><dd>{run.testCount}</dd></div>
+      <div><dt>Stack</dt><dd>{run.stack}</dd></div>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Observed Strengths</h2>
+    <ul>
+      {
+        run.observations.observedStrengths.map((observation) => (
+          <li>{observation}</li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section>
+    <h2>Observed Weaknesses</h2>
+    <ul>
+      {
+        run.observations.observedWeaknesses.map((observation) => (
+          <li>{observation}</li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section>
+    <h2>Evidence</h2>
+    <figure>
+      <img
+        src={run.screenshotPath}
+        alt={run.screenshotAlt}
+        width="1440"
+        height="900"
+      />
+      <figcaption>{run.screenshotCaption}</figcaption>
+    </figure>
+    <ul>
+      <li><a href={run.demoUrl}>Open archived demo</a></li>
+      <li><a href={run.screenshotUrl}>Open archived screenshot</a></li>
+      <li><a href={run.markdownUrl}>Open Markdown run record</a></li>
+      <li>
+        <a href="/phonetic-benchmark/results.json">Open JSON results export</a>
+      </li>
+      <li>
+        <a href="/phonetic-benchmark/results.csv">Open CSV results export</a>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Interpretation Limits</h2>
+    <ul>
+      {
+        phoneticBenchmarkInterpretationLimitations.map((limitation) => (
+          <li>{limitation}</li>
+        ))
+      }
+    </ul>
+    <p>
+      Report updated: <time datetime={phoneticBenchmarkMetadata.updatedDate}>
+        {phoneticBenchmarkMetadata.updatedDate}
+      </time>.
+      <a href="/phonetic-benchmark/methodology/"> Read the full methodology.</a>
+    </p>
+  </section>
+</article>
+
+<style>
+  .run-details > * {
+    margin: 0;
+  }
+
+  .run-details > * + * {
+    margin-top: calc(var(--spacing-rhythm) * 1.25);
+    padding-top: calc(var(--spacing-rhythm) * 1.25);
+    border-top: 1px solid var(--divider);
+  }
+
+  .run-details header > *,
+  .run-details section > * {
+    margin: 0;
+  }
+
+  .run-details header > * + *,
+  .run-details section > * + * {
+    margin-top: calc(var(--spacing-rhythm) * 0.62);
+  }
+
+  .run-eyebrow {
+    color: var(--accent);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .run-summary {
+    max-width: 66ch;
+    font-size: clamp(1.12rem, 1.06rem + 0.2vw, 1.22rem);
+    line-height: 1.5;
+  }
+
+  .run-record {
+    display: grid;
+    gap: 0.38rem;
+    margin: 0;
+  }
+
+  .run-record div {
+    display: grid;
+    grid-template-columns: minmax(9rem, 13rem) minmax(0, 1fr);
+    gap: 0.7rem;
+  }
+
+  .run-record dt {
+    font-weight: 700;
+  }
+
+  .run-record dd,
+  figure {
+    margin: 0;
+  }
+
+  figure {
+    max-width: 54rem;
+  }
+
+  figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--divider);
+  }
+
+  figcaption {
+    margin-top: calc(var(--spacing-rhythm) * 0.3);
+    color: rgb(23 20 18 / 72%);
+    font-size: var(--text-ui);
+  }
+
+  ul {
+    max-width: 72ch;
+    padding-inline-start: 1.3rem;
+  }
+
+  li + li {
+    margin-top: calc(var(--spacing-rhythm) * 0.28);
+  }
+
+  @media (max-width: 39.99rem) {
+    .run-record div {
+      grid-template-columns: 1fr;
+      gap: 0.05rem;
+    }
+  }
+</style>

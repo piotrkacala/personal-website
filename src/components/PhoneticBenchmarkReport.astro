@@ -5,6 +5,7 @@ import type {
   BenchmarkRunCopy,
   BenchmarkStatus,
 } from "../site/phonetic-benchmark";
+import { phoneticBenchmarkMetadata } from "../site/phonetic-benchmark";
 
 interface Props {
   report: BenchmarkReportCopy;
@@ -57,6 +58,24 @@ function getFailureTypes(run: BenchmarkRunCopy): string {
     <p class="report-eyebrow ui-text">{report.eyebrow}</p>
     <h1>{report.title}</h1>
     <p class="report-summary">{report.summary}</p>
+    <p class="report-metadata ui-text">
+      <span
+        >{report.metadataLabels.benchmark}
+        {phoneticBenchmarkMetadata.benchmarkVersion}</span
+      >
+      <span aria-hidden="true">&middot;</span>
+      <span>{runs.length} {report.metadataLabels.runs}</span>
+      <span aria-hidden="true">&middot;</span>
+      <span>
+        {report.metadataLabels.updated}: <time
+          datetime={phoneticBenchmarkMetadata.updatedDate}
+        >
+          {phoneticBenchmarkMetadata.updatedDate}
+        </time>
+      </span>
+      <span aria-hidden="true">&middot;</span>
+      <a href={report.methodologyHref}>{report.methodologyLabel}</a>
+    </p>
     <p class="report-home-link">
       <a href={report.homeHref}>{report.homeLabel}</a>
     </p>
@@ -87,7 +106,8 @@ function getFailureTypes(run: BenchmarkRunCopy): string {
     <h2 id={resultsHeadingId}>{report.resultsHeading}</h2>
     <p>{report.resultsIntro}</p>
     <p>
-      {report.galleryText} <a href={report.galleryHref}>{report.galleryLabel}</a>
+      {report.galleryText}
+      <a href={report.galleryHref}>{report.galleryLabel}</a>
     </p>
     <div class="results-table-wrap">
       <table class="results-table">
@@ -99,7 +119,7 @@ function getFailureTypes(run: BenchmarkRunCopy): string {
             <th scope="col">{report.tableLabels.sourceLoc}</th>
             <th scope="col">{report.tableLabels.testCount}</th>
             <th scope="col">{report.tableLabels.functionalRead}</th>
-            <th scope="col">{report.tableLabels.demo}</th>
+            <th scope="col">{report.tableLabels.details}</th>
           </tr>
         </thead>
         <tbody>
@@ -130,8 +150,8 @@ function getFailureTypes(run: BenchmarkRunCopy): string {
                 <td data-label={report.tableLabels.functionalRead}>
                   {run.functionalRead}
                 </td>
-                <td data-label={report.tableLabels.demo}>
-                  <a href={run.demoUrl}>{report.demoLabel}</a>
+                <td data-label={report.tableLabels.details}>
+                  <a href={run.detailsUrl}>{report.detailsLabel}</a>
                 </td>
               </tr>
             ))
@@ -148,7 +168,9 @@ function getFailureTypes(run: BenchmarkRunCopy): string {
         report.findings.map((finding) => (
           <section>
             <h3>{finding.heading}</h3>
-            {finding.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            {finding.paragraphs.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
           </section>
         ))
       }
@@ -163,7 +185,9 @@ function getFailureTypes(run: BenchmarkRunCopy): string {
           <article class="case-note" id={`case-${caseNote.id}`}>
             <div class="case-note-copy">
               <h3>{caseNote.heading}</h3>
-              {caseNote.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+              {caseNote.paragraphs.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
             </div>
             <div class="case-note-media">
               {caseNote.runIds.map((runId) => {
@@ -207,7 +231,18 @@ function getFailureTypes(run: BenchmarkRunCopy): string {
     <h2 id={artifactHeadingId}>{report.artifactHeading}</h2>
     <p>{report.artifactIntro}</p>
     <p>
-      {report.galleryText} <a href={report.galleryHref}>{report.galleryLabel}</a>
+      {report.galleryText}
+      <a href={report.galleryHref}>{report.galleryLabel}</a>
+    </p>
+    <p>
+      {report.metadataLabels.machineReadable}: {
+        report.resourceLinks.map((resource, index) => (
+          <>
+            {index > 0 && <span aria-hidden="true"> / </span>}
+            <a href={resource.href}>{resource.label}</a>
+          </>
+        ))
+      }
     </p>
     <ul class="artifact-list">
       {

@@ -8,23 +8,28 @@ interface Props {
   metadata: SiteMetadata;
   markdownUrl?: string | false;
   contentWidth?: "default" | "wide";
-  alternates?: {
-    en: string;
-    pl: string;
-    default: string;
-  };
+  alternates?:
+    | {
+        en: string;
+        pl: string;
+        default: string;
+      }
+    | false;
   homeLink?: {
     href: string;
     ariaLabel: string;
   };
-  languageSwitcher: {
-    ariaLabel: string;
-    currentLabel: string;
-    currentLanguage: "en" | "pl";
-    alternateLabel: string;
-    alternateHref: string;
-    alternateLanguage: "en" | "pl";
-  };
+  languageSwitcher:
+    | {
+        ariaLabel: string;
+        currentLabel: string;
+        currentLanguage: "en" | "pl";
+        alternateLabel: string;
+        alternateHref: string;
+        alternateLanguage: "en" | "pl";
+      }
+    | false;
+  pageSchemas?: readonly Record<string, unknown>[];
 }
 
 const { lang, metadata, languageSwitcher } = Astro.props;
@@ -42,16 +47,22 @@ const fontPreloads = [
   "/fonts/source-sans-3-latin-ext.woff2",
   "/fonts/spectral-600-latin.woff2",
 ];
-const alternateUrls = Astro.props.alternates ?? {
-  en: new URL("/", siteUrl).toString(),
-  pl: new URL("/pl/", siteUrl).toString(),
-  default: new URL("/", siteUrl).toString(),
-};
-const alternates = [
-  { lang: "en", href: alternateUrls.en },
-  { lang: "pl", href: alternateUrls.pl },
-  { lang: "x-default", href: alternateUrls.default },
-];
+const alternateUrls =
+  Astro.props.alternates === false
+    ? undefined
+    : (Astro.props.alternates ?? {
+        en: new URL("/", siteUrl).toString(),
+        pl: new URL("/pl/", siteUrl).toString(),
+        default: new URL("/", siteUrl).toString(),
+      });
+const alternates = alternateUrls
+  ? [
+      { lang: "en", href: alternateUrls.en },
+      { lang: "pl", href: alternateUrls.pl },
+      { lang: "x-default", href: alternateUrls.default },
+    ]
+  : [];
+const pageSchemas = Astro.props.pageSchemas ?? [];
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -81,67 +92,118 @@ const personSchema = {
     <meta property="og:site_name" content={metadata.openGraph.siteName} />
     <meta property="og:url" content={metadata.openGraph.url} />
     <meta property="og:image" content={metadata.openGraph.image.url} />
-    <meta property="og:image:width" content={String(metadata.openGraph.image.width)} />
-    <meta property="og:image:height" content={String(metadata.openGraph.image.height)} />
+    <meta
+      property="og:image:width"
+      content={String(metadata.openGraph.image.width)}
+    />
+    <meta
+      property="og:image:height"
+      content={String(metadata.openGraph.image.height)}
+    />
     <meta property="og:image:alt" content={metadata.openGraph.image.alt} />
-    {fontPreloads.map((href) => (
-      <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
-    ))}
-    {alternates.map((alternate) => (
-      <link rel="alternate" hreflang={alternate.lang} href={alternate.href} />
-    ))}
-    {markdownUrl && (
-      <link
-        rel="alternate"
-        type="text/markdown"
-        href={markdownUrl}
-        title={lang === "en" ? "Markdown version of this page" : "Wersja markdown tej strony"}
-      />
-    )}
-    <script type="application/ld+json" is:inline set:html={JSON.stringify(personSchema)} />
+    {
+      fontPreloads.map((href) => (
+        <link
+          rel="preload"
+          href={href}
+          as="font"
+          type="font/woff2"
+          crossorigin
+        />
+      ))
+    }
+    {
+      alternates.map((alternate) => (
+        <link rel="alternate" hreflang={alternate.lang} href={alternate.href} />
+      ))
+    }
+    {
+      markdownUrl && (
+        <link
+          rel="alternate"
+          type="text/markdown"
+          href={markdownUrl}
+          title={
+            lang === "en"
+              ? "Markdown version of this page"
+              : "Wersja markdown tej strony"
+          }
+        />
+      )
+    }
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(personSchema)}
+    />
+    {
+      pageSchemas.map((schema) => (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(schema)}
+        />
+      ))
+    }
   </head>
   <body class="site-body">
     <!-- LLM-readable profile context: https://piotrkacala.pl/llms.txt -->
     <div class="site-shell">
-      <div class:list={["page-column", { "page-column--wide": contentWidth === "wide" }]}>
-        <header class="mb-5 border-b pb-4" style="border-color: var(--divider);">
+      <div
+        class:list={[
+          "page-column",
+          { "page-column--wide": contentWidth === "wide" },
+        ]}
+      >
+        <header
+          class="mb-5 border-b pb-4"
+          style="border-color: var(--divider);"
+        >
           <div
             class:list={[
               "flex min-h-11 items-center gap-4",
               homeLink ? "justify-between" : "justify-end",
             ]}
           >
-            {homeLink && (
-              <a
-                href={homeLink.href}
-                aria-label={homeLink.ariaLabel}
-                class="ui-text inline-flex min-h-11 items-center font-semibold"
-              >
-                {siteProfile.name}
-              </a>
-            )}
-            <nav
-              aria-label={languageSwitcher.ariaLabel}
-              class="ui-text flex min-h-11 items-center justify-end gap-3 uppercase"
-            >
-              <span
-                aria-current="page"
-                lang={languageSwitcher.currentLanguage}
-                class="inline-flex min-h-11 items-center border-b pb-0.5 font-semibold"
-                style="color: var(--text); border-color: currentColor;"
-              >
-                {languageSwitcher.currentLabel}
-              </span>
-              <span aria-hidden="true" style="color: var(--divider);">/</span>
-              <a
-                href={languageSwitcher.alternateHref}
-                hreflang={languageSwitcher.alternateLanguage}
-                lang={languageSwitcher.alternateLanguage}
-                class="inline-flex min-h-11 items-center px-3"
-              >
-                {languageSwitcher.alternateLabel}
-              </a>
-            </nav>
+            {
+              homeLink && (
+                <a
+                  href={homeLink.href}
+                  aria-label={homeLink.ariaLabel}
+                  class="ui-text inline-flex min-h-11 items-center font-semibold"
+                >
+                  {siteProfile.name}
+                </a>
+              )
+            }
+            {
+              languageSwitcher && (
+                <nav
+                  aria-label={languageSwitcher.ariaLabel}
+                  class="ui-text flex min-h-11 items-center justify-end gap-3 uppercase"
+                >
+                  <span
+                    aria-current="page"
+                    lang={languageSwitcher.currentLanguage}
+                    class="inline-flex min-h-11 items-center border-b pb-0.5 font-semibold"
+                    style="color: var(--text); border-color: currentColor;"
+                  >
+                    {languageSwitcher.currentLabel}
+                  </span>
+                  <span aria-hidden="true" style="color: var(--divider);">
+                    /
+                  </span>
+                  <a
+                    href={languageSwitcher.alternateHref}
+                    hreflang={languageSwitcher.alternateLanguage}
+                    lang={languageSwitcher.alternateLanguage}
+                    class="inline-flex min-h-11 items-center px-3"
+                  >
+                    {languageSwitcher.alternateLabel}
+                  </a>
+                </nav>
+              )
+            }
           </div>
         </header>
         <main id="content">

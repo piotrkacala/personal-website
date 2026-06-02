@@ -1,0 +1,21 @@
+---
+import PhoneticBenchmarkMethodology from "../../../components/PhoneticBenchmarkMethodology.astro";
+import Base from "../../../layouts/Base.astro";
+import {
+  getPhoneticBenchmarkMethodologyMarkdownUrl,
+  getPhoneticBenchmarkMethodologySchemas,
+  phoneticBenchmarkMethodology,
+} from "../../../site/phonetic-benchmark";
+---
+
+<Base
+  lang="en"
+  metadata={phoneticBenchmarkMethodology.metadata}
+  languageSwitcher={false}
+  markdownUrl={getPhoneticBenchmarkMethodologyMarkdownUrl()}
+  alternates={false}
+  homeLink={{ href: "/", ariaLabel: "Back to homepage" }}
+  pageSchemas={getPhoneticBenchmarkMethodologySchemas()}
+>
+  <PhoneticBenchmarkMethodology methodology={phoneticBenchmarkMethodology} />
+</Base>

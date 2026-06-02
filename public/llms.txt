@@ -14,6 +14,11 @@
 - Polish Phonetic Benchmark screenshot gallery: https://piotrkacala.pl/pl/phonetic-benchmark/gallery/
 - Phonetic Benchmark markdown report: https://piotrkacala.pl/phonetic-benchmark/index.md
 - Polish Phonetic Benchmark markdown report: https://piotrkacala.pl/pl/phonetic-benchmark/index.md
+- Phonetic Benchmark methodology: https://piotrkacala.pl/phonetic-benchmark/methodology/
+- Phonetic Benchmark methodology markdown: https://piotrkacala.pl/phonetic-benchmark/methodology/index.md
+- Phonetic Benchmark results JSON: https://piotrkacala.pl/phonetic-benchmark/results.json
+- Phonetic Benchmark results CSV: https://piotrkacala.pl/phonetic-benchmark/results.csv
+- Phonetic Benchmark run details pattern: https://piotrkacala.pl/phonetic-benchmark/runs/{run-id}/
 - 400m companion profile: https://piotrkacala.pl/projects/400m.md
 - Full public context: https://piotrkacala.pl/llms-full.txt
 - Contact: mailto:kontakt@piotrkacala.pl

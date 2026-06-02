@@ -17,13 +17,15 @@ A static single-page personal website built with Astro. No backend, no database,
 │   ├── llms.txt              ← concise agent-facing directory copied from `public/`
 │   ├── robots.txt            ← crawl policy for search engines and bots
 │   ├── og/                   ← localized Open Graph images
-│   └── sitemap.xml           ← static sitemap for root public routes
+│   └── phonetic-benchmark/   ← archived benchmark screenshots and static demos
 ├── src/
 │   ├── pages/
 │   │   ├── 404.astro         ← custom 404 page
 │   │   ├── index.astro       ← English version
+│   │   ├── phonetic-benchmark/ ← report, gallery, methodology, and EN-only run details
 │   │   └── pl/
-│   │       └── index.astro   ← Polish version
+│   │       ├── index.astro   ← Polish version
+│   │       └── phonetic-benchmark/ ← localized report and gallery
 │   ├── components/
 │   │   ├── Contact.astro     ← semantic footer/contact block
 │   │   ├── Hero.astro        ← positioning section
@@ -35,12 +37,13 @@ A static single-page personal website built with Astro. No backend, no database,
 │   │   ├── pl.ts             ← Polish strings
 │   │   └── schema.ts         ← shared copy schema
 │   ├── integrations/
-│   │   └── machine-readable-artifacts.mjs ← build hook that writes markdown assets into `dist/`
+│   │   └── machine-readable-artifacts.mjs ← build hook that writes discovery assets into `dist/`
 │   ├── env.d.ts              ← Astro type declarations
 │   ├── layouts/
 │   │   └── Base.astro        ← shared document shell
 │   ├── site/
 │   │   ├── external-projects.ts ← companion markdown profiles for separately deployed tools
+│   │   ├── phonetic-benchmark.ts ← benchmark facts, copy, observations, and JSON-LD helpers
 │   │   └── profile.ts        ← shared public profile/discovery metadata
 │   └── styles/
 │       └── global.css        ← Tailwind entrypoint + global CSS custom properties
@@ -85,13 +88,21 @@ Build output now includes:
 - `/index.md` ← generated English markdown version of the homepage
 - `/pl/index.md` ← generated Polish markdown version of the homepage
 - `/projects/<slug>.md` ← companion markdown profiles for separately deployed tools
+- `/phonetic-benchmark/index.md` and `/pl/phonetic-benchmark/index.md` ← generated report markdown
+- `/phonetic-benchmark/methodology/index.md` ← generated canonical English methodology markdown
+- `/phonetic-benchmark/runs/<run-id>/index.md` ← generated canonical English run-details records
+- `/phonetic-benchmark/results.json` and `/phonetic-benchmark/results.csv` ← language-neutral exports
+- `/sitemap.xml` ← generated sitemap aligned with static routes and discovery artifacts
 - `/llms-full.txt` ← compact single-file public context resource
 - `/llms.txt` ← concise directory for agents, copied from `public/`
 
 Source of truth remains the existing EN/PL copy in `src/i18n/en.ts` and `src/i18n/pl.ts`.
-The markdown artifacts are generated at build time by an Astro build hook. They are not edited manually.
+Benchmark publication facts remain centralized in `src/site/phonetic-benchmark.ts`. Generated
+artifacts are written at build time by an Astro build hook. They are not edited manually.
 
-The shared layout also emits factual `Person` JSON-LD and page-level `rel="alternate" type="text/markdown"` links so the discovery layer stays tied to the actual public pages.
+The shared layout emits factual `Person` JSON-LD, optional page-level benchmark JSON-LD, and
+page-level `rel="alternate" type="text/markdown"` links so the discovery layer stays tied to the
+actual public pages.
 
 ### External project surfaces
 
@@ -119,7 +130,10 @@ This keeps machine-readable discovery inside the public repo without creating de
 | Domain     | `piotrkacala.pl`                             |
 | Error page | Custom static `404.html`                     |
 
-Static discovery files such as `robots.txt`, `sitemap.xml`, and `llms.txt` live in `public/` and are copied into the final build. Generated machine-readable files such as `index.md`, `pl/index.md`, and `llms-full.txt` are written into `dist/` during `astro build` and should be deployed together with the HTML output.
+Static discovery files such as `robots.txt` and `llms.txt` live in `public/` and are copied into the
+final build. Generated machine-readable files such as `sitemap.xml`, `index.md`, `pl/index.md`, and
+`llms-full.txt` are written into `dist/` during `astro build` and should be deployed together with
+the HTML output.
 
 Companion markdown profiles for external project surfaces should follow the same deploy rule once implemented: they are static artifacts owned by this repo and must not conflict with separately deployed application paths on the same domain.
 

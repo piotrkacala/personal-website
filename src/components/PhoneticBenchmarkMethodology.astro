@@ -1,0 +1,91 @@
+---
+import type { BenchmarkMethodologyCopy } from "../site/phonetic-benchmark";
+
+interface Props {
+  methodology: BenchmarkMethodologyCopy;
+}
+
+const { methodology } = Astro.props;
+
+function renderInlineCode(text: string): string {
+  return text.replace(/`([^`]+)`/gu, "<code>$1</code>");
+}
+---
+
+<article class="methodology">
+  <header>
+    <p class="methodology-eyebrow ui-text">{methodology.eyebrow}</p>
+    <h1>{methodology.title}</h1>
+    <p class="methodology-summary">{methodology.summary}</p>
+    <p><a href={methodology.reportHref}>{methodology.reportLabel}</a></p>
+  </header>
+
+  {
+    methodology.sections.map((section) => (
+      <section>
+        <h2>{section.heading}</h2>
+        {section.paragraphs?.map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
+        {section.items && (
+          <ul>
+            {section.items.map((item) => (
+              <li set:html={renderInlineCode(item)} />
+            ))}
+          </ul>
+        )}
+      </section>
+    ))
+  }
+
+  <section>
+    <h2>Public Benchmark Package</h2>
+    <p>
+      <a href={methodology.sourcePackageUrl}>{methodology.sourcePackageLabel}</a
+      >
+    </p>
+  </section>
+</article>
+
+<style>
+  .methodology > * {
+    margin: 0;
+  }
+
+  .methodology > * + * {
+    margin-top: calc(var(--spacing-rhythm) * 1.25);
+    padding-top: calc(var(--spacing-rhythm) * 1.25);
+    border-top: 1px solid var(--divider);
+  }
+
+  .methodology header > *,
+  .methodology section > * {
+    margin: 0;
+  }
+
+  .methodology header > * + *,
+  .methodology section > * + * {
+    margin-top: calc(var(--spacing-rhythm) * 0.62);
+  }
+
+  .methodology-eyebrow {
+    color: var(--accent);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .methodology-summary {
+    max-width: 66ch;
+    font-size: clamp(1.12rem, 1.06rem + 0.2vw, 1.22rem);
+    line-height: 1.5;
+  }
+
+  .methodology ul {
+    max-width: 72ch;
+    padding-inline-start: 1.3rem;
+  }
+
+  .methodology li + li {
+    margin-top: calc(var(--spacing-rhythm) * 0.28);
+  }
+</style>

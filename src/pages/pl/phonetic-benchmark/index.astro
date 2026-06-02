@@ -3,6 +3,7 @@ import PhoneticBenchmarkReport from "../../../components/PhoneticBenchmarkReport
 import Base from "../../../layouts/Base.astro";
 import {
   getPhoneticBenchmarkMarkdownUrl,
+  getPhoneticBenchmarkReportSchemas,
   phoneticBenchmarkReports,
 } from "../../../site/phonetic-benchmark";
 
@@ -22,6 +23,7 @@ const alternates = {
   alternates={alternates}
   homeLink={{ href: report.homeHref, ariaLabel: report.homeLabel }}
   contentWidth="wide"
+  pageSchemas={getPhoneticBenchmarkReportSchemas(report)}
 >
   <PhoneticBenchmarkReport report={report} />
 </Base>

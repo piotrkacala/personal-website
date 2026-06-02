@@ -7,8 +7,14 @@ import { getMachineReadableArtifacts } from "../src/i18n/machine-readable.ts";
 import { pl } from "../src/i18n/pl.ts";
 import type { LinkBlock } from "../src/i18n/schema.ts";
 import {
+  getPhoneticBenchmarkMethodologySchemas,
+  getPhoneticBenchmarkReportSchemas,
+  getPhoneticBenchmarkResultsData,
+  getPhoneticBenchmarkRunSchemas,
+  phoneticBenchmarkMetadata,
   phoneticBenchmarkGalleries,
   phoneticBenchmarkReports,
+  phoneticBenchmarkRuns as benchmarkRunData,
 } from "../src/site/phonetic-benchmark.ts";
 
 type ArtifactPath = `/${string}`;
@@ -77,14 +83,24 @@ test("getMachineReadableArtifacts returns the expected artifact inventory", () =
     .map((artifact) => artifact.pathname)
     .sort();
 
-  assert.deepEqual(paths, [
-    "/index.md",
-    "/llms-full.txt",
-    "/phonetic-benchmark/index.md",
-    "/pl/index.md",
-    "/pl/phonetic-benchmark/index.md",
-    "/projects/400m.md",
-  ]);
+  assert.deepEqual(
+    paths,
+    [
+      "/index.md",
+      "/llms-full.txt",
+      "/phonetic-benchmark/index.md",
+      "/phonetic-benchmark/methodology/index.md",
+      "/phonetic-benchmark/results.csv",
+      "/phonetic-benchmark/results.json",
+      ...phoneticBenchmarkRuns.map(
+        (run) => `/phonetic-benchmark/runs/${run.id}/index.md`,
+      ),
+      "/pl/index.md",
+      "/pl/phonetic-benchmark/index.md",
+      "/projects/400m.md",
+      "/sitemap.xml",
+    ].sort(),
+  );
 });
 
 test("English homepage markdown keeps its key structure and references", () => {
@@ -189,6 +205,11 @@ test("llms-full.txt carries the consolidated public references", () => {
     content,
     /^- Phonetic Benchmark screenshot gallery: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/gallery\/$/m,
   );
+  assert.match(
+    content,
+    /^- Phonetic Benchmark methodology: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/methodology\/$/m,
+  );
+  assert.match(content, /^### Run-details directory$/m);
   assert.match(content, /^- Contact: mailto:kontakt@piotrkacala\.pl$/m);
   assert.match(
     content,
@@ -266,6 +287,10 @@ test("English Phonetic Benchmark markdown publishes all runs without private wor
   assert.match(content, /^- Source LoC: 2314$/m);
   assert.match(content, /^- Static automated tests: 43$/m);
   assert.match(content, /^- Stack: /m);
+  assert.match(
+    content,
+    /^- Details: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/runs\/gpt-5-4-high\/$/m,
+  );
   assert.match(content, /^## What The Runs Show$/m);
   assert.match(content, /^## Selected Case Notes$/m);
   assert.match(content, /^## Archived Demos$/m);
@@ -354,7 +379,7 @@ test("Polish Phonetic Benchmark markdown carries localized narrative and all dem
 test("machine-readable demo links point at explicit static index files", () => {
   const artifacts = getMachineReadableArtifacts();
   const demoUrlPattern =
-    /https:\/\/piotrkacala\.pl\/phonetic-benchmark\/demos\/[a-z0-9-]+\/[^\s)>\]]*/gu;
+    /https:\/\/piotrkacala\.pl\/phonetic-benchmark\/demos\/[a-z0-9-]+\/[^\s)">,\]]*/gu;
 
   const demoUrls = artifacts.flatMap((artifact) =>
     [...artifact.content.matchAll(demoUrlPattern)].map((match) => ({
@@ -410,6 +435,158 @@ test("benchmark structured data covers 15 archived runs and selected screenshot 
   );
 });
 
+test("benchmark publication metadata derives coverage and avoids inferred inference settings", () => {
+  const results = getPhoneticBenchmarkResultsData();
+
+  assert.equal(phoneticBenchmarkMetadata.publishedDate, "2026-05-26");
+  assert.equal(phoneticBenchmarkMetadata.updatedDate, "2026-06-02");
+  assert.equal(phoneticBenchmarkMetadata.coveredThroughDate, "2026-06-01");
+  assert.equal(results.runs.length, 15);
+  assert.equal(results.benchmark.coveredThroughDate, "2026-06-01");
+
+  const serialized = JSON.stringify(results);
+
+  assert.doesNotMatch(
+    serialized,
+    /"(?:provider|gateway|canonicalModelId|modelVariant|effort)"\s*:/i,
+  );
+  assert.match(
+    serialized,
+    /Missing inference-effort metadata must not be interpreted as a known provider default/,
+  );
+});
+
+test("benchmark JSON and CSV exports publish one neutral record per run", () => {
+  const jsonContent = getArtifactContent("/phonetic-benchmark/results.json");
+  const csvContent = getArtifactContent("/phonetic-benchmark/results.csv");
+  const results = JSON.parse(jsonContent) as {
+    schemaVersion: string;
+    benchmark: { methodologyUrl: string };
+    runs: Array<{
+      id: string;
+      detailsUrl: string;
+      markdownUrl: string;
+      observations: {
+        observedStrengths: string[];
+        observedWeaknesses: string[];
+      };
+      interpretationLimitations: string[];
+    }>;
+  };
+
+  assert.equal(results.schemaVersion, "1");
+  assert.equal(
+    results.benchmark.methodologyUrl,
+    "https://piotrkacala.pl/phonetic-benchmark/methodology/",
+  );
+  assert.equal(results.runs.length, 15);
+  results.runs.forEach((run) => {
+    assert.equal(
+      run.detailsUrl,
+      `https://piotrkacala.pl/phonetic-benchmark/runs/${run.id}/`,
+    );
+    assert.equal(
+      run.markdownUrl,
+      `https://piotrkacala.pl/phonetic-benchmark/runs/${run.id}/index.md`,
+    );
+    assert.ok(run.observations.observedStrengths.length > 0);
+    assert.ok(run.observations.observedWeaknesses.length > 0);
+    assert.ok(run.interpretationLimitations.length > 0);
+  });
+
+  const csvLines = csvContent.trimEnd().split("\n");
+
+  assert.equal(csvLines.length, 16);
+  assert.match(
+    csvLines[0],
+    /^run_id,execution_order,model,run_date,benchmark_version,status,failure_types,source_loc,static_automated_tests,stack,functional_read,details_url,markdown_url,demo_url,screenshot_url$/,
+  );
+  assert.match(
+    csvContent,
+    /gpt-5-4-high,1,GPT 5\.4 High,2026-05-25,v1,comparable,/,
+  );
+  assert.doesNotMatch(
+    csvLines[0],
+    /provider|gateway|canonical_model_id|model_variant|effort/i,
+  );
+});
+
+test("benchmark JSON-LD connects reports, methodology, and runs to factual public evidence", () => {
+  const reportSchemas = getPhoneticBenchmarkReportSchemas(
+    phoneticBenchmarkReports.en,
+  );
+  const dataset = reportSchemas.find((schema) => schema["@type"] === "Dataset");
+  const report = reportSchemas.find((schema) => schema["@type"] === "Article");
+  const methodology = getPhoneticBenchmarkMethodologySchemas().find(
+    (schema) => schema["@type"] === "TechArticle",
+  );
+  const run = benchmarkRunData[0];
+  const runSchema = getPhoneticBenchmarkRunSchemas(run)[0];
+  const reportMainEntity = report?.mainEntity as Record<string, unknown>;
+  const methodologyMainEntity = methodology?.mainEntity as Record<
+    string,
+    unknown
+  >;
+  const methodologyIsPartOf = methodology?.isPartOf as Record<string, unknown>;
+  const runAbout = runSchema.about as Record<string, unknown>;
+  const runAssociatedMedia = runSchema.associatedMedia as Record<
+    string,
+    unknown
+  >;
+
+  assert.ok(dataset);
+  assert.equal(reportMainEntity["@id"], dataset["@id"]);
+  assert.equal(methodologyMainEntity["@id"], dataset["@id"]);
+  assert.equal(
+    methodologyIsPartOf.url,
+    "https://piotrkacala.pl/phonetic-benchmark/",
+  );
+  assert.equal(runSchema.url, run.detailsUrl);
+  assert.equal(runAbout.identifier, run.id);
+  assert.equal(runAssociatedMedia.contentUrl, run.screenshotUrl);
+});
+
+test("methodology and every run record have generated markdown discovery surfaces", () => {
+  const methodology = getArtifactContent(
+    "/phonetic-benchmark/methodology/index.md",
+  );
+
+  assert.match(methodology, /^# Phonetic Benchmark v1 Methodology$/m);
+  assert.match(
+    methodology,
+    /^Public benchmark package: https:\/\/github\.com\/piotrkacala\/phonetic-benchmark$/m,
+  );
+  assert.match(methodology, /^## Interpretation Limits$/m);
+  assert.match(methodology, /^## Source LoC Counting Rule$/m);
+  assert.match(methodology, /^## Static Automated Test Counting Rule$/m);
+  assert.match(methodology, /Archived demos are preserved static snapshots/);
+  assert.match(methodology, /keyboard-mode trimming, case insensitivity/);
+  assert.match(
+    methodology,
+    /Missing inference-effort metadata must not be interpreted as a known provider default/,
+  );
+
+  benchmarkRunData.forEach((run) => {
+    const content = getArtifactContent(
+      `/phonetic-benchmark/runs/${run.id}/index.md`,
+    );
+
+    assert.match(
+      content,
+      new RegExp(
+        `^# ${escapeRegExp(run.model)} — Phonetic Benchmark run details$`,
+        "m",
+      ),
+    );
+    assert.match(content, /^## Run Record$/m);
+    assert.match(content, /^## Observed Strengths$/m);
+    assert.match(content, /^## Observed Weaknesses$/m);
+    assert.match(content, /^## Evidence$/m);
+    assert.match(content, /^## Interpretation Limits$/m);
+    assert.match(content, /not a general model review or universal ranking/);
+  });
+});
+
 test("benchmark galleries expose exactly 15 screenshots and explicit demo links in run order", () => {
   const expectedRunIds = phoneticBenchmarkRuns.map((run) => run.id);
 
@@ -439,7 +616,7 @@ test("benchmark galleries expose exactly 15 screenshots and explicit demo links 
 
 test("static discovery files include report and gallery paths", () => {
   const llms = readFileSync("public/llms.txt", "utf8");
-  const sitemap = readFileSync("public/sitemap.xml", "utf8");
+  const sitemap = getArtifactContent("/sitemap.xml");
 
   assert.match(
     llms,
@@ -456,6 +633,18 @@ test("static discovery files include report and gallery paths", () => {
   assert.match(
     llms,
     /^- Polish Phonetic Benchmark screenshot gallery: https:\/\/piotrkacala\.pl\/pl\/phonetic-benchmark\/gallery\/$/m,
+  );
+  assert.match(
+    llms,
+    /^- Phonetic Benchmark methodology: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/methodology\/$/m,
+  );
+  assert.match(
+    llms,
+    /^- Phonetic Benchmark results JSON: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/results\.json$/m,
+  );
+  assert.match(
+    llms,
+    /^- Phonetic Benchmark run details pattern: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/runs\/\{run-id\}\/$/m,
   );
   assert.match(
     llms,
@@ -477,6 +666,10 @@ test("static discovery files include report and gallery paths", () => {
     "/pl/phonetic-benchmark/gallery/",
     "/phonetic-benchmark/index.md",
     "/pl/phonetic-benchmark/index.md",
+    "/phonetic-benchmark/methodology/",
+    "/phonetic-benchmark/methodology/index.md",
+    "/phonetic-benchmark/results.json",
+    "/phonetic-benchmark/results.csv",
   ]) {
     assert.match(
       sitemap,
@@ -485,6 +678,21 @@ test("static discovery files include report and gallery paths", () => {
       ),
     );
   }
+
+  phoneticBenchmarkRuns.forEach(({ id }) => {
+    assert.match(
+      sitemap,
+      new RegExp(
+        `<loc>https://piotrkacala\\.pl/phonetic-benchmark/runs/${id}/</loc>`,
+      ),
+    );
+    assert.match(
+      sitemap,
+      new RegExp(
+        `<loc>https://piotrkacala\\.pl/phonetic-benchmark/runs/${id}/index\\.md</loc>`,
+      ),
+    );
+  });
 });
 
 test("gallery pages use the shared gallery data without claiming a duplicate markdown export", () => {
@@ -550,6 +758,10 @@ test("benchmark report component keeps compact rows and selected screenshot case
   assert.match(component, /report\.tableLabels\.failureTypes/);
   assert.match(component, /report\.tableLabels\.testCount/);
   assert.match(component, /report\.tableLabels\.functionalRead/);
+  assert.match(
+    component,
+    /<a href=\{run\.detailsUrl\}>\{report\.detailsLabel\}<\/a>/,
+  );
   assert.match(component, /report\.caseNotes\.map/);
   assert.match(component, /caseNote\.runIds\.map/);
   assert.match(component, /src=\{run\.screenshotPath\}/);

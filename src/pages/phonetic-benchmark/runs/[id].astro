@@ -1,0 +1,52 @@
+---
+import PhoneticBenchmarkRunDetails from "../../../components/PhoneticBenchmarkRunDetails.astro";
+import Base from "../../../layouts/Base.astro";
+import {
+  getPhoneticBenchmarkRunSchemas,
+  phoneticBenchmarkRuns,
+  type BenchmarkRunCopy,
+} from "../../../site/phonetic-benchmark";
+
+interface Props {
+  run: BenchmarkRunCopy;
+}
+
+export function getStaticPaths() {
+  return phoneticBenchmarkRuns.map((run) => ({
+    params: { id: run.id },
+    props: { run },
+  }));
+}
+
+const { run } = Astro.props;
+const metadata = {
+  title: `${run.model} — Phonetic Benchmark run details`,
+  description: run.functionalRead,
+  openGraph: {
+    title: `${run.model} — Phonetic Benchmark run details`,
+    description: run.functionalRead,
+    type: "website",
+    locale: "en_US",
+    siteName: "Piotr Kacała",
+    url: run.detailsUrl,
+    image: {
+      url: run.screenshotUrl,
+      width: 1440,
+      height: 900,
+      alt: run.screenshotAlt,
+    },
+  },
+} as const;
+---
+
+<Base
+  lang="en"
+  metadata={metadata}
+  languageSwitcher={false}
+  markdownUrl={run.markdownUrl}
+  alternates={false}
+  homeLink={{ href: "/", ariaLabel: "Back to homepage" }}
+  pageSchemas={getPhoneticBenchmarkRunSchemas(run)}
+>
+  <PhoneticBenchmarkRunDetails run={run} />
+</Base>

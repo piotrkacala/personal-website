@@ -23,12 +23,21 @@ interface BenchmarkRunData {
   stack: string;
 }
 
+export interface BenchmarkRunObservations {
+  observedStrengths: readonly string[];
+  observedWeaknesses: readonly string[];
+}
+
 export interface BenchmarkRunCopy extends BenchmarkRunData {
   functionalRead: string;
   screenshotPath: `/${string}`;
+  screenshotUrl: string;
   screenshotAlt: string;
   screenshotCaption: string;
   demoUrl: string;
+  detailsUrl: string;
+  markdownUrl: string;
+  observations: BenchmarkRunObservations;
 }
 
 export interface BenchmarkNarrativeSection {
@@ -75,7 +84,7 @@ export interface BenchmarkReportCopy {
     sourceLoc: string;
     testCount: string;
     functionalRead: string;
-    demo: string;
+    details: string;
   };
   detailLabels: {
     runDate: string;
@@ -84,7 +93,21 @@ export interface BenchmarkReportCopy {
   statusLabels: Readonly<Record<BenchmarkStatus, string>>;
   failureTypeLabels: Readonly<Record<BenchmarkFailureType, string>>;
   noneLabel: string;
+  detailsLabel: string;
   demoLabel: string;
+  metadataLabels: {
+    benchmark: string;
+    runs: string;
+    updated: string;
+    methodology: string;
+    machineReadable: string;
+  };
+  methodologyLabel: string;
+  methodologyHref: string;
+  resourceLinks: readonly {
+    label: string;
+    href: string;
+  }[];
   runs: readonly BenchmarkRunCopy[];
   findingsHeading: string;
   findings: readonly BenchmarkNarrativeSection[];
@@ -97,6 +120,33 @@ export interface BenchmarkReportCopy {
   galleryLabel: string;
   closingHeading: string;
   closingText: string;
+}
+
+export interface BenchmarkMethodologySection {
+  heading: string;
+  paragraphs?: readonly string[];
+  items?: readonly string[];
+}
+
+export interface BenchmarkMethodologyCopy {
+  metadata: SiteMetadata;
+  markdownPath: `/${string}`;
+  reportHref: string;
+  reportLabel: string;
+  eyebrow: string;
+  title: string;
+  summary: string;
+  sourcePackageLabel: string;
+  sourcePackageUrl: string;
+  sections: readonly BenchmarkMethodologySection[];
+}
+
+export interface BenchmarkMetadata {
+  schemaVersion: "1";
+  benchmarkVersion: "v1";
+  publishedDate: string;
+  updatedDate: string;
+  coveredThroughDate: string;
 }
 
 export interface BenchmarkGalleryCopy {
@@ -121,6 +171,16 @@ export interface BenchmarkGalleryCopy {
 }
 
 const siteUrl = siteProfile.siteUrl;
+export const phoneticBenchmarkPublicPackageUrl =
+  "https://github.com/piotrkacala/phonetic-benchmark";
+export const phoneticBenchmarkResultsJsonPath =
+  "/phonetic-benchmark/results.json";
+export const phoneticBenchmarkResultsCsvPath =
+  "/phonetic-benchmark/results.csv";
+export const phoneticBenchmarkMethodologyPath =
+  "/phonetic-benchmark/methodology/";
+export const phoneticBenchmarkMethodologyMarkdownPath =
+  "/phonetic-benchmark/methodology/index.md";
 
 function url(pathname: string): string {
   return new URL(pathname, siteUrl).toString();
@@ -311,7 +371,172 @@ const runData = [
   },
 ] as const satisfies readonly BenchmarkRunData[];
 
-type BenchmarkRunId = (typeof runData)[number]["id"];
+export type BenchmarkRunId = (typeof runData)[number]["id"];
+
+function getLatestRunDate(): string {
+  return runData.reduce<string>(
+    (latestDate, run) => (run.runDate > latestDate ? run.runDate : latestDate),
+    runData[0].runDate,
+  );
+}
+
+function getEarliestRunDate(): string {
+  return runData.reduce<string>(
+    (earliestDate, run) =>
+      run.runDate < earliestDate ? run.runDate : earliestDate,
+    runData[0].runDate,
+  );
+}
+
+export const phoneticBenchmarkMetadata = {
+  schemaVersion: "1",
+  benchmarkVersion: "v1",
+  publishedDate: "2026-05-26",
+  updatedDate: "2026-06-02",
+  coveredThroughDate: getLatestRunDate(),
+} as const satisfies BenchmarkMetadata;
+
+const runObservations = {
+  "gpt-5-4-high": {
+    observedStrengths: ["Clears the v1 contract.", "Includes automated tests."],
+    observedWeaknesses: [
+      "The answer input loses focus after progression to the next symbol.",
+      "The focus miss forces repeated mouse use in a keyboard-first training loop.",
+    ],
+  },
+  "gpt-5-5-high": {
+    observedStrengths: [
+      "Clears the v1 contract.",
+      "Uses a compact plain JavaScript implementation with no build step.",
+      "No significant issue was found in the reviewed flow.",
+    ],
+    observedWeaknesses: ["No material reviewed weakness was recorded."],
+  },
+  "gemini-3-5-flash-high": {
+    observedStrengths: [
+      "Produces a functionally usable output.",
+      "Includes automated tests.",
+    ],
+    observedWeaknesses: [
+      "Implementation-specific install and run commands are not documented.",
+      "Quiz notifications cause visible layout shifts during the core loop.",
+    ],
+  },
+  "gemini-3-1-pro-high": {
+    observedStrengths: ["Produces an inspectable interface."],
+    observedWeaknesses: [
+      "Required keyboard hint behavior is broken.",
+      "Implementation-specific workflow instructions are missing.",
+      "Attribution does not preserve a fixed implementation date.",
+      "Attribution does not show piotrkacala.pl as visible text.",
+    ],
+  },
+  "sonnet-4-6-thinking": {
+    observedStrengths: [
+      "Clears the v1 contract.",
+      "Includes a strong automated test footprint.",
+    ],
+    observedWeaknesses: [
+      "Revealing a hint in suggestion mode reshuffles button positions.",
+    ],
+  },
+  "owl-alpha": {
+    observedStrengths: [
+      "Produces a functionally usable output.",
+      "Includes a visible automated-test footprint.",
+      "Uses a distinctive fading treatment for wrong answers.",
+    ],
+    observedWeaknesses: [
+      "Implementation-specific workflow instructions are missing.",
+      "Attribution uses a runtime-generated date.",
+      "Repetitive use exposes interaction friction: an unnecessary click to continue, no reset control, and lost focus after a wrong keyboard answer.",
+    ],
+  },
+  "gemma-4-26b": {
+    observedStrengths: ["Produces a functionally usable final application."],
+    observedWeaknesses: [
+      "Implementation-specific workflow instructions are missing.",
+      "Attribution uses a runtime-generated date.",
+      "Keyboard input loses focus after progression to the next symbol.",
+    ],
+  },
+  "nemotron-3-super": {
+    observedStrengths: ["Produces an interface that starts."],
+    observedWeaknesses: [
+      "The quiz cannot progress past the first correct answer.",
+      "Suggestion mode also shows keyboard input, mixing the required input modes.",
+      "Required attribution is not usable.",
+      "Implementation-specific workflow instructions are missing.",
+    ],
+  },
+  "laguna-m-1": {
+    observedStrengths: ["Clears the v1 contract.", "Includes automated tests."],
+    observedWeaknesses: [
+      "No reset control is available in the UI.",
+      "Focus handling after progression remains unfinished.",
+    ],
+  },
+  "deepseek-v4-pro": {
+    observedStrengths: [
+      "Produces a functionally strong output.",
+      "Explicitly documents restrictive product decisions.",
+      "Active-run restart and language-switching choices are reviewable as coherent decisions.",
+    ],
+    observedWeaknesses: ["Does not document install, run, and test commands."],
+  },
+  "gpt-oss-120b": {
+    observedStrengths: [
+      "No material product strength was recorded in the reviewed output.",
+    ],
+    observedWeaknesses: [
+      "The output crashes before the benchmark behavior can be exercised.",
+      "The UI is incomplete.",
+      "Workflow documentation and required attribution are missing.",
+    ],
+  },
+  "hy3-preview": {
+    observedStrengths: [
+      "Produces a functionally usable final application.",
+      "Includes static automated tests.",
+    ],
+    observedWeaknesses: [
+      "Attribution generates the current date at runtime instead of preserving the implementation date.",
+      "The documented npm test workflow fails.",
+      "No reset control is available.",
+    ],
+  },
+  "mimo-v2-5-pro": {
+    observedStrengths: [
+      "Clears the v1 contract.",
+      "Includes a visible automated-test footprint.",
+    ],
+    observedWeaknesses: [
+      "Content jumps during use.",
+      "No active-run reset control is available.",
+    ],
+  },
+  "minimax-m3": {
+    observedStrengths: [
+      "Produces a functionally strong output.",
+      "Includes substantive implementation notes.",
+      "Includes automated tests.",
+    ],
+    observedWeaknesses: [
+      "Attribution date is generated at startup or build time instead of being preserved as a fixed implementation date.",
+      "Documentation and UI differ around active-run language switching.",
+    ],
+  },
+  "kimi-k2-6": {
+    observedStrengths: [
+      "Clears the v1 contract.",
+      "Returning to the menu during an active run asks for confirmation.",
+      "Includes automated tests.",
+    ],
+    observedWeaknesses: [
+      "Keyboard answer input does not receive focus automatically.",
+    ],
+  },
+} as const satisfies Record<BenchmarkRunId, BenchmarkRunObservations>;
 
 const functionalReads = {
   en: {
@@ -383,12 +608,23 @@ const functionalReads = {
   Record<BenchmarkRunId, string>
 >;
 
+export function getPhoneticBenchmarkRunPath(runId: BenchmarkRunId): string {
+  return `/phonetic-benchmark/runs/${runId}/`;
+}
+
+export function getPhoneticBenchmarkRunMarkdownPath(
+  runId: BenchmarkRunId,
+): string {
+  return `/phonetic-benchmark/runs/${runId}/index.md`;
+}
+
 function getRuns(lang: BenchmarkReportLang): readonly BenchmarkRunCopy[] {
   return runData.map((run) => ({
     ...run,
     functionalRead: functionalReads[lang][run.id],
     screenshotPath:
       `/phonetic-benchmark/screenshots/${run.id}-quiz.png` as const,
+    screenshotUrl: url(`/phonetic-benchmark/screenshots/${run.id}-quiz.png`),
     screenshotAlt:
       lang === "en"
         ? `Archived quiz state from the ${run.model} Phonetic Alphabet Trainer output.`
@@ -398,10 +634,14 @@ function getRuns(lang: BenchmarkReportLang): readonly BenchmarkRunCopy[] {
         ? `Archived quiz state for ${run.model}.`
         : `Archiwalny stan quizu dla ${run.model}.`,
     demoUrl: url(`/phonetic-benchmark/demos/${run.id}/index.html`),
+    detailsUrl: url(getPhoneticBenchmarkRunPath(run.id)),
+    markdownUrl: url(getPhoneticBenchmarkRunMarkdownPath(run.id)),
+    observations: runObservations[run.id],
   }));
 }
 
-const englishRuns = getRuns("en");
+export const phoneticBenchmarkRuns = getRuns("en");
+const englishRuns = phoneticBenchmarkRuns;
 const polishRuns = getRuns("pl");
 
 export const phoneticBenchmarkReports = {
@@ -468,7 +708,7 @@ export const phoneticBenchmarkReports = {
       sourceLoc: "Source LoC",
       testCount: "Static automated tests",
       functionalRead: "Functional read",
-      demo: "Demo",
+      details: "Details",
     },
     detailLabels: {
       runDate: "Run date",
@@ -487,7 +727,31 @@ export const phoneticBenchmarkReports = {
       "unrunnable output": "unrunnable output",
     },
     noneLabel: "none",
+    detailsLabel: "Run details",
     demoLabel: "Open archived demo",
+    metadataLabels: {
+      benchmark: "Benchmark",
+      runs: "runs",
+      updated: "Updated",
+      methodology: "Methodology",
+      machineReadable: "Machine-readable data",
+    },
+    methodologyLabel: "Methodology",
+    methodologyHref: phoneticBenchmarkMethodologyPath,
+    resourceLinks: [
+      {
+        label: "JSON",
+        href: phoneticBenchmarkResultsJsonPath,
+      },
+      {
+        label: "CSV",
+        href: phoneticBenchmarkResultsCsvPath,
+      },
+      {
+        label: "Markdown",
+        href: "/phonetic-benchmark/index.md",
+      },
+    ],
     runs: englishRuns,
     findingsHeading: "What The Runs Show",
     findings: [
@@ -646,7 +910,7 @@ export const phoneticBenchmarkReports = {
       sourceLoc: "Linie kodu źródłowego",
       testCount: "Statycznie policzone testy automatyczne",
       functionalRead: "Odczyt funkcjonalny",
-      demo: "Demo",
+      details: "Szczegóły",
     },
     detailLabels: {
       runDate: "Data próby",
@@ -665,7 +929,31 @@ export const phoneticBenchmarkReports = {
       "unrunnable output": "niedziałający wynik",
     },
     noneLabel: "brak",
+    detailsLabel: "Szczegóły próby (EN)",
     demoLabel: "Otwórz archiwalne demo",
+    metadataLabels: {
+      benchmark: "Benchmark",
+      runs: "prób",
+      updated: "Aktualizacja",
+      methodology: "Metodologia",
+      machineReadable: "Dane machine-readable",
+    },
+    methodologyLabel: "Metodologia (EN)",
+    methodologyHref: phoneticBenchmarkMethodologyPath,
+    resourceLinks: [
+      {
+        label: "JSON (EN)",
+        href: phoneticBenchmarkResultsJsonPath,
+      },
+      {
+        label: "CSV (EN)",
+        href: phoneticBenchmarkResultsCsvPath,
+      },
+      {
+        label: "Markdown",
+        href: "/pl/phonetic-benchmark/index.md",
+      },
+    ],
     runs: polishRuns,
     findingsHeading: "Co Pokazują Próby",
     findings: [
@@ -867,4 +1155,356 @@ export function getPhoneticBenchmarkMarkdownUrl(
   lang: BenchmarkReportLang,
 ): string {
   return url(phoneticBenchmarkReports[lang].markdownPath);
+}
+
+export const phoneticBenchmarkInterpretationLimitations = [
+  "Each model currently has one run against one small browser-app task.",
+  "The v1 run records did not consistently capture provider, gateway, canonical API model ID, editor or agent interface, or inference effort.",
+  "Missing inference-effort metadata must not be interpreted as a known provider default.",
+  "The report compares observed outputs under the workflows used for these runs, not isolated model performance under controlled inference parameters.",
+  "The report is a qualitative product review, not a universal model ranking.",
+] as const;
+
+export const phoneticBenchmarkMethodology = {
+  metadata: {
+    title: "Phonetic Benchmark Methodology — Piotr Kacała",
+    description:
+      "Public methodology for the Phonetic Benchmark v1 AI-agent web application review.",
+    openGraph: {
+      title: "Phonetic Benchmark Methodology",
+      description:
+        "Scope, review rules, limitations, and repository-evidence definitions for the Phonetic Benchmark v1 report.",
+      type: "website",
+      locale: "en_US",
+      siteName: "Piotr Kacała",
+      url: url(phoneticBenchmarkMethodologyPath),
+      image: {
+        url: "https://piotrkacala.pl/og/piotr-kacala-en.png",
+        width: 1200,
+        height: 630,
+        alt: "Phonetic Benchmark Methodology — Piotr Kacała",
+      },
+    },
+  },
+  markdownPath: phoneticBenchmarkMethodologyMarkdownPath,
+  reportHref: "/phonetic-benchmark/",
+  reportLabel: "Back to Phonetic Benchmark report",
+  eyebrow: "Phonetic Benchmark v1",
+  title: "Methodology",
+  summary:
+    "This page documents how the public v1 report was assembled and how its fields should be interpreted. It is intentionally narrower than a controlled model evaluation.",
+  sourcePackageLabel: "Open the public benchmark package",
+  sourcePackageUrl: phoneticBenchmarkPublicPackageUrl,
+  sections: [
+    {
+      heading: "Purpose and Intended Use",
+      paragraphs: [
+        "The Phonetic Benchmark is a small web-application implementation benchmark. It uses a two-layer review model: first verify whether an implementation can be meaningfully compared, then review what it reveals about product judgment, requirement preservation, UX, testing, and delivery quality.",
+        "This is not a numeric leaderboard. Each model currently has one run against one small product brief, so no run-details page should be read as a general review of a model.",
+      ],
+    },
+    {
+      heading: "Benchmark Task and Package",
+      paragraphs: [
+        "Each model received the same docs-first package, fixed benchmark data, and a direct instruction to implement a small Phonetic Alphabet Trainer web application. The resulting repositories were reviewed against the same v1 product contract.",
+        "Archived demos are preserved static snapshots of the reviewed outputs, not maintained products.",
+        "The report compares observed outputs from the agent workflows used for these runs. It does not claim to isolate model quality under controlled inference parameters.",
+      ],
+    },
+    {
+      heading: "Run Status",
+      items: [
+        "`comparable`: the implementation clears the contract well enough for qualitative comparison.",
+        "`contract-failing`: the application can be inspected, but at least one required submission or product behavior is missing or incorrect.",
+        "`unrunnable`: the implemented behavior cannot be meaningfully exercised.",
+      ],
+    },
+    {
+      heading: "Failure Types",
+      items: [
+        "`core behavior`: a required product behavior is missing or incorrect.",
+        "`submission documentation`: required install, run, or test workflow documentation is incomplete.",
+        "`attribution`: required visible attribution details are missing or incorrect.",
+        "`test workflow`: the documented automated test workflow does not complete successfully.",
+        "`unrunnable output`: the generated application cannot be meaningfully exercised.",
+      ],
+    },
+    {
+      heading: "Contract v1",
+      paragraphs: [
+        "The benchmark contract keeps the implementation freedom broad while requiring the core learning flow and delivery details to remain inspectable.",
+      ],
+      items: [
+        "A browser-based phonetic-alphabet learning application with a Node.js project workflow and `package.json`.",
+        "Documented install and run commands, plus documented test commands when automated tests are included.",
+        "Visible attribution to Piotr Kacała, `piotrkacala.pl`, the implementing model name and version, and a fixed implementation date.",
+        "Polish and NATO phonetic alphabets, plus Polish and English interface languages.",
+        "Exactly two exercise modes: keyboard and four-option suggestion, separated within a run.",
+        "One full selected alphabet per randomized run, with progression only after a correct answer.",
+        "Fixed suggestion-mode option sets from benchmark data, randomized button order, hint reveal without auto-completion, and deterministic final scoring.",
+        "A final result screen with score, alphabet, and mode.",
+      ],
+    },
+    {
+      heading: "Run Procedure",
+      items: [
+        "Give each model the same docs-first package, fixed benchmark data, and direct implementation instruction.",
+        "Preserve the resulting repository as an archived static demo snapshot.",
+        "Record the run date, model label, formal status, failure types, stack summary, source LoC, static automated test count, screenshot, and compact functional read.",
+      ],
+    },
+    {
+      heading: "Manual Review Procedure",
+      items: [
+        "Check documented install and run workflow, package scripts, and required visible attribution.",
+        "Inspect both UI languages, setup flow, and full-alphabet run progression where practical.",
+        "Check randomized symbol order and keyboard-mode trimming, case insensitivity, and diacritic significance.",
+        "Check suggestion mode for exactly four buttons, fixed repository option data, randomized display order, and strict separation from keyboard mode.",
+        "Check hint reveal without auto-completion, deterministic scoring, and the final result screen.",
+        "Use focused source inspection and automated checks for combinatorial cases that are expensive to click through manually.",
+        "Review open product areas such as reset behavior and active-run language switching for coherence without silently turning them into contract failures.",
+      ],
+    },
+    {
+      heading: "Source LoC Counting Rule",
+      paragraphs: [
+        "Source LoC describes the shape of a submission. It is approximate repository evidence, not a quality score.",
+      ],
+      items: [
+        "Count implementation source, tests, configuration files, and authored HTML and CSS files.",
+        "Exclude generated build output such as `dist`, dependency directories such as `node_modules`, lockfiles, benchmark documentation copied from the starter package, and benchmark data copied from the starter package.",
+      ],
+    },
+    {
+      heading: "Static Automated Test Counting Rule",
+      paragraphs: [
+        "Static automated test counts describe the shape of a submission. They do not prove test coverage, assertion quality, executed test count, passing test count, or successful test execution.",
+      ],
+      items: [
+        "Static automated tests count direct authored `it(...)` and `test(...)` declarations in JavaScript and TypeScript files.",
+        "The static test count excludes `dist`, `node_modules`, generated code, dependency code, `describe(...)`, placeholder scripts, inferred loop or table expansions, and variants such as `test.skip`, `test.todo`, and `test.each`.",
+        "Successful execution of a documented test command is recorded separately from the static test count.",
+      ],
+    },
+    {
+      heading: "Interpretation Limits",
+      items: phoneticBenchmarkInterpretationLimitations,
+    },
+    {
+      heading: "Planned v2 Run Manifest",
+      paragraphs: [
+        "A future benchmark revision should require a run manifest before implementation starts.",
+      ],
+      items: [
+        "Benchmark version and run ID.",
+        "Display label and canonical model ID.",
+        "Provider or gateway.",
+        "Editor or agent interface.",
+        "Requested effort and effective effort when exposed, with explicit `unknown` otherwise.",
+        "Run date and baseline commit.",
+      ],
+    },
+    {
+      heading: "Version History",
+      items: [
+        "`v1`: one archived run per model for the same small browser-app task, with qualitative manual review and repository-evidence fields.",
+        "`v2` planning: require an explicit run manifest before collecting new results.",
+      ],
+    },
+  ],
+} as const satisfies BenchmarkMethodologyCopy;
+
+export interface PhoneticBenchmarkResultsData {
+  schemaVersion: "1";
+  benchmark: {
+    name: "Phonetic Benchmark";
+    benchmarkVersion: "v1";
+    publishedDate: string;
+    updatedDate: string;
+    coveredThroughDate: string;
+    reportUrl: string;
+    methodologyUrl: string;
+    publicBenchmarkPackageUrl: string;
+    interpretationLimitations: readonly string[];
+  };
+  runs: readonly (BenchmarkRunCopy & {
+    interpretationLimitations: readonly string[];
+  })[];
+}
+
+export function getPhoneticBenchmarkResultsData(): PhoneticBenchmarkResultsData {
+  return {
+    schemaVersion: phoneticBenchmarkMetadata.schemaVersion,
+    benchmark: {
+      name: "Phonetic Benchmark",
+      benchmarkVersion: phoneticBenchmarkMetadata.benchmarkVersion,
+      publishedDate: phoneticBenchmarkMetadata.publishedDate,
+      updatedDate: phoneticBenchmarkMetadata.updatedDate,
+      coveredThroughDate: phoneticBenchmarkMetadata.coveredThroughDate,
+      reportUrl: url("/phonetic-benchmark/"),
+      methodologyUrl: url(phoneticBenchmarkMethodologyPath),
+      publicBenchmarkPackageUrl: phoneticBenchmarkPublicPackageUrl,
+      interpretationLimitations: phoneticBenchmarkInterpretationLimitations,
+    },
+    runs: phoneticBenchmarkRuns.map((run) => ({
+      ...run,
+      interpretationLimitations: phoneticBenchmarkInterpretationLimitations,
+    })),
+  };
+}
+
+export function getPhoneticBenchmarkResultsJsonUrl(): string {
+  return url(phoneticBenchmarkResultsJsonPath);
+}
+
+export function getPhoneticBenchmarkResultsCsvUrl(): string {
+  return url(phoneticBenchmarkResultsCsvPath);
+}
+
+export function getPhoneticBenchmarkMethodologyMarkdownUrl(): string {
+  return url(phoneticBenchmarkMethodologyMarkdownPath);
+}
+
+export function getPhoneticBenchmarkRun(
+  runId: BenchmarkRunId,
+): BenchmarkRunCopy {
+  const run = phoneticBenchmarkRuns.find((candidate) => candidate.id === runId);
+
+  if (!run) {
+    throw new Error(`Missing benchmark run: ${runId}`);
+  }
+
+  return run;
+}
+
+export type JsonLdSchema = Record<string, unknown>;
+
+function getDatasetSchema(): JsonLdSchema {
+  const resultsJsonUrl = getPhoneticBenchmarkResultsJsonUrl();
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "@id": `${resultsJsonUrl}#dataset`,
+    name: "Phonetic Benchmark v1 results",
+    description:
+      "Qualitative review data for 15 archived AI-agent web applications built from the same Phonetic Alphabet Trainer specification.",
+    url: resultsJsonUrl,
+    version: phoneticBenchmarkMetadata.benchmarkVersion,
+    datePublished: phoneticBenchmarkMetadata.publishedDate,
+    dateModified: phoneticBenchmarkMetadata.updatedDate,
+    temporalCoverage: `${getEarliestRunDate()}/${phoneticBenchmarkMetadata.coveredThroughDate}`,
+    creator: {
+      "@type": "Person",
+      name: siteProfile.name,
+      url: siteProfile.siteUrl,
+    },
+    distribution: [
+      {
+        "@type": "DataDownload",
+        encodingFormat: "application/json",
+        contentUrl: resultsJsonUrl,
+      },
+      {
+        "@type": "DataDownload",
+        encodingFormat: "text/csv",
+        contentUrl: getPhoneticBenchmarkResultsCsvUrl(),
+      },
+    ],
+  };
+}
+
+export function getPhoneticBenchmarkReportSchemas(
+  report: BenchmarkReportCopy,
+): readonly JsonLdSchema[] {
+  const datasetSchema = getDatasetSchema();
+
+  return [
+    datasetSchema,
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: report.title,
+      description: report.metadata.description,
+      url: report.metadata.openGraph.url,
+      inLanguage: report.lang,
+      datePublished: phoneticBenchmarkMetadata.publishedDate,
+      dateModified: phoneticBenchmarkMetadata.updatedDate,
+      author: {
+        "@type": "Person",
+        name: siteProfile.name,
+        url: siteProfile.siteUrl,
+      },
+      mainEntity: {
+        "@id": datasetSchema["@id"],
+      },
+    },
+  ];
+}
+
+export function getPhoneticBenchmarkMethodologySchemas(): readonly JsonLdSchema[] {
+  const datasetSchema = getDatasetSchema();
+
+  return [
+    datasetSchema,
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      headline: phoneticBenchmarkMethodology.title,
+      description: phoneticBenchmarkMethodology.metadata.description,
+      url: phoneticBenchmarkMethodology.metadata.openGraph.url,
+      inLanguage: "en",
+      datePublished: phoneticBenchmarkMetadata.publishedDate,
+      dateModified: phoneticBenchmarkMetadata.updatedDate,
+      isPartOf: {
+        "@type": "Article",
+        url: url("/phonetic-benchmark/"),
+        name: "Phonetic Benchmark Report",
+      },
+      mainEntity: {
+        "@id": datasetSchema["@id"],
+      },
+      author: {
+        "@type": "Person",
+        name: siteProfile.name,
+        url: siteProfile.siteUrl,
+      },
+    },
+  ];
+}
+
+export function getPhoneticBenchmarkRunSchemas(
+  run: BenchmarkRunCopy,
+): readonly JsonLdSchema[] {
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: `${run.model} — Phonetic Benchmark run details`,
+      description: run.functionalRead,
+      url: run.detailsUrl,
+      inLanguage: "en",
+      datePublished: run.runDate,
+      dateModified: phoneticBenchmarkMetadata.updatedDate,
+      isPartOf: {
+        "@type": "Article",
+        url: url("/phonetic-benchmark/"),
+        name: "Phonetic Benchmark Report",
+      },
+      about: {
+        "@type": "Thing",
+        identifier: run.id,
+        name: `${run.model} Phonetic Benchmark v1 run`,
+      },
+      author: {
+        "@type": "Person",
+        name: siteProfile.name,
+        url: siteProfile.siteUrl,
+      },
+      associatedMedia: {
+        "@type": "ImageObject",
+        contentUrl: run.screenshotUrl,
+      },
+    },
+  ];
 }

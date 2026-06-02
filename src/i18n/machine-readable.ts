@@ -7,9 +7,21 @@ import {
   type ExternalProjectProfile,
 } from "../site/external-projects.ts";
 import {
+  getPhoneticBenchmarkMethodologyMarkdownUrl,
   getPhoneticBenchmarkMarkdownUrl,
+  getPhoneticBenchmarkResultsCsvUrl,
+  getPhoneticBenchmarkResultsData,
+  getPhoneticBenchmarkResultsJsonUrl,
+  phoneticBenchmarkInterpretationLimitations,
+  phoneticBenchmarkMetadata,
+  phoneticBenchmarkMethodology,
   phoneticBenchmarkReports,
+  phoneticBenchmarkResultsCsvPath,
+  phoneticBenchmarkResultsJsonPath,
+  phoneticBenchmarkRuns,
+  type BenchmarkMethodologyCopy,
   type BenchmarkReportCopy,
+  type BenchmarkRunCopy,
 } from "../site/phonetic-benchmark.ts";
 
 export interface MachineReadableArtifact {
@@ -147,6 +159,13 @@ function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
     `Report URL: ${report.metadata.openGraph.url}`,
     `Markdown URL: ${getPhoneticBenchmarkMarkdownUrl(report.lang)}`,
     `Homepage: ${new URL(report.homeHref, report.metadata.openGraph.url).toString()}`,
+    `Benchmark version: ${phoneticBenchmarkMetadata.benchmarkVersion}`,
+    `Published: ${phoneticBenchmarkMetadata.publishedDate}`,
+    `Updated: ${phoneticBenchmarkMetadata.updatedDate}`,
+    `Covered through: ${phoneticBenchmarkMetadata.coveredThroughDate}`,
+    `Methodology: ${phoneticBenchmarkMethodology.metadata.openGraph.url}`,
+    `Results JSON: ${getPhoneticBenchmarkResultsJsonUrl()}`,
+    `Results CSV: ${getPhoneticBenchmarkResultsCsvUrl()}`,
   ];
   lines.push("");
   lines.push(heading(2, report.benchmarkHeading));
@@ -187,9 +206,9 @@ function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
     lines.push(`- ${report.tableLabels.testCount}: ${run.testCount}`);
     lines.push(`- ${report.detailLabels.stack}: ${run.stack}`);
     lines.push(`- ${report.tableLabels.functionalRead}: ${run.functionalRead}`);
-    lines.push(
-      `- Screenshot: ${new URL(run.screenshotPath, report.metadata.openGraph.url).toString()}`,
-    );
+    lines.push(`- Details: ${run.detailsUrl}`);
+    lines.push(`- Markdown details: ${run.markdownUrl}`);
+    lines.push(`- Screenshot: ${run.screenshotUrl}`);
     lines.push(`- Demo: ${run.demoUrl}`);
     lines.push("");
   });
@@ -227,6 +246,272 @@ function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
 
   return lines.join("\n");
 }
+
+function renderBenchmarkMethodologyMarkdown(
+  methodology: BenchmarkMethodologyCopy,
+): string {
+  const lines = [
+    heading(
+      1,
+      `Phonetic Benchmark ${phoneticBenchmarkMetadata.benchmarkVersion} Methodology`,
+    ),
+    "",
+    `> ${methodology.metadata.description}`,
+    "",
+    methodology.summary,
+    "",
+    `Methodology URL: ${methodology.metadata.openGraph.url}`,
+    `Markdown URL: ${getPhoneticBenchmarkMethodologyMarkdownUrl()}`,
+    `Report URL: ${phoneticBenchmarkReports.en.metadata.openGraph.url}`,
+    `Public benchmark package: ${methodology.sourcePackageUrl}`,
+    `Published: ${phoneticBenchmarkMetadata.publishedDate}`,
+    `Updated: ${phoneticBenchmarkMetadata.updatedDate}`,
+    `Covered through: ${phoneticBenchmarkMetadata.coveredThroughDate}`,
+  ];
+
+  methodology.sections.forEach((section) => {
+    lines.push("");
+    lines.push(heading(2, section.heading));
+    lines.push("");
+
+    section.paragraphs?.forEach((paragraph) => {
+      lines.push(paragraph);
+      lines.push("");
+    });
+    section.items?.forEach((item) => {
+      lines.push(`- ${item}`);
+    });
+  });
+
+  lines.push("");
+  lines.push(heading(2, "Public Benchmark Package"));
+  lines.push("");
+  lines.push(
+    `- ${methodology.sourcePackageLabel}: ${methodology.sourcePackageUrl}`,
+  );
+  lines.push("");
+
+  return lines.join("\n");
+}
+
+function renderBenchmarkRunMarkdown(run: BenchmarkRunCopy): string {
+  const lines = [
+    heading(1, `${run.model} — Phonetic Benchmark run details`),
+    "",
+    `> One observed output from one small browser-app task. This is not a general model review or universal ranking.`,
+    "",
+    run.functionalRead,
+    "",
+    `Details URL: ${run.detailsUrl}`,
+    `Markdown URL: ${run.markdownUrl}`,
+    `Report URL: ${phoneticBenchmarkReports.en.metadata.openGraph.url}`,
+    `Methodology URL: ${phoneticBenchmarkMethodology.metadata.openGraph.url}`,
+    "",
+    heading(2, "Run Record"),
+    "",
+    `- Run ID: ${run.id}`,
+    `- Model label: ${run.model}`,
+    `- Benchmark version: ${run.benchmarkVersion}`,
+    `- Run date: ${run.runDate}`,
+    `- Status: ${run.status}`,
+    `- Failure types: ${run.failureTypes.length > 0 ? run.failureTypes.join(", ") : "none"}`,
+    `- Source LoC: ${run.sourceLoc}`,
+    `- Static automated tests: ${run.testCount}`,
+    `- Stack: ${run.stack}`,
+    "",
+    heading(2, "Observed Strengths"),
+    "",
+    ...run.observations.observedStrengths.map((item) => `- ${item}`),
+    "",
+    heading(2, "Observed Weaknesses"),
+    "",
+    ...run.observations.observedWeaknesses.map((item) => `- ${item}`),
+    "",
+    heading(2, "Evidence"),
+    "",
+    `- Archived demo: ${run.demoUrl}`,
+    `- Screenshot: ${run.screenshotUrl}`,
+    `- Main report: ${phoneticBenchmarkReports.en.metadata.openGraph.url}`,
+    `- Methodology: ${phoneticBenchmarkMethodology.metadata.openGraph.url}`,
+    "",
+    heading(2, "Interpretation Limits"),
+    "",
+    ...phoneticBenchmarkInterpretationLimitations.map((item) => `- ${item}`),
+    "",
+  ];
+
+  return lines.join("\n");
+}
+
+function renderBenchmarkResultsJson(): string {
+  return `${JSON.stringify(getPhoneticBenchmarkResultsData(), null, 2)}\n`;
+}
+
+function escapeCsvCell(value: string | number): string {
+  const text = String(value);
+
+  return /[",\n\r]/u.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
+}
+
+function renderBenchmarkResultsCsv(): string {
+  const header = [
+    "run_id",
+    "execution_order",
+    "model",
+    "run_date",
+    "benchmark_version",
+    "status",
+    "failure_types",
+    "source_loc",
+    "static_automated_tests",
+    "stack",
+    "functional_read",
+    "details_url",
+    "markdown_url",
+    "demo_url",
+    "screenshot_url",
+  ];
+  const rows = phoneticBenchmarkRuns.map((run) => [
+    run.id,
+    run.executionOrder,
+    run.model,
+    run.runDate,
+    run.benchmarkVersion,
+    run.status,
+    run.failureTypes.join(" | "),
+    run.sourceLoc,
+    run.testCount,
+    run.stack,
+    run.functionalRead,
+    run.detailsUrl,
+    run.markdownUrl,
+    run.demoUrl,
+    run.screenshotUrl,
+  ]);
+
+  return `${[header, ...rows]
+    .map((row) => row.map(escapeCsvCell).join(","))
+    .join("\n")}\n`;
+}
+
+interface SitemapAlternate {
+  lang: string;
+  href: string;
+}
+
+interface SitemapEntry {
+  loc: string;
+  lastmod?: string;
+  alternates?: readonly SitemapAlternate[];
+}
+
+function escapeXml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;");
+}
+
+function getPairedAlternates(enUrl: string, plUrl: string): SitemapAlternate[] {
+  return [
+    { lang: "en", href: enUrl },
+    { lang: "pl", href: plUrl },
+    { lang: "x-default", href: enUrl },
+  ];
+}
+
+function renderSitemap(): string {
+  const benchmarkLastmod = phoneticBenchmarkMetadata.updatedDate;
+  const reportAlternates = getPairedAlternates(
+    phoneticBenchmarkReports.en.metadata.openGraph.url,
+    phoneticBenchmarkReports.pl.metadata.openGraph.url,
+  );
+  const galleryAlternates = getPairedAlternates(
+    "https://piotrkacala.pl/phonetic-benchmark/gallery/",
+    "https://piotrkacala.pl/pl/phonetic-benchmark/gallery/",
+  );
+  const homepageAlternates = getPairedAlternates(
+    "https://piotrkacala.pl/",
+    "https://piotrkacala.pl/pl/",
+  );
+  const entries: SitemapEntry[] = [
+    { loc: "https://piotrkacala.pl/", alternates: homepageAlternates },
+    { loc: "https://piotrkacala.pl/pl/", alternates: homepageAlternates },
+    { loc: "https://piotrkacala.pl/index.md" },
+    { loc: "https://piotrkacala.pl/pl/index.md" },
+    {
+      loc: phoneticBenchmarkReports.en.metadata.openGraph.url,
+      lastmod: benchmarkLastmod,
+      alternates: reportAlternates,
+    },
+    {
+      loc: phoneticBenchmarkReports.pl.metadata.openGraph.url,
+      lastmod: benchmarkLastmod,
+      alternates: reportAlternates,
+    },
+    {
+      loc: "https://piotrkacala.pl/phonetic-benchmark/gallery/",
+      lastmod: benchmarkLastmod,
+      alternates: galleryAlternates,
+    },
+    {
+      loc: "https://piotrkacala.pl/pl/phonetic-benchmark/gallery/",
+      lastmod: benchmarkLastmod,
+      alternates: galleryAlternates,
+    },
+    {
+      loc: getPhoneticBenchmarkMarkdownUrl("en"),
+      lastmod: benchmarkLastmod,
+    },
+    {
+      loc: getPhoneticBenchmarkMarkdownUrl("pl"),
+      lastmod: benchmarkLastmod,
+    },
+    {
+      loc: phoneticBenchmarkMethodology.metadata.openGraph.url,
+      lastmod: benchmarkLastmod,
+    },
+    {
+      loc: getPhoneticBenchmarkMethodologyMarkdownUrl(),
+      lastmod: benchmarkLastmod,
+    },
+    { loc: getPhoneticBenchmarkResultsJsonUrl(), lastmod: benchmarkLastmod },
+    { loc: getPhoneticBenchmarkResultsCsvUrl(), lastmod: benchmarkLastmod },
+    ...phoneticBenchmarkRuns.flatMap((run) => [
+      { loc: run.detailsUrl, lastmod: benchmarkLastmod },
+      { loc: run.markdownUrl, lastmod: benchmarkLastmod },
+    ]),
+    { loc: "https://piotrkacala.pl/400m/" },
+    { loc: "https://piotrkacala.pl/projects/400m.md" },
+  ];
+  const lines = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
+  ];
+
+  entries.forEach((entry) => {
+    lines.push("  <url>");
+    lines.push(`    <loc>${escapeXml(entry.loc)}</loc>`);
+
+    if (entry.lastmod) {
+      lines.push(`    <lastmod>${entry.lastmod}</lastmod>`);
+    }
+
+    entry.alternates?.forEach((alternate) => {
+      lines.push(
+        `    <xhtml:link rel="alternate" hreflang="${escapeXml(alternate.lang)}" href="${escapeXml(alternate.href)}" />`,
+      );
+    });
+    lines.push("  </url>");
+  });
+  lines.push("</urlset>");
+  lines.push("");
+
+  return lines.join("\n");
+}
+
 function collectPublicReferences(): readonly string[] {
   const references = [
     "English homepage: https://piotrkacala.pl/",
@@ -237,6 +522,11 @@ function collectPublicReferences(): readonly string[] {
     "Polish Phonetic Benchmark screenshot gallery: https://piotrkacala.pl/pl/phonetic-benchmark/gallery/",
     `Phonetic Benchmark markdown report: ${getPhoneticBenchmarkMarkdownUrl("en")}`,
     `Polish Phonetic Benchmark markdown report: ${getPhoneticBenchmarkMarkdownUrl("pl")}`,
+    `Phonetic Benchmark methodology: ${phoneticBenchmarkMethodology.metadata.openGraph.url}`,
+    `Phonetic Benchmark methodology markdown: ${getPhoneticBenchmarkMethodologyMarkdownUrl()}`,
+    `Phonetic Benchmark results JSON: ${getPhoneticBenchmarkResultsJsonUrl()}`,
+    `Phonetic Benchmark results CSV: ${getPhoneticBenchmarkResultsCsvUrl()}`,
+    "Phonetic Benchmark run details pattern: https://piotrkacala.pl/phonetic-benchmark/runs/{run-id}/",
     `Contact: mailto:${en.contact.email}`,
   ];
 
@@ -282,6 +572,17 @@ function renderLlmsFull(): string {
     "",
     renderBenchmarkReportMarkdown(phoneticBenchmarkReports.pl).trimEnd(),
     "",
+    "## Phonetic Benchmark machine-readable resources",
+    "",
+    `- Methodology: ${phoneticBenchmarkMethodology.metadata.openGraph.url}`,
+    `- Methodology markdown: ${getPhoneticBenchmarkMethodologyMarkdownUrl()}`,
+    `- Results JSON: ${getPhoneticBenchmarkResultsJsonUrl()}`,
+    `- Results CSV: ${getPhoneticBenchmarkResultsCsvUrl()}`,
+    "",
+    "### Run-details directory",
+    "",
+    ...phoneticBenchmarkRuns.map((run) => `- ${run.model}: ${run.detailsUrl}`),
+    "",
     "## Public references",
     "",
     ...collectPublicReferences().map((reference) => `- ${reference}`),
@@ -312,10 +613,33 @@ export function getMachineReadableArtifacts(): readonly MachineReadableArtifact[
     content: renderBenchmarkReportMarkdown(report),
   }));
 
+  const benchmarkRunArtifacts: MachineReadableArtifact[] =
+    phoneticBenchmarkRuns.map((run) => ({
+      pathname: new URL(run.markdownUrl).pathname as `/${string}`,
+      content: renderBenchmarkRunMarkdown(run),
+    }));
+
   return [
     ...homepageArtifacts,
     ...externalProjectArtifacts,
     ...benchmarkReportArtifacts,
+    {
+      pathname: phoneticBenchmarkMethodology.markdownPath,
+      content: renderBenchmarkMethodologyMarkdown(phoneticBenchmarkMethodology),
+    },
+    ...benchmarkRunArtifacts,
+    {
+      pathname: phoneticBenchmarkResultsJsonPath,
+      content: renderBenchmarkResultsJson(),
+    },
+    {
+      pathname: phoneticBenchmarkResultsCsvPath,
+      content: renderBenchmarkResultsCsv(),
+    },
+    {
+      pathname: "/sitemap.xml",
+      content: renderSitemap(),
+    },
     {
       pathname: "/llms-full.txt",
       content: renderLlmsFull(),

@@ -23,7 +23,7 @@ export function machineReadableArtifacts() {
           }),
         );
 
-        logger.info("Generated machine-readable markdown assets.");
+        logger.info("Generated machine-readable discovery assets.");
       },
     },
   };
