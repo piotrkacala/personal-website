@@ -61,3 +61,10 @@ export function getMarkdownUrl(lang: "en" | "pl"): string {
 export function getLlmsFullUrl(): string {
   return new URL("/llms-full.txt", siteProfile.siteUrl).toString();
 }
+
+export function getConsultingMarkdownUrl(lang: "en" | "pl"): string {
+  return new URL(
+    lang === "en" ? "/consulting.md" : "/pl/consulting.md",
+    siteProfile.siteUrl,
+  ).toString();
+}

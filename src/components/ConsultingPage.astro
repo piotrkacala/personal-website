@@ -1,0 +1,131 @@
+---
+import type { ConsultingCopy } from "../i18n/schema";
+
+interface Props {
+  copy: ConsultingCopy;
+}
+
+const { copy } = Astro.props;
+const scopeHeadingId = "consulting-scope";
+const deliveryHeadingId = "consulting-delivery";
+const aiHeadingId = "consulting-ai";
+const fitHeadingId = "consulting-fit";
+const selectedWorkHeadingId = "consulting-selected-work";
+const contactHeadingId = "consulting-contact";
+---
+
+<article class="consulting-page">
+  <header class="consulting-header">
+    <p class="consulting-eyebrow ui-text">{copy.eyebrow}</p>
+    <h1>{copy.title}</h1>
+    <p class="consulting-intro">{copy.intro}</p>
+  </header>
+
+  <section class="consulting-section" aria-labelledby={scopeHeadingId}>
+    <h2 id={scopeHeadingId}>{copy.scope.heading}</h2>
+    {copy.scope.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    <p class="list-heading"><strong>{copy.scope.deliverablesHeading}</strong></p>
+    <ul>
+      {copy.scope.deliverables.map((deliverable) => <li>{deliverable}</li>)}
+    </ul>
+  </section>
+
+  <section class="consulting-section" aria-labelledby={deliveryHeadingId}>
+    <h2 id={deliveryHeadingId}>{copy.delivery.heading}</h2>
+    {copy.delivery.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+  </section>
+
+  <section class="consulting-section" aria-labelledby={aiHeadingId}>
+    <h2 id={aiHeadingId}>{copy.ai.heading}</h2>
+    {copy.ai.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+  </section>
+
+  <section class="consulting-section" aria-labelledby={fitHeadingId}>
+    <h2 id={fitHeadingId}>{copy.fit.goodHeading}</h2>
+    <ul>
+      {copy.fit.goodItems.map((item) => <li>{item}</li>)}
+    </ul>
+    <h2 class="fit-subheading">{copy.fit.notHeading}</h2>
+    <ul>
+      {copy.fit.notItems.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+
+  <section class="consulting-section" aria-labelledby={selectedWorkHeadingId}>
+    <h2 id={selectedWorkHeadingId}>{copy.selectedWork.heading}</h2>
+    <p>{copy.selectedWork.body}</p>
+    <p><a href={copy.selectedWork.href}>{copy.selectedWork.linkLabel}</a></p>
+  </section>
+
+  <section class="consulting-section consulting-contact" aria-labelledby={contactHeadingId}>
+    <h2 id={contactHeadingId}>{copy.contact.heading}</h2>
+    <p>{copy.contact.body}</p>
+    <p>
+      <a class="contact-email" href={`mailto:${copy.contact.email}`}>
+        {copy.contact.email}
+      </a>
+    </p>
+  </section>
+</article>
+
+<style>
+  .consulting-page > * {
+    margin: 0;
+  }
+
+  .consulting-page > * + * {
+    margin-top: calc(var(--spacing-rhythm) * 1.45);
+    padding-top: calc(var(--spacing-rhythm) * 1.45);
+    border-top: 1px solid var(--divider);
+  }
+
+  .consulting-header > *,
+  .consulting-section > * {
+    margin: 0;
+  }
+
+  .consulting-header > * + *,
+  .consulting-section > * + * {
+    margin-top: calc(var(--spacing-rhythm) * 0.72);
+  }
+
+  .consulting-eyebrow {
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .consulting-intro {
+    margin-top: calc(var(--spacing-rhythm) * 0.9);
+    font-size: clamp(1.125rem, 1.06rem + 0.28vw, 1.25rem);
+    line-height: 1.5;
+  }
+
+  .list-heading,
+  .fit-subheading {
+    margin-top: calc(var(--spacing-rhythm) * 1.05);
+  }
+
+  .consulting-section ul {
+    max-width: 62ch;
+    margin-bottom: 0;
+    padding-left: 1.25em;
+  }
+
+  .consulting-section li + li {
+    margin-top: 0.4em;
+  }
+
+  .fit-subheading {
+    font-size: clamp(1.35rem, 1.2rem + 0.72vw, 1.7rem);
+  }
+
+  .contact-email {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+</style>

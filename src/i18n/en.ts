@@ -169,6 +169,93 @@ export const en = {
     heading: "Contact",
     prompt: "Get in touch",
     email: "kontakt@piotrkacala.pl",
+    consultingLink: {
+      href: "/consulting/",
+      label: "Looking for product consulting? See how I work.",
+    },
+  },
+  consulting: {
+    lang: "en",
+    metadata: {
+      title: "Consulting | Piotr Kacała",
+      description:
+        "Product consulting and complete software delivery for founders and small teams: clarify the scope, write the spec, build, test, deploy, and iterate.",
+      openGraph: {
+        title: "Consulting | Piotr Kacała",
+        description:
+          "Product consulting and complete software delivery for founders and small teams: clarify the scope, write the spec, build, test, deploy, and iterate.",
+        type: "website",
+        locale: "en_US",
+        siteName: "Piotr Kacała",
+        url: "https://piotrkacala.pl/consulting/",
+        image: {
+          url: "https://piotrkacala.pl/og/piotr-kacala-en.png",
+          width: 1200,
+          height: 630,
+          alt: "Piotr Kacała — Product Builder. Across product, design, QA, and development.",
+        },
+      },
+    },
+    eyebrow: "Consulting",
+    title: "From rough product idea to shipped software.",
+    intro:
+      "I work with founders and small teams that need to turn an idea into a usable product without assembling a full product team. I clarify the scope, write the practical specification, build the system, test it, deploy it, and iterate.",
+    homeLabel: "Back to homepage",
+    scope: {
+      heading: "Start with the scope",
+      paragraphs: [
+        "If the idea is still rough, the first useful step is a short product scoping pass with a defined scope. The goal is not to produce a large strategy document. It is to make the project concrete enough to build. It may also identify early that the project should not be built yet.",
+        "If you already have a clear brief, we can go directly to build planning.",
+      ],
+      deliverablesHeading: "The scoping pass produces:",
+      deliverables: [
+        "practical product brief",
+        "focused first scope and explicit list of things to leave for later",
+        "key user flows, constraints, and risks",
+        "recommended next step",
+        "architecture notes and implementation outline when the idea is ready to build",
+      ],
+    },
+    delivery: {
+      heading: "From scope to delivery",
+      paragraphs: [
+        "If the project is a good fit, I can continue through the full delivery loop: specification, implementation, testing, deployment, and iteration. This works best for prototypes, internal tools, automations, and first production versions where one person needs to carry the product context end to end.",
+      ],
+    },
+    ai: {
+      heading: "AI is part of the method",
+      paragraphs: [
+        "I build through AI agent workflows. The value is not that a model writes code. The value is structuring the work well enough to move quickly without lowering the bar for judgment, review, or quality.",
+        "If AI belongs inside the product itself, I also help define the model's role: what it should do, what it must not decide, which tools it can use, what it may persist, and which guardrails shape the experience.",
+      ],
+    },
+    fit: {
+      goodHeading: "Good fit",
+      goodItems: [
+        "founders at an early stage with a product idea that needs structure",
+        "small companies without a full product team",
+        "prototypes, internal tools, automations, and first production versions",
+        "work where ownership and practical decisions matter more than filling a ticket queue",
+      ],
+      notHeading: "Not a fit",
+      notItems: [
+        "narrow staff augmentation",
+        "execution limited to tickets without product context",
+        "projects looking mainly for deep specialization in one framework",
+        "responsibility for outcomes without authority to make the decisions needed to deliver them",
+      ],
+    },
+    selectedWork: {
+      heading: "Selected work",
+      body: "The homepage shows the progression: a released browser extension, a private production platform for a real customer, a public website with readable documentation, small useful software, and a published coding agent benchmark with inspectable outputs.",
+      linkLabel: "See selected work",
+      href: "/#projects",
+    },
+    contact: {
+      heading: "Start a conversation",
+      body: "Send a short note: what needs to be built, who it is for, and what exists today.",
+      email: "kontakt@piotrkacala.pl",
+    },
   },
 } satisfies SiteCopy & {
   languageSwitcher: {

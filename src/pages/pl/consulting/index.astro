@@ -1,0 +1,32 @@
+---
+import ConsultingPage from "../../../components/ConsultingPage.astro";
+import { pl } from "../../../i18n/pl";
+import Base from "../../../layouts/Base.astro";
+import { getConsultingMarkdownUrl } from "../../../site/profile";
+
+const copy = pl.consulting;
+const alternates = {
+  en: "https://piotrkacala.pl/consulting/",
+  pl: copy.metadata.openGraph.url,
+  default: "https://piotrkacala.pl/consulting/",
+};
+const languageSwitcher = {
+  ariaLabel: pl.languageSwitcher.ariaLabel,
+  currentLabel: pl.languageSwitcher.pl,
+  currentLanguage: "pl" as const,
+  alternateLabel: pl.languageSwitcher.en,
+  alternateHref: "/consulting/",
+  alternateLanguage: "en" as const,
+};
+---
+
+<Base
+  lang={copy.lang}
+  metadata={copy.metadata}
+  languageSwitcher={languageSwitcher}
+  markdownUrl={getConsultingMarkdownUrl(copy.lang)}
+  alternates={alternates}
+  homeLink={{ href: "/pl/", ariaLabel: copy.homeLabel }}
+>
+  <ConsultingPage copy={copy} />
+</Base>

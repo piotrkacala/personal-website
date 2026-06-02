@@ -31,6 +31,9 @@ Single user type: someone evaluating Piotr as a developer, consultant, or potent
 **Primary flow:** Visitor arrives → reads positioning statement and expansion → reads project
 narrative → optionally opens public proof artifacts → optionally contacts.
 
+**Consulting flow:** Visitor with a relevant need follows the restrained homepage contact link →
+reads the focused consulting offer → optionally returns to selected work → contacts by email.
+
 **Acceptance criteria:**
 
 - Visitor can understand what Piotr does and why it is unusual within 10 seconds of landing.
@@ -39,6 +42,8 @@ narrative → optionally opens public proof artifacts → optionally contacts.
 - Phonetic Benchmark has a dedicated entry with report, gallery, methodology, and package links.
 - Machine-readable artifacts preserve the same framing as the HTML homepage.
 - Contact action is clear and requires no explanation.
+- Consulting visitors can understand the low-friction scoping entry point and the path from scope
+  to delivery without turning the homepage into a services landing page.
 - Site loads fast and reads correctly on mobile.
 
 ## Current Public Scope
@@ -49,12 +54,15 @@ The following must be present and working:
 - Section 2: Projects — Phonetic Alphabet Trainer, Surfaced, `Private client audit platform`, This site, and
   Phonetic Benchmark with an explicit narrative arc
 - Section 3: Contact — simple CTA, no form needed
+- Focused consulting route at `/consulting/` and `/pl/consulting/`, linked once from the homepage
+  contact footer
 - Mobile responsive, no layout breakage at 375px
 - Available in English and Polish with a language switcher
 - Static Phonetic Benchmark report, gallery, methodology, run-details, JSON, CSV, and markdown
   routes
 - Generated EN/PL homepage markdown, `llms.txt`, `llms-full.txt`, sitemap, and project companion
   profiles
+- Generated EN/PL consulting markdown at `/consulting.md` and `/pl/consulting.md`
 - Deployed to production via FTP
 
 ## Non-Goals
@@ -68,3 +76,4 @@ The following must be present and working:
 - Analytics
 - Contact form with backend
 - General-purpose long-form publishing system
+- Homepage services block or general services navigation

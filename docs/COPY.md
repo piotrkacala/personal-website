@@ -225,6 +225,30 @@ Kontakt: kontakt@piotrkacala.pl
 
 ---
 
+## Consulting Surface
+
+The homepage stays compact. Add one restrained localized link in the contact footer:
+
+- EN: `Looking for product consulting? See how I work.`
+- PL: `Szukasz wsparcia produktowego? Zobacz, jak pracuję.`
+
+The dedicated bilingual consulting surface lives at `/consulting/` and `/pl/consulting/`. It is a
+focused next-step page for visitors with a relevant need, not the beginning of a general services
+section or publishing system.
+
+The offer leads with product clarity and delivery:
+
+- a short fixed-scope product scoping pass when the idea is still rough
+- direct build planning when the client already has a clear brief
+- end-to-end specification, implementation, testing, deployment, and iteration when the project
+  fits
+- AI agent workflows as part of the method, with model role design included when AI belongs inside
+  the product itself
+
+The finalized localized public strings live in `src/i18n/en.ts` and `src/i18n/pl.ts`.
+
+---
+
 ## Metadata
 
 **Finalized values (EN, June 2026):**

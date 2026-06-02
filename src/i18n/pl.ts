@@ -172,6 +172,93 @@ export const pl = {
     heading: "Kontakt",
     prompt: "Napisz do mnie",
     email: "kontakt@piotrkacala.pl",
+    consultingLink: {
+      href: "/pl/consulting/",
+      label: "Szukasz wsparcia produktowego? Zobacz, jak pracuję.",
+    },
+  },
+  consulting: {
+    lang: "pl",
+    metadata: {
+      title: "Consulting | Piotr Kacała",
+      description:
+        "Consulting produktowy i kompleksowa realizacja oprogramowania dla founderów i małych zespołów: doprecyzowanie zakresu, specyfikacja, budowa, testy, deploy i iteracja.",
+      openGraph: {
+        title: "Consulting | Piotr Kacała",
+        description:
+          "Consulting produktowy i kompleksowa realizacja oprogramowania dla founderów i małych zespołów: doprecyzowanie zakresu, specyfikacja, budowa, testy, deploy i iteracja.",
+        type: "website",
+        locale: "pl_PL",
+        siteName: "Piotr Kacała",
+        url: "https://piotrkacala.pl/pl/consulting/",
+        image: {
+          url: "https://piotrkacala.pl/og/piotr-kacala-pl.png",
+          width: 1200,
+          height: 630,
+          alt: "Piotr Kacała — Product Builder. Na styku produktu, designu, QA i developmentu.",
+        },
+      },
+    },
+    eyebrow: "Consulting",
+    title: "Od niejasnego pomysłu do działającego produktu.",
+    intro:
+      "Pracuję z founderami i małymi zespołami, które chcą zamienić pomysł w użyteczny produkt bez budowania całego zespołu produktowego. Doprecyzowuję zakres, piszę praktyczną specyfikację, buduję system, testuję go, wdrażam i rozwijam.",
+    homeLabel: "Wróć na stronę główną",
+    scope: {
+      heading: "Zacznijmy od zakresu",
+      paragraphs: [
+        "Jeśli pomysł jest jeszcze nieprecyzyjny, pierwszym sensownym krokiem jest krótki, zamknięty etap doprecyzowania produktu. Celem nie jest duży dokument strategiczny. Chodzi o to, żeby projekt stał się wystarczająco konkretny do realizacji. Ten etap może też wcześnie pokazać, że jeszcze nie warto go budować.",
+        "Jeśli masz już konkretny brief, możemy od razu przejść do planu budowy.",
+      ],
+      deliverablesHeading: "Etap doprecyzowania obejmuje:",
+      deliverables: [
+        "praktyczny brief produktowy",
+        "skupiony pierwszy zakres i jawna lista rzeczy na później",
+        "najważniejsze user flows, ograniczenia i ryzyka",
+        "rekomendowany kolejny krok",
+        "notatki architektoniczne i zarys implementacji, jeśli pomysł jest gotowy do realizacji",
+      ],
+    },
+    delivery: {
+      heading: "Od zakresu do wdrożenia",
+      paragraphs: [
+        "Jeśli projekt jest dobrze dopasowany, mogę przeprowadzić go przez cały proces: specyfikację, implementację, testy, deploy i iterację. To podejście najlepiej sprawdza się przy prototypach, narzędziach wewnętrznych, automatyzacjach i pierwszych wersjach produkcyjnych, kiedy jedna osoba powinna trzymać kontekst produktu od początku do końca.",
+      ],
+    },
+    ai: {
+      heading: "AI jest częścią metody",
+      paragraphs: [
+        "Buduję przez workflow oparte na agentach AI. Wartość nie polega na tym, że model pisze kod. Polega na takim ułożeniu pracy, żeby działać szybko bez obniżania poprzeczki dla oceny, review i jakości.",
+        "Jeśli AI ma być częścią samego produktu, pomagam też zaprojektować rolę modelu: co powinien robić, czego nie wolno mu rozstrzygać, z jakich narzędzi może korzystać, co może zapisywać i jakie guardrails kształtują doświadczenie użytkownika.",
+      ],
+    },
+    fit: {
+      goodHeading: "Dobre dopasowanie",
+      goodItems: [
+        "founderzy na wczesnym etapie z pomysłem, który potrzebuje struktury",
+        "małe firmy bez pełnego zespołu produktowego",
+        "prototypy, narzędzia wewnętrzne, automatyzacje i pierwsze wersje produkcyjne",
+        "praca, w której liczy się ownership i praktyczne decyzje, a nie realizacja kolejki ticketów",
+      ],
+      notHeading: "Słabe dopasowanie",
+      notItems: [
+        "wąski staff augmentation",
+        "realizacja samych ticketów bez kontekstu produktowego",
+        "projekty szukające przede wszystkim głębokiej specjalizacji w jednym frameworku",
+        "odpowiedzialność za rezultat bez uprawnień do podejmowania decyzji potrzebnych do jego dostarczenia",
+      ],
+    },
+    selectedWork: {
+      heading: "Wybrane projekty",
+      body: "Strona główna pokazuje kolejne etapy: opublikowane rozszerzenie do przeglądarki, prywatną platformę produkcyjną dla realnego klienta, publiczną stronę z czytelną dokumentacją, niewielkie użyteczne narzędzia i opublikowany benchmark agentów programistycznych z wynikami, które można samodzielnie sprawdzić.",
+      linkLabel: "Zobacz wybrane projekty",
+      href: "/pl/#projects",
+    },
+    contact: {
+      heading: "Porozmawiajmy",
+      body: "Napisz krótko: co chcesz zbudować, dla kogo i co istnieje dzisiaj.",
+      email: "kontakt@piotrkacala.pl",
+    },
   },
 } satisfies SiteCopy & {
   languageSwitcher: {

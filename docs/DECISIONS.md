@@ -294,3 +294,32 @@ Using static generation and structured repo-owned data preserves the project's c
 ## Superseded Open Questions Note
 
 Open questions are now tracked in `docs/QUESTIONS.md`, not here.
+
+---
+
+## ADR-017 — Consulting offer stays a focused next-step surface
+
+**Date:** 2026-06-02
+**Status:** Accepted
+
+**Context:**
+The public profile needs a concrete path for founders and small teams who already have a relevant
+product need. Expanding the homepage into a services landing page would weaken its primary job as a
+compact profile and proof surface.
+
+**Decision:**
+Publish a bilingual consulting page at `/consulting/` and `/pl/consulting/`, linked once from the
+homepage contact footer.
+
+The page presents a low-friction product scoping pass as the default starting point for rough ideas,
+allows direct build planning for clients who already have a clear brief, and explains the path to
+end-to-end delivery when the project fits.
+
+The page remains a static Astro route with generated markdown equivalents, sitemap entries, and
+public discovery references. It does not introduce a services block on the homepage, a contact form,
+pricing tables, a CMS, or a general content system.
+
+**Reasoning:**
+The consulting offer needs enough space to be concrete without changing the homepage visitor flow.
+A dedicated static route preserves the compact homepage, gives relevant visitors a clear next step,
+and fits the existing document-like architecture and machine-readable publication model.

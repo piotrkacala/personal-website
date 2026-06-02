@@ -35,6 +35,7 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 
 ## Done
 
+- [x] Focused bilingual consulting surface added with generated markdown, discovery entries, sitemap coverage, and production smoke checks while keeping the homepage compact (2026-06-02)
 - [x] Homepage proof hierarchy refreshed with a dedicated Phonetic Benchmark entry and a compact private-project treatment for `Private client audit platform` (2026-06-02)
 - [x] Companion profiles added for Phonetic Alphabet Trainer, Surfaced, and `Private client audit platform` (2026-06-02)
 - [x] Production smoke-check script added for HTML, markdown negotiation, discovery files, and sitemap consistency (2026-06-02)

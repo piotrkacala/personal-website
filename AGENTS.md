@@ -51,14 +51,17 @@ npm run smoke:production
 
 ## Architecture
 
-Single Astro project, no monorepo. The bilingual homepage lives at `/` and `/pl/`. Static proof
-artifacts, generated markdown, and discovery routes extend that primary flow without introducing a
-blog, CMS, SSR, or API layer.
+Single Astro project, no monorepo. The bilingual homepage lives at `/` and `/pl/`. The focused
+consulting surface lives at `/consulting/` and `/pl/consulting/`. Static proof artifacts, generated
+markdown, and discovery routes extend that primary flow without introducing a blog, CMS, SSR, or
+API layer.
 
 ```text
 src/
   pages/index.astro     ← English version
   pages/pl/index.astro  ← Polish version
+  pages/consulting/     ← focused EN consulting next-step surface
+  pages/pl/consulting/  ← focused PL consulting next-step surface
   pages/phonetic-benchmark/ ← report, gallery, methodology, run details
   i18n/                 ← centralized EN/PL strings
   site/                 ← public profile, benchmark data, companion profiles

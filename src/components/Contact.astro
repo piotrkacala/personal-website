@@ -3,9 +3,13 @@ interface Props {
   heading: string;
   prompt: string;
   email: string;
+  consultingLink: {
+    href: string;
+    label: string;
+  };
 }
 
-const { heading, prompt, email } = Astro.props;
+const { heading, prompt, email, consultingLink } = Astro.props;
 const headingId = "contact-heading";
 ---
 
@@ -16,6 +20,9 @@ const headingId = "contact-heading";
     <a class="contact-email" href={`mailto:${email}`}>
       {email}
     </a>
+  </p>
+  <p class="consulting-link">
+    <a href={consultingLink.href}>{consultingLink.label}</a>
   </p>
 </footer>
 
@@ -36,5 +43,10 @@ const headingId = "contact-heading";
     min-height: 2.75rem;
     font-weight: 600;
     overflow-wrap: anywhere;
+  }
+
+  .consulting-link {
+    max-width: 42ch;
+    font-size: var(--text-ui);
   }
 </style>

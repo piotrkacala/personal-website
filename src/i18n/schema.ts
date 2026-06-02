@@ -49,6 +49,46 @@ export interface SiteMetadata {
   };
 }
 
+export interface ConsultingCopy {
+  lang: "en" | "pl";
+  metadata: SiteMetadata;
+  eyebrow: string;
+  title: string;
+  intro: string;
+  homeLabel: string;
+  scope: {
+    heading: string;
+    paragraphs: readonly string[];
+    deliverablesHeading: string;
+    deliverables: readonly string[];
+  };
+  delivery: {
+    heading: string;
+    paragraphs: readonly string[];
+  };
+  ai: {
+    heading: string;
+    paragraphs: readonly string[];
+  };
+  fit: {
+    goodHeading: string;
+    goodItems: readonly string[];
+    notHeading: string;
+    notItems: readonly string[];
+  };
+  selectedWork: {
+    heading: string;
+    body: string;
+    linkLabel: string;
+    href: string;
+  };
+  contact: {
+    heading: string;
+    body: string;
+    email: string;
+  };
+}
+
 export interface SiteCopy {
   lang: "en" | "pl";
   title: string;
@@ -66,5 +106,10 @@ export interface SiteCopy {
     heading: string;
     prompt: string;
     email: string;
+    consultingLink: {
+      href: string;
+      label: string;
+    };
   };
+  consulting: ConsultingCopy;
 }

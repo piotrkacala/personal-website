@@ -1,6 +1,11 @@
 import { en } from "./en.ts";
 import { pl } from "./pl.ts";
-import type { LinkBlock, ProjectBlock, SiteCopy } from "./schema.ts";
+import type {
+  ConsultingCopy,
+  LinkBlock,
+  ProjectBlock,
+  SiteCopy,
+} from "./schema.ts";
 import {
   externalProjectProfiles,
   getExternalProjectMarkdownUrl,
@@ -23,7 +28,7 @@ import {
   type BenchmarkReportCopy,
   type BenchmarkRunCopy,
 } from "../site/phonetic-benchmark.ts";
-import { siteProfile } from "../site/profile.ts";
+import { getConsultingMarkdownUrl, siteProfile } from "../site/profile.ts";
 
 export interface MachineReadableArtifact {
   pathname: `/${string}`;
@@ -91,12 +96,68 @@ function renderHomepageBody(copy: SiteCopy, sectionLevel: number): string {
   lines.push(heading(sectionLevel, copy.contact.heading));
   lines.push("");
   lines.push(`${copy.contact.prompt}: ${copy.contact.email}`);
+  lines.push("");
+  lines.push(
+    `${copy.contact.consultingLink.label}: ${new URL(
+      copy.contact.consultingLink.href,
+      siteProfile.siteUrl,
+    ).toString()}`,
+  );
 
   return `${lines.join("\n")}\n`;
 }
 
 function renderHomepageMarkdown(copy: SiteCopy): string {
   return `${heading(1, copy.metadata.title)}\n\n${renderHomepageBody(copy, 2)}`;
+}
+
+function renderConsultingMarkdown(copy: ConsultingCopy): string {
+  const lines = [
+    heading(1, copy.metadata.title),
+    "",
+    `> ${copy.metadata.description}`,
+    "",
+    copy.intro,
+    "",
+    heading(2, copy.scope.heading),
+    "",
+    ...copy.scope.paragraphs.flatMap((paragraph) => [paragraph, ""]),
+    copy.scope.deliverablesHeading,
+    "",
+    ...copy.scope.deliverables.map((deliverable) => `- ${deliverable}`),
+    "",
+    heading(2, copy.delivery.heading),
+    "",
+    ...copy.delivery.paragraphs.flatMap((paragraph) => [paragraph, ""]),
+    heading(2, copy.ai.heading),
+    "",
+    ...copy.ai.paragraphs.flatMap((paragraph) => [paragraph, ""]),
+    heading(2, copy.fit.goodHeading),
+    "",
+    ...copy.fit.goodItems.map((item) => `- ${item}`),
+    "",
+    heading(2, copy.fit.notHeading),
+    "",
+    ...copy.fit.notItems.map((item) => `- ${item}`),
+    "",
+    heading(2, copy.selectedWork.heading),
+    "",
+    copy.selectedWork.body,
+    "",
+    `${copy.selectedWork.linkLabel}: ${new URL(
+      copy.selectedWork.href,
+      copy.metadata.openGraph.url,
+    ).toString()}`,
+    "",
+    heading(2, copy.contact.heading),
+    "",
+    copy.contact.body,
+    "",
+    `Email: ${copy.contact.email}`,
+    "",
+  ];
+
+  return lines.join("\n");
 }
 
 function renderBulletSection(
@@ -434,11 +495,25 @@ function renderSitemap(): string {
     "https://piotrkacala.pl/",
     "https://piotrkacala.pl/pl/",
   );
+  const consultingAlternates = getPairedAlternates(
+    en.consulting.metadata.openGraph.url,
+    pl.consulting.metadata.openGraph.url,
+  );
   const entries: SitemapEntry[] = [
     { loc: "https://piotrkacala.pl/", alternates: homepageAlternates },
     { loc: "https://piotrkacala.pl/pl/", alternates: homepageAlternates },
     { loc: "https://piotrkacala.pl/index.md" },
     { loc: "https://piotrkacala.pl/pl/index.md" },
+    {
+      loc: en.consulting.metadata.openGraph.url,
+      alternates: consultingAlternates,
+    },
+    {
+      loc: pl.consulting.metadata.openGraph.url,
+      alternates: consultingAlternates,
+    },
+    { loc: getConsultingMarkdownUrl("en") },
+    { loc: getConsultingMarkdownUrl("pl") },
     {
       loc: phoneticBenchmarkReports.en.metadata.openGraph.url,
       lastmod: benchmarkLastmod,
@@ -516,6 +591,10 @@ function collectPublicReferences(): readonly string[] {
   const references = [
     "English homepage: https://piotrkacala.pl/",
     "Polish homepage: https://piotrkacala.pl/pl/",
+    `Consulting: ${en.consulting.metadata.openGraph.url}`,
+    `Polish consulting: ${pl.consulting.metadata.openGraph.url}`,
+    `Consulting markdown: ${getConsultingMarkdownUrl("en")}`,
+    `Polish consulting markdown: ${getConsultingMarkdownUrl("pl")}`,
     "Phonetic Benchmark report: https://piotrkacala.pl/phonetic-benchmark/",
     "Polish Phonetic Benchmark report: https://piotrkacala.pl/pl/phonetic-benchmark/",
     "Phonetic Benchmark screenshot gallery: https://piotrkacala.pl/phonetic-benchmark/gallery/",
@@ -567,6 +646,14 @@ function renderLlmsFull(): string {
     `**${pl.metadata.title}**`,
     "",
     renderHomepageBody(pl, 3).trimEnd(),
+    "",
+    "## English consulting",
+    "",
+    renderConsultingMarkdown(en.consulting).trimEnd(),
+    "",
+    "## Polish consulting",
+    "",
+    renderConsultingMarkdown(pl.consulting).trimEnd(),
     "",
     "## English Phonetic Benchmark report",
     "",
@@ -625,6 +712,14 @@ export function getMachineReadableArtifacts(): readonly MachineReadableArtifact[
 
   return [
     ...homepageArtifacts,
+    {
+      pathname: "/consulting.md",
+      content: renderConsultingMarkdown(en.consulting),
+    },
+    {
+      pathname: "/pl/consulting.md",
+      content: renderConsultingMarkdown(pl.consulting),
+    },
     ...externalProjectArtifacts,
     ...benchmarkReportArtifacts,
     {

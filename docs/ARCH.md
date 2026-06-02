@@ -26,11 +26,14 @@ commit history, and agent instructions are part of the portfolio.
 │   ├── pages/
 │   │   ├── 404.astro         ← custom 404 page
 │   │   ├── index.astro       ← English version
+│   │   ├── consulting/       ← focused English consulting surface
 │   │   ├── phonetic-benchmark/ ← report, gallery, methodology, and EN-only run details
 │   │   └── pl/
 │   │       ├── index.astro   ← Polish version
+│   │       ├── consulting/   ← focused Polish consulting surface
 │   │       └── phonetic-benchmark/ ← localized report and gallery
 │   ├── components/
+│   │   ├── ConsultingPage.astro ← shared bilingual consulting document
 │   │   ├── Contact.astro     ← semantic footer/contact block
 │   │   ├── Hero.astro        ← positioning section
 │   │   ├── ProjectCard.astro ← single project entry
@@ -70,17 +73,17 @@ commit history, and agent instructions are part of the portfolio.
 
 ## Frontend
 
-| Concern    | Choice                                                           |
-| ---------- | ---------------------------------------------------------------- |
-| Framework  | Astro 5 (static output mode)                                     |
-| Styling    | Tailwind CSS v4 via `@tailwindcss/vite`                          |
-| Components | Astro native components — no React, no shadcn                    |
-| Icons      | Hand-authored SVG favicon with generated `.ico` fallback         |
-| Fonts      | Self-hosted `Spectral` + `Source Sans 3` in `public/fonts/`      |
-| JS         | Zero JS by default; add only if interaction requires it          |
-| i18n       | Astro built-in i18n routing — `/` (EN) and `/pl/` (PL)           |
-| Routing    | Static routes for EN, PL, and custom `404.html`                  |
-| Deployment | `astro build` output uploaded manually via FTP to shared hosting |
+| Concern    | Choice                                                                    |
+| ---------- | ------------------------------------------------------------------------- |
+| Framework  | Astro 5 (static output mode)                                              |
+| Styling    | Tailwind CSS v4 via `@tailwindcss/vite`                                   |
+| Components | Astro native components — no React, no shadcn                             |
+| Icons      | Hand-authored SVG favicon with generated `.ico` fallback                  |
+| Fonts      | Self-hosted `Spectral` + `Source Sans 3` in `public/fonts/`               |
+| JS         | Zero JS by default; add only if interaction requires it                   |
+| i18n       | Astro built-in i18n routing — `/` (EN) and `/pl/` (PL)                    |
+| Routing    | Static homepage, consulting, proof-artifact, and custom `404.html` routes |
+| Deployment | `astro build` output uploaded manually via FTP to shared hosting          |
 
 No client-side routing. No state management. No API calls. The page is a document.
 
@@ -94,6 +97,7 @@ Build output now includes:
 
 - `/index.md` ← generated English markdown version of the homepage
 - `/pl/index.md` ← generated Polish markdown version of the homepage
+- `/consulting.md` and `/pl/consulting.md` ← generated consulting offer markdown
 - `/projects/<slug>.md` ← companion markdown profiles for linked projects and dated private-project records
 - `/phonetic-benchmark/index.md` and `/pl/phonetic-benchmark/index.md` ← generated report markdown
 - `/phonetic-benchmark/methodology/index.md` ← generated canonical English methodology markdown
@@ -151,9 +155,10 @@ the HTML output.
 Companion markdown profiles follow the same deploy rule: they are static artifacts owned by this
 repo and must not conflict with separately deployed application paths on the same domain.
 
-After each FTP upload, run `npm run smoke:production`. It verifies EN and PL HTML, explicit and
-negotiated markdown, Cloudflare `Link` alternate headers, `llms.txt`, `llms-full.txt`, and sitemap
-discovery and direct availability for the companion profiles.
+After each FTP upload, run `npm run smoke:production`. It verifies EN and PL homepage and consulting
+HTML, explicit consulting markdown, explicit and negotiated homepage markdown, Cloudflare `Link`
+alternate headers, `llms.txt`, `llms-full.txt`, and sitemap discovery and direct availability for
+the companion profiles.
 
 Production currently uses a thin Cloudflare-only layer for route-scoped markdown negotiation on `/` and `/pl/`, returning markdown for clients that explicitly send `Accept: text/markdown`. That same edge layer also adds route-scoped `Link` alternate headers and keeps markdown-negotiated requests out of edge cache as a simple correctness guardrail. It remains intentionally separate from the repo-controlled artifact generation and should stay narrow: preserve `Vary: Accept`, expose markdown alternates where useful, and avoid taking ownership of external tool routes. See `docs/008-cloudflare-markdown-edge-follow-up.md` for the repo-safe operational scope and current state.
 

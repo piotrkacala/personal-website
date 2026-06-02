@@ -86,6 +86,7 @@ test("getMachineReadableArtifacts returns the expected artifact inventory", () =
   assert.deepEqual(
     paths,
     [
+      "/consulting.md",
       "/index.md",
       "/llms-full.txt",
       "/phonetic-benchmark/index.md",
@@ -96,6 +97,7 @@ test("getMachineReadableArtifacts returns the expected artifact inventory", () =
         (run) => `/phonetic-benchmark/runs/${run.id}/index.md`,
       ),
       "/pl/index.md",
+      "/pl/consulting.md",
       "/pl/phonetic-benchmark/index.md",
       "/projects/400m.md",
       "/projects/client-audit-platform.md",
@@ -152,6 +154,10 @@ test("English homepage markdown keeps its key structure and references", () => {
   );
   assert.match(content, /^## Contact$/m);
   assert.match(content, /^Get in touch: kontakt@piotrkacala\.pl$/m);
+  assert.match(
+    content,
+    /^Looking for product consulting\? See how I work\.: https:\/\/piotrkacala\.pl\/consulting\/$/m,
+  );
 });
 
 test("Polish homepage markdown keeps its key structure and references", () => {
@@ -203,6 +209,45 @@ test("Polish homepage markdown keeps its key structure and references", () => {
   );
   assert.match(content, /^## Kontakt$/m);
   assert.match(content, /^Napisz do mnie: kontakt@piotrkacala\.pl$/m);
+  assert.match(
+    content,
+    /^Szukasz wsparcia produktowego\? Zobacz, jak pracuję\.: https:\/\/piotrkacala\.pl\/pl\/consulting\/$/m,
+  );
+});
+
+test("consulting markdown publishes the localized offer from shared copy", () => {
+  const english = getArtifactContent("/consulting.md");
+  const polish = getArtifactContent("/pl/consulting.md");
+
+  assert.match(english, /^# Consulting \| Piotr Kacała$/m);
+  assert.match(english, /^## Start with the scope$/m);
+  assert.match(english, /^- practical product brief$/m);
+  assert.match(english, /^## From scope to delivery$/m);
+  assert.match(english, /^## AI is part of the method$/m);
+  assert.match(english, /^## Good fit$/m);
+  assert.match(english, /^## Not a fit$/m);
+  assert.match(english, /^## Selected work$/m);
+  assert.match(
+    english,
+    /^See selected work: https:\/\/piotrkacala\.pl\/#projects$/m,
+  );
+  assert.match(english, /^## Start a conversation$/m);
+  assert.match(english, /^Email: kontakt@piotrkacala\.pl$/m);
+
+  assert.match(polish, /^# Consulting \| Piotr Kacała$/m);
+  assert.match(polish, /^## Zacznijmy od zakresu$/m);
+  assert.match(polish, /^- praktyczny brief produktowy$/m);
+  assert.match(polish, /^## Od zakresu do wdrożenia$/m);
+  assert.match(polish, /^## AI jest częścią metody$/m);
+  assert.match(polish, /^## Dobre dopasowanie$/m);
+  assert.match(polish, /^## Słabe dopasowanie$/m);
+  assert.match(polish, /^## Wybrane projekty$/m);
+  assert.match(
+    polish,
+    /^Zobacz wybrane projekty: https:\/\/piotrkacala\.pl\/pl\/#projects$/m,
+  );
+  assert.match(polish, /^## Porozmawiajmy$/m);
+  assert.match(polish, /^Email: kontakt@piotrkacala\.pl$/m);
 });
 
 test("llms-full.txt carries the consolidated public references", () => {
@@ -211,6 +256,8 @@ test("llms-full.txt carries the consolidated public references", () => {
   assert.match(content, /^# Piotr Kacała — Full Public Site Context$/m);
   assert.match(content, /^## English homepage$/m);
   assert.match(content, /^## Polish homepage$/m);
+  assert.match(content, /^## English consulting$/m);
+  assert.match(content, /^## Polish consulting$/m);
   assert.match(content, /^## Public references$/m);
   assert.match(content, /^## Canonical summary$/m);
   assert.match(
@@ -221,6 +268,14 @@ test("llms-full.txt carries the consolidated public references", () => {
   assert.match(
     content,
     /^- Polish homepage: https:\/\/piotrkacala\.pl\/pl\/$/m,
+  );
+  assert.match(
+    content,
+    /^- Consulting: https:\/\/piotrkacala\.pl\/consulting\/$/m,
+  );
+  assert.match(
+    content,
+    /^- Polish consulting markdown: https:\/\/piotrkacala\.pl\/pl\/consulting\.md$/m,
   );
   assert.match(
     content,
@@ -671,10 +726,18 @@ test("benchmark galleries expose exactly 15 screenshots and explicit demo links 
   }
 });
 
-test("static discovery files include report and gallery paths", () => {
+test("static discovery files include consulting, report, and gallery paths", () => {
   const llms = readFileSync("public/llms.txt", "utf8");
   const sitemap = getArtifactContent("/sitemap.xml");
 
+  assert.match(
+    llms,
+    /^- Consulting: https:\/\/piotrkacala\.pl\/consulting\/$/m,
+  );
+  assert.match(
+    llms,
+    /^- Polish consulting markdown: https:\/\/piotrkacala\.pl\/pl\/consulting\.md$/m,
+  );
   assert.match(
     llms,
     /^- Phonetic Benchmark report: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/$/m,
@@ -737,6 +800,10 @@ test("static discovery files include report and gallery paths", () => {
   }
 
   for (const pathname of [
+    "/consulting/",
+    "/pl/consulting/",
+    "/consulting.md",
+    "/pl/consulting.md",
     "/phonetic-benchmark/",
     "/pl/phonetic-benchmark/",
     "/phonetic-benchmark/gallery/",
@@ -770,6 +837,29 @@ test("static discovery files include report and gallery paths", () => {
       ),
     );
   });
+});
+
+test("consulting routes expose localized alternates and the shared page component", () => {
+  const englishRoute = readFileSync("src/pages/consulting/index.astro", "utf8");
+  const polishRoute = readFileSync(
+    "src/pages/pl/consulting/index.astro",
+    "utf8",
+  );
+  const projects = readFileSync("src/components/Projects.astro", "utf8");
+
+  assert.match(englishRoute, /<ConsultingPage copy=\{copy\} \/>/);
+  assert.match(polishRoute, /<ConsultingPage copy=\{copy\} \/>/);
+  assert.match(
+    englishRoute,
+    /markdownUrl=\{getConsultingMarkdownUrl\(copy\.lang\)\}/,
+  );
+  assert.match(
+    polishRoute,
+    /markdownUrl=\{getConsultingMarkdownUrl\(copy\.lang\)\}/,
+  );
+  assert.match(englishRoute, /alternateHref: "\/pl\/consulting\/"/);
+  assert.match(polishRoute, /alternateHref: "\/consulting\/"/);
+  assert.match(projects, /<section id="projects"/);
 });
 
 test("gallery pages use the shared gallery data without claiming a duplicate markdown export", () => {
