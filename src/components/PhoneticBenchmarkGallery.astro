@@ -3,15 +3,17 @@ import type {
   BenchmarkGalleryCopy,
   BenchmarkStatus,
 } from "../site/phonetic-benchmark";
+import { getBenchmarkRunGroupRuns } from "../site/phonetic-benchmark";
 
 interface Props {
   gallery: BenchmarkGalleryCopy;
 }
 
 const { gallery } = Astro.props;
-const runs = [...gallery.runs].sort(
-  (firstRun, secondRun) => firstRun.executionOrder - secondRun.executionOrder,
-);
+const runGroups = gallery.resultGroups.map((group) => ({
+  ...group,
+  runs: getBenchmarkRunGroupRuns(gallery.runs, group.benchmarkVersion),
+}));
 
 function getStatusLabel(status: BenchmarkStatus): string {
   return gallery.statusLabels[status];
@@ -28,51 +30,62 @@ function getStatusLabel(status: BenchmarkStatus): string {
     </p>
   </header>
 
-  <ol class="gallery-list">
+  <div class="gallery-groups">
     {
-      runs.map((run) => (
-        <li class="gallery-item" data-run-id={run.id}>
-          <figure>
-            <figcaption>
-              <h2>
-                <span class="gallery-order">
-                  {String(run.executionOrder).padStart(2, "0")}.
-                </span>{" "}
-                {run.model}
-              </h2>
-              <dl>
-                <div>
-                  <dt>{gallery.detailLabels.status}</dt>
-                  <dd>
-                    <span class:list={["status", `status--${run.status}`]}>
-                      {getStatusLabel(run.status)}
-                    </span>
-                  </dd>
-                </div>
-                <div>
-                  <dt>{gallery.detailLabels.sourceLoc}</dt>
-                  <dd>{run.sourceLoc.toLocaleString(gallery.lang)}</dd>
-                </div>
-                <div>
-                  <dt>{gallery.detailLabels.testCount}</dt>
-                  <dd>{run.testCount}</dd>
-                </div>
-              </dl>
-              <a href={run.demoUrl}>{gallery.demoLabel}</a>
-            </figcaption>
-            <img
-              src={run.screenshotPath}
-              alt={run.screenshotAlt}
-              width="1440"
-              height="900"
-              loading="lazy"
-              decoding="async"
-            />
-          </figure>
-        </li>
+      runGroups.map((group) => (
+        <section class="gallery-group">
+          <h2>{group.heading}</h2>
+          <p>{group.intro}</p>
+          <ol class="gallery-list">
+            {group.runs.map((run) => (
+              <li class="gallery-item" data-run-id={run.id}>
+                <figure>
+                  <figcaption>
+                    <h3>
+                      <span class="gallery-order">
+                        {run.benchmarkVersion}-{String(run.executionOrder).padStart(2, "0")}.
+                      </span>{" "}
+                      {run.model}
+                      <span class="version-badge">
+                        {gallery.versionLabels[run.benchmarkVersion]}
+                      </span>
+                    </h3>
+                    <dl>
+                      <div>
+                        <dt>{gallery.detailLabels.status}</dt>
+                        <dd>
+                          <span class:list={["status", `status--${run.status}`]}>
+                            {getStatusLabel(run.status)}
+                          </span>
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>{gallery.detailLabels.sourceLoc}</dt>
+                        <dd>{run.sourceLoc.toLocaleString(gallery.lang)}</dd>
+                      </div>
+                      <div>
+                        <dt>{gallery.detailLabels.testCount}</dt>
+                        <dd>{run.testCount}</dd>
+                      </div>
+                    </dl>
+                    <a href={run.demoUrl}>{gallery.demoLabel}</a>
+                  </figcaption>
+                  <img
+                    src={run.screenshotPath}
+                    alt={run.screenshotAlt}
+                    width="1440"
+                    height="900"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
+              </li>
+            ))}
+          </ol>
+        </section>
       ))
     }
-  </ol>
+  </div>
 
   <p class="gallery-report-link">
     <a href={gallery.reportHref}>{gallery.reportLabel}</a>
@@ -82,8 +95,9 @@ function getStatusLabel(status: BenchmarkStatus): string {
 <style>
   .gallery > *,
   .gallery-header > *,
+  .gallery-group > *,
   .gallery-item figure,
-  .gallery-item h2,
+  .gallery-item h3,
   .gallery-item dl,
   .gallery-item dd {
     margin: 0;
@@ -115,8 +129,27 @@ function getStatusLabel(status: BenchmarkStatus): string {
     font-weight: 600;
   }
 
-  .gallery-list {
+  .gallery-groups {
     margin: calc(var(--spacing-rhythm) * 1.45) 0 0;
+  }
+
+  .gallery-group + .gallery-group {
+    margin-top: calc(var(--spacing-rhythm) * 1.45);
+    padding-top: calc(var(--spacing-rhythm) * 1.45);
+    border-top: 1px solid var(--divider);
+  }
+
+  .gallery-group > * + * {
+    margin-top: calc(var(--spacing-rhythm) * 0.55);
+  }
+
+  .gallery-group h2 {
+    max-width: 36ch;
+    font-size: clamp(1.35rem, 1.24rem + 0.4vw, 1.65rem);
+  }
+
+  .gallery-list {
+    margin: calc(var(--spacing-rhythm) * 0.7) 0 0;
     padding: 0;
     list-style: none;
   }
@@ -137,13 +170,29 @@ function getStatusLabel(status: BenchmarkStatus): string {
     margin-bottom: calc(var(--spacing-rhythm) * 0.48);
   }
 
-  .gallery-item h2 {
+  .gallery-item h3 {
     max-width: none;
     font-size: clamp(1.3rem, 1.18rem + 0.45vw, 1.62rem);
   }
 
   .gallery-order {
     color: var(--accent);
+  }
+
+  .version-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.35rem;
+    margin-inline-start: 0.35rem;
+    padding-inline: 0.38rem;
+    border: 1px solid var(--divider);
+    color: rgb(23 20 18 / 72%);
+    font-family: var(--font-body);
+    font-size: 0.62em;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    vertical-align: middle;
   }
 
   .gallery-item dl {

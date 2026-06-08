@@ -20,6 +20,10 @@ import {
 type ArtifactPath = `/${string}`;
 
 const phoneticBenchmarkRuns = [
+  { heading: "Big Pickle", id: "big-pickle-v2" },
+  { heading: "DeepSeek V4 Flash", id: "deepseek-v4-flash-v2" },
+  { heading: "MiMo 2.5", id: "mimo-v2-5-v2" },
+  { heading: "Nemotron 3 Super", id: "nemotron-3-super-v2" },
   { heading: "GPT 5.4 High", id: "gpt-5-4-high" },
   { heading: "GPT 5.5 High", id: "gpt-5-5-high" },
   { heading: "Gemini 3.5 Flash High", id: "gemini-3-5-flash-high" },
@@ -359,29 +363,32 @@ test("English Phonetic Benchmark markdown publishes all runs without private wor
     /^Markdown URL: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/index\.md$/m,
   );
   assert.match(content, /^## What This Benchmark Is$/m);
-  assert.match(content, /same docs-first package/);
+  assert.match(content, /docs-first package/);
   assert.match(content, /^## How To Read The Results$/m);
   assert.match(content, /^- `comparable`:/m);
   assert.match(content, /^- `contract-failing`:/m);
   assert.match(content, /^- `unrunnable`:/m);
   assert.match(content, /^## Results$/m);
-  assert.match(content, /table keeps every run visible/);
+  assert.match(content, /grouped by benchmark version/);
+  assert.match(content, /^### v2 Batch$/m);
+  assert.match(content, /^### v1 Snapshot$/m);
+  assert.ok(
+    content.indexOf("### v2 Batch") < content.indexOf("### v1 Snapshot"),
+  );
   phoneticBenchmarkRuns.forEach((run) => {
     assert.match(
       content,
-      new RegExp(`^### ${escapeRegExp(run.heading)}$`, "m"),
+      new RegExp(`^#### ${escapeRegExp(run.heading)}$`, "m"),
     );
   });
-  phoneticBenchmarkRuns
-    .map((run) => `### ${run.heading}`)
-    .reduce((previousIndex, heading) => {
-      const currentIndex = content.indexOf(heading);
-      assert.ok(currentIndex > previousIndex);
-      return currentIndex;
-    }, -1);
+  assert.ok(
+    content.indexOf("#### Big Pickle") < content.indexOf("#### GPT 5.4 High"),
+  );
   assert.match(content, /^- ID: gpt-5-4-high$/m);
+  assert.match(content, /^- ID: big-pickle-v2$/m);
   assert.match(content, /^- ID: kimi-k2-6$/m);
   assert.match(content, /^- Benchmark version: v1$/m);
+  assert.match(content, /^- Benchmark version: v2$/m);
   assert.match(content, /^- Status: contract-failing$/m);
   assert.match(content, /^- Failure types: attribution, test workflow$/m);
   assert.match(content, /^- Run date: 2026-06-01$/m);
@@ -434,19 +441,25 @@ test("Polish Phonetic Benchmark markdown carries localized narrative and all dem
 
   assert.match(content, /^# Phonetic Benchmark Report$/m);
   assert.match(content, /^## Czym Jest Ten Benchmark$/m);
-  assert.match(content, /ten sam pakiet dokumentacji/);
+  assert.match(content, /pakiet dokumentacji/);
   assert.match(content, /^## Jak Czytać Wyniki$/m);
   assert.match(content, /^- `comparable`:/m);
   assert.match(content, /^- `contract-failing`:/m);
   assert.match(content, /^- `unrunnable`:/m);
   assert.match(content, /^## Wyniki$/m);
+  assert.match(content, /^### Batch v2$/m);
+  assert.match(content, /^### Snapshot v1$/m);
+  assert.ok(
+    content.indexOf("### Batch v2") < content.indexOf("### Snapshot v1"),
+  );
   phoneticBenchmarkRuns.forEach((run) => {
     assert.match(
       content,
-      new RegExp(`^### ${escapeRegExp(run.heading)}$`, "m"),
+      new RegExp(`^#### ${escapeRegExp(run.heading)}$`, "m"),
     );
   });
   assert.match(content, /^- ID: gpt-5-4-high$/m);
+  assert.match(content, /^- ID: deepseek-v4-flash-v2$/m);
   assert.match(content, /^- ID: kimi-k2-6$/m);
   assert.match(content, /^- Status: unrunnable$/m);
   assert.match(content, /^- Typy problemów: atrybucja, workflow testów$/m);
@@ -516,14 +529,19 @@ test("Sonnet archived demo loads benchmark data relative to its index file", () 
   assert.doesNotMatch(bundle, /fetch\("\/data\//u);
 });
 
-test("benchmark structured data covers 15 archived runs and selected screenshot cases", () => {
+test("benchmark structured data covers versioned runs and selected screenshot cases", () => {
   const report = phoneticBenchmarkReports.en;
   const statusCounts = new Map<string, number>();
+  const versionCounts = new Map<string, number>();
 
-  assert.equal(report.runs.length, 15);
+  assert.equal(report.runs.length, 19);
 
   report.runs.forEach((run) => {
     statusCounts.set(run.status, (statusCounts.get(run.status) ?? 0) + 1);
+    versionCounts.set(
+      run.benchmarkVersion,
+      (versionCounts.get(run.benchmarkVersion) ?? 0) + 1,
+    );
     assert.match(run.runDate, /^\d{4}-\d{2}-\d{2}$/);
     assert.ok(run.stack.length > 0);
     assert.ok(existsSync(`public${run.screenshotPath}`), run.screenshotPath);
@@ -534,19 +552,27 @@ test("benchmark structured data covers 15 archived runs and selected screenshot 
   });
 
   assert.deepEqual(Object.fromEntries(statusCounts), {
-    comparable: 6,
-    "contract-failing": 8,
+    comparable: 8,
+    "contract-failing": 10,
     unrunnable: 1,
+  });
+  assert.deepEqual(Object.fromEntries(versionCounts), {
+    v1: 15,
+    v2: 4,
   });
   assert.deepEqual(
     report.caseNotes.flatMap((caseNote) => caseNote.runIds).sort(),
     [
+      "big-pickle-v2",
+      "deepseek-v4-flash-v2",
       "deepseek-v4-pro",
       "gemini-3-1-pro-high",
       "gpt-5-4-high",
       "gpt-5-5-high",
       "gpt-oss-120b",
+      "mimo-v2-5-v2",
       "nemotron-3-super",
+      "nemotron-3-super-v2",
       "sonnet-4-6-thinking",
     ],
   );
@@ -556,10 +582,17 @@ test("benchmark publication metadata derives coverage and avoids inferred infere
   const results = getPhoneticBenchmarkResultsData();
 
   assert.equal(phoneticBenchmarkMetadata.publishedDate, "2026-05-26");
-  assert.equal(phoneticBenchmarkMetadata.updatedDate, "2026-06-02");
-  assert.equal(phoneticBenchmarkMetadata.coveredThroughDate, "2026-06-01");
-  assert.equal(results.runs.length, 15);
-  assert.equal(results.benchmark.coveredThroughDate, "2026-06-01");
+  assert.equal(phoneticBenchmarkMetadata.updatedDate, "2026-06-08");
+  assert.equal(phoneticBenchmarkMetadata.coveredThroughDate, "2026-06-03");
+  assert.deepEqual(phoneticBenchmarkMetadata.coveredBenchmarkVersions, [
+    "v1",
+    "v2",
+  ]);
+  assert.equal(phoneticBenchmarkMetadata.currentBenchmarkVersion, "v2");
+  assert.equal(results.runs.length, 19);
+  assert.equal(results.benchmark.coveredThroughDate, "2026-06-03");
+  assert.deepEqual(results.benchmark.coveredBenchmarkVersions, ["v1", "v2"]);
+  assert.equal(results.benchmark.currentBenchmarkVersion, "v2");
 
   const serialized = JSON.stringify(results);
 
@@ -578,9 +611,15 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
   const csvContent = getArtifactContent("/phonetic-benchmark/results.csv");
   const results = JSON.parse(jsonContent) as {
     schemaVersion: string;
-    benchmark: { methodologyUrl: string };
+    benchmark: {
+      methodologyUrl: string;
+      coveredBenchmarkVersions: string[];
+      currentBenchmarkVersion: string;
+    };
     runs: Array<{
       id: string;
+      benchmarkVersion: string;
+      comparativeScore?: number;
       detailsUrl: string;
       markdownUrl: string;
       observations: {
@@ -596,7 +635,18 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
     results.benchmark.methodologyUrl,
     "https://piotrkacala.pl/phonetic-benchmark/methodology/",
   );
-  assert.equal(results.runs.length, 15);
+  assert.deepEqual(results.benchmark.coveredBenchmarkVersions, ["v1", "v2"]);
+  assert.equal(results.benchmark.currentBenchmarkVersion, "v2");
+  assert.equal(results.runs.length, 19);
+  assert.deepEqual(
+    results.runs.slice(0, 4).map((run) => run.id),
+    [
+      "big-pickle-v2",
+      "deepseek-v4-flash-v2",
+      "mimo-v2-5-v2",
+      "nemotron-3-super-v2",
+    ],
+  );
   results.runs.forEach((run) => {
     assert.equal(
       run.detailsUrl,
@@ -610,17 +660,43 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
     assert.ok(run.observations.observedWeaknesses.length > 0);
     assert.ok(run.interpretationLimitations.length > 0);
   });
+  assert.equal(
+    results.runs.find((run) => run.id === "deepseek-v4-flash-v2")
+      ?.comparativeScore,
+    67,
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "mimo-v2-5-v2")?.comparativeScore,
+    80,
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "gpt-5-4-high")?.comparativeScore,
+    undefined,
+  );
 
   const csvLines = csvContent.trimEnd().split("\n");
 
-  assert.equal(csvLines.length, 16);
+  assert.equal(csvLines.length, 20);
+  assert.deepEqual(
+    csvLines.slice(1, 5).map((line) => line.split(",")[0]),
+    [
+      "big-pickle-v2",
+      "deepseek-v4-flash-v2",
+      "mimo-v2-5-v2",
+      "nemotron-3-super-v2",
+    ],
+  );
   assert.match(
     csvLines[0],
-    /^run_id,execution_order,model,run_date,benchmark_version,status,failure_types,source_loc,static_automated_tests,stack,functional_read,details_url,markdown_url,demo_url,screenshot_url$/,
+    /^run_id,execution_order,model,run_date,benchmark_version,status,failure_types,source_loc,static_automated_tests,comparative_score,stack,functional_read,details_url,markdown_url,demo_url,screenshot_url$/,
   );
   assert.match(
     csvContent,
     /gpt-5-4-high,1,GPT 5\.4 High,2026-05-25,v1,comparable,/,
+  );
+  assert.match(
+    csvContent,
+    /deepseek-v4-flash-v2,2,DeepSeek V4 Flash,2026-06-03,v2,comparable,,834,0,67,/,
   );
   assert.doesNotMatch(
     csvLines[0],
@@ -668,7 +744,7 @@ test("methodology and every run record have generated markdown discovery surface
     "/phonetic-benchmark/methodology/index.md",
   );
 
-  assert.match(methodology, /^# Phonetic Benchmark v1 Methodology$/m);
+  assert.match(methodology, /^# Phonetic Benchmark Methodology$/m);
   assert.match(
     methodology,
     /^Public benchmark package: https:\/\/github\.com\/piotrkacala\/phonetic-benchmark$/m,
@@ -676,6 +752,7 @@ test("methodology and every run record have generated markdown discovery surface
   assert.match(methodology, /^## Interpretation Limits$/m);
   assert.match(methodology, /^## Source LoC Counting Rule$/m);
   assert.match(methodology, /^## Static Automated Test Counting Rule$/m);
+  assert.match(methodology, /^## Contract v2$/m);
   assert.match(methodology, /Archived demos are preserved static snapshots/);
   assert.match(methodology, /keyboard-mode trimming, case insensitivity/);
   assert.match(
@@ -691,7 +768,7 @@ test("methodology and every run record have generated markdown discovery surface
     assert.match(
       content,
       new RegExp(
-        `^# ${escapeRegExp(run.model)} — Phonetic Benchmark run details$`,
+        `^# ${escapeRegExp(run.model)} — Phonetic Benchmark ${run.benchmarkVersion} run details$`,
         "m",
       ),
     );
@@ -704,18 +781,24 @@ test("methodology and every run record have generated markdown discovery surface
   });
 });
 
-test("benchmark galleries expose exactly 15 screenshots and explicit demo links in run order", () => {
-  const expectedRunIds = phoneticBenchmarkRuns.map((run) => run.id);
-
+test("benchmark galleries expose versioned screenshots and explicit demo links", () => {
   for (const gallery of Object.values(phoneticBenchmarkGalleries)) {
-    assert.equal(gallery.runs.length, 15);
+    assert.equal(gallery.runs.length, 19);
     assert.deepEqual(
-      gallery.runs.map((run) => run.id),
-      expectedRunIds,
+      gallery.resultGroups.map((group) => group.benchmarkVersion),
+      ["v2", "v1"],
     );
     assert.deepEqual(
-      gallery.runs.map((run) => run.executionOrder),
+      gallery.runs
+        .filter((run) => run.benchmarkVersion === "v1")
+        .map((run) => run.executionOrder),
       Array.from({ length: 15 }, (_, index) => index + 1),
+    );
+    assert.deepEqual(
+      gallery.runs
+        .filter((run) => run.benchmarkVersion === "v2")
+        .map((run) => run.executionOrder),
+      Array.from({ length: 4 }, (_, index) => index + 1),
     );
 
     gallery.runs.forEach((run) => {
@@ -980,9 +1063,11 @@ test("benchmark gallery component renders ordered screenshots and demos without 
 
   assert.match(
     component,
-    /firstRun\.executionOrder - secondRun\.executionOrder/,
+    /getBenchmarkRunGroupRuns\(gallery\.runs, group\.benchmarkVersion\)/,
   );
-  assert.match(component, /runs\.map/);
+  assert.match(component, /runGroups\.map/);
+  assert.match(component, /group\.runs\.map/);
+  assert.match(component, /run\.benchmarkVersion/);
   assert.match(component, /data-run-id=\{run\.id\}/);
   assert.match(component, /src=\{run\.screenshotPath\}/);
   assert.match(

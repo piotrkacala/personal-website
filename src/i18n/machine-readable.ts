@@ -12,6 +12,8 @@ import {
   type ExternalProjectProfile,
 } from "../site/external-projects.ts";
 import {
+  getBenchmarkRunGroupRuns,
+  getBenchmarkVersionedRuns,
   getPhoneticBenchmarkMethodologyMarkdownUrl,
   getPhoneticBenchmarkMarkdownUrl,
   getPhoneticBenchmarkResultsCsvUrl,
@@ -201,9 +203,10 @@ function renderExternalProjectProfile(profile: ExternalProjectProfile): string {
 }
 
 function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
-  const runs = [...report.runs].sort(
-    (firstRun, secondRun) => firstRun.executionOrder - secondRun.executionOrder,
-  );
+  const runGroups = report.resultGroups.map((group) => ({
+    ...group,
+    runs: getBenchmarkRunGroupRuns(report.runs, group.benchmarkVersion),
+  }));
   const renderParagraphs = (paragraphs: readonly string[]): void => {
     paragraphs.forEach((paragraph) => {
       lines.push(paragraph);
@@ -220,7 +223,8 @@ function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
     `Report URL: ${report.metadata.openGraph.url}`,
     `Markdown URL: ${getPhoneticBenchmarkMarkdownUrl(report.lang)}`,
     `Homepage: ${new URL(report.homeHref, report.metadata.openGraph.url).toString()}`,
-    `Benchmark version: ${phoneticBenchmarkMetadata.benchmarkVersion}`,
+    `Benchmark versions: ${phoneticBenchmarkMetadata.coveredBenchmarkVersions.join(", ")}`,
+    `Current benchmark version: ${phoneticBenchmarkMetadata.currentBenchmarkVersion}`,
     `Published: ${phoneticBenchmarkMetadata.publishedDate}`,
     `Updated: ${phoneticBenchmarkMetadata.updatedDate}`,
     `Covered through: ${phoneticBenchmarkMetadata.coveredThroughDate}`,
@@ -247,31 +251,39 @@ function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
   lines.push(report.resultsIntro);
   lines.push("");
 
-  runs.forEach((run) => {
-    lines.push(heading(3, run.model));
+  runGroups.forEach((group) => {
+    lines.push(heading(3, group.heading));
     lines.push("");
-    lines.push(`- ID: ${run.id}`);
-    lines.push(`- Benchmark version: ${run.benchmarkVersion}`);
-    lines.push(`- Status: ${run.status}`);
-    lines.push(
-      `- ${report.tableLabels.failureTypes}: ${
-        run.failureTypes.length > 0
-          ? run.failureTypes
-              .map((failureType) => report.failureTypeLabels[failureType])
-              .join(", ")
-          : report.noneLabel
-      }`,
-    );
-    lines.push(`- ${report.detailLabels.runDate}: ${run.runDate}`);
-    lines.push(`- ${report.tableLabels.sourceLoc}: ${run.sourceLoc}`);
-    lines.push(`- ${report.tableLabels.testCount}: ${run.testCount}`);
-    lines.push(`- ${report.detailLabels.stack}: ${run.stack}`);
-    lines.push(`- ${report.tableLabels.functionalRead}: ${run.functionalRead}`);
-    lines.push(`- Details: ${run.detailsUrl}`);
-    lines.push(`- Markdown details: ${run.markdownUrl}`);
-    lines.push(`- Screenshot: ${run.screenshotUrl}`);
-    lines.push(`- Demo: ${run.demoUrl}`);
+    lines.push(group.intro);
     lines.push("");
+    group.runs.forEach((run) => {
+      lines.push(heading(4, run.model));
+      lines.push("");
+      lines.push(`- ID: ${run.id}`);
+      lines.push(`- Benchmark version: ${run.benchmarkVersion}`);
+      lines.push(`- Status: ${run.status}`);
+      lines.push(
+        `- ${report.tableLabels.failureTypes}: ${
+          run.failureTypes.length > 0
+            ? run.failureTypes
+                .map((failureType) => report.failureTypeLabels[failureType])
+                .join(", ")
+            : report.noneLabel
+        }`,
+      );
+      lines.push(`- ${report.detailLabels.runDate}: ${run.runDate}`);
+      lines.push(`- ${report.tableLabels.sourceLoc}: ${run.sourceLoc}`);
+      lines.push(`- ${report.tableLabels.testCount}: ${run.testCount}`);
+      lines.push(`- ${report.detailLabels.stack}: ${run.stack}`);
+      lines.push(
+        `- ${report.tableLabels.functionalRead}: ${run.functionalRead}`,
+      );
+      lines.push(`- Details: ${run.detailsUrl}`);
+      lines.push(`- Markdown details: ${run.markdownUrl}`);
+      lines.push(`- Screenshot: ${run.screenshotUrl}`);
+      lines.push(`- Demo: ${run.demoUrl}`);
+      lines.push("");
+    });
   });
 
   lines.push(heading(2, report.findingsHeading));
@@ -296,8 +308,11 @@ function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
     `${report.galleryText} ${report.galleryLabel}: ${new URL(report.galleryHref, report.metadata.openGraph.url).toString()}`,
   );
   lines.push("");
-  runs.forEach((run) => {
-    lines.push(`- ${run.model}: ${run.demoUrl}`);
+  runGroups.forEach((group) => {
+    lines.push(`- ${group.heading}`);
+    group.runs.forEach((run) => {
+      lines.push(`  - ${run.model}: ${run.demoUrl}`);
+    });
   });
   lines.push("");
   lines.push(heading(2, report.closingHeading));
@@ -312,10 +327,7 @@ function renderBenchmarkMethodologyMarkdown(
   methodology: BenchmarkMethodologyCopy,
 ): string {
   const lines = [
-    heading(
-      1,
-      `Phonetic Benchmark ${phoneticBenchmarkMetadata.benchmarkVersion} Methodology`,
-    ),
+    heading(1, "Phonetic Benchmark Methodology"),
     "",
     `> ${methodology.metadata.description}`,
     "",
@@ -357,7 +369,10 @@ function renderBenchmarkMethodologyMarkdown(
 
 function renderBenchmarkRunMarkdown(run: BenchmarkRunCopy): string {
   const lines = [
-    heading(1, `${run.model} — Phonetic Benchmark run details`),
+    heading(
+      1,
+      `${run.model} — Phonetic Benchmark ${run.benchmarkVersion} run details`,
+    ),
     "",
     `> One observed output from one small browser-app task. This is not a general model review or universal ranking.`,
     "",
@@ -425,6 +440,7 @@ function renderBenchmarkResultsCsv(): string {
     "failure_types",
     "source_loc",
     "static_automated_tests",
+    "comparative_score",
     "stack",
     "functional_read",
     "details_url",
@@ -432,7 +448,7 @@ function renderBenchmarkResultsCsv(): string {
     "demo_url",
     "screenshot_url",
   ];
-  const rows = phoneticBenchmarkRuns.map((run) => [
+  const rows = getBenchmarkVersionedRuns(phoneticBenchmarkRuns).map((run) => [
     run.id,
     run.executionOrder,
     run.model,
@@ -442,6 +458,7 @@ function renderBenchmarkResultsCsv(): string {
     run.failureTypes.join(" | "),
     run.sourceLoc,
     run.testCount,
+    run.comparativeScore ?? "",
     run.stack,
     run.functionalRead,
     run.detailsUrl,

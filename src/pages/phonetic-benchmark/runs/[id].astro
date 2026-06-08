@@ -19,11 +19,12 @@ export function getStaticPaths() {
 }
 
 const { run } = Astro.props;
+const runTitle = `${run.model} — Phonetic Benchmark ${run.benchmarkVersion} run details`;
 const metadata = {
-  title: `${run.model} — Phonetic Benchmark run details`,
+  title: runTitle,
   description: run.functionalRead,
   openGraph: {
-    title: `${run.model} — Phonetic Benchmark run details`,
+    title: runTitle,
     description: run.functionalRead,
     type: "website",
     locale: "en_US",

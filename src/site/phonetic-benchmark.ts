@@ -2,6 +2,7 @@ import type { SiteMetadata } from "../i18n/schema.ts";
 import { siteProfile } from "./profile.ts";
 
 export type BenchmarkReportLang = "en" | "pl";
+export type BenchmarkVersion = "v1" | "v2";
 export type BenchmarkStatus = "comparable" | "contract-failing" | "unrunnable";
 export type BenchmarkFailureType =
   | "core behavior"
@@ -15,12 +16,13 @@ interface BenchmarkRunData {
   executionOrder: number;
   model: string;
   runDate: string;
-  benchmarkVersion: "v1";
+  benchmarkVersion: BenchmarkVersion;
   status: BenchmarkStatus;
   failureTypes: readonly BenchmarkFailureType[];
   sourceLoc: number;
   testCount: number;
   stack: string;
+  comparativeScore?: number;
 }
 
 export interface BenchmarkRunObservations {
@@ -52,6 +54,12 @@ export interface BenchmarkCaseNote {
   runIds: readonly string[];
 }
 
+export interface BenchmarkRunGroupCopy {
+  benchmarkVersion: BenchmarkVersion;
+  heading: string;
+  intro: string;
+}
+
 export interface BenchmarkReportCopy {
   lang: BenchmarkReportLang;
   metadata: SiteMetadata;
@@ -77,6 +85,7 @@ export interface BenchmarkReportCopy {
   evidenceText: string;
   resultsHeading: string;
   resultsIntro: string;
+  resultGroups: readonly BenchmarkRunGroupCopy[];
   tableLabels: {
     model: string;
     status: string;
@@ -92,6 +101,7 @@ export interface BenchmarkReportCopy {
   };
   statusLabels: Readonly<Record<BenchmarkStatus, string>>;
   failureTypeLabels: Readonly<Record<BenchmarkFailureType, string>>;
+  versionLabels: Readonly<Record<BenchmarkVersion, string>>;
   noneLabel: string;
   detailsLabel: string;
   demoLabel: string;
@@ -143,7 +153,8 @@ export interface BenchmarkMethodologyCopy {
 
 export interface BenchmarkMetadata {
   schemaVersion: "1";
-  benchmarkVersion: "v1";
+  coveredBenchmarkVersions: readonly BenchmarkVersion[];
+  currentBenchmarkVersion: BenchmarkVersion;
   publishedDate: string;
   updatedDate: string;
   coveredThroughDate: string;
@@ -160,12 +171,14 @@ export interface BenchmarkGalleryCopy {
   eyebrow: string;
   title: string;
   introParagraphs: readonly string[];
+  resultGroups: readonly BenchmarkRunGroupCopy[];
   detailLabels: {
     status: string;
     sourceLoc: string;
     testCount: string;
   };
   statusLabels: Readonly<Record<BenchmarkStatus, string>>;
+  versionLabels: Readonly<Record<BenchmarkVersion, string>>;
   demoLabel: string;
   runs: readonly BenchmarkRunCopy[];
 }
@@ -369,6 +382,56 @@ const runData = [
     testCount: 11,
     stack: "Vite, TypeScript, plain browser DOM APIs, Vitest",
   },
+  {
+    id: "big-pickle-v2",
+    executionOrder: 1,
+    model: "Big Pickle",
+    runDate: "2026-06-03",
+    benchmarkVersion: "v2",
+    status: "contract-failing",
+    failureTypes: ["core behavior"],
+    sourceLoc: 1101,
+    testCount: 21,
+    stack: "Vanilla JavaScript, Vite 6, Vitest",
+  },
+  {
+    id: "deepseek-v4-flash-v2",
+    executionOrder: 2,
+    model: "DeepSeek V4 Flash",
+    runDate: "2026-06-03",
+    benchmarkVersion: "v2",
+    status: "comparable",
+    failureTypes: [],
+    sourceLoc: 834,
+    testCount: 0,
+    stack: "Vanilla JavaScript, Vite 6",
+    comparativeScore: 67,
+  },
+  {
+    id: "mimo-v2-5-v2",
+    executionOrder: 3,
+    model: "MiMo 2.5",
+    runDate: "2026-06-03",
+    benchmarkVersion: "v2",
+    status: "comparable",
+    failureTypes: [],
+    sourceLoc: 671,
+    testCount: 0,
+    stack: "Vanilla JavaScript, Express, custom Node test runner",
+    comparativeScore: 80,
+  },
+  {
+    id: "nemotron-3-super-v2",
+    executionOrder: 4,
+    model: "Nemotron 3 Super",
+    runDate: "2026-06-03",
+    benchmarkVersion: "v2",
+    status: "contract-failing",
+    failureTypes: ["core behavior", "attribution", "test workflow"],
+    sourceLoc: 692,
+    testCount: 0,
+    stack: "Vanilla JavaScript, http-server",
+  },
 ] as const satisfies readonly BenchmarkRunData[];
 
 export type BenchmarkRunId = (typeof runData)[number]["id"];
@@ -390,9 +453,10 @@ function getEarliestRunDate(): string {
 
 export const phoneticBenchmarkMetadata = {
   schemaVersion: "1",
-  benchmarkVersion: "v1",
+  coveredBenchmarkVersions: ["v1", "v2"],
+  currentBenchmarkVersion: "v2",
   publishedDate: "2026-05-26",
-  updatedDate: "2026-06-02",
+  updatedDate: "2026-06-08",
   coveredThroughDate: getLatestRunDate(),
 } as const satisfies BenchmarkMetadata;
 
@@ -536,6 +600,49 @@ const runObservations = {
       "Keyboard answer input does not receive focus automatically.",
     ],
   },
+  "big-pickle-v2": {
+    observedStrengths: [
+      "The application starts and language selection works.",
+      "Includes a visible automated-test footprint.",
+    ],
+    observedWeaknesses: [
+      "Hint behavior breaks after one hinted question.",
+      "The submission fails the core v2 hint contract.",
+      "The reviewed UX execution is weak.",
+    ],
+  },
+  "deepseek-v4-flash-v2": {
+    observedStrengths: [
+      "Clears the v2 contract.",
+      "The application works in the reviewed flow.",
+      "The overall execution is good.",
+    ],
+    observedWeaknesses: [
+      "Suggestion buttons reshuffle during hint or feedback re-renders.",
+    ],
+  },
+  "mimo-v2-5-v2": {
+    observedStrengths: [
+      "Clears the v2 contract.",
+      "The application works in the reviewed flow.",
+      "Includes a sensible delayed reset decision.",
+    ],
+    observedWeaknesses: [
+      "Feedback and hint messages cause visible content jumps.",
+      "The custom test runner is not counted by the current static declaration rule.",
+    ],
+  },
+  "nemotron-3-super-v2": {
+    observedStrengths: ["The application starts and can be inspected."],
+    observedWeaknesses: [
+      "Attribution is only visible at the end.",
+      "Setup language switching does not update visible copy.",
+      "Hint behavior breaks.",
+      "Score formatting is wrong.",
+      "Restart is broken.",
+      "The documented test command fails.",
+    ],
+  },
 } as const satisfies Record<BenchmarkRunId, BenchmarkRunObservations>;
 
 const functionalReads = {
@@ -570,6 +677,14 @@ const functionalReads = {
       "Functionally strong with substantive implementation notes. Its formal failure is a build-time generated date instead of a preserved implementation date.",
     "kimi-k2-6":
       "Works, with a keyboard-focus miss and a useful confirmation step before abandoning a run.",
+    "big-pickle-v2":
+      "Stealth-model v2 run with weak UX execution. The app starts and language selection works, but hint becomes unavailable after one hinted question, so the submission fails the core hint contract.",
+    "deepseek-v4-flash-v2":
+      "Good v2 run. The app works and clears the formal contract, with a minor visual issue where suggestion buttons reshuffle during hint or feedback re-renders.",
+    "mimo-v2-5-v2":
+      "Good v2 run. The app works and clears the formal contract. It includes a sensible delayed reset decision, but feedback and hint messages cause visible content jumps.",
+    "nemotron-3-super-v2":
+      "Weak v2 run. The app starts, but the review found multiple hard failures: attribution is only visible at the end, setup language switching does not update visible copy, hint behavior breaks, score formatting is wrong, restart is broken, and the documented test command fails.",
   },
   pl: {
     "gpt-5-4-high":
@@ -602,6 +717,14 @@ const functionalReads = {
       "Funkcjonalnie mocna, z rzeczowymi notatkami implementacyjnymi. Formalny błąd to data generowana podczas startu lub buildu zamiast zachowanej daty implementacji.",
     "kimi-k2-6":
       "Działa, z problemem fokusu oraz sensownym potwierdzeniem przed opuszczeniem aktywnej próby.",
+    "big-pickle-v2":
+      "Run v2 ze stealth modelu i słabym wykonaniem UX. Aplikacja startuje, a wybór języka działa, ale hint staje się niedostępny po jednym użyciu, więc wynik nie przechodzi core kontraktu hintów.",
+    "deepseek-v4-flash-v2":
+      "Dobry run v2. Aplikacja działa i przechodzi formalny kontrakt, z drobnym problemem wizualnym: przyciski sugestii zmieniają kolejność przy re-renderze hintu lub feedbacku.",
+    "mimo-v2-5-v2":
+      "Dobry run v2. Aplikacja działa i przechodzi formalny kontrakt. Ma sensowną decyzję o opóźnionym pokazaniu resetu, ale komunikaty feedbacku i hintu powodują widoczne skoki contentu.",
+    "nemotron-3-super-v2":
+      "Słaby run v2. Aplikacja startuje, ale review znalazł kilka twardych błędów: attribution jest widoczne tylko na końcu, zmiana języka na setupie nie aktualizuje widocznego tekstu, hint się psuje, score ma zły format, restart nie działa, a udokumentowana komenda testowa failuje.",
   },
 } as const satisfies Record<
   BenchmarkReportLang,
@@ -644,17 +767,29 @@ export const phoneticBenchmarkRuns = getRuns("en");
 const englishRuns = phoneticBenchmarkRuns;
 const polishRuns = getRuns("pl");
 
+export function getBenchmarkRunGroupRuns(
+  runs: readonly BenchmarkRunCopy[],
+  benchmarkVersion: BenchmarkVersion,
+): readonly BenchmarkRunCopy[] {
+  return runs
+    .filter((run) => run.benchmarkVersion === benchmarkVersion)
+    .sort(
+      (firstRun, secondRun) =>
+        firstRun.executionOrder - secondRun.executionOrder,
+    );
+}
+
 export const phoneticBenchmarkReports = {
   en: {
     lang: "en",
     metadata: {
       title: "Phonetic Benchmark Report — Piotr Kacała",
       description:
-        "Qualitative review of 15 archived web applications built from the same Phonetic Alphabet Trainer specification.",
+        "Qualitative review of archived web applications built from the Phonetic Alphabet Trainer benchmark specification.",
       openGraph: {
         title: "Phonetic Benchmark Report",
         description:
-          "A qualitative review of 15 archived AI-agent outputs for the same Phonetic Alphabet Trainer specification, with screenshots and static demos.",
+          "A qualitative review of AI-agent outputs for the Phonetic Alphabet Trainer benchmark, with versioned results, screenshots, and static demos.",
         type: "website",
         locale: "en_US",
         siteName: "Piotr Kacała",
@@ -681,10 +816,11 @@ export const phoneticBenchmarkReports = {
     eyebrow: "AI agent development benchmark",
     title: "Phonetic Benchmark Report",
     summary:
-      "A qualitative review of 15 archived web applications built from the same Phonetic Alphabet Trainer specification. This is not a leaderboard. The useful signal is whether an output works, where it fails, and what it reveals about building small products with AI agents.",
+      "A qualitative review of archived web applications built from the Phonetic Alphabet Trainer benchmark specification. The v2 batch is the current benchmark series; the original v1 results remain preserved as a 15-run snapshot. This is not a leaderboard. The useful signal is whether an output works, where it fails, and what it reveals about building small products with AI agents.",
     benchmarkHeading: "What This Benchmark Is",
     benchmarkParagraphs: [
-      "Each model received the same docs-first package, fixed benchmark data, and a direct instruction to implement the web app. The resulting repositories were reviewed against the same v1 contract and preserved as archived demos.",
+      "Each model received a docs-first package, fixed benchmark data, and a direct instruction to implement the web app. Runs are reviewed against the contract for their benchmark version and preserved as archived demos.",
+      "The v1 results are the original 15-run snapshot. The v2 results use the revised review procedure and should be read as the current batch, not appended to a flat v1 leaderboard.",
       "The task is intentionally small. That makes it easier to inspect details that matter in real use: whether the main flow works, whether required behavior survives implementation, whether the interface feels stable, whether repetitive keyboard use is comfortable, and whether the repository remains understandable after the agent finishes.",
     ],
     readingHeading: "How To Read The Results",
@@ -697,10 +833,24 @@ export const phoneticBenchmarkReports = {
       unrunnable: "the implemented behavior cannot be meaningfully exercised.",
     },
     evidenceText:
-      "A failed status is not a quality score. Failure types remain visible because they have different practical weight. Missing workflow documentation in an otherwise strong application is not the same problem as a quiz that cannot progress past its first question. Source LoC and automated test counts are repository evidence: they help show the shape of an implementation, but they do not prove code quality or test coverage.",
+      "A failed status is not a quality score. Failure types remain visible because they have different practical weight. Missing workflow documentation in an otherwise strong application is not the same problem as a quiz that cannot progress past its first question. Source LoC and automated test counts are repository evidence: they help show the shape of an implementation, but they do not prove code quality or test coverage. When v2 comparative scores are published in machine-readable exports, they apply only to v2 runs.",
     resultsHeading: "Results",
     resultsIntro:
-      "The table keeps every run visible. The short functional read is deliberately compact; selected cases below explain the distinctions that matter most. Screenshots and archived demos remain available so the applications can be inspected directly.",
+      "The results are grouped by benchmark version. The short functional read is deliberately compact; selected cases below explain the distinctions that matter most. Screenshots and archived demos remain available so the applications can be inspected directly.",
+    resultGroups: [
+      {
+        benchmarkVersion: "v2",
+        heading: "v2 Batch",
+        intro:
+          "The first v2 runs use the revised review procedure. They are the current benchmark batch.",
+      },
+      {
+        benchmarkVersion: "v1",
+        heading: "v1 Snapshot",
+        intro:
+          "The original 15 v1 runs remain preserved as a historical snapshot.",
+      },
+    ],
     tableLabels: {
       model: "Model",
       status: "Status",
@@ -725,6 +875,10 @@ export const phoneticBenchmarkReports = {
       attribution: "attribution",
       "test workflow": "test workflow",
       "unrunnable output": "unrunnable output",
+    },
+    versionLabels: {
+      v1: "v1",
+      v2: "v2",
     },
     noneLabel: "none",
     detailsLabel: "Run details",
@@ -756,6 +910,13 @@ export const phoneticBenchmarkReports = {
     findingsHeading: "What The Runs Show",
     findings: [
       {
+        heading: "The First v2 Batch Separates Good Execution From Hard Breaks",
+        paragraphs: [
+          "DeepSeek V4 Flash and MiMo 2.5 are the first useful v2 comparables. Both work and clear the formal contract, while still showing small UX issues that matter in repeated use.",
+          "Big Pickle and Nemotron 3 Super are weaker v2 outputs. They start, but hard product failures keep them out of the comparable set.",
+        ],
+      },
+      {
         heading: "Useful Results Are Not Limited To One Model Tier",
         paragraphs: [
           "Several models produced convincing small applications from the same docs-first package. The useful outputs are not limited to the most prominent or most expensive models. That makes experimentation with less obvious, cheaper, or open models a reasonable part of a zero-code workflow.",
@@ -765,7 +926,7 @@ export const phoneticBenchmarkReports = {
         heading:
           "Formal Compliance And Product Quality Are Different Questions",
         paragraphs: [
-          "The strict review leaves six comparable submissions, eight contract-failing submissions, and one unrunnable output. That split needs context. DeepSeek V4 Pro is functionally strong but fails because it does not document its install, run, and test commands. Nemotron 3 Super also fails, but for a much more important reason: its quiz cannot move past the first symbol.",
+          "The v1 snapshot leaves six comparable submissions, eight contract-failing submissions, and one unrunnable output. That split needs context. DeepSeek V4 Pro is functionally strong but fails because it does not document its install, run, and test commands. Nemotron 3 Super also fails, but for a much more important reason: its quiz cannot move past the first symbol.",
           "The contract matters because disciplined delivery matters. The failure type matters because not every miss has the same practical cost.",
         ],
       },
@@ -792,6 +953,20 @@ export const phoneticBenchmarkReports = {
     ],
     caseNotesHeading: "Selected Case Notes",
     caseNotes: [
+      {
+        id: "first-v2-batch",
+        heading: "First v2 Batch: Two Comparables And Two Core Failures",
+        paragraphs: [
+          "DeepSeek V4 Flash and MiMo 2.5 are good first v2 comparables. Both clear the revised contract, while preserving visible UX issues for inspection: DeepSeek reshuffles suggestions during re-renders, and MiMo has content jumps around feedback and hint messages.",
+          "Big Pickle and Nemotron 3 Super show why the versioned status still matters. Both can be inspected, but each breaks required core behavior.",
+        ],
+        runIds: [
+          "deepseek-v4-flash-v2",
+          "mimo-v2-5-v2",
+          "big-pickle-v2",
+          "nemotron-3-super-v2",
+        ],
+      },
       {
         id: "reference-baselines",
         heading:
@@ -840,7 +1015,7 @@ export const phoneticBenchmarkReports = {
     artifactIntro:
       "Each demo is a static snapshot preserved for this report. These are benchmark submissions, not maintained products. The archive is intentionally complete: even weak outputs are useful evidence when comparing model behavior.",
     galleryText:
-      "The screenshot gallery places all 15 interfaces in execution order for direct visual comparison.",
+      "The screenshot gallery groups interfaces by benchmark version for direct visual comparison.",
     galleryHref: "/phonetic-benchmark/gallery/",
     galleryLabel: "Open screenshot gallery",
     closingHeading: "Closing",
@@ -852,11 +1027,11 @@ export const phoneticBenchmarkReports = {
     metadata: {
       title: "Phonetic Benchmark Report — Piotr Kacała",
       description:
-        "Jakościowy przegląd 15 archiwalnych aplikacji webowych zbudowanych na podstawie tej samej specyfikacji Phonetic Alphabet Trainer.",
+        "Jakościowy przegląd archiwalnych aplikacji webowych zbudowanych na podstawie specyfikacji benchmarku Phonetic Alphabet Trainer.",
       openGraph: {
         title: "Phonetic Benchmark Report",
         description:
-          "Jakościowy przegląd 15 archiwalnych wyników pracy agentów AI dla tej samej specyfikacji Phonetic Alphabet Trainer, ze screenshotami i statycznymi demo.",
+          "Jakościowy przegląd wyników pracy agentów AI dla benchmarku Phonetic Alphabet Trainer, z wersjonowanymi wynikami, screenshotami i statycznymi demo.",
         type: "website",
         locale: "pl_PL",
         siteName: "Piotr Kacała",
@@ -883,10 +1058,11 @@ export const phoneticBenchmarkReports = {
     eyebrow: "Benchmark pracy agentów AI",
     title: "Phonetic Benchmark Report",
     summary:
-      "Jakościowy przegląd 15 archiwalnych aplikacji webowych zbudowanych na podstawie tej samej specyfikacji Phonetic Alphabet Trainer. To nie jest ranking. Liczy się to, czy wynik działa, gdzie się psuje i co mówi o budowaniu małych produktów z agentami AI.",
+      "Jakościowy przegląd archiwalnych aplikacji webowych zbudowanych na podstawie specyfikacji benchmarku Phonetic Alphabet Trainer. Batch v2 jest aktualną serią benchmarku; oryginalne wyniki v1 pozostają zachowane jako snapshot 15 prób. To nie jest ranking. Liczy się to, czy wynik działa, gdzie się psuje i co mówi o budowaniu małych produktów z agentami AI.",
     benchmarkHeading: "Czym Jest Ten Benchmark",
     benchmarkParagraphs: [
-      "Każdy model dostał ten sam pakiet dokumentacji, stałe dane benchmarku i bezpośrednie polecenie implementacji aplikacji webowej. Powstałe repozytoria zostały sprawdzone według tego samego kontraktu v1 i zachowane jako archiwalne demo.",
+      "Każdy model dostał pakiet dokumentacji, stałe dane benchmarku i bezpośrednie polecenie implementacji aplikacji webowej. Próby są sprawdzane według kontraktu właściwego dla swojej wersji benchmarku i zachowane jako archiwalne demo.",
+      "Wyniki v1 są oryginalnym snapshotem 15 prób. Wyniki v2 używają zmienionej procedury przeglądu i należy je czytać jako aktualny batch, a nie jako dopisanie do płaskiego leaderboardu v1.",
       "Zadanie jest celowo niewielkie. Dzięki temu łatwiej sprawdzić detale ważne w rzeczywistym użyciu: czy główna ścieżka działa, czy wymagane zachowania przetrwały implementację, czy interfejs jest stabilny, czy powtarzalna obsługa z klawiatury pozostaje wygodna i czy repozytorium nadal jest zrozumiałe po zakończeniu pracy agenta.",
     ],
     readingHeading: "Jak Czytać Wyniki",
@@ -899,10 +1075,24 @@ export const phoneticBenchmarkReports = {
       unrunnable: "nie da się sensownie przejść zaimplementowanego zachowania.",
     },
     evidenceText:
-      "Negatywny status nie jest oceną jakości. Typ problemu pozostaje widoczny, bo poszczególne błędy mają różną wagę praktyczną. Brak dokumentacji workflow w dobrej aplikacji nie jest tym samym problemem co quiz, który nie przechodzi dalej niż pierwsze pytanie. Liczba linii kodu źródłowego i liczba statycznie policzonych testów automatycznych są materiałem z repozytorium: pokazują kształt implementacji, ale same nie dowodzą jakości kodu ani pokrycia testami.",
+      "Negatywny status nie jest oceną jakości. Typ problemu pozostaje widoczny, bo poszczególne błędy mają różną wagę praktyczną. Brak dokumentacji workflow w dobrej aplikacji nie jest tym samym problemem co quiz, który nie przechodzi dalej niż pierwsze pytanie. Liczba linii kodu źródłowego i liczba statycznie policzonych testów automatycznych są materiałem z repozytorium: pokazują kształt implementacji, ale same nie dowodzą jakości kodu ani pokrycia testami. Jeśli v2 comparative score pojawia się w eksportach machine-readable, dotyczy wyłącznie prób v2.",
     resultsHeading: "Wyniki",
     resultsIntro:
-      "Tabela pokazuje wszystkie próby. Krótki opis funkcjonalny jest celowo zwięzły; wybrane przypadki poniżej wyjaśniają najważniejsze różnice. Screenshoty i archiwalne demo pozostają dostępne, żeby aplikacje można było sprawdzić bezpośrednio.",
+      "Wyniki są pogrupowane według wersji benchmarku. Krótki opis funkcjonalny jest celowo zwięzły; wybrane przypadki poniżej wyjaśniają najważniejsze różnice. Screenshoty i archiwalne demo pozostają dostępne, żeby aplikacje można było sprawdzić bezpośrednio.",
+    resultGroups: [
+      {
+        benchmarkVersion: "v2",
+        heading: "Batch v2",
+        intro:
+          "Pierwsze próby v2 używają zmienionej procedury przeglądu. To aktualny batch benchmarku.",
+      },
+      {
+        benchmarkVersion: "v1",
+        heading: "Snapshot v1",
+        intro:
+          "Oryginalne 15 prób v1 pozostaje zachowane jako historyczny snapshot.",
+      },
+    ],
     tableLabels: {
       model: "Model",
       status: "Status",
@@ -927,6 +1117,10 @@ export const phoneticBenchmarkReports = {
       attribution: "atrybucja",
       "test workflow": "workflow testów",
       "unrunnable output": "niedziałający wynik",
+    },
+    versionLabels: {
+      v1: "v1",
+      v2: "v2",
     },
     noneLabel: "brak",
     detailsLabel: "Szczegóły próby (EN)",
@@ -958,6 +1152,14 @@ export const phoneticBenchmarkReports = {
     findingsHeading: "Co Pokazują Próby",
     findings: [
       {
+        heading:
+          "Pierwszy Batch v2 Oddziela Dobre Wykonanie Od Twardych Błędów",
+        paragraphs: [
+          "DeepSeek V4 Flash i MiMo 2.5 to pierwsze użyteczne porównywalne wyniki v2. Obie aplikacje działają i przechodzą formalny kontrakt, ale nadal pokazują drobne problemy UX istotne przy powtarzalnym użyciu.",
+          "Big Pickle i Nemotron 3 Super są słabszymi wynikami v2. Startują, ale twarde błędy produktowe wykluczają je ze zbioru porównywalnego.",
+        ],
+      },
+      {
         heading: "Użyteczne Wyniki Nie Są Ograniczone Do Jednej Półki Modeli",
         paragraphs: [
           "Kilka modeli przygotowało przekonujące małe aplikacje na podstawie tego samego pakietu dokumentacji. Użyteczne wyniki nie są ograniczone do najbardziej rozpoznawalnych ani najdroższych modeli. Eksperymentowanie z mniej oczywistymi, tańszymi lub otwartymi modelami ma sens także w workflow zero-code.",
@@ -966,7 +1168,7 @@ export const phoneticBenchmarkReports = {
       {
         heading: "Zgodność Formalna I Jakość Produktu To Dwa Różne Pytania",
         paragraphs: [
-          "Rygorystyczny przegląd zostawia sześć prób porównywalnych, osiem niespełniających kontraktu i jeden niedziałający wynik. Ten podział wymaga kontekstu. DeepSeek V4 Pro jest funkcjonalnie mocny, ale nie dokumentuje komend instalacji, uruchomienia i testów. Nemotron 3 Super również nie spełnia kontraktu, ale z dużo ważniejszego powodu: quiz nie przechodzi dalej niż pierwszy symbol.",
+          "Snapshot v1 zostawia sześć prób porównywalnych, osiem niespełniających kontraktu i jeden niedziałający wynik. Ten podział wymaga kontekstu. DeepSeek V4 Pro jest funkcjonalnie mocny, ale nie dokumentuje komend instalacji, uruchomienia i testów. Nemotron 3 Super również nie spełnia kontraktu, ale z dużo ważniejszego powodu: quiz nie przechodzi dalej niż pierwszy symbol.",
           "Kontrakt jest ważny, bo uporządkowane dostarczenie projektu ma znaczenie. Typ problemu jest ważny, bo nie każdy błąd ma ten sam koszt praktyczny.",
         ],
       },
@@ -994,6 +1196,21 @@ export const phoneticBenchmarkReports = {
     ],
     caseNotesHeading: "Wybrane Przypadki",
     caseNotes: [
+      {
+        id: "first-v2-batch",
+        heading:
+          "Pierwszy Batch v2: Dwa Wyniki Porównywalne I Dwa Core Failure",
+        paragraphs: [
+          "DeepSeek V4 Flash i MiMo 2.5 to dobre pierwsze wyniki porównywalne v2. Oba przechodzą zmieniony kontrakt, a jednocześnie zostawiają widoczne problemy UX do sprawdzenia: DeepSeek przetasowuje sugestie podczas re-renderów, a MiMo ma skoki contentu wokół feedbacku i hintów.",
+          "Big Pickle i Nemotron 3 Super pokazują, dlaczego status wersjonowany nadal ma znaczenie. Oba wyniki da się sprawdzić, ale każdy łamie wymagane główne zachowanie.",
+        ],
+        runIds: [
+          "deepseek-v4-flash-v2",
+          "mimo-v2-5-v2",
+          "big-pickle-v2",
+          "nemotron-3-super-v2",
+        ],
+      },
       {
         id: "reference-baselines",
         heading:
@@ -1041,7 +1258,7 @@ export const phoneticBenchmarkReports = {
     artifactIntro:
       "Każde demo jest statycznym snapshotem zachowanym dla tego raportu. To wynik benchmarku, a nie utrzymywany produkt. Archiwum jest celowo kompletne: także słabe wyniki są użytecznym materiałem przy porównywaniu zachowania modeli.",
     galleryText:
-      "Galeria screenshotów pokazuje wszystkie 15 interfejsów w kolejności wykonania, żeby można było bezpośrednio porównać decyzje wizualne.",
+      "Galeria screenshotów grupuje interfejsy według wersji benchmarku, żeby można było bezpośrednio porównać decyzje wizualne.",
     galleryHref: "/pl/phonetic-benchmark/gallery/",
     galleryLabel: "Otwórz galerię screenshotów",
     closingHeading: "Zakończenie",
@@ -1056,11 +1273,11 @@ export const phoneticBenchmarkGalleries = {
     metadata: {
       title: "Phonetic Benchmark Screenshot Gallery — Piotr Kacała",
       description:
-        "Screenshot gallery of 15 archived web applications built from the same Phonetic Alphabet Trainer specification.",
+        "Versioned screenshot gallery of archived web applications built from the Phonetic Alphabet Trainer benchmark specification.",
       openGraph: {
         title: "Phonetic Benchmark Screenshot Gallery",
         description:
-          "All 15 archived Phonetic Benchmark interfaces in execution order for direct visual comparison.",
+          "Archived Phonetic Benchmark interfaces grouped by benchmark version for direct visual comparison.",
         type: "website",
         locale: "en_US",
         siteName: "Piotr Kacała",
@@ -1089,7 +1306,19 @@ export const phoneticBenchmarkGalleries = {
     title: "Phonetic Benchmark Screenshot Gallery",
     introParagraphs: [
       "These screenshots show how different models interpreted the same product brief. The differences in layout, color, density, and polish are part of the benchmark material.",
-      "The gallery keeps every run visible in execution order for direct visual comparison. It is not a ranking and does not identify a winner. The status shown with each interface is the formal report status, not a visual score.",
+      "The gallery keeps every run visible by benchmark version for direct visual comparison. It is not a ranking and does not identify a winner. The status shown with each interface is the formal report status, not a visual score.",
+    ],
+    resultGroups: [
+      {
+        benchmarkVersion: "v2",
+        heading: "v2 Batch",
+        intro: "Current benchmark batch, shown before the original snapshot.",
+      },
+      {
+        benchmarkVersion: "v1",
+        heading: "v1 Snapshot",
+        intro: "Original 15-run snapshot preserved for historical comparison.",
+      },
     ],
     detailLabels: {
       status: "Status",
@@ -1097,6 +1326,7 @@ export const phoneticBenchmarkGalleries = {
       testCount: "Static automated tests",
     },
     statusLabels: phoneticBenchmarkReports.en.statusLabels,
+    versionLabels: phoneticBenchmarkReports.en.versionLabels,
     demoLabel: "Open archived demo",
     runs: englishRuns,
   },
@@ -1105,11 +1335,11 @@ export const phoneticBenchmarkGalleries = {
     metadata: {
       title: "Galeria Screenshotów Phonetic Benchmark — Piotr Kacała",
       description:
-        "Galeria screenshotów 15 archiwalnych aplikacji webowych zbudowanych na podstawie tej samej specyfikacji Phonetic Alphabet Trainer.",
+        "Wersjonowana galeria screenshotów archiwalnych aplikacji webowych zbudowanych na podstawie specyfikacji benchmarku Phonetic Alphabet Trainer.",
       openGraph: {
         title: "Galeria Screenshotów Phonetic Benchmark",
         description:
-          "Wszystkie 15 archiwalnych interfejsów Phonetic Benchmark w kolejności wykonania do bezpośredniego porównania wizualnego.",
+          "Archiwalne interfejsy Phonetic Benchmark pogrupowane według wersji benchmarku do bezpośredniego porównania wizualnego.",
         type: "website",
         locale: "pl_PL",
         siteName: "Piotr Kacała",
@@ -1138,7 +1368,21 @@ export const phoneticBenchmarkGalleries = {
     title: "Galeria Screenshotów Phonetic Benchmark",
     introParagraphs: [
       "Te screenshoty pokazują, jak różne modele zinterpretowały ten sam brief produktowy. Różnice w layoucie, kolorach, gęstości i poziomie dopracowania są częścią materiału benchmarkowego.",
-      "Galeria pokazuje każdą próbę w kolejności wykonania, żeby ułatwić bezpośrednie porównanie wizualne. To nie jest ranking i nie wskazuje zwycięzcy. Status przy interfejsie jest formalnym statusem z raportu, a nie oceną warstwy wizualnej.",
+      "Galeria pokazuje każdą próbę według wersji benchmarku, żeby ułatwić bezpośrednie porównanie wizualne. To nie jest ranking i nie wskazuje zwycięzcy. Status przy interfejsie jest formalnym statusem z raportu, a nie oceną warstwy wizualnej.",
+    ],
+    resultGroups: [
+      {
+        benchmarkVersion: "v2",
+        heading: "Batch v2",
+        intro:
+          "Aktualny batch benchmarku, pokazany przed oryginalnym snapshotem.",
+      },
+      {
+        benchmarkVersion: "v1",
+        heading: "Snapshot v1",
+        intro:
+          "Oryginalny snapshot 15 prób zachowany do porównania historycznego.",
+      },
     ],
     detailLabels: {
       status: "Status",
@@ -1146,10 +1390,19 @@ export const phoneticBenchmarkGalleries = {
       testCount: "Statycznie policzone testy automatyczne",
     },
     statusLabels: phoneticBenchmarkReports.pl.statusLabels,
+    versionLabels: phoneticBenchmarkReports.pl.versionLabels,
     demoLabel: "Otwórz archiwalne demo",
     runs: polishRuns,
   },
 } as const satisfies Record<BenchmarkReportLang, BenchmarkGalleryCopy>;
+
+export function getBenchmarkVersionedRuns(
+  runs: readonly BenchmarkRunCopy[],
+): readonly BenchmarkRunCopy[] {
+  return phoneticBenchmarkReports.en.resultGroups.flatMap((group) =>
+    getBenchmarkRunGroupRuns(runs, group.benchmarkVersion),
+  );
+}
 
 export function getPhoneticBenchmarkMarkdownUrl(
   lang: BenchmarkReportLang,
@@ -1169,11 +1422,11 @@ export const phoneticBenchmarkMethodology = {
   metadata: {
     title: "Phonetic Benchmark Methodology — Piotr Kacała",
     description:
-      "Public methodology for the Phonetic Benchmark v1 AI-agent web application review.",
+      "Public methodology for the versioned Phonetic Benchmark AI-agent web application review.",
     openGraph: {
       title: "Phonetic Benchmark Methodology",
       description:
-        "Scope, review rules, limitations, and repository-evidence definitions for the Phonetic Benchmark v1 report.",
+        "Scope, review rules, limitations, and repository-evidence definitions for the versioned Phonetic Benchmark report.",
       type: "website",
       locale: "en_US",
       siteName: "Piotr Kacała",
@@ -1189,10 +1442,10 @@ export const phoneticBenchmarkMethodology = {
   markdownPath: phoneticBenchmarkMethodologyMarkdownPath,
   reportHref: "/phonetic-benchmark/",
   reportLabel: "Back to Phonetic Benchmark report",
-  eyebrow: "Phonetic Benchmark v1",
+  eyebrow: "Phonetic Benchmark methodology",
   title: "Methodology",
   summary:
-    "This page documents how the public v1 report was assembled and how its fields should be interpreted. It is intentionally narrower than a controlled model evaluation.",
+    "This page documents how the public versioned report is assembled and how its fields should be interpreted. It is intentionally narrower than a controlled model evaluation.",
   sourcePackageLabel: "Open the public benchmark package",
   sourcePackageUrl: phoneticBenchmarkPublicPackageUrl,
   sections: [
@@ -1206,7 +1459,7 @@ export const phoneticBenchmarkMethodology = {
     {
       heading: "Benchmark Task and Package",
       paragraphs: [
-        "Each model received the same docs-first package, fixed benchmark data, and a direct instruction to implement a small Phonetic Alphabet Trainer web application. The resulting repositories were reviewed against the same v1 product contract.",
+        "Each model received a docs-first package, fixed benchmark data, and a direct instruction to implement a small Phonetic Alphabet Trainer web application. The resulting repositories were reviewed against the product contract for their benchmark version.",
         "Archived demos are preserved static snapshots of the reviewed outputs, not maintained products.",
         "The report compares observed outputs from the agent workflows used for these runs. It does not claim to isolate model quality under controlled inference parameters.",
       ],
@@ -1243,6 +1496,18 @@ export const phoneticBenchmarkMethodology = {
         "One full selected alphabet per randomized run, with progression only after a correct answer.",
         "Fixed suggestion-mode option sets from benchmark data, randomized button order, hint reveal without auto-completion, and deterministic final scoring.",
         "A final result screen with score, alphabet, and mode.",
+      ],
+    },
+    {
+      heading: "Contract v2",
+      paragraphs: [
+        "The v2 procedure keeps the same small product task and evidence-first review shape, but treats the revised contract as a separate benchmark version.",
+      ],
+      items: [
+        "Do not merge v2 outputs into the v1 leaderboard or infer v1 comparative scores.",
+        "Record v2 run facts without private workflow metrics.",
+        "Keep run-level benchmark version visible in HTML, markdown, JSON, CSV, and structured data.",
+        "Publish v2 comparative score only for v2 runs when available.",
       ],
     },
     {
@@ -1291,9 +1556,9 @@ export const phoneticBenchmarkMethodology = {
       items: phoneticBenchmarkInterpretationLimitations,
     },
     {
-      heading: "Planned v2 Run Manifest",
+      heading: "v2 Run Manifest",
       paragraphs: [
-        "A future benchmark revision should require a run manifest before implementation starts.",
+        "The v2 revision should keep run metadata explicit before implementation starts.",
       ],
       items: [
         "Benchmark version and run ID.",
@@ -1308,7 +1573,7 @@ export const phoneticBenchmarkMethodology = {
       heading: "Version History",
       items: [
         "`v1`: one archived run per model for the same small browser-app task, with qualitative manual review and repository-evidence fields.",
-        "`v2` planning: require an explicit run manifest before collecting new results.",
+        "`v2`: revised review procedure with explicit run-level versioning, private workflow metrics excluded, and optional v2-only comparative score.",
       ],
     },
   ],
@@ -1318,7 +1583,8 @@ export interface PhoneticBenchmarkResultsData {
   schemaVersion: "1";
   benchmark: {
     name: "Phonetic Benchmark";
-    benchmarkVersion: "v1";
+    coveredBenchmarkVersions: readonly BenchmarkVersion[];
+    currentBenchmarkVersion: BenchmarkVersion;
     publishedDate: string;
     updatedDate: string;
     coveredThroughDate: string;
@@ -1337,7 +1603,10 @@ export function getPhoneticBenchmarkResultsData(): PhoneticBenchmarkResultsData 
     schemaVersion: phoneticBenchmarkMetadata.schemaVersion,
     benchmark: {
       name: "Phonetic Benchmark",
-      benchmarkVersion: phoneticBenchmarkMetadata.benchmarkVersion,
+      coveredBenchmarkVersions:
+        phoneticBenchmarkMetadata.coveredBenchmarkVersions,
+      currentBenchmarkVersion:
+        phoneticBenchmarkMetadata.currentBenchmarkVersion,
       publishedDate: phoneticBenchmarkMetadata.publishedDate,
       updatedDate: phoneticBenchmarkMetadata.updatedDate,
       coveredThroughDate: phoneticBenchmarkMetadata.coveredThroughDate,
@@ -1346,7 +1615,7 @@ export function getPhoneticBenchmarkResultsData(): PhoneticBenchmarkResultsData 
       publicBenchmarkPackageUrl: phoneticBenchmarkPublicPackageUrl,
       interpretationLimitations: phoneticBenchmarkInterpretationLimitations,
     },
-    runs: phoneticBenchmarkRuns.map((run) => ({
+    runs: getBenchmarkVersionedRuns(phoneticBenchmarkRuns).map((run) => ({
       ...run,
       interpretationLimitations: phoneticBenchmarkInterpretationLimitations,
     })),
@@ -1386,11 +1655,11 @@ function getDatasetSchema(): JsonLdSchema {
     "@context": "https://schema.org",
     "@type": "Dataset",
     "@id": `${resultsJsonUrl}#dataset`,
-    name: "Phonetic Benchmark v1 results",
+    name: "Phonetic Benchmark versioned results",
     description:
-      "Qualitative review data for 15 archived AI-agent web applications built from the same Phonetic Alphabet Trainer specification.",
+      "Qualitative review data for archived AI-agent web applications built from the Phonetic Alphabet Trainer benchmark specification.",
     url: resultsJsonUrl,
-    version: phoneticBenchmarkMetadata.benchmarkVersion,
+    version: phoneticBenchmarkMetadata.coveredBenchmarkVersions.join(", "),
     datePublished: phoneticBenchmarkMetadata.publishedDate,
     dateModified: phoneticBenchmarkMetadata.updatedDate,
     temporalCoverage: `${getEarliestRunDate()}/${phoneticBenchmarkMetadata.coveredThroughDate}`,
@@ -1480,7 +1749,7 @@ export function getPhoneticBenchmarkRunSchemas(
     {
       "@context": "https://schema.org",
       "@type": "Article",
-      headline: `${run.model} — Phonetic Benchmark run details`,
+      headline: `${run.model} — Phonetic Benchmark ${run.benchmarkVersion} run details`,
       description: run.functionalRead,
       url: run.detailsUrl,
       inLanguage: "en",
@@ -1494,7 +1763,7 @@ export function getPhoneticBenchmarkRunSchemas(
       about: {
         "@type": "Thing",
         identifier: run.id,
-        name: `${run.model} Phonetic Benchmark v1 run`,
+        name: `${run.model} Phonetic Benchmark ${run.benchmarkVersion} run`,
       },
       author: {
         "@type": "Person",

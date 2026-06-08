@@ -132,7 +132,7 @@ export const en = {
         blocks: [
           {
             type: "paragraph",
-            text: "A practical, task-specific evaluation of coding-agent outputs. Fifteen models received the same docs-first brief for a small browser app. I archived every result and reviewed contract compliance, UX behavior, testing, and delivery quality. This is not a universal model ranking. It is a documented comparison of how coding-agent workflows behave on the same product task.",
+            text: "A practical, task-specific evaluation of coding-agent outputs. Models receive a docs-first brief for the same small browser app; v2 is now the current batch and the original v1 results remain archived as a snapshot. I preserve every result and review contract compliance, UX behavior, testing, and delivery quality. This is not a universal model ranking.",
           },
           {
             type: "link",

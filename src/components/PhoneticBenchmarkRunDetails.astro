@@ -15,7 +15,9 @@ const { run } = Astro.props;
 <article class="run-details">
   <header>
     <p class="run-eyebrow ui-text">Phonetic Benchmark run details</p>
-    <h1>{run.model} — Phonetic Benchmark v1 run</h1>
+    <h1>
+      {run.model} — Phonetic Benchmark {run.benchmarkVersion} run
+    </h1>
     <p>
       One observed output from one small browser-app task. This is not a general
       model review or universal ranking.

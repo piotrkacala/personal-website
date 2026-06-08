@@ -5,16 +5,23 @@ import type {
   BenchmarkRunCopy,
   BenchmarkStatus,
 } from "../site/phonetic-benchmark";
-import { phoneticBenchmarkMetadata } from "../site/phonetic-benchmark";
+import {
+  getBenchmarkRunGroupRuns,
+  phoneticBenchmarkMetadata,
+} from "../site/phonetic-benchmark";
 
 interface Props {
   report: BenchmarkReportCopy;
 }
 
 const { report } = Astro.props;
-const runs = [...report.runs].sort(
+const allRuns = [...report.runs].sort(
   (firstRun, secondRun) => firstRun.executionOrder - secondRun.executionOrder,
 );
+const runGroups = report.resultGroups.map((group) => ({
+  ...group,
+  runs: getBenchmarkRunGroupRuns(report.runs, group.benchmarkVersion),
+}));
 const statusOrder = [
   "comparable",
   "contract-failing",
@@ -29,7 +36,7 @@ const artifactHeadingId = "benchmark-artifacts";
 const closingHeadingId = "benchmark-closing";
 
 function getRun(runId: string): BenchmarkRunCopy {
-  const run = runs.find((candidate) => candidate.id === runId);
+  const run = allRuns.find((candidate) => candidate.id === runId);
 
   if (!run) {
     throw new Error(`Missing benchmark run: ${runId}`);
@@ -61,10 +68,10 @@ function getFailureTypes(run: BenchmarkRunCopy): string {
     <p class="report-metadata ui-text">
       <span
         >{report.metadataLabels.benchmark}
-        {phoneticBenchmarkMetadata.benchmarkVersion}</span
+        {phoneticBenchmarkMetadata.coveredBenchmarkVersions.join("-")}</span
       >
       <span aria-hidden="true">&middot;</span>
-      <span>{runs.length} {report.metadataLabels.runs}</span>
+      <span>{report.runs.length} {report.metadataLabels.runs}</span>
       <span aria-hidden="true">&middot;</span>
       <span>
         {report.metadataLabels.updated}: <time
@@ -109,56 +116,68 @@ function getFailureTypes(run: BenchmarkRunCopy): string {
       {report.galleryText}
       <a href={report.galleryHref}>{report.galleryLabel}</a>
     </p>
-    <div class="results-table-wrap">
-      <table class="results-table">
-        <thead>
-          <tr>
-            <th scope="col">{report.tableLabels.model}</th>
-            <th scope="col">{report.tableLabels.status}</th>
-            <th scope="col">{report.tableLabels.failureTypes}</th>
-            <th scope="col">{report.tableLabels.sourceLoc}</th>
-            <th scope="col">{report.tableLabels.testCount}</th>
-            <th scope="col">{report.tableLabels.functionalRead}</th>
-            <th scope="col">{report.tableLabels.details}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            runs.map((run) => (
-              <tr
-                data-status={run.status}
-                data-run-date={run.runDate}
-                data-stack={run.stack}
-              >
-                <th scope="row" data-label={report.tableLabels.model}>
-                  {run.model}
-                </th>
-                <td data-label={report.tableLabels.status}>
-                  <span class:list={["status", `status--${run.status}`]}>
-                    {getStatusLabel(run.status)}
-                  </span>
-                </td>
-                <td data-label={report.tableLabels.failureTypes}>
-                  {getFailureTypes(run)}
-                </td>
-                <td data-label={report.tableLabels.sourceLoc}>
-                  {run.sourceLoc.toLocaleString(report.lang)}
-                </td>
-                <td data-label={report.tableLabels.testCount}>
-                  {run.testCount}
-                </td>
-                <td data-label={report.tableLabels.functionalRead}>
-                  {run.functionalRead}
-                </td>
-                <td data-label={report.tableLabels.details}>
-                  <a href={run.detailsUrl}>{report.detailsLabel}</a>
-                </td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
-    </div>
+    {
+      runGroups.map((group) => (
+        <section class="results-group">
+          <h3>{group.heading}</h3>
+          <p>{group.intro}</p>
+          <div class="results-table-wrap">
+            <table class="results-table">
+              <thead>
+                <tr>
+                  <th scope="col">{report.tableLabels.model}</th>
+                  <th scope="col">{report.tableLabels.status}</th>
+                  <th scope="col">{report.tableLabels.failureTypes}</th>
+                  <th scope="col">{report.tableLabels.sourceLoc}</th>
+                  <th scope="col">{report.tableLabels.testCount}</th>
+                  <th scope="col">{report.tableLabels.functionalRead}</th>
+                  <th scope="col">{report.tableLabels.details}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {group.runs.map((run) => (
+                  <tr
+                    data-status={run.status}
+                    data-benchmark-version={run.benchmarkVersion}
+                    data-run-date={run.runDate}
+                    data-stack={run.stack}
+                  >
+                    <th scope="row" data-label={report.tableLabels.model}>
+                      <span class="run-model">
+                        {run.model}
+                        <span class="version-badge">
+                          {report.versionLabels[run.benchmarkVersion]}
+                        </span>
+                      </span>
+                    </th>
+                    <td data-label={report.tableLabels.status}>
+                      <span class:list={["status", `status--${run.status}`]}>
+                        {getStatusLabel(run.status)}
+                      </span>
+                    </td>
+                    <td data-label={report.tableLabels.failureTypes}>
+                      {getFailureTypes(run)}
+                    </td>
+                    <td data-label={report.tableLabels.sourceLoc}>
+                      {run.sourceLoc.toLocaleString(report.lang)}
+                    </td>
+                    <td data-label={report.tableLabels.testCount}>
+                      {run.testCount}
+                    </td>
+                    <td data-label={report.tableLabels.functionalRead}>
+                      {run.functionalRead}
+                    </td>
+                    <td data-label={report.tableLabels.details}>
+                      <a href={run.detailsUrl}>{report.detailsLabel}</a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      ))
+    }
   </section>
 
   <section class="report-section" aria-labelledby={findingsHeadingId}>
@@ -246,9 +265,16 @@ function getFailureTypes(run: BenchmarkRunCopy): string {
     </p>
     <ul class="artifact-list">
       {
-        runs.map((run) => (
+        runGroups.map((group) => (
           <li>
-            <a href={run.demoUrl}>{run.model}</a>
+            <strong>{group.heading}</strong>
+            <ul>
+              {group.runs.map((run) => (
+                <li>
+                  <a href={run.demoUrl}>{run.model}</a>
+                </li>
+              ))}
+            </ul>
           </li>
         ))
       }
@@ -316,6 +342,25 @@ function getFailureTypes(run: BenchmarkRunCopy): string {
     margin-top: calc(var(--spacing-rhythm) * 0.28);
   }
 
+  .results-group {
+    margin-top: calc(var(--spacing-rhythm) * 0.95);
+  }
+
+  .results-group > * {
+    margin: 0;
+  }
+
+  .results-group > * + * {
+    margin-top: calc(var(--spacing-rhythm) * 0.45);
+  }
+
+  .results-group h3 {
+    max-width: 36ch;
+    font-family: var(--font-display);
+    font-size: clamp(1.18rem, 1.1rem + 0.28vw, 1.35rem);
+    line-height: 1.16;
+  }
+
   .results-table-wrap {
     width: 100%;
     overflow-x: auto;
@@ -372,6 +417,26 @@ function getFailureTypes(run: BenchmarkRunCopy): string {
 
   .results-table tbody th {
     font-weight: 700;
+  }
+
+  .run-model {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.28rem 0.42rem;
+    align-items: baseline;
+  }
+
+  .version-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.35rem;
+    padding-inline: 0.38rem;
+    border: 1px solid var(--divider);
+    color: rgb(23 20 18 / 72%);
+    font-size: 0.78em;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
   }
 
   .status {
@@ -457,6 +522,11 @@ function getFailureTypes(run: BenchmarkRunCopy): string {
     margin-inline: 0;
     padding-inline-start: 0;
     list-style: none;
+  }
+
+  .artifact-list ul {
+    margin: calc(var(--spacing-rhythm) * 0.24) 0 0;
+    padding-inline-start: 1.1rem;
   }
 
   @media (max-width: 39.99rem) {

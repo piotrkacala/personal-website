@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phonetic Benchmark v2</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <div id="screen-setup" class="screen active">
+      <h1 id="setup-title"></h1>
+
+      <div class="setup-group">
+        <label id="label-lang"></label>
+        <div class="option-row">
+          <button class="btn option-btn selected" data-lang="en">English</button>
+          <button class="btn option-btn" data-lang="pl">Polski</button>
+        </div>
+      </div>
+
+      <div class="setup-group">
+        <label id="label-alphabet"></label>
+        <div class="option-row">
+          <button class="btn option-btn selected" data-alphabet="nato">NATO</button>
+          <button class="btn option-btn" data-alphabet="polish">Polski</button>
+        </div>
+      </div>
+
+      <div class="setup-group">
+        <label id="label-mode"></label>
+        <div class="option-row">
+          <button class="btn option-btn selected" data-mode="keyboard" id="btn-mode-keyboard"></button>
+          <button class="btn option-btn" data-mode="suggestion" id="btn-mode-suggestion"></button>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" id="btn-start"></button>
+    </div>
+
+    <div id="screen-run" class="screen">
+      <div class="run-header">
+        <div class="progress-info">
+          <span id="progress-text"></span>
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        </div>
+      </div>
+
+      <div class="question-area">
+        <div class="symbol-display" id="symbol-display"></div>
+
+        <div id="keyboard-input-area" class="input-area hidden">
+          <input type="text" id="answer-input" autocomplete="off" spellcheck="false">
+          <button class="btn btn-primary" id="btn-submit-answer"></button>
+        </div>
+
+        <div id="suggestion-input-area" class="input-area hidden">
+          <div id="suggestion-buttons"></div>
+        </div>
+
+        <div id="hint-area" class="hidden">
+          <div class="hint-box" id="hint-text"></div>
+        </div>
+
+        <div id="feedback-area" class="hidden">
+          <div class="feedback" id="feedback-text"></div>
+        </div>
+      </div>
+
+      <div class="run-actions">
+        <button class="btn btn-hint" id="btn-hint"></button>
+        <button class="btn btn-secondary" id="btn-restart" style="display:none"></button>
+      </div>
+    </div>
+
+    <div id="screen-result" class="screen">
+      <h1 id="result-title"></h1>
+      <div class="result-score" id="result-score"></div>
+      <div class="result-details" id="result-details"></div>
+      <button class="btn btn-primary" id="btn-play-again"></button>
+    </div>
+
+    <footer class="attribution" id="attribution"></footer>
+  </div>
+
+  <script src="i18n.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

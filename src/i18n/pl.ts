@@ -135,7 +135,7 @@ export const pl = {
         blocks: [
           {
             type: "paragraph",
-            text: "Praktyczna, zadaniowa ewaluacja outputów agentów programistycznych. Piętnaście modeli dostało ten sam docs-first brief małej aplikacji webowej. Każdy wynik zarchiwizowałem i sprawdziłem pod kątem zgodności z kontraktem, UX, testów i jakości dostarczenia. To nie jest uniwersalny ranking modeli, tylko udokumentowane porównanie zachowania workflow agentów na tym samym zadaniu produktowym.",
+            text: "Praktyczna, zadaniowa ewaluacja outputów agentów programistycznych. Modele dostają docs-first brief tej samej małej aplikacji webowej; v2 jest teraz aktualnym batchem, a oryginalne wyniki v1 pozostają zarchiwizowanym snapshotem. Każdy wynik zachowuję i sprawdzam pod kątem zgodności z kontraktem, UX, testów i jakości dostarczenia. To nie jest uniwersalny ranking modeli.",
           },
           {
             type: "link",
