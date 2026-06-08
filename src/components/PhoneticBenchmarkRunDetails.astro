@@ -44,7 +44,10 @@ const { run } = Astro.props;
         </dd>
       </div>
       <div><dt>Source LoC</dt><dd>{run.sourceLoc}</dd></div>
-      <div><dt>Static automated tests</dt><dd>{run.testCount}</dd></div>
+      <div>
+        <dt>Automated test evidence</dt>
+        <dd>{run.testEvidence ?? String(run.testCount)}</dd>
+      </div>
       <div><dt>Stack</dt><dd>{run.stack}</dd></div>
     </dl>
   </section>

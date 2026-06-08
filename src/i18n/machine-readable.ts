@@ -273,7 +273,9 @@ function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
       );
       lines.push(`- ${report.detailLabels.runDate}: ${run.runDate}`);
       lines.push(`- ${report.tableLabels.sourceLoc}: ${run.sourceLoc}`);
-      lines.push(`- ${report.tableLabels.testCount}: ${run.testCount}`);
+      lines.push(
+        `- ${report.tableLabels.testCount}: ${run.testEvidence ?? String(run.testCount)}`,
+      );
       lines.push(`- ${report.detailLabels.stack}: ${run.stack}`);
       lines.push(
         `- ${report.tableLabels.functionalRead}: ${run.functionalRead}`,
@@ -392,7 +394,7 @@ function renderBenchmarkRunMarkdown(run: BenchmarkRunCopy): string {
     `- Status: ${run.status}`,
     `- Failure types: ${run.failureTypes.length > 0 ? run.failureTypes.join(", ") : "none"}`,
     `- Source LoC: ${run.sourceLoc}`,
-    `- Static automated tests: ${run.testCount}`,
+    `- Automated test evidence: ${run.testEvidence ?? String(run.testCount)}`,
     `- Stack: ${run.stack}`,
     "",
     heading(2, "Observed Strengths"),
@@ -440,6 +442,7 @@ function renderBenchmarkResultsCsv(): string {
     "failure_types",
     "source_loc",
     "static_automated_tests",
+    "test_evidence",
     "comparative_score",
     "stack",
     "functional_read",
@@ -458,6 +461,7 @@ function renderBenchmarkResultsCsv(): string {
     run.failureTypes.join(" | "),
     run.sourceLoc,
     run.testCount,
+    run.testEvidence ?? String(run.testCount),
     run.comparativeScore ?? "",
     run.stack,
     run.functionalRead,

@@ -162,7 +162,7 @@ function getFailureTypes(run: BenchmarkRunCopy): string {
                       {run.sourceLoc.toLocaleString(report.lang)}
                     </td>
                     <td data-label={report.tableLabels.testCount}>
-                      {run.testCount}
+                      {run.testEvidence ?? String(run.testCount)}
                     </td>
                     <td data-label={report.tableLabels.functionalRead}>
                       {run.functionalRead}

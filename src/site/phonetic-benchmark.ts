@@ -21,6 +21,7 @@ interface BenchmarkRunData {
   failureTypes: readonly BenchmarkFailureType[];
   sourceLoc: number;
   testCount: number;
+  testEvidence?: string;
   stack: string;
   comparativeScore?: number;
 }
@@ -417,6 +418,8 @@ const runData = [
     failureTypes: [],
     sourceLoc: 671,
     testCount: 0,
+    testEvidence:
+      "0 framework-style static cases; custom runner reported 381 passed, 0 failed",
     stack: "Vanilla JavaScript, Express, custom Node test runner",
     comparativeScore: 80,
   },
@@ -833,7 +836,7 @@ export const phoneticBenchmarkReports = {
       unrunnable: "the implemented behavior cannot be meaningfully exercised.",
     },
     evidenceText:
-      "A failed status is not a quality score. Failure types remain visible because they have different practical weight. Missing workflow documentation in an otherwise strong application is not the same problem as a quiz that cannot progress past its first question. Source LoC and automated test counts are repository evidence: they help show the shape of an implementation, but they do not prove code quality or test coverage. When v2 comparative scores are published in machine-readable exports, they apply only to v2 runs.",
+      "A failed status is not a quality score. Failure types remain visible because they have different practical weight. Missing workflow documentation in an otherwise strong application is not the same problem as a quiz that cannot progress past its first question. Source LoC and automated test evidence are repository evidence: they help show the shape of an implementation, but they do not prove code quality or test coverage. When v2 comparative scores are published in machine-readable exports, they apply only to v2 runs.",
     resultsHeading: "Results",
     resultsIntro:
       "The results are grouped by benchmark version. The short functional read is deliberately compact; selected cases below explain the distinctions that matter most. Screenshots and archived demos remain available so the applications can be inspected directly.",
@@ -856,7 +859,7 @@ export const phoneticBenchmarkReports = {
       status: "Status",
       failureTypes: "Failure types",
       sourceLoc: "Source LoC",
-      testCount: "Static automated tests",
+      testCount: "Automated test evidence",
       functionalRead: "Functional read",
       details: "Details",
     },
@@ -1098,7 +1101,7 @@ export const phoneticBenchmarkReports = {
       status: "Status",
       failureTypes: "Typy problemów",
       sourceLoc: "Linie kodu źródłowego",
-      testCount: "Statycznie policzone testy automatyczne",
+      testCount: "Dowody testów automatycznych",
       functionalRead: "Odczyt funkcjonalny",
       details: "Szczegóły",
     },
@@ -1323,7 +1326,7 @@ export const phoneticBenchmarkGalleries = {
     detailLabels: {
       status: "Status",
       sourceLoc: "Source LoC",
-      testCount: "Static automated tests",
+      testCount: "Automated test evidence",
     },
     statusLabels: phoneticBenchmarkReports.en.statusLabels,
     versionLabels: phoneticBenchmarkReports.en.versionLabels,
@@ -1387,7 +1390,7 @@ export const phoneticBenchmarkGalleries = {
     detailLabels: {
       status: "Status",
       sourceLoc: "Linie kodu źródłowego",
-      testCount: "Statycznie policzone testy automatyczne",
+      testCount: "Dowody testów automatycznych",
     },
     statusLabels: phoneticBenchmarkReports.pl.statusLabels,
     versionLabels: phoneticBenchmarkReports.pl.versionLabels,

@@ -393,7 +393,7 @@ test("English Phonetic Benchmark markdown publishes all runs without private wor
   assert.match(content, /^- Failure types: attribution, test workflow$/m);
   assert.match(content, /^- Run date: 2026-06-01$/m);
   assert.match(content, /^- Source LoC: 2314$/m);
-  assert.match(content, /^- Static automated tests: 43$/m);
+  assert.match(content, /^- Automated test evidence: 43$/m);
   assert.match(content, /^- Stack: /m);
   assert.match(
     content,
@@ -464,7 +464,7 @@ test("Polish Phonetic Benchmark markdown carries localized narrative and all dem
   assert.match(content, /^- Status: unrunnable$/m);
   assert.match(content, /^- Typy problemów: atrybucja, workflow testów$/m);
   assert.match(content, /^- Data próby: 2026-05-29$/m);
-  assert.match(content, /^- Statycznie policzone testy automatyczne: 40$/m);
+  assert.match(content, /^- Dowody testów automatycznych: 40$/m);
   assert.match(content, /^## Co Pokazują Próby$/m);
   assert.match(content, /^## Wybrane Przypadki$/m);
   assert.match(content, /^## Archiwalne Demo$/m);
@@ -620,6 +620,7 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
       id: string;
       benchmarkVersion: string;
       comparativeScore?: number;
+      testEvidence?: string;
       detailsUrl: string;
       markdownUrl: string;
       observations: {
@@ -670,6 +671,14 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
     80,
   );
   assert.equal(
+    results.runs.find((run) => run.id === "mimo-v2-5-v2")?.testEvidence,
+    "0 framework-style static cases; custom runner reported 381 passed, 0 failed",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "deepseek-v4-flash-v2")?.testEvidence,
+    undefined,
+  );
+  assert.equal(
     results.runs.find((run) => run.id === "gpt-5-4-high")?.comparativeScore,
     undefined,
   );
@@ -688,7 +697,7 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
   );
   assert.match(
     csvLines[0],
-    /^run_id,execution_order,model,run_date,benchmark_version,status,failure_types,source_loc,static_automated_tests,comparative_score,stack,functional_read,details_url,markdown_url,demo_url,screenshot_url$/,
+    /^run_id,execution_order,model,run_date,benchmark_version,status,failure_types,source_loc,static_automated_tests,test_evidence,comparative_score,stack,functional_read,details_url,markdown_url,demo_url,screenshot_url$/,
   );
   assert.match(
     csvContent,
@@ -696,7 +705,7 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
   );
   assert.match(
     csvContent,
-    /deepseek-v4-flash-v2,2,DeepSeek V4 Flash,2026-06-03,v2,comparable,,834,0,67,/,
+    /deepseek-v4-flash-v2,2,DeepSeek V4 Flash,2026-06-03,v2,comparable,,834,0,0,67,/,
   );
   assert.doesNotMatch(
     csvLines[0],
@@ -1012,6 +1021,7 @@ test("benchmark report component keeps compact rows and selected screenshot case
   assert.match(component, /data-stack=\{run\.stack\}/);
   assert.match(component, /report\.tableLabels\.failureTypes/);
   assert.match(component, /report\.tableLabels\.testCount/);
+  assert.match(component, /run\.testEvidence \?\? String\(run\.testCount\)/);
   assert.match(component, /report\.tableLabels\.functionalRead/);
   assert.match(
     component,
@@ -1075,7 +1085,10 @@ test("benchmark gallery component renders ordered screenshots and demos without 
     /<a href=\{run\.demoUrl\}>\{gallery\.demoLabel\}<\/a>/,
   );
   assert.match(component, /run\.sourceLoc\.toLocaleString\(gallery\.lang\)/);
-  assert.match(component, /\{run\.testCount\}/);
+  assert.match(
+    component,
+    /\{run\.testEvidence \?\? String\(run\.testCount\)\}/,
+  );
   assert.doesNotMatch(component, /href=\{run\.screenshotPath\}/);
   assert.doesNotMatch(component, /<script/);
   assert.ok(

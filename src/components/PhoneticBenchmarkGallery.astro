@@ -65,7 +65,7 @@ function getStatusLabel(status: BenchmarkStatus): string {
                       </div>
                       <div>
                         <dt>{gallery.detailLabels.testCount}</dt>
-                        <dd>{run.testCount}</dd>
+                        <dd>{run.testEvidence ?? String(run.testCount)}</dd>
                       </div>
                     </dl>
                     <a href={run.demoUrl}>{gallery.demoLabel}</a>
