@@ -34,6 +34,7 @@ const findingsHeadingId = "benchmark-findings";
 const caseNotesHeadingId = "benchmark-case-notes";
 const artifactHeadingId = "benchmark-artifacts";
 const closingHeadingId = "benchmark-closing";
+const modelStatusLabel = `${report.tableLabels.model} / ${report.tableLabels.status}`;
 
 function getRun(runId: string): BenchmarkRunCopy {
   const run = allRuns.find((candidate) => candidate.id === runId);
@@ -125,8 +126,7 @@ function getFailureTypes(run: BenchmarkRunCopy): string {
             <table class="results-table">
               <thead>
                 <tr>
-                  <th scope="col">{report.tableLabels.model}</th>
-                  <th scope="col">{report.tableLabels.status}</th>
+                  <th scope="col">{modelStatusLabel}</th>
                   <th scope="col">{report.tableLabels.failureTypes}</th>
                   <th scope="col">{report.tableLabels.sourceLoc}</th>
                   <th scope="col">{report.tableLabels.testCount}</th>
@@ -142,19 +142,19 @@ function getFailureTypes(run: BenchmarkRunCopy): string {
                     data-run-date={run.runDate}
                     data-stack={run.stack}
                   >
-                    <th scope="row" data-label={report.tableLabels.model}>
-                      <span class="run-model">
-                        {run.model}
-                        <span class="version-badge">
-                          {report.versionLabels[run.benchmarkVersion]}
+                    <th scope="row" data-label={modelStatusLabel}>
+                      <span class="run-identity">
+                        <span class="run-model">
+                          {run.model}
+                          <span class="version-badge">
+                            {report.versionLabels[run.benchmarkVersion]}
+                          </span>
+                        </span>
+                        <span class:list={["status", `status--${run.status}`]}>
+                          {getStatusLabel(run.status)}
                         </span>
                       </span>
                     </th>
-                    <td data-label={report.tableLabels.status}>
-                      <span class:list={["status", `status--${run.status}`]}>
-                        {getStatusLabel(run.status)}
-                      </span>
-                    </td>
                     <td data-label={report.tableLabels.failureTypes}>
                       {getFailureTypes(run)}
                     </td>
@@ -391,32 +391,39 @@ function getFailureTypes(run: BenchmarkRunCopy): string {
   }
 
   .results-table thead th:nth-child(1) {
-    width: 12%;
+    width: 18%;
   }
 
   .results-table thead th:nth-child(2) {
-    width: 12%;
-  }
-
-  .results-table thead th:nth-child(3) {
     width: 15%;
   }
 
-  .results-table thead th:nth-child(4),
+  .results-table thead th:nth-child(3) {
+    width: 9%;
+  }
+
+  .results-table thead th:nth-child(4) {
+    width: 16%;
+    min-width: 11rem;
+  }
+
   .results-table thead th:nth-child(5) {
-    width: 8%;
+    width: 32%;
   }
 
   .results-table thead th:nth-child(6) {
-    width: 35%;
-  }
-
-  .results-table thead th:nth-child(7) {
     width: 10%;
   }
 
   .results-table tbody th {
     font-weight: 700;
+  }
+
+  .run-identity {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    align-items: flex-start;
   }
 
   .run-model {

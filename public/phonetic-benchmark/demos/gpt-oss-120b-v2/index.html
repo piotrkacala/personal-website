@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phonetic Benchmark – Phonetic Trainer</title>
+  <meta name="description" content="Interactive Polish and NATO phonetic alphabets trainer for the Phonetic Benchmark v2." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <h1>Phonetic Trainer</h1>
+    <button id="theme-toggle" aria-label="Toggle dark mode" class="theme-toggle">🌙</button>
+  </header>
+  <main class="container">
+    <section class="alphabet-selector">
+      <label for="alphabet-select">Choose alphabet:</label>
+      <select id="alphabet-select">
+        <option value="polish">Polish</option>
+        <option value="nato">NATO</option>
+      </select>
+    </section>
+    <section id="alphabet-list" class="alphabet-list"></section>
+  </main>
+  <footer class="footer">© 2026 Phonetic Benchmark v2</footer>
+  <script src="app.js"></script>
+</body>
+</html>

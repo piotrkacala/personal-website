@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phonetic Benchmark</title>
+  <link rel="stylesheet" href="./src/styles.css">
+</head>
+<body>
+  <div id="app">
+    <div id="setup-screen" class="screen">
+      <h1 data-i18n="setup.title">Phonetic Training</h1>
+      
+      <div class="setting-group">
+        <label data-i18n="setup.interfaceLanguage">Interface Language:</label>
+        <select id="interface-language">
+          <option value="en">English</option>
+          <option value="pl">Polski</option>
+        </select>
+      </div>
+
+      <div class="setting-group">
+        <label data-i18n="setup.alphabet">Phonetic Alphabet:</label>
+        <select id="alphabet">
+          <option value="nato">NATO</option>
+          <option value="polish">Polski</option>
+        </select>
+      </div>
+
+      <div class="setting-group">
+        <label data-i18n="setup.mode">Exercise Mode:</label>
+        <select id="mode">
+          <option value="keyboard" data-i18n="setup.keyboardMode">Keyboard</option>
+          <option value="suggestion" data-i18n="setup.suggestionMode">Suggestion</option>
+        </select>
+      </div>
+
+      <button id="start-btn" data-i18n="setup.start">Start</button>
+    </div>
+
+    <div id="exercise-screen" class="screen hidden">
+      <div class="progress" id="progress"></div>
+      <div class="symbol" id="current-symbol"></div>
+      <div class="hint" id="hint-display" data-i18n-hint=""></div>
+
+      <div id="keyboard-input" class="input-area hidden">
+        <input type="text" id="answer-input" data-i18n-placeholder="exercise.typeAnswer" placeholder="Type answer...">
+        <button id="submit-btn" data-i18n="exercise.submit">Submit</button>
+      </div>
+
+      <div id="suggestion-input" class="input-area hidden">
+        <div id="suggestion-buttons" class="suggestion-grid"></div>
+      </div>
+
+      <button id="hint-btn" data-i18n="exercise.hint">Hint</button>
+      <button id="restart-btn" data-i18n="exercise.restart">Restart</button>
+    </div>
+
+    <div id="result-screen" class="screen hidden">
+      <h2 data-i18n="result.title">Results</h2>
+      <div class="score" id="final-score"></div>
+      <div class="summary" id="result-summary"></div>
+      <button id="play-again-btn" data-i18n="result.playAgain">Play Again</button>
+    </div>
+  </div>
+
+  <footer id="attribution" data-i18n="attribution">
+    Phonetic Benchmark by Piotr Kacała (piotrkacala.pl). Developed by poolside/laguna-m.1:free on 2026-06-11.
+  </footer>
+
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>

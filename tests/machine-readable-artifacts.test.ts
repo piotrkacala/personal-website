@@ -22,8 +22,18 @@ type ArtifactPath = `/${string}`;
 const phoneticBenchmarkRuns = [
   { heading: "Big Pickle", id: "big-pickle-v2" },
   { heading: "DeepSeek V4 Flash", id: "deepseek-v4-flash-v2" },
-  { heading: "MiMo 2.5", id: "mimo-v2-5-v2" },
-  { heading: "Nemotron 3 Super", id: "nemotron-3-super-v2" },
+  { heading: "MiMo V2.5 Free", id: "mimo-v2-5-free-v2" },
+  { heading: "Gemma 4 26B", id: "gemma-4-26b-v2" },
+  { heading: "Laguna M.1 Free", id: "laguna-m-1-v2" },
+  { heading: "North Mini Code Free", id: "north-mini-code-free-v2" },
+  { heading: "Owl Alpha", id: "owl-alpha-v2" },
+  { heading: "Claude Opus 4.6 Thinking", id: "opus-4-6-thinking-v2" },
+  { heading: "Gemini 3.5 Flash High", id: "gemini-3-5-flash-high-v2" },
+  { heading: "Claude Sonnet 4.6 Thinking", id: "sonnet-4-6-thinking-v2" },
+  { heading: "Gemini 3.1 Pro High", id: "gemini-3-1-pro-high-v2" },
+  { heading: "GPT 5.4 High", id: "gpt-5-4-high-v2" },
+  { heading: "GPT 5.5 High", id: "gpt-5-5-high-v2" },
+  { heading: "gpt-oss-120b", id: "gpt-oss-120b-v2" },
   { heading: "GPT 5.4 High", id: "gpt-5-4-high" },
   { heading: "GPT 5.5 High", id: "gpt-5-5-high" },
   { heading: "Gemini 3.5 Flash High", id: "gemini-3-5-flash-high" },
@@ -87,6 +97,10 @@ test("getMachineReadableArtifacts returns the expected artifact inventory", () =
     .map((artifact) => artifact.pathname)
     .sort();
 
+  assert.deepEqual(
+    phoneticBenchmarkRuns.map((run) => run.id).sort(),
+    benchmarkRunData.map((run) => run.id).sort(),
+  );
   assert.deepEqual(
     paths,
     [
@@ -534,7 +548,7 @@ test("benchmark structured data covers versioned runs and selected screenshot ca
   const statusCounts = new Map<string, number>();
   const versionCounts = new Map<string, number>();
 
-  assert.equal(report.runs.length, 19);
+  assert.equal(report.runs.length, 29);
 
   report.runs.forEach((run) => {
     statusCounts.set(run.status, (statusCounts.get(run.status) ?? 0) + 1);
@@ -552,13 +566,13 @@ test("benchmark structured data covers versioned runs and selected screenshot ca
   });
 
   assert.deepEqual(Object.fromEntries(statusCounts), {
-    comparable: 8,
-    "contract-failing": 10,
+    comparable: 9,
+    "contract-failing": 19,
     unrunnable: 1,
   });
   assert.deepEqual(Object.fromEntries(versionCounts), {
     v1: 15,
-    v2: 4,
+    v2: 14,
   });
   assert.deepEqual(
     report.caseNotes.flatMap((caseNote) => caseNote.runIds).sort(),
@@ -567,13 +581,30 @@ test("benchmark structured data covers versioned runs and selected screenshot ca
       "deepseek-v4-flash-v2",
       "deepseek-v4-pro",
       "gemini-3-1-pro-high",
+      "gemini-3-1-pro-high-v2",
+      "gemini-3-1-pro-high-v2",
+      "gemini-3-5-flash-high-v2",
+      "gemini-3-5-flash-high-v2",
+      "gemma-4-26b-v2",
       "gpt-5-4-high",
+      "gpt-5-4-high-v2",
+      "gpt-5-4-high-v2",
       "gpt-5-5-high",
+      "gpt-5-5-high-v2",
+      "gpt-5-5-high-v2",
       "gpt-oss-120b",
-      "mimo-v2-5-v2",
+      "gpt-oss-120b-v2",
+      "gpt-oss-120b-v2",
+      "laguna-m-1-v2",
+      "mimo-v2-5-free-v2",
       "nemotron-3-super",
-      "nemotron-3-super-v2",
+      "north-mini-code-free-v2",
+      "opus-4-6-thinking-v2",
+      "owl-alpha-v2",
+      "owl-alpha-v2",
       "sonnet-4-6-thinking",
+      "sonnet-4-6-thinking-v2",
+      "sonnet-4-6-thinking-v2",
     ],
   );
 });
@@ -582,15 +613,15 @@ test("benchmark publication metadata derives coverage and avoids inferred infere
   const results = getPhoneticBenchmarkResultsData();
 
   assert.equal(phoneticBenchmarkMetadata.publishedDate, "2026-05-26");
-  assert.equal(phoneticBenchmarkMetadata.updatedDate, "2026-06-08");
-  assert.equal(phoneticBenchmarkMetadata.coveredThroughDate, "2026-06-03");
+  assert.equal(phoneticBenchmarkMetadata.updatedDate, "2026-06-15");
+  assert.equal(phoneticBenchmarkMetadata.coveredThroughDate, "2026-06-15");
   assert.deepEqual(phoneticBenchmarkMetadata.coveredBenchmarkVersions, [
     "v1",
     "v2",
   ]);
   assert.equal(phoneticBenchmarkMetadata.currentBenchmarkVersion, "v2");
-  assert.equal(results.runs.length, 19);
-  assert.equal(results.benchmark.coveredThroughDate, "2026-06-03");
+  assert.equal(results.runs.length, 29);
+  assert.equal(results.benchmark.coveredThroughDate, "2026-06-15");
   assert.deepEqual(results.benchmark.coveredBenchmarkVersions, ["v1", "v2"]);
   assert.equal(results.benchmark.currentBenchmarkVersion, "v2");
 
@@ -638,14 +669,24 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
   );
   assert.deepEqual(results.benchmark.coveredBenchmarkVersions, ["v1", "v2"]);
   assert.equal(results.benchmark.currentBenchmarkVersion, "v2");
-  assert.equal(results.runs.length, 19);
+  assert.equal(results.runs.length, 29);
   assert.deepEqual(
-    results.runs.slice(0, 4).map((run) => run.id),
+    results.runs.slice(0, 14).map((run) => run.id),
     [
       "big-pickle-v2",
       "deepseek-v4-flash-v2",
-      "mimo-v2-5-v2",
-      "nemotron-3-super-v2",
+      "mimo-v2-5-free-v2",
+      "gemma-4-26b-v2",
+      "laguna-m-1-v2",
+      "north-mini-code-free-v2",
+      "owl-alpha-v2",
+      "opus-4-6-thinking-v2",
+      "gemini-3-5-flash-high-v2",
+      "sonnet-4-6-thinking-v2",
+      "gemini-3-1-pro-high-v2",
+      "gpt-5-4-high-v2",
+      "gpt-5-5-high-v2",
+      "gpt-oss-120b-v2",
     ],
   );
   results.runs.forEach((run) => {
@@ -664,19 +705,71 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
   assert.equal(
     results.runs.find((run) => run.id === "deepseek-v4-flash-v2")
       ?.comparativeScore,
-    67,
-  );
-  assert.equal(
-    results.runs.find((run) => run.id === "mimo-v2-5-v2")?.comparativeScore,
-    80,
-  );
-  assert.equal(
-    results.runs.find((run) => run.id === "mimo-v2-5-v2")?.testEvidence,
-    "0 framework-style static cases; custom runner reported 381 passed, 0 failed",
+    undefined,
   );
   assert.equal(
     results.runs.find((run) => run.id === "deepseek-v4-flash-v2")?.testEvidence,
-    undefined,
+    "20 framework-style static cases; controlled runner reported 20 passed, 0 failed",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "mimo-v2-5-free-v2")?.testEvidence,
+    "35 framework-style static cases; controlled runner reported 35 passed, 0 failed",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "gemma-4-26b-v2")?.testEvidence,
+    "0 framework-style static cases; controlled runner blocked by dependency-policy failures; npm test exits with no test files found",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "laguna-m-1-v2")?.testEvidence,
+    "0 framework-style static cases; custom runner reported 9 passed, 0 failed; controlled runner reported 9 passed, 0 failed",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "north-mini-code-free-v2")
+      ?.testEvidence,
+    "0 framework-style static cases; package test command reported 7 verification sections passed, 0 failed; unreferenced Jest-style tests are not run by npm test",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "owl-alpha-v2")?.testEvidence,
+    "33 framework-style static cases; controlled runner reported 33 passed, 0 failed",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "opus-4-6-thinking-v2")?.testEvidence,
+    "45 framework-style static cases; controlled runner reported 45 passed, 0 failed",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "gemini-3-5-flash-high-v2")
+      ?.testEvidence,
+    "10 framework-style static cases; controlled runner reported 10 passed, 0 failed",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "sonnet-4-6-thinking-v2")
+      ?.testEvidence,
+    "96 framework-style static cases; controlled runner reported 158 assertions passed, 0 failed",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "gemini-3-1-pro-high-v2")
+      ?.testEvidence,
+    "0 framework-style static cases; custom Node assertion script; controlled runner reported the documented test command passed",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "gpt-5-4-high-v2")?.testEvidence,
+    "12 framework-style static cases; controlled runner reported 12 passed, 0 failed",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "gpt-5-4-high-v2")?.comparativeScore,
+    89,
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "gpt-5-5-high-v2")?.testEvidence,
+    "0 framework-style static cases; no automated test runner evidence in archived artifact",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "gpt-oss-120b-v2")?.testEvidence,
+    "0 framework-style static cases; no automated test runner evidence in archived artifact",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "owl-alpha-v2")?.comparativeScore,
+    87,
   );
   assert.equal(
     results.runs.find((run) => run.id === "gpt-5-4-high")?.comparativeScore,
@@ -685,14 +778,24 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
 
   const csvLines = csvContent.trimEnd().split("\n");
 
-  assert.equal(csvLines.length, 20);
+  assert.equal(csvLines.length, 30);
   assert.deepEqual(
-    csvLines.slice(1, 5).map((line) => line.split(",")[0]),
+    csvLines.slice(1, 15).map((line) => line.split(",")[0]),
     [
       "big-pickle-v2",
       "deepseek-v4-flash-v2",
-      "mimo-v2-5-v2",
-      "nemotron-3-super-v2",
+      "mimo-v2-5-free-v2",
+      "gemma-4-26b-v2",
+      "laguna-m-1-v2",
+      "north-mini-code-free-v2",
+      "owl-alpha-v2",
+      "opus-4-6-thinking-v2",
+      "gemini-3-5-flash-high-v2",
+      "sonnet-4-6-thinking-v2",
+      "gemini-3-1-pro-high-v2",
+      "gpt-5-4-high-v2",
+      "gpt-5-5-high-v2",
+      "gpt-oss-120b-v2",
     ],
   );
   assert.match(
@@ -705,7 +808,47 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
   );
   assert.match(
     csvContent,
-    /deepseek-v4-flash-v2,2,DeepSeek V4 Flash,2026-06-03,v2,comparable,,834,0,0,67,/,
+    /deepseek-v4-flash-v2,2,DeepSeek V4 Flash,2026-06-10,v2,contract-failing,attribution,809,20,/,
+  );
+  assert.match(
+    csvContent,
+    /gemma-4-26b-v2,4,Gemma 4 26B,2026-06-11,v2,contract-failing,core behavior \| submission documentation \| attribution \| test workflow,635,0,/,
+  );
+  assert.match(
+    csvContent,
+    /laguna-m-1-v2,5,Laguna M\.1 Free,2026-06-11,v2,contract-failing,core behavior \| attribution,716,0,/,
+  );
+  assert.match(
+    csvContent,
+    /north-mini-code-free-v2,6,North Mini Code Free,2026-06-11,v2,contract-failing,core behavior \| attribution \| test workflow,1191,0,"0 framework-style static cases; package test command reported 7 verification sections passed, 0 failed; unreferenced Jest-style tests are not run by npm test",,/,
+  );
+  assert.match(
+    csvContent,
+    /owl-alpha-v2,7,Owl Alpha,2026-06-11,v2,comparable,,1330,33,"33 framework-style static cases; controlled runner reported 33 passed, 0 failed",87,/,
+  );
+  assert.match(
+    csvContent,
+    /gemini-3-5-flash-high-v2,9,Gemini 3\.5 Flash High,2026-06-12,v2,contract-failing,core behavior \| attribution,1441,10,"10 framework-style static cases; controlled runner reported 10 passed, 0 failed",,/,
+  );
+  assert.match(
+    csvContent,
+    /sonnet-4-6-thinking-v2,10,Claude Sonnet 4\.6 Thinking,2026-06-13,v2,contract-failing,submission documentation \| attribution,2352,96,"96 framework-style static cases; controlled runner reported 158 assertions passed, 0 failed",,/,
+  );
+  assert.match(
+    csvContent,
+    /gemini-3-1-pro-high-v2,11,Gemini 3\.1 Pro High,2026-06-13,v2,contract-failing,core behavior \| attribution,694,0,0 framework-style static cases; custom Node assertion script; controlled runner reported the documented test command passed,,/,
+  );
+  assert.match(
+    csvContent,
+    /gpt-5-4-high-v2,12,GPT 5\.4 High,2026-06-15,v2,comparable,,1573,12,"12 framework-style static cases; controlled runner reported 12 passed, 0 failed",89,/,
+  );
+  assert.match(
+    csvContent,
+    /gpt-5-5-high-v2,13,GPT 5\.5 High,2026-06-15,v2,comparable,,1056,0,0 framework-style static cases; no automated test runner evidence in archived artifact,,/,
+  );
+  assert.match(
+    csvContent,
+    /gpt-oss-120b-v2,14,gpt-oss-120b,2026-06-15,v2,contract-failing,core behavior \| submission documentation \| attribution \| test workflow,187,0,0 framework-style static cases; no automated test runner evidence in archived artifact,,/,
   );
   assert.doesNotMatch(
     csvLines[0],
@@ -768,6 +911,11 @@ test("methodology and every run record have generated markdown discovery surface
     methodology,
     /Missing inference-effort metadata must not be interpreted as a known provider default/,
   );
+  assert.match(
+    methodology,
+    /Each result is one archived run for one model label and one benchmark version/,
+  );
+  assert.doesNotMatch(methodology, /Each model currently has one run/);
 
   benchmarkRunData.forEach((run) => {
     const content = getArtifactContent(
@@ -787,12 +935,54 @@ test("methodology and every run record have generated markdown discovery surface
     assert.match(content, /^## Evidence$/m);
     assert.match(content, /^## Interpretation Limits$/m);
     assert.match(content, /not a general model review or universal ranking/);
+    assert.match(
+      content,
+      new RegExp(`^- Run ID: ${escapeRegExp(run.id)}$`, "m"),
+    );
+    assert.match(
+      content,
+      new RegExp(`^- Model label: ${escapeRegExp(run.model)}$`, "m"),
+    );
+    assert.match(
+      content,
+      new RegExp(`^- Benchmark version: ${run.benchmarkVersion}$`, "m"),
+    );
+    assert.match(content, new RegExp(`^- Run date: ${run.runDate}$`, "m"));
+    assert.match(content, new RegExp(`^- Status: ${run.status}$`, "m"));
+    assert.match(content, new RegExp(`^- Source LoC: ${run.sourceLoc}$`, "m"));
+    assert.match(
+      content,
+      new RegExp(
+        `^- Automated test evidence: ${escapeRegExp(run.testEvidence ?? String(run.testCount))}$`,
+        "m",
+      ),
+    );
+    assert.match(
+      content,
+      new RegExp(
+        `^- Comparative score: ${run.comparativeScore ?? "not published"}$`,
+        "m",
+      ),
+    );
+    assert.match(
+      content,
+      new RegExp(`^- Archived demo: ${escapeRegExp(run.demoUrl)}$`, "m"),
+    );
+    assert.match(
+      content,
+      new RegExp(`^- Screenshot: ${escapeRegExp(run.screenshotUrl)}$`, "m"),
+    );
+    assert.match(
+      content,
+      /Each result is one archived run for one model label and one benchmark version/,
+    );
+    assert.doesNotMatch(content, /Each model currently has one run/);
   });
 });
 
 test("benchmark galleries expose versioned screenshots and explicit demo links", () => {
   for (const gallery of Object.values(phoneticBenchmarkGalleries)) {
-    assert.equal(gallery.runs.length, 19);
+    assert.equal(gallery.runs.length, 29);
     assert.deepEqual(
       gallery.resultGroups.map((group) => group.benchmarkVersion),
       ["v2", "v1"],
@@ -807,7 +997,7 @@ test("benchmark galleries expose versioned screenshots and explicit demo links",
       gallery.runs
         .filter((run) => run.benchmarkVersion === "v2")
         .map((run) => run.executionOrder),
-      Array.from({ length: 4 }, (_, index) => index + 1),
+      Array.from({ length: 14 }, (_, index) => index + 1),
     );
 
     gallery.runs.forEach((run) => {
@@ -1015,8 +1205,10 @@ test("benchmark report component keeps compact rows and selected screenshot case
   );
   assert.match(
     component,
-    /<th scope="row" data-label=\{report\.tableLabels\.model\}>/,
+    /const modelStatusLabel = `\$\{report\.tableLabels\.model\} \/ \$\{report\.tableLabels\.status\}`;/,
   );
+  assert.match(component, /<th scope="row" data-label=\{modelStatusLabel\}>/);
+  assert.match(component, /<th scope="col">\{modelStatusLabel\}<\/th>/);
   assert.match(component, /data-run-date=\{run\.runDate\}/);
   assert.match(component, /data-stack=\{run\.stack\}/);
   assert.match(component, /report\.tableLabels\.failureTypes/);

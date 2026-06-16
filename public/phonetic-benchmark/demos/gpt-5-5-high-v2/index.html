@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Phonetic Benchmark v2</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell" id="app">
+      <section class="topbar" data-i18n-aria="applicationControls" aria-label="Application controls">
+        <div>
+          <p class="kicker" data-i18n="benchmarkLabel">Phonetic Benchmark v2</p>
+          <h1 data-i18n="title">Phonetic trainer</h1>
+        </div>
+        <label class="language-picker">
+          <span data-i18n="languageLabel">Interface</span>
+          <select id="languageSelect" data-i18n-aria="languageAria" aria-label="Interface language">
+            <option value="en">English</option>
+            <option value="pl">Polski</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="setup-panel" id="setupPanel">
+        <div class="section-heading">
+          <h2 data-i18n="setupTitle">Set up a run</h2>
+          <p data-i18n="setupDescription">
+            Choose one alphabet and one input mode. Each run uses every symbol exactly once.
+          </p>
+        </div>
+
+        <form id="setupForm" class="setup-grid">
+          <fieldset>
+            <legend data-i18n="alphabetLegend">Alphabet</legend>
+            <label class="choice-card">
+              <input type="radio" name="alphabet" value="polish" checked />
+              <span>
+                <strong data-i18n="polishAlphabet">Polish phonetic alphabet</strong>
+                <small data-i18n="polishAlphabetMeta">34 symbols, including Polish diacritics</small>
+              </span>
+            </label>
+            <label class="choice-card">
+              <input type="radio" name="alphabet" value="nato" />
+              <span>
+                <strong data-i18n="natoAlphabet">NATO phonetic alphabet</strong>
+                <small data-i18n="natoAlphabetMeta">26 international radio codewords</small>
+              </span>
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend data-i18n="modeLegend">Exercise mode</legend>
+            <label class="choice-card">
+              <input type="radio" name="mode" value="keyboard" checked />
+              <span>
+                <strong data-i18n="keyboardMode">Keyboard mode</strong>
+                <small data-i18n="keyboardModeMeta">Type the exact codeword</small>
+              </span>
+            </label>
+            <label class="choice-card">
+              <input type="radio" name="mode" value="suggestion" />
+              <span>
+                <strong data-i18n="suggestionMode">Suggestion mode</strong>
+                <small data-i18n="suggestionModeMeta">Choose from four fixed options</small>
+              </span>
+            </label>
+          </fieldset>
+
+          <button class="primary-action" type="submit" data-i18n="startRun">Start run</button>
+        </form>
+      </section>
+
+      <section class="run-panel hidden" id="runPanel" aria-live="polite">
+        <div class="run-header">
+          <div>
+            <p class="kicker" id="runContext"></p>
+            <h2 id="questionTitle"></h2>
+          </div>
+          <div class="progress-block">
+            <span id="progressText"></span>
+            <div class="progress-track" aria-hidden="true">
+              <div id="progressBar" class="progress-bar"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="symbol-card">
+          <span data-i18n="symbolPrompt">Symbol</span>
+          <strong id="symbolDisplay"></strong>
+        </div>
+
+        <div class="feedback" id="feedback" role="status"></div>
+
+        <form class="answer-form" id="keyboardForm">
+          <label for="answerInput" data-i18n="answerLabel">Codeword</label>
+          <div class="answer-row">
+            <input id="answerInput" name="answer" autocomplete="off" spellcheck="false" />
+            <button type="submit" data-i18n="submitAnswer">Submit</button>
+          </div>
+        </form>
+
+        <div
+          class="options-grid hidden"
+          id="optionsGrid"
+          data-i18n-aria="optionsAria"
+          aria-label="Answer options"
+        ></div>
+
+        <div class="hint-panel hidden" id="hintPanel">
+          <span data-i18n="hintRevealedLabel">Hint</span>
+          <strong id="hintValue"></strong>
+        </div>
+
+        <div class="run-actions">
+          <button type="button" id="hintButton" data-i18n="showHint">Show hint</button>
+          <button type="button" id="resetButton" class="secondary-action" data-i18n="resetRun">Exit run</button>
+        </div>
+      </section>
+
+      <section class="result-panel hidden" id="resultPanel" aria-live="polite">
+        <p class="kicker" data-i18n="finishedLabel">Run finished</p>
+        <h2 id="scoreTitle"></h2>
+        <dl class="result-grid">
+          <div>
+            <dt data-i18n="resultAlphabet">Alphabet</dt>
+            <dd id="resultAlphabetValue"></dd>
+          </div>
+          <div>
+            <dt data-i18n="resultMode">Mode</dt>
+            <dd id="resultModeValue"></dd>
+          </div>
+          <div>
+            <dt data-i18n="resultHints">Hinted questions</dt>
+            <dd id="resultHintsValue"></dd>
+          </div>
+        </dl>
+        <div class="run-actions">
+          <button type="button" id="repeatButton" data-i18n="repeatRun">Repeat these settings</button>
+          <button type="button" id="changeSettingsButton" class="secondary-action" data-i18n="changeSettings">
+            Change settings
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer data-i18n="attribution">
+      Phonetic Benchmark by Piotr Kacała (piotrkacala.pl). Developed by GPT-5.5 (Codex) on 2026-06-15.
+    </footer>
+
+    <script type="module" src="./js/app.js"></script>
+  </body>
+</html>

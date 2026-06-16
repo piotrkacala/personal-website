@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phonetic Benchmark v2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            max-width: 900px;
+            width: 100%;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .attribution {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .setup-screen {
+            padding: 40px;
+            flex: 1;
+        }
+
+        .setup-content {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            transition: border-color 0.3s;
+        }
+
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .mode-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .mode-card {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .mode-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .mode-card.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .mode-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .mode-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .mode-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: block;
+            margin: 30px auto 0;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .start-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .exercise-screen {
+            display: none;
+            padding: 40px;
+            flex: 1;
+        }
+
+        .exercise-screen.active {
+            display: block;
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .progress-info {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .question-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .symbol-display {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+        }
+
+        .hint-btn {
+            background: #ffc107;
+            color: #856404;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            transition: background 0.3s;
+        }
+
+        .hint-btn:hover {
+            background: #ffb300;
+        }
+
+        .hint-btn.used {
+            background: #6c757d;
+            color: white;
+            cursor: not-allowed;
+        }
+
+        .hint-display {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            display: none;
+        }
+
+        .hint-display.show {
+            display: block;
+        }
+
+        .answer-area {
+            margin-bottom: 30px;
+        }
+
+        .answer-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 15px 20px;
+            font-size: 1.2rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: border-color 0.3s;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .option-btn {
+            padding: 15px;
+            font-size: 1rem;
+            border: 2px solid #e9ecef;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .option-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .option-btn.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .option-btn.correct {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+
+        .option-btn.incorrect {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            display: block;
+        }
+
+        .next-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .next-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .result-screen {
+            display: none;
+            padding: 40px;
+            text-align: center;
+            flex: 1;
+        }
+
+        .result-screen.active {
+            display: block;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .result-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: left;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .result-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .restart-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .language-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 20px;
+            padding: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .language-switch button {
+            padding: 8px 15px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 15px;
+            transition: background 0.3s;
+        }
+
+        .language-switch button.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                min-height: auto;
+                max-height: 100vh;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .setup-screen,
+            .exercise-screen,
+            .result-screen {
+                padding: 20px;
+            }
+
+            .mode-selector {
+                grid-template-columns: 1fr;
+            }
+
+            .symbol-display {
+                font-size: 3rem;
+                padding: 20px;
+            }
+
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-switch">
+        <button class="active" data-lang="en">EN</button>
+        <button data-lang="pl">PL</button>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1 id="app-title">Phonetic Benchmark v2</h1>
+            <p id="app-subtitle">Practice phonetic alphabets</p>
+        </div>
+
+        <div class="attribution" id="attribution">
+            Phonetic Benchmark by Piotr Kacała (piotrkacala.pl). Developed by {model_name_and_version} on {implementation_date}.
+        </div>
+
+        <div class="setup-screen active" id="setup-screen">
+            <div class="setup-content">
+                <div class="form-group">
+                    <label for="language-select" id="language-label">Interface Language</label>
+                    <select id="language-select">
+                        <option value="en">English</option>
+                        <option value="pl">Polish</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="alphabet-select" id="alphabet-label">Phonetic Alphabet</label>
+                    <select id="alphabet-select">
+                        <option value="nato">NATO Phonetic Alphabet</option>
+                        <option value="polish">Polish Phonetic Alphabet</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label id="mode-label">Exercise Mode</label>
+                    <div class="mode-selector">
+                        <div class="mode-card" data-mode="keyboard">
+                            <div class="mode-icon">⌨️</div>
+                            <div class="mode-title" id="keyboard-title">Keyboard Mode</div>
+                            <div class="mode-desc" id="keyboard-desc">Type the matching codeword</div>
+                        </div>
+                        <div class="mode-card" data-mode="suggestion">
+                            <div class="mode-icon">🔘</div>
+                            <div class="mode-title" id="suggestion-title">Suggestion Mode</div>
+                            <div class="mode-desc" id="suggestion-desc">Click the correct option</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="start-btn" id="start-btn" disabled>Start Exercise</button>
+            </div>
+        </div>
+
+        <div class="exercise-screen" id="exercise-screen">
+            <div class="exercise-header">
+                <div class="progress-info">
+                    <span id="progress-text">Question 1 of 26</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="symbol-display" id="symbol-display">?</div>
+                <button class="hint-btn" id="hint-btn">Show Hint</button>
+                <div class="hint-display" id="hint-display"></div>
+            </div>
+
+            <div class="answer-area" id="keyboard-area">
+                <input type="text" class="answer-input" id="answer-input" placeholder="ENTER ANSWER" maxlength="20" autocomplete="off">
+            </div>
+
+            <div class="options-grid" id="options-area" style="display: none;">
+            </div>
+
+            <div class="feedback" id="feedback"></div>
+
+            <button class="next-btn" id="next-btn" style="display: none;">Next</button>
+        </div>
+
+        <div class="result-screen" id="result-screen">
+            <div class="score-display" id="final-score">100%</div>
+            <div class="result-details">
+                <div class="result-detail">
+                    <span id="result-alphabet-label">Alphabet</span>:
+                    <span id="result-alphabet">NATO Phonetic Alphabet</span>
+                </div>
+                <div class="result-detail">
+                    <span id="result-mode-label">Mode</span>:
+                    <span id="result-mode">Keyboard Mode</span>
+                </div>
+                <div class="result-detail">
+                    <span id="result-questions-label">Questions</span>:
+                    <span id="result-questions">26</span>
+                </div>
+                <div class="result-detail">
+                    <span id="result-hinted-label">Hinted Questions</span>:
+                    <span id="result-hinted">0</span>
+                </div>
+            </div>
+            <button class="restart-btn" id="restart-btn">Start New Exercise</button>
+        </div>
+    </div>
+
+    <script>
+        // Translation data
+        const translations = {
+            en: {
+                appTitle: 'Phonetic Benchmark v2',
+                appSubtitle: 'Practice phonetic alphabets',
+                languageLabel: 'Interface Language',
+                alphabetLabel: 'Phonetic Alphabet',
+                modeLabel: 'Exercise Mode',
+                keyboardTitle: 'Keyboard Mode',
+                keyboardDesc: 'Type the matching codeword',
+                suggestionTitle: 'Suggestion Mode',
+                suggestionDesc: 'Click the correct option',
+                startBtn: 'Start Exercise',
+                progressText: 'Question {current} of {total}',
+                hintBtn: 'Show Hint',
+                nextBtn: 'Next',
+                resultScreenTitle: 'Exercise Complete!',
+                finalScore: '{score}%',
+                alphabetLabel: 'Alphabet',
+                modeLabel: 'Mode',
+                questionsLabel: 'Questions',
+                hintedLabel: 'Hinted Questions',
+                restartBtn: 'Start New Exercise'
+            },
+            pl: {
+                appTitle: 'Benchmark Fonetyczny v2',
+                appSubtitle: 'Ćwicz alfabety fonetyczne',
+                languageLabel: 'Język Interfejsu',
+                alphabetLabel: 'Alfabet Fonetyczny',
+                modeLabel: 'Tryb Ćwiczeń',
+                keyboardTitle: 'Tryb Klawiatury',
+                keyboardDesc: 'Wpisz pasujący kodoword',
+                suggestionTitle: 'Tryb Sugestii',
+                suggestionDesc: 'Kliknij poprawną opcję',
+                startBtn: 'Rozpocznij Ćwiczenia',
+                progressText: 'Pytanie {current} z {total}',
+                hintBtn: 'Pokaż Podpowiedź',
+                nextBtn: 'Następne',
+                resultScreenTitle: 'Ćwiczenia Ukończone!',
+                finalScore: '{score}%',
+                alphabetLabel: 'Alfabet',
+                modeLabel: 'Tryb',
+                questionsLabel: 'Pytania',
+                hintedLabel: 'Pytania z Podpowiedzią',
+                restartBtn: 'Rozpocznij Nowe Ćwiczenia'
+            }
+        };
+
+        // Application state
+        let currentLanguage = 'en';
+        let currentSession = null;
+        let currentSymbol = null;
+        let correctAnswer = null;
+        let hintUsed = false;
+        let selectedOption = null;
+        let alphabetsData = null;
+        let optionsData = null;
+        const sessions = {};
+
+        // DOM elements
+        const setupScreen = document.getElementById('setup-screen');
+        const exerciseScreen = document.getElementById('exercise-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const startBtn = document.getElementById('start-btn');
+        const languageSelect = document.getElementById('language-select');
+        const alphabetSelect = document.getElementById('alphabet-select');
+        const modeCards = document.querySelectorAll('.mode-card');
+        const symbolDisplay = document.getElementById('symbol-display');
+        const hintBtn = document.getElementById('hint-btn');
+        const hintDisplay = document.getElementById('hint-display');
+        const answerInput = document.getElementById('answer-input');
+        const optionsArea = document.getElementById('options-area');
+        const feedback = document.getElementById('feedback');
+        const nextBtn = document.getElementById('next-btn');
+        const progressText = document.getElementById('progress-text');
+        const progressFill = document.getElementById('progress-fill');
+        const appTitle = document.getElementById('app-title');
+        const appSubtitle = document.getElementById('app-subtitle');
+        const attribution = document.getElementById('attribution');
+        const languageLabels = document.querySelectorAll('[id$="-label"]');
+        const modeTitles = document.querySelectorAll('[id*="-title"]');
+        const modeDescs = document.querySelectorAll('[id*="-desc"]');
+
+        // Initialize
+        async function init() {
+            await loadBenchmarkData();
+            loadSessionFromUrl();
+            setupEventListeners();
+            updateLanguage();
+        }
+
+        async function loadBenchmarkData() {
+            const [alphabetsResponse, optionsResponse] = await Promise.all([
+                fetch('./benchmark-data/alphabets.json'),
+                fetch('./benchmark-data/multiple-choice-options.json')
+            ]);
+
+            alphabetsData = await alphabetsResponse.json();
+            optionsData = await optionsResponse.json();
+        }
+
+        function setupEventListeners() {
+            startBtn.addEventListener('click', startExercise);
+            languageSelect.addEventListener('change', updateLanguage);
+            hintBtn.addEventListener('click', showHint);
+            answerInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && !hintUsed) {
+                    submitAnswer();
+                }
+            });
+            nextBtn.addEventListener('click', nextQuestion);
+            document.getElementById('restart-btn').addEventListener('click', restartExercise);
+
+            modeCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    modeCards.forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    updateStartButton();
+                });
+            });
+
+            // Language switch buttons
+            document.querySelectorAll('.language-switch button').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.language-switch button').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentLanguage = e.target.dataset.lang;
+                    updateLanguage();
+                });
+            });
+
+            // Option buttons
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('option-btn')) {
+                    selectOption(e.target);
+                }
+            });
+        }
+
+        function updateLanguage() {
+            const t = translations[currentLanguage];
+
+            appTitle.textContent = t.appTitle;
+            appSubtitle.textContent = t.appSubtitle;
+            languageSelect.value = currentLanguage;
+            alphabetSelect.value = alphabetSelect.value;
+
+            // Update labels
+            languageLabels.forEach(el => {
+                const key = el.id.replace('-label', '');
+                if (t[key + 'Label']) {
+                    el.textContent = t[key + 'Label'];
+                }
+            });
+
+            // Update mode titles and descriptions
+            modeTitles.forEach(el => {
+                const key = el.id.replace('-title', '');
+                if (t[key + 'Title']) {
+                    el.textContent = t[key + 'Title'];
+                }
+            });
+
+            modeDescs.forEach(el => {
+                const key = el.id.replace('-desc', '');
+                if (t[key + 'Desc']) {
+                    el.textContent = t[key + 'Desc'];
+                }
+            });
+
+            startBtn.textContent = t.startBtn;
+            hintBtn.textContent = t.hintBtn;
+            nextBtn.textContent = t.nextBtn;
+
+            // Update attribution
+            attribution.innerHTML = attribution.innerHTML
+                .replace('{model_name_and_version}', 'AI Implementation')
+                .replace('{implementation_date}', new Date().toLocaleDateString());
+        }
+
+        function updateStartButton() {
+            const selectedMode = document.querySelector('.mode-card.selected');
+            startBtn.disabled = !selectedMode;
+        }
+
+        function shuffleArray(items) {
+            const shuffled = [...items];
+            for (let index = shuffled.length - 1; index > 0; index--) {
+                const swapIndex = Math.floor(Math.random() * (index + 1));
+                [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+            }
+            return shuffled;
+        }
+
+        function getCodeword(symbol, alphabetName) {
+            const alphabet = alphabetsData[alphabetName] || [];
+            const item = alphabet.find(entry => entry.symbol === symbol);
+            return item ? item.codeword : null;
+        }
+
+        function getOptions(symbol, alphabetName) {
+            const options = optionsData[alphabetName][symbol];
+            return options ? shuffleArray(options) : null;
+        }
+
+        function calculateScore(session) {
+            const totalQuestions = session.symbols.length;
+            const cleanQuestions = totalQuestions - session.hintedQuestions;
+            return Math.round((cleanQuestions / totalQuestions) * 100);
+        }
+
+        function createLocalSession(language, alphabet, mode) {
+            const sessionId = crypto.randomUUID
+                ? crypto.randomUUID()
+                : `session-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+            const symbols = shuffleArray(alphabetsData[alphabet].map(item => item.symbol));
+
+            sessions[sessionId] = {
+                id: sessionId,
+                language,
+                alphabet,
+                mode,
+                symbols,
+                currentIndex: 0,
+                score: 0,
+                hintedQuestions: 0,
+                hints: {}
+            };
+
+            return { sessionId };
+        }
+
+        function getLocalSessionData(sessionId) {
+            const session = sessions[sessionId];
+            const currentSymbol = session.symbols[session.currentIndex];
+            const currentCodeword = getCodeword(currentSymbol, session.alphabet);
+
+            return {
+                sessionId: session.id,
+                language: session.language,
+                alphabet: session.alphabet,
+                mode: session.mode,
+                currentSymbol,
+                currentCodeword,
+                options: session.mode === 'suggestion' ? getOptions(currentSymbol, session.alphabet) : null,
+                hint: session.hints[session.currentIndex] || null,
+                progress: {
+                    currentIndex: session.currentIndex,
+                    total: session.symbols.length,
+                    percentage: Math.round((session.currentIndex / session.symbols.length) * 100)
+                },
+                score: session.score,
+                hintedQuestions: session.hintedQuestions
+            };
+        }
+
+        function startExercise() {
+            const selectedMode = document.querySelector('.mode-card.selected');
+            if (!selectedMode) return;
+
+            const language = languageSelect.value;
+            const alphabet = alphabetSelect.value;
+            const mode = selectedMode.dataset.mode;
+
+            setupScreen.classList.remove('active');
+            exerciseScreen.classList.add('active');
+
+            createSession(language, alphabet, mode);
+        }
+
+        function createSession(language, alphabet, mode) {
+            Promise.resolve(createLocalSession(language, alphabet, mode))
+            .then(data => {
+                currentSession = data.sessionId;
+                loadSession();
+            })
+            .catch(error => {
+                console.error('Error creating session:', error);
+                alert('Error starting exercise. Please try again.');
+            });
+        }
+
+        function loadSession() {
+            Promise.resolve(getLocalSessionData(currentSession))
+            .then(data => {
+                updateExerciseDisplay(data);
+            })
+            .catch(error => {
+                console.error('Error loading session:', error);
+            });
+        }
+
+        function updateExerciseDisplay(data) {
+            symbolDisplay.textContent = data.currentSymbol;
+            currentSymbol = data.currentSymbol;
+            correctAnswer = data.currentCodeword;
+            hintUsed = false;
+            selectedOption = null;
+
+            hintDisplay.classList.remove('show');
+            hintDisplay.textContent = '';
+            feedback.style.display = 'none';
+            nextBtn.style.display = 'none';
+            answerInput.value = '';
+            answerInput.disabled = false;
+
+            if (data.mode === 'keyboard') {
+                optionsArea.style.display = 'none';
+                answerInput.style.display = 'block';
+                answerInput.focus();
+                hintBtn.style.display = 'inline-block';
+            } else {
+                optionsArea.style.display = 'grid';
+                answerInput.style.display = 'none';
+                hintBtn.style.display = 'inline-block';
+                renderOptions(data.options);
+            }
+
+            updateProgress(data.progress);
+        }
+
+        function renderOptions(options) {
+            optionsArea.innerHTML = '';
+            options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = option;
+                btn.dataset.index = index;
+                btn.addEventListener('click', () => selectOption(btn));
+                optionsArea.appendChild(btn);
+            });
+        }
+
+        function selectOption(button) {
+            if (currentSession && document.querySelector('.exercise-screen.active')) {
+                const allButtons = document.querySelectorAll('.option-btn');
+                allButtons.forEach(btn => btn.classList.remove('selected'));
+
+                button.classList.add('selected');
+                selectedOption = button.textContent;
+                submitAnswer();
+            }
+        }
+
+        function showHint() {
+            if (hintUsed) return;
+
+            hintUsed = true;
+            hintBtn.classList.add('used');
+            hintBtn.textContent = 'Hint Used';
+
+            const session = sessions[currentSession];
+            const currentIndex = session.currentIndex;
+            const currentSymbol = session.symbols[currentIndex];
+            const hint = getCodeword(currentSymbol, session.alphabet);
+            session.hints[currentIndex] = hint;
+            session.hintedQuestions++;
+
+            Promise.resolve({ hint })
+            .then(data => {
+                hintDisplay.textContent = data.hint;
+                hintDisplay.classList.add('show');
+            })
+            .catch(error => {
+                console.error('Error showing hint:', error);
+            });
+        }
+
+        function submitAnswer() {
+            const answer = currentSession && document.querySelector('.exercise-screen.active') 
+                ? (selectedOption || answerInput.value)
+                : null;
+
+            if (!answer || hintUsed) return;
+
+            const session = sessions[currentSession];
+            const currentSymbol = session.symbols[session.currentIndex];
+            const correctCodeword = getCodeword(currentSymbol, session.alphabet);
+            const isCorrect = answer.trim().toLowerCase() === correctCodeword.toLowerCase();
+
+            if (isCorrect) {
+                session.currentIndex++;
+                if (session.currentIndex >= session.symbols.length) {
+                    session.score = calculateScore(session);
+                }
+            }
+
+            Promise.resolve({
+                isCorrect,
+                correctAnswer: correctCodeword,
+                progress: {
+                    currentIndex: session.currentIndex,
+                    total: session.symbols.length,
+                    completed: session.currentIndex >= session.symbols.length
+                },
+                score: session.score,
+                completed: session.currentIndex >= session.symbols.length
+            })
+            .then(data => {
+                if (data.isCorrect) {
+                    feedback.className = 'feedback correct';
+                    feedback.textContent = 'Correct!';
+                    feedback.style.display = 'block';
+
+                    if (data.completed) {
+                        setTimeout(() => {
+                            showResult(data.score);
+                        }, 1000);
+                    } else {
+                        nextBtn.style.display = 'block';
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.textContent = `Incorrect. The correct answer is: ${data.correctAnswer}`;
+                    feedback.style.display = 'block';
+                    nextBtn.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting answer:', error);
+            });
+        }
+
+        function nextQuestion() {
+            loadSession();
+        }
+
+        function showResult(score) {
+            exerciseScreen.classList.remove('active');
+            resultScreen.classList.add('active');
+
+            const finalScore = document.getElementById('final-score');
+            finalScore.textContent = `${score}%`;
+
+            const resultAlphabet = document.getElementById('result-alphabet');
+            const resultMode = document.getElementById('result-mode');
+            const resultQuestions = document.getElementById('result-questions');
+            const resultHinted = document.getElementById('result-hinted');
+
+            resultAlphabet.textContent = alphabetSelect.options[alphabetSelect.selectedIndex].text;
+            resultMode.textContent = document.querySelector('.mode-card.selected .mode-title').textContent;
+            resultQuestions.textContent = alphabetSelect.value === 'polish' ? '34' : '26';
+            resultHinted.textContent = '0';
+        }
+
+        function restartExercise() {
+            resultScreen.classList.remove('active');
+            setupScreen.classList.add('active');
+
+            modeCards.forEach(card => card.classList.remove('selected'));
+            updateStartButton();
+        }
+
+        function updateProgress(progress) {
+            const current = progress.currentIndex;
+            const total = progress.total;
+            const percentage = progress.percentage;
+
+            progressText.textContent = `Question ${current} of ${total}`;
+            progressFill.style.width = `${percentage}%`;
+        }
+
+        function loadSessionFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sessionId = urlParams.get('session');
+            if (sessionId) {
+                currentSession = sessionId;
+            }
+        }
+
+        // Initialize the app
+        init();
+    </script>
+</body>
+</html>

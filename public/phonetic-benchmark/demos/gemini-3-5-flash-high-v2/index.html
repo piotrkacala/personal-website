@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phonetic Training Web Application - Phonetic Benchmark v2</title>
+  <meta name="description" content="A browser-based learning tool for practicing NATO and Polish phonetic alphabets. Developed for Phonetic Benchmark v2." />
+  
+  <!-- Preconnect and Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet" />
+  
+  <!-- CSS Stylesheet -->
+  <script type="module" crossorigin src="./assets/index-BkYiH9MZ.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BAxc_dxC.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <h1 id="app-main-title">Phonetic Trainer</h1>
+      <div class="lang-switcher" aria-label="Language selection">
+        <button id="lang-btn-en" class="btn-lang active" data-lang="en" aria-label="Switch to English">EN</button>
+        <button id="lang-btn-pl" class="btn-lang" data-lang="pl" aria-label="Przełącz na język polski">PL</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div id="app-card" class="card">
+      
+      <!-- SETUP / CONFIGURATION SCREEN -->
+      <section id="setup-view" class="view" aria-labelledby="setup-title">
+        <h2 id="setup-title">Setup Training Session</h2>
+        
+        <div class="form-group">
+          <span id="label-alphabet" class="field-label">Select Phonetic Alphabet</span>
+          <div class="btn-group" role="radiogroup" aria-labelledby="label-alphabet">
+            <button id="alphabet-btn-polish" class="btn-choice active" data-alphabet="polish" role="radio" aria-checked="true">
+              Polish Phonetic
+            </button>
+            <button id="alphabet-btn-nato" class="btn-choice" data-alphabet="nato" role="radio" aria-checked="false">
+              NATO Phonetic
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <span id="label-mode" class="field-label">Select Exercise Mode</span>
+          <div class="btn-group" role="radiogroup" aria-labelledby="label-mode">
+            <button id="mode-btn-keyboard" class="btn-choice active" data-mode="keyboard" role="radio" aria-checked="true">
+              Keyboard Mode
+            </button>
+            <button id="mode-btn-suggestion" class="btn-choice" data-mode="suggestion" role="radio" aria-checked="false">
+              Suggestion Mode
+            </button>
+          </div>
+        </div>
+
+        <button id="start-btn" class="btn-primary">Start Session</button>
+      </section>
+
+      <!-- ACTIVE SESSION SCREEN -->
+      <section id="session-view" class="view hidden" aria-labelledby="session-title">
+        <div class="session-header">
+          <h2 id="session-title" class="sr-only">Training Session</h2>
+          <span id="session-info">Polish Phonetic - Keyboard Mode</span>
+          <button id="session-reset-btn" class="btn-text" aria-label="Reset training session">Reset</button>
+        </div>
+
+        <div class="progress-bar-container">
+          <div id="progress-bar" class="progress-bar" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+
+        <div class="progress-meta">
+          <span id="progress-text">Question 1 / 34</span>
+          <span id="score-text">Clean: 0 | Hinted: 0</span>
+        </div>
+
+        <div class="question-panel">
+          <div id="symbol-display" class="symbol-display">A</div>
+        </div>
+
+        <!-- Answering Interface -->
+        <div class="answer-container">
+          <!-- Keyboard Mode input form -->
+          <form id="keyboard-form" class="input-form">
+            <div class="input-wrapper">
+              <input type="text" id="codeword-input" placeholder="Type codeword..." autocomplete="off" aria-label="Codeword input" />
+            </div>
+            <button type="submit" id="submit-btn" class="btn-primary">Submit</button>
+          </form>
+
+          <!-- Suggestion Mode button grid -->
+          <div id="suggestion-grid" class="suggestion-grid hidden">
+            <button id="option-0" class="btn-option" aria-label="Option 1"></button>
+            <button id="option-1" class="btn-option" aria-label="Option 2"></button>
+            <button id="option-2" class="btn-option" aria-label="Option 3"></button>
+            <button id="option-3" class="btn-option" aria-label="Option 4"></button>
+          </div>
+        </div>
+
+        <!-- Hint and Feedback -->
+        <div class="hints-and-feedback">
+          <div id="hint-display" class="hint-display hidden" role="status">
+            <span id="hint-text">Hint: codeword</span>
+          </div>
+          <div id="feedback-display" class="feedback-display hidden" role="alert">
+            <span id="feedback-text">Incorrect, try again!</span>
+          </div>
+        </div>
+
+        <div class="actions-container">
+          <button id="hint-btn" class="btn-secondary">Reveal Hint</button>
+        </div>
+      </section>
+
+      <!-- RESULTS SCREEN -->
+      <section id="result-view" class="view hidden" aria-labelledby="result-title">
+        <h2 id="result-title">Training Completed!</h2>
+        <p id="result-meta" class="result-meta">Polish Phonetic - Keyboard Mode</p>
+
+        <div class="result-graphic">
+          <div class="score-ring">
+            <span id="result-score-percent">100%</span>
+          </div>
+        </div>
+
+        <div class="result-details">
+          <div class="detail-row">
+            <span id="lbl-total" class="detail-label">Total Questions</span>
+            <span id="result-total-questions" class="detail-value">34</span>
+          </div>
+          <div class="detail-row">
+            <span id="lbl-clean" class="detail-label">Clean Answers</span>
+            <span id="result-clean-answers" class="detail-value">34</span>
+          </div>
+          <div class="detail-row">
+            <span id="lbl-hinted" class="detail-label">Hinted Answers</span>
+            <span id="result-hinted-answers" class="detail-value">0</span>
+          </div>
+        </div>
+
+        <button id="restart-btn" class="btn-primary">Start New Session</button>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <p id="attribution-line">Phonetic Benchmark by Piotr Kacała (piotrkacala.pl). Developed by Gemini 3.5 Flash on 2026-06-12.</p>
+    </div>
+  </footer>
+
+  <!-- Core JavaScript -->
+</body>
+</html>

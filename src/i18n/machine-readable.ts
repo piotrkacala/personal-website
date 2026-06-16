@@ -276,6 +276,9 @@ function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
       lines.push(
         `- ${report.tableLabels.testCount}: ${run.testEvidence ?? String(run.testCount)}`,
       );
+      lines.push(
+        `- Comparative score: ${run.comparativeScore ?? "not published"}`,
+      );
       lines.push(`- ${report.detailLabels.stack}: ${run.stack}`);
       lines.push(
         `- ${report.tableLabels.functionalRead}: ${run.functionalRead}`,
@@ -395,6 +398,7 @@ function renderBenchmarkRunMarkdown(run: BenchmarkRunCopy): string {
     `- Failure types: ${run.failureTypes.length > 0 ? run.failureTypes.join(", ") : "none"}`,
     `- Source LoC: ${run.sourceLoc}`,
     `- Automated test evidence: ${run.testEvidence ?? String(run.testCount)}`,
+    `- Comparative score: ${run.comparativeScore ?? "not published"}`,
     `- Stack: ${run.stack}`,
     "",
     heading(2, "Observed Strengths"),

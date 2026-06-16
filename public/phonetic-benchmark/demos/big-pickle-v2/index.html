@@ -3,82 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-i18n="app.title">Phonetic Training</title>
-  <script type="module" crossorigin src="./assets/index-DQ3xEmVh.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-rSkqoi0G.css">
+  <title>Phonetic Benchmark</title>
+  <script type="module" crossorigin src="./assets/index-BHYroYFV.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-mnKC-E3e.css">
 </head>
 <body>
-  <div class="container">
-    <!-- Setup Screen -->
-    <div id="setup-screen">
-      <h1 data-i18n="app.title">Phonetic Training</h1>
-      <h2 data-i18n="setup.heading">Setup</h2>
-      <div class="setup-form">
-        <div>
-          <label for="setup-language" data-i18n="setup.language">Interface language</label>
-          <select id="setup-language">
-            <option value="en" data-i18n="setup.choose">English</option>
-            <option value="pl" data-i18n="setup.choose">Polski</option>
-          </select>
-        </div>
-        <div>
-          <label for="setup-alphabet" data-i18n="setup.alphabet">Phonetic alphabet</label>
-          <select id="setup-alphabet">
-            <option value="polish" data-i18n="setup.alphabet.polish">Polish</option>
-            <option value="nato" data-i18n="setup.alphabet.nato">NATO</option>
-          </select>
-        </div>
-        <div>
-          <label for="setup-mode" data-i18n="setup.mode">Exercise mode</label>
-          <select id="setup-mode">
-            <option value="keyboard" data-i18n="setup.mode.keyboard">Keyboard</option>
-            <option value="suggestion" data-i18n="setup.mode.suggestion">Suggestion</option>
-          </select>
-        </div>
-        <button id="setup-start" data-i18n="setup.start">Start</button>
+  <div id="app">
+    <div id="view-setup" class="view active">
+      <h1 id="setup-title"></h1>
+      <div class="form-group">
+        <label id="label-language"></label>
+        <select id="input-language">
+          <option value="en">English</option>
+          <option value="pl">Polski</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label id="label-alphabet"></label>
+        <select id="input-alphabet">
+          <option value="polish">Polish</option>
+          <option value="nato">NATO</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label id="label-mode"></label>
+        <select id="input-mode">
+          <option value="keyboard">Keyboard</option>
+          <option value="suggestion">Suggestion</option>
+        </select>
+      </div>
+      <button id="btn-start" class="btn-primary"></button>
+    </div>
+
+    <div id="view-exercise" class="view">
+      <div id="exercise-header">
+        <span id="progress"></span>
+      </div>
+      <div id="exercise-body">
+        <div id="symbol-display"></div>
+        <div id="hint-area"></div>
+        <div id="input-area"></div>
+        <div id="feedback"></div>
+      </div>
+      <div id="exercise-footer">
+        <button id="btn-hint" class="btn-secondary"></button>
       </div>
     </div>
 
-    <!-- Exercise Screen -->
-    <div id="exercise-screen" class="hidden">
-      <div class="exercise-header">
-        <h2 data-i18n="exercise.heading">Exercise</h2>
-        <span id="ex-progress">0/0</span>
-      </div>
-      <div class="symbol-display">
-        <div class="symbol" id="ex-symbol">A</div>
-      </div>
-      <div id="ex-keyboard-group" class="keyboard-group">
-        <input type="text" id="ex-keyboard-input" data-i18n="exercise.keyboard.placeholder" placeholder="Type codeword..." autocomplete="off">
-        <button id="ex-submit" data-i18n="exercise.submit">Submit</button>
-      </div>
-      <div id="ex-suggestion-group" class="suggestion-group hidden">
-        <div id="ex-suggestion-buttons" class="suggestion-buttons"></div>
-      </div>
-      <div class="exercise-actions">
-        <button id="ex-hint" data-i18n="exercise.hint">Hint</button>
-      </div>
-      <div id="ex-hint-text" class="hint-text hidden"></div>
-      <div id="ex-feedback"></div>
-    </div>
-
-    <!-- Result Screen -->
-    <div id="result-screen" class="hidden">
-      <div class="result-card">
-        <h2 data-i18n="result.heading">Result</h2>
-        <div class="result-score" id="result-score">100%</div>
-        <div class="result-stats" id="result-stats"></div>
-        <div class="result-info" id="result-info"></div>
-        <div class="result-actions">
-          <button id="result-play-again" data-i18n="result.playAgain">Play again</button>
-        </div>
-      </div>
+    <div id="view-result" class="view">
+      <h1 id="result-title"></h1>
+      <div id="result-score"></div>
+      <div id="result-details"></div>
+      <button id="btn-restart" class="btn-primary"></button>
     </div>
   </div>
 
-  <footer>
-    <span id="footer-attribution">Phonetic Benchmark by Piotr Kacała (piotrkacala.pl). Developed by Big-Pickle on 2026-06-03.</span>
-  </footer>
+  <footer id="app-footer"></footer>
 
 </body>
 </html>

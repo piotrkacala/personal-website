@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phonetic Benchmark</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1 id="app-title"></h1>
+    </header>
+
+    <main id="main-content">
+      <!-- Setup screen -->
+      <section id="setup-screen" class="screen active">
+        <div class="setup-group">
+          <label id="label-language"></label>
+          <div class="button-row">
+            <button class="option-btn" data-lang="pl">Polski</button>
+            <button class="option-btn" data-lang="en">English</button>
+          </div>
+        </div>
+
+        <div class="setup-group">
+          <label id="label-alphabet"></label>
+          <div class="button-row">
+            <button class="option-btn" data-alphabet="polish"></button>
+            <button class="option-btn" data-alphabet="nato"></button>
+          </div>
+        </div>
+
+        <div class="setup-group">
+          <label id="label-mode"></label>
+          <div class="button-row">
+            <button class="option-btn" data-mode="keyboard"></button>
+            <button class="option-btn" data-mode="suggestion"></button>
+          </div>
+        </div>
+
+        <button id="start-btn" class="primary-btn" disabled></button>
+      </section>
+
+      <!-- Exercise screen -->
+      <section id="exercise-screen" class="screen">
+        <div class="progress-bar">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+        <div id="progress-text" class="progress-text"></div>
+
+        <div id="symbol-display" class="symbol-display"></div>
+
+        <div id="keyboard-input-area" class="input-area" style="display:none;">
+          <input type="text" id="answer-input" autocomplete="off" spellcheck="false">
+          <button id="submit-answer" class="primary-btn"></button>
+        </div>
+
+        <div id="suggestion-area" class="input-area" style="display:none;">
+          <div id="suggestion-buttons" class="suggestion-grid"></div>
+        </div>
+
+        <div id="hint-area" class="hint-area">
+          <button id="hint-btn" class="hint-btn"></button>
+          <div id="hint-text" class="hint-text" style="display:none;"></div>
+        </div>
+
+        <div id="feedback" class="feedback"></div>
+      </section>
+
+      <!-- Result screen -->
+      <section id="result-screen" class="screen">
+        <div id="result-content" class="result-content"></div>
+        <button id="restart-btn" class="primary-btn"></button>
+      </section>
+    </main>
+
+    <footer id="attribution" class="attribution"></footer>
+  </div>
+
+  <script src="./core.js"></script>
+  <script src="./i18n.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
