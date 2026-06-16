@@ -40,8 +40,12 @@ src/components/
 
 - Mobile-first: base styles for mobile, `md:` / `lg:` for wider viewports
 - No arbitrary values (`p-[17px]`) unless there is no Tailwind equivalent
-- No `@apply` in component files — utility classes directly in markup
+- Prefer Tailwind utility classes directly in markup for simple spacing, layout, sizing, and color use
+- Component-scoped `<style>` blocks are acceptable for complex document layouts, repeated child selectors,
+  responsive reading rhythm, and styles built around shared project tokens
+- No `@apply` in component files
 - Use CSS custom properties for any values that appear in more than one place (colors, spacing rhythm)
+- Consider Tailwind v4 `@theme` aliases when a token starts being used repeatedly through utility classes
 
 **Responsive breakpoints:** Tailwind defaults. No custom breakpoints at v1.
 

@@ -167,6 +167,11 @@ h2 {
 p {
   max-width: 62ch;
   margin: 0;
+  text-wrap: pretty;
+}
+
+li {
+  text-wrap: pretty;
 }
 
 a {
@@ -197,5 +202,37 @@ hr {
   :root {
     --page-inline: clamp(2.5rem, 8vw, 6.5rem);
     --page-measure: 44rem;
+  }
+}
+
+@media print {
+  :root {
+    --background: #fff;
+    --text: #000;
+    --accent: #000;
+    --divider: rgb(0 0 0 / 28%);
+    --page-inline: 0;
+    --page-block: 0;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .site-header {
+    display: none;
+  }
+
+  a {
+    color: #000;
+    text-decoration-thickness: 0.06em;
+  }
+
+  .document-flow > * + *,
+  .document-section > * + *,
+  .project-entry {
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 }

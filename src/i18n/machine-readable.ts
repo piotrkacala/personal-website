@@ -259,9 +259,13 @@ function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
     group.runs.forEach((run) => {
       lines.push(heading(4, run.model));
       lines.push("");
-      lines.push(`- ID: ${run.id}`);
-      lines.push(`- Benchmark version: ${run.benchmarkVersion}`);
-      lines.push(`- Status: ${run.status}`);
+      lines.push(`- ${report.detailLabels.id}: ${run.id}`);
+      lines.push(
+        `- ${report.detailLabels.benchmarkVersion}: ${report.versionLabels[run.benchmarkVersion]}`,
+      );
+      lines.push(
+        `- ${report.tableLabels.status}: ${report.statusLabels[run.status]}`,
+      );
       lines.push(
         `- ${report.tableLabels.failureTypes}: ${
           run.failureTypes.length > 0
@@ -276,17 +280,21 @@ function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
       lines.push(
         `- ${report.tableLabels.testCount}: ${run.testEvidence ?? String(run.testCount)}`,
       );
-      lines.push(
-        `- Comparative score: ${run.comparativeScore ?? "not published"}`,
-      );
+      if (run.comparativeScore !== undefined) {
+        lines.push(
+          `- ${report.detailLabels.comparativeScore}: ${run.comparativeScore}`,
+        );
+      }
       lines.push(`- ${report.detailLabels.stack}: ${run.stack}`);
       lines.push(
         `- ${report.tableLabels.functionalRead}: ${run.functionalRead}`,
       );
-      lines.push(`- Details: ${run.detailsUrl}`);
-      lines.push(`- Markdown details: ${run.markdownUrl}`);
-      lines.push(`- Screenshot: ${run.screenshotUrl}`);
-      lines.push(`- Demo: ${run.demoUrl}`);
+      lines.push(`- ${report.tableLabels.details}: ${run.detailsUrl}`);
+      lines.push(
+        `- ${report.detailLabels.markdownDetails}: ${run.markdownUrl}`,
+      );
+      lines.push(`- ${report.detailLabels.screenshot}: ${run.screenshotUrl}`);
+      lines.push(`- ${report.detailLabels.demo}: ${run.demoUrl}`);
       lines.push("");
     });
   });
@@ -398,7 +406,9 @@ function renderBenchmarkRunMarkdown(run: BenchmarkRunCopy): string {
     `- Failure types: ${run.failureTypes.length > 0 ? run.failureTypes.join(", ") : "none"}`,
     `- Source LoC: ${run.sourceLoc}`,
     `- Automated test evidence: ${run.testEvidence ?? String(run.testCount)}`,
-    `- Comparative score: ${run.comparativeScore ?? "not published"}`,
+    ...(run.comparativeScore !== undefined
+      ? [`- Comparative score: ${run.comparativeScore}`]
+      : []),
     `- Stack: ${run.stack}`,
     "",
     heading(2, "Observed Strengths"),
@@ -699,7 +709,17 @@ function renderLlmsFull(): string {
     "",
     "### Run-details directory",
     "",
-    ...phoneticBenchmarkRuns.map((run) => `- ${run.model}: ${run.detailsUrl}`),
+    ...phoneticBenchmarkReports.en.resultGroups.flatMap((group) => [
+      heading(4, group.heading),
+      "",
+      ...getBenchmarkRunGroupRuns(
+        phoneticBenchmarkReports.en.runs,
+        group.benchmarkVersion,
+      ).map(
+        (run) => `- ${run.model} (${run.benchmarkVersion}): ${run.detailsUrl}`,
+      ),
+      "",
+    ]),
     "",
     "## Public references",
     "",

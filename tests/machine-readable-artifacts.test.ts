@@ -317,6 +317,16 @@ test("llms-full.txt carries the consolidated public references", () => {
     /^- Phonetic Benchmark methodology: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/methodology\/$/m,
   );
   assert.match(content, /^### Run-details directory$/m);
+  assert.match(content, /^#### v2 Batch$/m);
+  assert.match(content, /^#### v1 Snapshot$/m);
+  assert.match(
+    content,
+    /^- DeepSeek V4 Flash \(v2\): https:\/\/piotrkacala\.pl\/phonetic-benchmark\/runs\/deepseek-v4-flash-v2\/$/m,
+  );
+  assert.match(
+    content,
+    /^- GPT 5\.4 High \(v1\): https:\/\/piotrkacala\.pl\/phonetic-benchmark\/runs\/gpt-5-4-high\/$/m,
+  );
   assert.match(content, /^- Contact: mailto:kontakt@piotrkacala\.pl$/m);
   assert.match(
     content,
@@ -403,7 +413,7 @@ test("English Phonetic Benchmark markdown publishes all runs without private wor
   assert.match(content, /^- ID: kimi-k2-6$/m);
   assert.match(content, /^- Benchmark version: v1$/m);
   assert.match(content, /^- Benchmark version: v2$/m);
-  assert.match(content, /^- Status: contract-failing$/m);
+  assert.match(content, /^- Status: Contract-failing$/m);
   assert.match(content, /^- Failure types: attribution, test workflow$/m);
   assert.match(content, /^- Run date: 2026-06-01$/m);
   assert.match(content, /^- Source LoC: 2314$/m);
@@ -475,7 +485,8 @@ test("Polish Phonetic Benchmark markdown carries localized narrative and all dem
   assert.match(content, /^- ID: gpt-5-4-high$/m);
   assert.match(content, /^- ID: deepseek-v4-flash-v2$/m);
   assert.match(content, /^- ID: kimi-k2-6$/m);
-  assert.match(content, /^- Status: unrunnable$/m);
+  assert.match(content, /^- Wersja benchmarku: v2$/m);
+  assert.match(content, /^- Status: Niedziałająca$/m);
   assert.match(content, /^- Typy problemów: atrybucja, workflow testów$/m);
   assert.match(content, /^- Data próby: 2026-05-29$/m);
   assert.match(content, /^- Dowody testów automatycznych: 40$/m);
@@ -490,7 +501,7 @@ test("Polish Phonetic Benchmark markdown carries localized narrative and all dem
     assert.match(
       content,
       new RegExp(
-        `^- Screenshot: https:\\/\\/piotrkacala\\.pl\\/phonetic-benchmark\\/screenshots\\/${runId}-quiz\\.png$`,
+        `^- Zrzut ekranu: https:\\/\\/piotrkacala\\.pl\\/phonetic-benchmark\\/screenshots\\/${runId}-quiz\\.png$`,
         "m",
       ),
     );
@@ -957,13 +968,14 @@ test("methodology and every run record have generated markdown discovery surface
         "m",
       ),
     );
-    assert.match(
-      content,
-      new RegExp(
-        `^- Comparative score: ${run.comparativeScore ?? "not published"}$`,
-        "m",
-      ),
-    );
+    if (run.comparativeScore !== undefined) {
+      assert.match(
+        content,
+        new RegExp(`^- Comparative score: ${run.comparativeScore}$`, "m"),
+      );
+    } else {
+      assert.doesNotMatch(content, /^- Comparative score:/m);
+    }
     assert.match(
       content,
       new RegExp(`^- Archived demo: ${escapeRegExp(run.demoUrl)}$`, "m"),
@@ -1124,6 +1136,17 @@ test("static discovery files include consulting, report, and gallery paths", () 
       ),
     );
   });
+});
+
+test("shared layout exposes llms.txt and keeps repeated navigation out of snippets", () => {
+  const layout = readFileSync("src/layouts/Base.astro", "utf8");
+
+  assert.match(
+    layout,
+    /<link rel="alternate" type="text\/plain" title="LLMs\.txt" href="\/llms\.txt" \/>/,
+  );
+  assert.match(layout, /<header\s+class="site-header[^"]*"/);
+  assert.match(layout, /data-nosnippet/);
 });
 
 test("consulting routes expose localized alternates and the shared page component", () => {

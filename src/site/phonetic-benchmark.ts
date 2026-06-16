@@ -97,8 +97,14 @@ export interface BenchmarkReportCopy {
     details: string;
   };
   detailLabels: {
+    id: string;
+    benchmarkVersion: string;
+    comparativeScore: string;
     runDate: string;
     stack: string;
+    markdownDetails: string;
+    screenshot: string;
+    demo: string;
   };
   statusLabels: Readonly<Record<BenchmarkStatus, string>>;
   failureTypeLabels: Readonly<Record<BenchmarkFailureType, string>>;
@@ -976,7 +982,7 @@ const functionalReads = {
     "laguna-m-1-v2":
       "Compact no-build v2 submission with passing runner evidence and clear docs, but formally contract-failing. Repeated hint clicks on one question lower the final score too much, and the attribution footer does not localize to Polish.",
     "north-mini-code-free-v2":
-      "Server-backed v2 submission with a runnable UI and passing verification script, but formally contract-failing. Attribution is generic and runtime-dated, hint use blocks answer submission, and the package test command does not run the submitted Jest-style tests.",
+      "Server-backed v2 submission with a runnable UI and passing verification script, but formally contract-failing. Attribution is generic and runtime-dated, hint use blocks submitting the answer for that question, and the package test command does not run the submitted Jest-style tests.",
     "owl-alpha-v2":
       "Strong no-build v2 run with clear docs, passing controlled-runner evidence, and good observed behavior. It makes a restrictive but coherent decision to lock language and omit reset during an active run.",
     "opus-4-6-thinking-v2":
@@ -1036,11 +1042,11 @@ const functionalReads = {
     "laguna-m-1-v2":
       "Zwarty run v2 bez buildu, z przechodzącym runnerem i czytelną dokumentacją, ale formalnie contract-failing. Powtórne kliknięcia hintu na jednym pytaniu zaniżają wynik, a stopka atrybucji nie przełącza się na polski.",
     "north-mini-code-free-v2":
-      "Server-backed run v2 z działającym UI i przechodzącym skryptem weryfikacji, ale formalnie contract-failing. Atrybucja jest generyczna i runtime-dated, użycie hintu blokuje odpowiedź, a komenda testowa nie uruchamia dostarczonych testów w stylu Jest.",
+      "Server-backed run v2 z działającym UI i przechodzącym skryptem weryfikacji, ale formalnie contract-failing. Atrybucja jest generyczna i runtime-dated, użycie hintu blokuje możliwość zatwierdzenia odpowiedzi na to pytanie, a komenda testowa nie uruchamia dostarczonych testów w stylu Jest.",
     "owl-alpha-v2":
       "Mocny run v2 bez buildu, z czytelną dokumentacją, przechodzącym controlled runnerem i dobrym zachowaniem w sprawdzonym flow. Restrykcyjnie, ale spójnie blokuje zmianę języka i reset podczas aktywnej próby.",
     "opus-4-6-thinking-v2":
-      "Działający run v2 z mocnymi testami i poprawnymi głównymi flow, ale formalnie contract-failing, bo wymagana stopka z atrybucją nie przełącza się na polski po zmianie języka UI. Powtarzany fade całej karty na setupie i w quizie też przeszkadza.",
+      "Działający run v2 z mocnymi testami i poprawnymi głównymi flow, ale formalnie contract-failing, bo wymagana stopka z atrybucją nie przełącza się na polski po zmianie języka UI. Powtarzające się wygaszanie (fade) całej karty na setupie i w quizie też przeszkadza.",
     "gemini-3-5-flash-high-v2":
       "Działający run v2 z czytelną dokumentacją i przechodzącym controlled runnerem, ale formalnie contract-failing. Stopka z atrybucją nie przełącza się na polski, a szybkie powtórne zatwierdzenie odpowiedzi klawiaturą może pominąć symbole.",
     "sonnet-4-6-thinking-v2":
@@ -1144,11 +1150,11 @@ export const phoneticBenchmarkReports = {
     eyebrow: "AI agent development benchmark",
     title: "Phonetic Benchmark Report",
     summary:
-      "A qualitative review of archived web applications built from the Phonetic Alphabet Trainer benchmark specification. The v2 batch is the current benchmark series; the original v1 results remain preserved as a 15-run snapshot. This is not a leaderboard. The useful signal is whether an output works, where it fails, and what it reveals about building small products with AI agents.",
+      "A qualitative review of archived web applications built from the Phonetic Alphabet Trainer benchmark specification. The v2 batch (14 runs) is the current benchmark series; the original v1 results remain preserved as a 15-run snapshot. This is not a leaderboard. The useful signal is whether an output works, where it fails, and what it reveals about building small products with AI agents.",
     benchmarkHeading: "What This Benchmark Is",
     benchmarkParagraphs: [
       "Each model received a docs-first package, fixed benchmark data, and a direct instruction to implement the web app. Runs are reviewed against the contract for their benchmark version and preserved as archived demos.",
-      "The v1 results are the original 15-run snapshot. The v2 results use the revised review procedure and should be read as the current batch, not appended to a flat v1 leaderboard.",
+      "The v1 results are the original 15-run snapshot. The v2 results use the revised review procedure that standardizes test runner evidence and tracks localization quality more rigorously, and should be read as the current batch, not appended to a flat v1 leaderboard.",
       "The task is intentionally small. That makes it easier to inspect details that matter in real use: whether the main flow works, whether required behavior survives implementation, whether the interface feels stable, whether repetitive keyboard use is comfortable, and whether the repository remains understandable after the agent finishes.",
     ],
     readingHeading: "How To Read The Results",
@@ -1189,8 +1195,14 @@ export const phoneticBenchmarkReports = {
       details: "Details",
     },
     detailLabels: {
+      id: "ID",
+      benchmarkVersion: "Benchmark version",
+      comparativeScore: "Comparative score",
       runDate: "Run date",
       stack: "Stack",
+      markdownDetails: "Markdown details",
+      screenshot: "Screenshot",
+      demo: "Demo",
     },
     statusLabels: {
       comparable: "Comparable",
@@ -1417,11 +1429,11 @@ export const phoneticBenchmarkReports = {
     eyebrow: "Benchmark pracy agentów AI",
     title: "Phonetic Benchmark Report",
     summary:
-      "Jakościowy przegląd archiwalnych aplikacji webowych zbudowanych na podstawie specyfikacji benchmarku Phonetic Alphabet Trainer. Batch v2 jest aktualną serią benchmarku; oryginalne wyniki v1 pozostają zachowane jako snapshot 15 prób. To nie jest ranking. Liczy się to, czy wynik działa, gdzie się psuje i co mówi o budowaniu małych produktów z agentami AI.",
+      "Jakościowy przegląd archiwalnych aplikacji webowych zbudowanych na podstawie specyfikacji benchmarku Phonetic Alphabet Trainer. Batch v2 (14 prób) jest aktualną serią benchmarku; oryginalne wyniki v1 pozostają zachowane jako snapshot 15 prób. To nie jest ranking. Liczy się to, czy wynik działa, gdzie się psuje i co mówi o budowaniu małych produktów z agentami AI.",
     benchmarkHeading: "Czym Jest Ten Benchmark",
     benchmarkParagraphs: [
       "Każdy model dostał pakiet dokumentacji, stałe dane benchmarku i bezpośrednie polecenie implementacji aplikacji webowej. Próby są sprawdzane według kontraktu właściwego dla swojej wersji benchmarku i zachowane jako archiwalne demo.",
-      "Wyniki v1 są oryginalnym snapshotem 15 prób. Wyniki v2 używają zmienionej procedury przeglądu i należy je czytać jako aktualny batch, a nie jako dopisanie do płaskiego leaderboardu v1.",
+      "Wyniki v1 są oryginalnym snapshotem 15 prób. Wyniki v2 używają zmienionej procedury przeglądu, która standaryzuje dowody z runnerów testowych i dokładniej śledzi jakość lokalizacji, i należy je czytać jako aktualny batch, a nie jako dopisanie do płaskiego leaderboardu v1.",
       "Zadanie jest celowo niewielkie. Dzięki temu łatwiej sprawdzić detale ważne w rzeczywistym użyciu: czy główna ścieżka działa, czy wymagane zachowania przetrwały implementację, czy interfejs jest stabilny, czy powtarzalna obsługa z klawiatury pozostaje wygodna i czy repozytorium nadal jest zrozumiałe po zakończeniu pracy agenta.",
     ],
     readingHeading: "Jak Czytać Wyniki",
@@ -1462,8 +1474,14 @@ export const phoneticBenchmarkReports = {
       details: "Szczegóły",
     },
     detailLabels: {
+      id: "ID",
+      benchmarkVersion: "Wersja benchmarku",
+      comparativeScore: "Wynik porównawczy",
       runDate: "Data próby",
       stack: "Stack",
+      markdownDetails: "Szczegóły markdown",
+      screenshot: "Zrzut ekranu",
+      demo: "Demo",
     },
     statusLabels: {
       comparable: "Porównywalna",
@@ -1514,7 +1532,7 @@ export const phoneticBenchmarkReports = {
         heading:
           "Batch v2 Oddziela Wyniki Spełniające Kontrakt Od Sprawdzalnych Błędów",
         paragraphs: [
-          "Owl Alpha, GPT 5.4 High i GPT 5.5 High są użytecznymi porównywalnymi wynikami v2 w tym batchu. Przechodzą zmieniony kontrakt, ale zostawiają widoczne notatki review wokół decyzji w aktywnej próbie, jakości polskiej lokalizacji i braku dowodu z automatycznych testów.",
+          "Owl Alpha, GPT 5.4 High i GPT 5.5 High są użytecznymi porównywalnymi wynikami v2 w tym batchu. Przechodzą zmieniony kontrakt, ale wiążą się z uwagami w przeglądzie dotyczącymi decyzji w aktywnej próbie, jakości polskiej lokalizacji i braku dowodu z automatycznych testów.",
           "Pozostałe jedenaście wyników v2 nie tworzy jednego typu porażki. Część to sprawdzalne aplikacje z wąskimi błędami formalnymi, a Big Pickle i gpt-oss-120b pokazują twardsze braki w zachowaniu produktu. To rozróżnienie jest ważniejsze niż płaski wynik pass/fail.",
         ],
       },
@@ -1535,7 +1553,7 @@ export const phoneticBenchmarkReports = {
       {
         heading: "Oczywiste Potrzeby UX Nadal Wymagają Oceny Produktowej",
         paragraphs: [
-          "Fokus klawiatury nadal jest najlepszym powtarzającym się przykładem, ale v2 dodaje więcej detali pętli interakcji: szybkie powtórne submitowanie, stan podpowiedzi po zmianie języka, scoring po wielokrotnym użyciu hintu i stabilność opcji w trybie sugestii. Różnice są niewielkie w kodzie i oczywiste podczas używania aplikacji.",
+          "Zarządzanie fokusem przy obsłudze z klawiatury nadal jest najlepszym powtarzającym się przykładem, ale v2 dodaje więcej detali pętli interakcji: szybkie powtórne submitowanie, stan podpowiedzi po zmianie języka, scoring po wielokrotnym użyciu hintu i stabilność opcji w trybie sugestii. Różnice są niewielkie w kodzie i oczywiste podczas używania aplikacji.",
           "To jeden z powodów, dla których samo zbudowanie repozytorium nie powinno kończyć przeglądu wygenerowanego produktu.",
         ],
       },
@@ -1568,8 +1586,8 @@ export const phoneticBenchmarkReports = {
         heading:
           "Pierwszy Batch v2: Trzy Wyniki Porównywalne I Jedenaście Contract Failure",
         paragraphs: [
-          "Owl Alpha, GPT 5.4 High i GPT 5.5 High są użytecznymi porównywalnymi wynikami v2 w tym batchu. DeepSeek V4 Flash jest funkcjonalnie ok, ale formalnie contract-failing, bo atrybucja znika przy pierwszym załadowaniu; MiMo V2.5 Free ma czytelne docs i przechodzący runner, ale nie przełącza stopki na polski i nie blokuje powtórnego zatwierdzenia z klawiatury.",
-          "Pozostałe błędy v2 poszerzają wzorzec. Opus, Gemini 3.5, Sonnet i Gemini 3.1 są uruchamialne i mają evidence testowe, ale nadal mijają wymagania atrybucji, tożsamości albo zachowania aktywnej próby. Gemma 4 26B blokuje się na dependency i failującej komendzie testowej. Laguna M.1 Free ma przechodzący runner, ale failuje scoring i lokalizację stopki. North Mini Code Free blokuje odpowiedź po użyciu hintu i ma rozłączone evidence testowe. Big Pickle i gpt-oss-120b mają twardsze błędy w głównym zachowaniu produktu.",
+          "Owl Alpha, GPT 5.4 High i GPT 5.5 High są użytecznymi porównywalnymi wynikami v2 w tym batchu. DeepSeek V4 Flash jest funkcjonalnie ok, ale formalnie contract-failing, bo atrybucja jest pusta przy pierwszym załadowaniu; MiMo V2.5 Free ma czytelne docs i przechodzący runner, ale nie przełącza stopki na polski i nie blokuje powtórnego zatwierdzenia z klawiatury.",
+          "Pozostałe błędy v2 poszerzają wzorzec. Opus, Gemini 3.5, Sonnet i Gemini 3.1 są uruchamialne i mają evidence testowe, ale nadal mijają wymagania atrybucji, tożsamości albo zachowania aktywnej próby. Gemma 4 26B blokuje się na dependency i failującej komendzie testowej. Laguna M.1 Free ma przechodzący runner, ale failuje scoring i lokalizację stopki. North Mini Code Free blokuje możliwość zatwierdzenia odpowiedzi po użyciu hintu i ma rozłączone evidence testowe. Big Pickle i gpt-oss-120b mają twardsze błędy w głównym zachowaniu produktu.",
         ],
         runIds: [
           "deepseek-v4-flash-v2",
@@ -1592,7 +1610,7 @@ export const phoneticBenchmarkReports = {
         id: "reference-baselines",
         heading: "Aktualne Wyniki Porównywalne v2 I Historyczne Baseline'y v1",
         paragraphs: [
-          "Aktualne referencje v2 spełniające kontrakt to Owl Alpha, GPT 5.4 High i GPT 5.5 High. Każda jest użyteczna inaczej: Owl Alpha jest konserwatywna i bez buildu, GPT 5.4 High ma mocne zachowanie interakcji z problemami jakości lokalizacji, a GPT 5.5 High jest zwartą aplikacją w plain JavaScript bez dowodu z automatycznego runnera.",
+          "Aktualne referencje v2 spełniające kontrakt to Owl Alpha, GPT 5.4 High i GPT 5.5 High. Każda jest użyteczna inaczej: Owl Alpha jest konserwatywna i bez buildu, GPT 5.4 High ma mocne zachowanie interakcji, ale boryka się z problemami jakości lokalizacji, a GPT 5.5 High jest zwartą aplikacją w plain JavaScript bez dowodu z automatycznego runnera.",
           "Wcześniejsze baseline'y v1 pozostają użyteczne jako historyczne punkty odniesienia: GPT 5.5 High i Claude Sonnet 4.6 Thinking były mocne w oryginalnym snapshotcie. Run Sonnet v2 nie jest baseline'em spełniającym kontrakt, bo failuje widoczna tożsamość modelu i lokalizacja atrybucji, mimo mocnych testów.",
         ],
         runIds: [
