@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Phonetic Benchmark</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1 id="app-title" data-i18n="app.title">Phonetic Benchmark</h1>
+      <div class="language-toggle" role="group" aria-label="Interface language">
+        <button type="button" data-lang="pl" aria-pressed="false" data-i18n="language.pl">Polski</button>
+        <button type="button" data-lang="en" aria-pressed="true" data-i18n="language.en">English</button>
+      </div>
+    </header>
+
+    <main id="screen" class="screen">
+      <!-- screens are rendered into here by app.js -->
+    </main>
+
+    <footer class="app-footer">
+      <p id="attribution" data-i18n="footer.attribution" data-i18n-vars="model,date">
+        Phonetic Benchmark by Piotr Kacała (piotrkacala.pl).
+      </p>
+    </footer>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

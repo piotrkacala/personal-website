@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phonetic Alphabet Trainer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Setup Screen -->
+    <div id="setup-screen" class="screen active">
+      <h1 id="app-title"></h1>
+      <div class="form-group">
+        <label for="language-select" id="language-label"></label>
+        <select id="language-select">
+          <option value="en">English</option>
+          <option value="pl">Polski</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="alphabet-select" id="alphabet-label"></label>
+        <select id="alphabet-select">
+          <option value="polish" id="opt-polish"></option>
+          <option value="nato" id="opt-nato"></option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="mode-select" id="mode-label"></label>
+        <select id="mode-select">
+          <option value="keyboard" id="opt-keyboard"></option>
+          <option value="suggestion" id="opt-suggestion"></option>
+        </select>
+      </div>
+      <button id="start-btn" class="btn primary"></button>
+    </div>
+
+    <!-- Exercise Screen -->
+    <div id="exercise-screen" class="screen">
+      <div class="exercise-header">
+        <span id="progress-text"></span>
+        <button id="reset-btn" class="btn small secondary"></button>
+      </div>
+      <div class="symbol-display">
+        <span id="current-symbol"></span>
+      </div>
+      <!-- Keyboard mode -->
+      <div id="keyboard-area" class="answer-area">
+        <p id="type-answer-label"></p>
+        <input type="text" id="answer-input" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <div class="button-row">
+          <button id="hint-btn" class="btn secondary"></button>
+          <button id="submit-btn" class="btn primary"></button>
+        </div>
+      </div>
+      <!-- Suggestion mode -->
+      <div id="suggestion-area" class="answer-area hidden">
+        <div id="suggestion-buttons" class="suggestion-grid"></div>
+        <button id="hint-btn-suggestion" class="btn secondary hint-btn-suggestion"></button>
+      </div>
+      <div id="hint-display" class="hint-box hidden"></div>
+      <div id="feedback" class="feedback hidden"></div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result-screen" class="screen">
+      <h1 id="result-title"></h1>
+      <div class="result-card">
+        <div class="score-display">
+          <span id="score-value"></span>
+          <span class="score-percent">%</span>
+        </div>
+        <div class="result-details">
+          <div class="result-row">
+            <span id="alphabet-result-label"></span>
+            <span id="alphabet-result-value"></span>
+          </div>
+          <div class="result-row">
+            <span id="mode-result-label"></span>
+            <span id="mode-result-value"></span>
+          </div>
+          <div class="result-row">
+            <span id="total-result-label"></span>
+            <span id="total-result-value"></span>
+          </div>
+          <div class="result-row">
+            <span id="clean-result-label"></span>
+            <span id="clean-result-value"></span>
+          </div>
+          <div class="result-row">
+            <span id="hinted-result-label"></span>
+            <span id="hinted-result-value"></span>
+          </div>
+        </div>
+      </div>
+      <button id="play-again-btn" class="btn primary"></button>
+    </div>
+  </div>
+
+  <footer id="attribution-footer"></footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
