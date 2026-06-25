@@ -203,9 +203,34 @@ function renderExternalProjectProfile(profile: ExternalProjectProfile): string {
 }
 
 function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
+  const statusOrder = [
+    "comparable",
+    "contract-failing",
+    "unrunnable",
+  ] as const satisfies readonly BenchmarkRunCopy["status"][];
+  const currentBenchmarkVersion =
+    phoneticBenchmarkMetadata.currentBenchmarkVersion;
+  const currentRuns = getBenchmarkRunGroupRuns(
+    report.runs,
+    currentBenchmarkVersion,
+  );
+  const currentComparableRuns = currentRuns.filter(
+    (run) => run.status === "comparable",
+  );
+  const getStatusRank = (status: BenchmarkRunCopy["status"]): number =>
+    statusOrder.indexOf(status);
+  const getCurrentStatusCount = (status: BenchmarkRunCopy["status"]): number =>
+    currentRuns.filter((run) => run.status === status).length;
   const runGroups = report.resultGroups.map((group) => ({
     ...group,
-    runs: getBenchmarkRunGroupRuns(report.runs, group.benchmarkVersion),
+    runs: getBenchmarkRunGroupRuns(
+      report.runs,
+      group.benchmarkVersion,
+    ).toSorted(
+      (firstRun, secondRun) =>
+        getStatusRank(firstRun.status) - getStatusRank(secondRun.status) ||
+        firstRun.executionOrder - secondRun.executionOrder,
+    ),
   }));
   const renderParagraphs = (paragraphs: readonly string[]): void => {
     paragraphs.forEach((paragraph) => {
@@ -233,6 +258,22 @@ function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
     `Results CSV: ${getPhoneticBenchmarkResultsCsvUrl()}`,
   ];
   lines.push("");
+  lines.push(heading(2, report.currentSummaryHeading));
+  lines.push("");
+  lines.push(report.currentSummaryText);
+  lines.push("");
+  lines.push(report.currentSummaryKicker);
+  statusOrder.forEach((status) => {
+    lines.push(
+      `- ${report.statusLabels[status]}: ${getCurrentStatusCount(status)}`,
+    );
+  });
+  lines.push("");
+  lines.push(`${report.currentSummaryComparableLabel}:`);
+  currentComparableRuns.forEach((run) => {
+    lines.push(`- ${run.model}: ${run.detailsUrl}`);
+  });
+  lines.push("");
   lines.push(heading(2, report.benchmarkHeading));
   lines.push("");
   renderParagraphs(report.benchmarkParagraphs);
@@ -246,6 +287,23 @@ function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
   lines.push("");
   lines.push(report.evidenceText);
   lines.push("");
+  lines.push(heading(2, report.spotlightHeading));
+  lines.push("");
+  lines.push(report.spotlightIntro);
+  lines.push("");
+  report.spotlights.forEach((spotlight) => {
+    lines.push(heading(3, spotlight.heading));
+    lines.push("");
+    renderParagraphs(spotlight.paragraphs);
+    spotlight.runIds.forEach((runId) => {
+      const run = report.runs.find((candidate) => candidate.id === runId);
+
+      if (run) {
+        lines.push(`- ${run.model}: ${run.detailsUrl}`);
+      }
+    });
+    lines.push("");
+  });
   lines.push(heading(2, report.resultsHeading));
   lines.push("");
   lines.push(report.resultsIntro);
@@ -299,19 +357,19 @@ function renderBenchmarkReportMarkdown(report: BenchmarkReportCopy): string {
     });
   });
 
-  lines.push(heading(2, report.findingsHeading));
-  lines.push("");
-  report.findings.forEach((finding) => {
-    lines.push(heading(3, finding.heading));
-    lines.push("");
-    renderParagraphs(finding.paragraphs);
-  });
   lines.push(heading(2, report.caseNotesHeading));
   lines.push("");
   report.caseNotes.forEach((caseNote) => {
     lines.push(heading(3, caseNote.heading));
     lines.push("");
     renderParagraphs(caseNote.paragraphs);
+  });
+  lines.push(heading(2, report.findingsHeading));
+  lines.push("");
+  report.findings.forEach((finding) => {
+    lines.push(heading(3, finding.heading));
+    lines.push("");
+    renderParagraphs(finding.paragraphs);
   });
   lines.push(heading(2, report.artifactHeading));
   lines.push("");

@@ -8,6 +8,7 @@ export type BenchmarkFailureType =
   | "core behavior"
   | "submission documentation"
   | "attribution"
+  | "localization"
   | "test workflow"
   | "unrunnable output";
 
@@ -55,6 +56,13 @@ export interface BenchmarkCaseNote {
   runIds: readonly string[];
 }
 
+export interface BenchmarkSpotlight {
+  id: string;
+  heading: string;
+  paragraphs: readonly string[];
+  runIds: readonly string[];
+}
+
 export interface BenchmarkRunGroupCopy {
   benchmarkVersion: BenchmarkVersion;
   heading: string;
@@ -78,12 +86,21 @@ export interface BenchmarkReportCopy {
   eyebrow: string;
   title: string;
   summary: string;
+  currentSummaryKicker: string;
+  currentSummaryHeading: string;
+  currentSummaryText: string;
+  currentSummaryComparableLabel: string;
+  currentSummaryResultsLabel: string;
+  currentSummaryGalleryLabel: string;
   benchmarkHeading: string;
   benchmarkParagraphs: readonly string[];
   readingHeading: string;
   readingIntro: string;
   statusDescriptions: Readonly<Record<BenchmarkStatus, string>>;
   evidenceText: string;
+  spotlightHeading: string;
+  spotlightIntro: string;
+  spotlights: readonly BenchmarkSpotlight[];
   resultsHeading: string;
   resultsIntro: string;
   resultGroups: readonly BenchmarkRunGroupCopy[];
@@ -94,6 +111,7 @@ export interface BenchmarkReportCopy {
     sourceLoc: string;
     testCount: string;
     functionalRead: string;
+    evidenceDetails: string;
     details: string;
   };
   detailLabels: {
@@ -607,6 +625,96 @@ const runData = [
     stack:
       "plain JavaScript, plain browser DOM APIs, static JSON data endpoint",
   },
+  {
+    id: "deepseek-v4-pro-v2",
+    executionOrder: 15,
+    model: "DeepSeek V4 Pro",
+    runDate: "2026-06-23",
+    benchmarkVersion: "v2",
+    status: "comparable",
+    failureTypes: [],
+    sourceLoc: 1259,
+    testCount: 67,
+    testEvidence:
+      "67 framework-style static cases; controlled runner reported 67 passed",
+    stack:
+      "Vite 5.4.11, vanilla JavaScript ES modules, plain CSS, Vitest 2.1.8",
+    comparativeScore: 74,
+  },
+  {
+    id: "glm-5-2-v2",
+    executionOrder: 16,
+    model: "GLM-5.2",
+    runDate: "2026-06-23",
+    benchmarkVersion: "v2",
+    status: "comparable",
+    failureTypes: [],
+    sourceLoc: 1268,
+    testCount: 28,
+    testEvidence:
+      "28 framework-style static cases; controlled runner reported 28 passed, 0 failed",
+    stack: "Vite 8.0.16, vanilla JavaScript, plain browser DOM APIs, node:test",
+    comparativeScore: 87,
+  },
+  {
+    id: "kimi-k2-7-v2",
+    executionOrder: 17,
+    model: "Kimi K2.7",
+    runDate: "2026-06-23",
+    benchmarkVersion: "v2",
+    status: "comparable",
+    failureTypes: [],
+    sourceLoc: 891,
+    testCount: 16,
+    testEvidence:
+      "16 framework-style static cases; controlled runner reported 16 tests passing",
+    stack: "Vite 5.4.14, plain JavaScript, plain browser DOM APIs, node:test",
+    comparativeScore: 90,
+  },
+  {
+    id: "mimo-v2-5-pro-v2",
+    executionOrder: 18,
+    model: "MiMo V2.5 Pro",
+    runDate: "2026-06-23",
+    benchmarkVersion: "v2",
+    status: "contract-failing",
+    failureTypes: ["attribution"],
+    sourceLoc: 1517,
+    testCount: 44,
+    testEvidence:
+      "44 framework-style static cases; controlled runner reported 44 tests and npm run test passed",
+    stack:
+      "plain JavaScript, plain browser DOM APIs, custom Node http server, node:test",
+  },
+  {
+    id: "minimax-m3-v2",
+    executionOrder: 19,
+    model: "MiniMax M3",
+    runDate: "2026-06-23",
+    benchmarkVersion: "v2",
+    status: "contract-failing",
+    failureTypes: ["localization"],
+    sourceLoc: 2017,
+    testCount: 47,
+    testEvidence:
+      "47 framework-style static cases; controlled runner reported 47 tests passing",
+    stack: "plain HTML, CSS, native ES modules, Node.js http server, node:test",
+  },
+  {
+    id: "qwen-3-7-max-v2",
+    executionOrder: 20,
+    model: "Qwen3.7 Max",
+    runDate: "2026-06-23",
+    benchmarkVersion: "v2",
+    status: "contract-failing",
+    failureTypes: ["core behavior", "submission documentation", "attribution"],
+    sourceLoc: 1083,
+    testCount: 32,
+    testEvidence:
+      "32 framework-style static cases; controlled runner reported 32 tests passing",
+    stack:
+      "Vite 6.3.5, vanilla JavaScript ES modules, plain browser DOM APIs, Vitest 3.2.4",
+  },
 ] as const satisfies readonly BenchmarkRunData[];
 
 export type BenchmarkRunId = (typeof runData)[number]["id"];
@@ -631,7 +739,7 @@ export const phoneticBenchmarkMetadata = {
   coveredBenchmarkVersions: ["v1", "v2"],
   currentBenchmarkVersion: "v2",
   publishedDate: "2026-05-26",
-  updatedDate: "2026-06-15",
+  updatedDate: "2026-06-23",
   coveredThroughDate: getLatestRunDate(),
 } as const satisfies BenchmarkMetadata;
 
@@ -937,6 +1045,74 @@ const runObservations = {
       "No automated test runner evidence is present in the archived artifact.",
     ],
   },
+  "deepseek-v4-pro-v2": {
+    observedStrengths: [
+      "Clears the v2 contract.",
+      "Includes complete submission artifacts and passing controlled-runner evidence.",
+      "Core scoring behavior was verified in a full NATO keyboard run.",
+    ],
+    observedWeaknesses: [
+      "Suggestion options reshuffle after wrong-answer feedback and hint reveal.",
+      "Keyboard focus is lost after starting and after correct-answer progression.",
+      "Setup language switching resets the selected alphabet and answer mode.",
+    ],
+  },
+  "glm-5-2-v2": {
+    observedStrengths: [
+      "Clears the v2 contract.",
+      "Includes complete submission artifacts and passing controlled-runner evidence.",
+      "Setup language switching, attribution localization, keyboard focus, and final scoring worked in targeted review.",
+    ],
+    observedWeaknesses: [
+      "Suggestion buttons reshuffle after wrong answers and after revealing a hint.",
+    ],
+  },
+  "kimi-k2-7-v2": {
+    observedStrengths: [
+      "Clears the v2 contract.",
+      "Includes complete submission artifacts and passing controlled-runner evidence.",
+      "Keyboard, suggestion, hint, language-switching, repeat-submit, full-run, and final-scoring probes worked cleanly.",
+    ],
+    observedWeaknesses: [
+      "The keyboard input is visibly taller than the adjacent submit button.",
+    ],
+  },
+  "mimo-v2-5-pro-v2": {
+    observedStrengths: [
+      "The application works in the reviewed keyboard, suggestion, and result flows.",
+      "Includes complete submission artifacts and passing controlled-runner evidence.",
+      "Rapid repeated Enter and suggestion-click locking worked in browser smoke.",
+    ],
+    observedWeaknesses: [
+      "The required footer attribution misspells Piotr Kacała's name.",
+      "Operator-observed setup selection confusion keeps the qualitative assessment weak.",
+    ],
+  },
+  "minimax-m3-v2": {
+    observedStrengths: [
+      "Functionally strong zero-dependency v2 run.",
+      "Includes complete submission artifacts and 47 passing node:test cases.",
+      "Keyboard, suggestion, active language switching, full-run, and final-scoring behavior worked cleanly in targeted review.",
+    ],
+    observedWeaknesses: [
+      "The Polish setup screen leaves visible English count labels.",
+      "Suggestion-mode hint reveal reshuffles answer buttons.",
+    ],
+  },
+  "qwen-3-7-max-v2": {
+    observedStrengths: [
+      "The application is runnable and generally solid in normal-paced use.",
+      "Includes complete submission artifacts and passing controlled-runner evidence.",
+      "A full NATO keyboard run completed with the expected 100% result screen.",
+    ],
+    observedWeaknesses: [
+      "Rapid repeated keyboard submits can skip symbols.",
+      "Rapid repeated suggestion clicks can skip symbols.",
+      "The attribution footer does not localize to Polish.",
+      "The displayed and documented implementation date conflicts with the 2026 run evidence.",
+      "Suggestion-mode hint reveal reshuffles answer buttons.",
+    ],
+  },
 } as const satisfies Record<BenchmarkRunId, BenchmarkRunObservations>;
 
 const functionalReads = {
@@ -972,33 +1148,45 @@ const functionalReads = {
     "kimi-k2-6":
       "Works, with a keyboard-focus miss and a useful confirmation step before abandoning a run.",
     "big-pickle-v2":
-      "Vite and plain JavaScript v2 submission with clear docs and passing tests, but formally contract-failing. Rapid repeated keyboard submits or suggestion clicks can skip a symbol, and the documented active-run language switching is not actually available in the UI.",
+      "Vite and plain JavaScript submission with clear docs and passing tests, but formally contract-failing. Rapid repeated keyboard submits or suggestion clicks can skip a symbol, and the documented active-run language switching is not actually available in the UI.",
     "deepseek-v4-flash-v2":
-      "Working v2 run with clear docs and passing tests, but formally contract-failing because the required attribution is not visible on the initial setup screen.",
+      "Working run with clear docs and passing tests, but formally contract-failing because the required attribution is not visible on the initial setup screen.",
     "mimo-v2-5-free-v2":
-      "Clear v2 submission with passing runner evidence and useful docs, but formally contract-failing. The footer attribution does not localize to Polish, and rapid repeated keyboard submits can skip a symbol.",
+      "Clear submission with passing runner evidence and useful docs, but formally contract-failing. The footer attribution does not localize to Polish, and rapid repeated keyboard submits can skip a symbol.",
     "gemma-4-26b-v2":
-      "Vite and TypeScript v2 submission with a runnable static artifact, but formally contract-failing. Dependency policy blocks the runner, the package test command fails, and keyboard plus suggestion interactions feel unfinished.",
+      "Vite and TypeScript submission with a runnable static artifact, but formally contract-failing. Dependency policy blocks the runner, the package test command fails, and keyboard plus suggestion interactions feel unfinished.",
     "laguna-m-1-v2":
-      "Compact no-build v2 submission with passing runner evidence and clear docs, but formally contract-failing. Repeated hint clicks on one question lower the final score too much, and the attribution footer does not localize to Polish.",
+      "Compact no-build submission with passing runner evidence and clear docs, but formally contract-failing. Repeated hint clicks on one question lower the final score too much, and the attribution footer does not localize to Polish.",
     "north-mini-code-free-v2":
-      "Server-backed v2 submission with a runnable UI and passing verification script, but formally contract-failing. Attribution is generic and runtime-dated, hint use blocks submitting the answer for that question, and the package test command does not run the submitted Jest-style tests.",
+      "Server-backed submission with a runnable UI and passing verification script, but formally contract-failing. Attribution is generic and runtime-dated, hint use blocks submitting the answer for that question, and the package test command does not run the submitted Jest-style tests.",
     "owl-alpha-v2":
-      "Strong no-build v2 run with clear docs, passing controlled-runner evidence, and good observed behavior. It makes a restrictive but coherent decision to lock language and omit reset during an active run.",
+      "Strong no-build run with clear docs, passing controlled-runner evidence, and good observed behavior. It makes a restrictive but coherent decision to lock language and omit reset during an active run.",
     "opus-4-6-thinking-v2":
-      "Runnable v2 submission with strong tests and correct core flows, but formally contract-failing because the required attribution footer does not switch to Polish when the UI language changes. The repeated full-card fade on setup and quiz re-renders is also distracting.",
+      "Runnable submission with strong tests and correct core flows, but formally contract-failing because the required attribution footer does not switch to Polish when the UI language changes. The repeated full-card fade on setup and quiz re-renders is also distracting.",
     "gemini-3-5-flash-high-v2":
-      "Runnable v2 submission with clear docs and passing controlled-runner evidence, but formally contract-failing. The attribution footer does not localize to Polish, and rapid repeated keyboard submits can skip symbols.",
+      "Runnable submission with clear docs and passing controlled-runner evidence, but formally contract-failing. The attribution footer does not localize to Polish, and rapid repeated keyboard submits can skip symbols.",
     "sonnet-4-6-thinking-v2":
-      "Runnable v2 submission with strong automated-test evidence, but formally contract-failing. The visible footer and submission docs identify the implementation as Sonnet 4.5 rather than the recorded Sonnet 4.6 Thinking run, and the attribution footer does not localize to Polish.",
+      "Runnable submission with strong automated-test evidence, but formally contract-failing. The visible footer and submission docs identify the implementation as Sonnet 4.5 rather than the recorded Sonnet 4.6 Thinking run, and the attribution footer does not localize to Polish.",
     "gemini-3-1-pro-high-v2":
-      "Runnable v2 submission with clear docs and passing controlled-runner evidence, but formally contract-failing. The attribution footer does not localize to Polish, and an active language switch hides a revealed hint before the question is completed.",
+      "Runnable submission with clear docs and passing controlled-runner evidence, but formally contract-failing. The attribution footer does not localize to Polish, and an active language switch hides a revealed hint before the question is completed.",
     "gpt-5-4-high-v2":
-      "Strong comparable v2 run with clear setup copy, passing controlled-runner evidence, and good keyboard plus suggestion-mode behavior. The main weakness is Polish localization quality: the UI is translated, but many Polish diacritics are simplified away.",
+      "Strong comparable run with clear setup copy, passing controlled-runner evidence, and good keyboard plus suggestion-mode behavior. The main weakness is Polish localization quality: the UI is translated, but many Polish diacritics are simplified away.",
     "gpt-5-5-high-v2":
-      "Strong plain JavaScript v2 run. The archived artifact implements the required exercise modes, hint reveal, final scoring, and localized attribution, but it does not include automated test runner evidence.",
+      "Strong plain JavaScript run. The archived artifact implements the required exercise modes, hint reveal, final scoring, and localized attribution, but it does not include automated test runner evidence.",
     "gpt-oss-120b-v2":
-      "Thin static v2 output. It loads alphabet data for inspection, but it does not implement the required quiz flow, exercise modes, hint behavior, scoring, or full attribution.",
+      "Thin static output. It loads alphabet data for inspection, but it does not implement the required quiz flow, exercise modes, hint behavior, scoring, or full attribution.",
+    "deepseek-v4-pro-v2":
+      "Comparable run with clear docs, passing controlled-runner evidence, and correct core scoring behavior. It is functionally solid, but interaction polish is notably weaker: suggestion options reshuffle after feedback or hint reveal, and keyboard focus is lost after progression.",
+    "glm-5-2-v2":
+      "Comparable run with complete submission artifacts, passing controlled-runner evidence, and good coverage of logic, data, i18n, scoring, and attribution. The app works well overall, but suggestion buttons reshuffle after wrong answers and hints.",
+    "kimi-k2-7-v2":
+      "Strong comparable run with complete submission artifacts, passing controlled-runner evidence, and clean observed keyboard, suggestion, hint, language-switching, repeated-submit, full-run, and final-scoring behavior. The only noted UX nit is the keyboard input being taller than the adjacent submit button.",
+    "mimo-v2-5-pro-v2":
+      "Runnable zero-dependency submission with passing controlled-runner evidence and working basic keyboard, suggestion, and result flows in targeted review. It is formally contract-failing because the required footer attribution misspells Piotr Kacała's name, and the operator-observed setup-selection confusion keeps the qualitative assessment weak.",
+    "minimax-m3-v2":
+      "Functionally strong zero-dependency run with complete submission artifacts, 47 passing node:test cases, and clean observed keyboard, suggestion, active language-switching, full-run, and final-scoring behavior. Formally contract-failing because the Polish setup screen leaves visible English count labels.",
+    "qwen-3-7-max-v2":
+      "Runnable submission with complete docs, passing controlled-runner evidence, and a generally solid app, but formally contract-failing. Rapid repeated keyboard submits and repeated suggestion clicks can skip symbols; the Polish UI leaves the attribution footer in English; and the displayed implementation date conflicts with the 2026 run evidence.",
   },
   pl: {
     "gpt-5-4-high":
@@ -1032,33 +1220,45 @@ const functionalReads = {
     "kimi-k2-6":
       "Działa, z problemem fokusu oraz sensownym potwierdzeniem przed opuszczeniem aktywnej próby.",
     "big-pickle-v2":
-      "Run v2 w Vite i plain JavaScript z czytelną dokumentacją oraz przechodzącymi testami, ale formalnie contract-failing. Szybkie powtórzenie Entera lub kliknięcia poprawnej opcji może pominąć symbol, a udokumentowane przełączanie języka w aktywnej próbie nie jest dostępne w UI.",
+      "Run w Vite i plain JavaScript z czytelną dokumentacją oraz przechodzącymi testami, ale formalnie contract-failing. Szybkie powtórzenie Entera lub kliknięcia poprawnej opcji może pominąć symbol, a udokumentowane przełączanie języka w aktywnej próbie nie jest dostępne w UI.",
     "deepseek-v4-flash-v2":
-      "Działający run v2 z czytelną dokumentacją i przechodzącymi testami, ale formalnie contract-failing, bo wymagana atrybucja nie jest widoczna na początkowym ekranie setupu.",
+      "Działający run z czytelną dokumentacją i przechodzącymi testami, ale formalnie contract-failing, bo wymagana atrybucja nie jest widoczna na początkowym ekranie setupu.",
     "mimo-v2-5-free-v2":
-      "Czytelny run v2 z przechodzącym runnerem i użyteczną dokumentacją, ale formalnie contract-failing. Stopka z atrybucją nie przełącza się na polski, a szybkie powtórne zatwierdzenie odpowiedzi z klawiatury może pominąć symbol.",
+      "Czytelny run z przechodzącym runnerem i użyteczną dokumentacją, ale formalnie contract-failing. Stopka z atrybucją nie przełącza się na polski, a szybkie powtórne zatwierdzenie odpowiedzi z klawiatury może pominąć symbol.",
     "gemma-4-26b-v2":
-      "Run v2 w Vite i TypeScript z działającym statycznym artefaktem, ale formalnie contract-failing. Dependency policy blokuje runner, komenda testowa failuje, a interakcje klawiatury i sugestii są niedopracowane.",
+      "Run w Vite i TypeScript z działającym statycznym artefaktem, ale formalnie contract-failing. Dependency policy blokuje runner, komenda testowa failuje, a interakcje klawiatury i sugestii są niedopracowane.",
     "laguna-m-1-v2":
-      "Zwarty run v2 bez buildu, z przechodzącym runnerem i czytelną dokumentacją, ale formalnie contract-failing. Powtórne kliknięcia hintu na jednym pytaniu zaniżają wynik, a stopka atrybucji nie przełącza się na polski.",
+      "Zwarty run bez buildu, z przechodzącym runnerem i czytelną dokumentacją, ale formalnie contract-failing. Powtórne kliknięcia hintu na jednym pytaniu zaniżają wynik, a stopka atrybucji nie przełącza się na polski.",
     "north-mini-code-free-v2":
-      "Server-backed run v2 z działającym UI i przechodzącym skryptem weryfikacji, ale formalnie contract-failing. Atrybucja jest generyczna i runtime-dated, użycie hintu blokuje możliwość zatwierdzenia odpowiedzi na to pytanie, a komenda testowa nie uruchamia dostarczonych testów w stylu Jest.",
+      "Server-backed run z działającym UI i przechodzącym skryptem weryfikacji, ale formalnie contract-failing. Atrybucja jest generyczna i runtime-dated, użycie hintu blokuje możliwość zatwierdzenia odpowiedzi na to pytanie, a komenda testowa nie uruchamia dostarczonych testów w stylu Jest.",
     "owl-alpha-v2":
-      "Mocny run v2 bez buildu, z czytelną dokumentacją, przechodzącym controlled runnerem i dobrym zachowaniem w sprawdzonym flow. Restrykcyjnie, ale spójnie blokuje zmianę języka i reset podczas aktywnej próby.",
+      "Mocny run bez buildu, z czytelną dokumentacją, przechodzącym controlled runnerem i dobrym zachowaniem w sprawdzonym flow. Restrykcyjnie, ale spójnie blokuje zmianę języka i reset podczas aktywnej próby.",
     "opus-4-6-thinking-v2":
-      "Działający run v2 z mocnymi testami i poprawnymi głównymi flow, ale formalnie contract-failing, bo wymagana stopka z atrybucją nie przełącza się na polski po zmianie języka UI. Powtarzające się wygaszanie (fade) całej karty na setupie i w quizie też przeszkadza.",
+      "Działający run z mocnymi testami i poprawnymi głównymi flow, ale formalnie contract-failing, bo wymagana stopka z atrybucją nie przełącza się na polski po zmianie języka UI. Powtarzające się wygaszanie (fade) całej karty na setupie i w quizie też przeszkadza.",
     "gemini-3-5-flash-high-v2":
-      "Działający run v2 z czytelną dokumentacją i przechodzącym controlled runnerem, ale formalnie contract-failing. Stopka z atrybucją nie przełącza się na polski, a szybkie powtórne zatwierdzenie odpowiedzi klawiaturą może pominąć symbole.",
+      "Działający run z czytelną dokumentacją i przechodzącym controlled runnerem, ale formalnie contract-failing. Stopka z atrybucją nie przełącza się na polski, a szybkie powtórne zatwierdzenie odpowiedzi klawiaturą może pominąć symbole.",
     "sonnet-4-6-thinking-v2":
-      "Działający run v2 z mocnym evidence testowym, ale formalnie contract-failing. Widoczna stopka i dokumentacja submission wskazują Sonnet 4.5 zamiast zapisanego runu Sonnet 4.6 Thinking, a stopka atrybucji nie przełącza się na polski.",
+      "Działający run z mocnym evidence testowym, ale formalnie contract-failing. Widoczna stopka i dokumentacja submission wskazują Sonnet 4.5 zamiast zapisanego runu Sonnet 4.6 Thinking, a stopka atrybucji nie przełącza się na polski.",
     "gemini-3-1-pro-high-v2":
-      "Działający run v2 z czytelną dokumentacją i przechodzącym controlled runnerem, ale formalnie contract-failing. Stopka z atrybucją nie przełącza się na polski, a zmiana języka w aktywnej próbie ukrywa ujawnioną podpowiedź przed ukończeniem pytania.",
+      "Działający run z czytelną dokumentacją i przechodzącym controlled runnerem, ale formalnie contract-failing. Stopka z atrybucją nie przełącza się na polski, a zmiana języka w aktywnej próbie ukrywa ujawnioną podpowiedź przed ukończeniem pytania.",
     "gpt-5-4-high-v2":
-      "Mocny porównywalny run v2 z czytelnym setupem, przechodzącym controlled runnerem oraz dobrym zachowaniem trybu klawiatury i sugestii. Główna słabość to jakość polskiej lokalizacji: UI jest przetłumaczony, ale wiele polskich znaków diakrytycznych uproszczono do ASCII.",
+      "Mocny porównywalny run z czytelnym setupem, przechodzącym controlled runnerem oraz dobrym zachowaniem trybu klawiatury i sugestii. Główna słabość to jakość polskiej lokalizacji: UI jest przetłumaczony, ale wiele polskich znaków diakrytycznych uproszczono do ASCII.",
     "gpt-5-5-high-v2":
-      "Mocny run v2 w plain JavaScript. Zarchiwizowany artefakt implementuje wymagane tryby ćwiczenia, hint, finalny wynik i lokalizowaną atrybucję, ale nie zawiera dowodu z automatycznego runnera testów.",
+      "Mocny run w plain JavaScript. Zarchiwizowany artefakt implementuje wymagane tryby ćwiczenia, hint, finalny wynik i lokalizowaną atrybucję, ale nie zawiera dowodu z automatycznego runnera testów.",
     "gpt-oss-120b-v2":
-      "Cienki statyczny output v2. Ładuje dane alfabetów do inspekcji, ale nie implementuje wymaganego flow quizu, trybów ćwiczenia, hintów, scoringu ani pełnej atrybucji.",
+      "Cienki statyczny output. Ładuje dane alfabetów do inspekcji, ale nie implementuje wymaganego flow quizu, trybów ćwiczenia, hintów, scoringu ani pełnej atrybucji.",
+    "deepseek-v4-pro-v2":
+      "Porównywalny run z czytelną dokumentacją, przechodzącym controlled runnerem i poprawnym głównym scoringiem. Funkcjonalnie jest solidny, ale interakcje są wyraźnie słabsze: opcje sugestii przetasowują się po feedbacku lub podpowiedzi, a fokus klawiatury ginie po przejściu dalej.",
+    "glm-5-2-v2":
+      "Porównywalny run z kompletnymi artefaktami submission, przechodzącym controlled runnerem i dobrym pokryciem logiki, danych, i18n, scoringu i atrybucji. Aplikacja ogólnie działa dobrze, ale przyciski sugestii przetasowują się po błędnej odpowiedzi i po podpowiedzi.",
+    "kimi-k2-7-v2":
+      "Mocny porównywalny run z kompletnymi artefaktami submission, przechodzącym controlled runnerem i czystym zachowaniem w sprawdzonych ścieżkach klawiatury, sugestii, hintu, zmiany języka, powtórnego submitu, pełnej próby i finalnego scoringu. Jedyna zauważona drobnostka UX to pole odpowiedzi wyższe od sąsiedniego przycisku.",
+    "mimo-v2-5-pro-v2":
+      "Działający zero-dependency run z przechodzącym controlled runnerem oraz działającymi podstawowymi flow klawiatury, sugestii i wyniku. Formalnie contract-failing, bo wymagana stopka atrybucji przekręca nazwisko Piotra Kacały, a zaobserwowane przez operatora zamieszanie w wyborze ustawień obniża ocenę jakościową.",
+    "minimax-m3-v2":
+      "Funkcjonalnie mocny zero-dependency run z kompletnymi artefaktami submission, 47 przechodzącymi testami node:test i czystym zachowaniem klawiatury, sugestii, aktywnej zmiany języka, pełnej próby i finalnego scoringu. Formalnie contract-failing, bo polski ekran setupu zostawia widoczne angielskie etykiety liczby symboli.",
+    "qwen-3-7-max-v2":
+      "Działający run z kompletną dokumentacją, przechodzącym controlled runnerem i ogólnie solidną aplikacją, ale formalnie contract-failing. Szybkie powtórne submity z klawiatury i kliknięcia sugestii mogą pomijać symbole; polski UI zostawia stopkę atrybucji po angielsku; a pokazana data implementacji kłóci się z dowodami z 2026 roku.",
   },
 } as const satisfies Record<
   BenchmarkReportLang,
@@ -1150,11 +1350,18 @@ export const phoneticBenchmarkReports = {
     eyebrow: "AI agent development benchmark",
     title: "Phonetic Benchmark Report",
     summary:
-      "A qualitative review of archived web applications built from the Phonetic Alphabet Trainer benchmark specification. The v2 batch (14 runs) is the current benchmark series; the original v1 results remain preserved as a 15-run snapshot. This is not a leaderboard. The useful signal is whether an output works, where it fails, and what it reveals about building small products with AI agents.",
+      "A qualitative review of 35 archived web applications built from the same Phonetic Alphabet Trainer brief. In the current batch, Owl Alpha, GPT 5.4 High, GPT 5.5 High, DeepSeek V4 Pro, GLM-5.2, and Kimi K2.7 clear the contract; 14 other outputs remain inspectable failures. The original v1 snapshot stays preserved for historical comparison.",
+    currentSummaryKicker: "Current outcome",
+    currentSummaryHeading: "Why this benchmark exists",
+    currentSummaryText:
+      "This report records my tests of automated software delivery in a zero-code workflow. Instead of relying on general model leaderboards, I check how models handle precise documentation, QA constraints, localization, and repository evidence. The value is practical: I can compare real, repeatable outputs from my everyday workflow and see which models are worth using after the cost of corrections, extra tokens, and debugging time is included.",
+    currentSummaryComparableLabel: "Comparable runs",
+    currentSummaryResultsLabel: "Read current results",
+    currentSummaryGalleryLabel: "Compare screenshots",
     benchmarkHeading: "What This Benchmark Is",
     benchmarkParagraphs: [
-      "Each model received a docs-first package, fixed benchmark data, and a direct instruction to implement the web app. Runs are reviewed against the contract for their benchmark version and preserved as archived demos.",
-      "The v1 results are the original 15-run snapshot. The v2 results use the revised review procedure that standardizes test runner evidence and tracks localization quality more rigorously, and should be read as the current batch, not appended to a flat v1 leaderboard.",
+      "Each model received a docs-first package, fixed benchmark data, and a direct instruction to implement the web app. I review each run against the contract for its benchmark version and preserve the result as an archived demo.",
+      "The v1 results are the original 15-run snapshot. The current results use the revised review procedure that standardizes test runner evidence and tracks localization quality more rigorously, and should be read as the current batch, not appended to a flat v1 leaderboard.",
       "The task is intentionally small. That makes it easier to inspect details that matter in real use: whether the main flow works, whether required behavior survives implementation, whether the interface feels stable, whether repetitive keyboard use is comfortable, and whether the repository remains understandable after the agent finishes.",
     ],
     readingHeading: "How To Read The Results",
@@ -1167,16 +1374,81 @@ export const phoneticBenchmarkReports = {
       unrunnable: "the implemented behavior cannot be meaningfully exercised.",
     },
     evidenceText:
-      "A failed status is not a quality score. Failure types remain visible because they have different practical weight. Missing workflow documentation in an otherwise strong application is not the same problem as a quiz that cannot progress past its first question. Source LoC and automated test evidence are repository evidence: they help show the shape of an implementation, but they do not prove code quality or test coverage. When v2 comparative scores are published in machine-readable exports, they apply only to v2 runs.",
+      "A failed status is not a quality score. Failure types remain visible because they have different practical weight. Missing workflow documentation in an otherwise strong application is not the same problem as a quiz that cannot progress past its first question. Source LoC and automated test evidence are repository evidence: they help show the shape of an implementation, but they do not prove code quality or test coverage. When comparative scores are published in machine-readable exports, they apply only to current runs.",
+    spotlightHeading: "Current Read Of The Batch",
+    spotlightIntro:
+      "These notes are my read of the table, not a universal ranking. For my workflow, the important question is whether a model can build a small web product and still respect a tight specification: implement every required behavior, preserve required evidence, and avoid inventing scope outside the contract.",
+    spotlights: [
+      {
+        id: "contract-clearing-models",
+        heading: "Models That Clear The Contract",
+        paragraphs: [
+          "In my tests, the current contract-clearing set is Owl Alpha, GPT 5.4 High, GPT 5.5 High, DeepSeek V4 Pro, GLM-5.2, and Kimi K2.7. They are the right starting set for qualitative comparison because their remaining notes are product-quality observations rather than formal contract blockers.",
+        ],
+        runIds: [
+          "owl-alpha-v2",
+          "gpt-5-4-high-v2",
+          "gpt-5-5-high-v2",
+          "deepseek-v4-pro-v2",
+          "glm-5-2-v2",
+          "kimi-k2-7-v2",
+        ],
+      },
+      {
+        id: "strongest-current-references",
+        heading: "Strongest Current References",
+        paragraphs: [
+          "From the user side, my strongest current references are GPT 5.5 High, Kimi K2.7, and Owl Alpha. GPT 5.5 High has the best direct product feel in this batch despite missing automated-runner evidence, Kimi K2.7 is the cleanest documented current run, and Owl Alpha is an unusually strong undisclosed-model result. A final human preference still matters because the benchmark deliberately keeps design taste and interaction feel inspectable rather than hiding them behind one score.",
+        ],
+        runIds: ["gpt-5-5-high-v2", "kimi-k2-7-v2", "owl-alpha-v2"],
+      },
+      {
+        id: "positive-surprises",
+        heading: "Positive Surprises",
+        paragraphs: [
+          "The less obvious names are part of the signal. At the time of these runs, DeepSeek V4 Flash and MiniMax M3 looked attractive for cost-sensitive work, but I count cost as more than token price: verbose output, loops, repeated corrections, and debugging time all matter. DeepSeek V4 Flash works well enough that its failure is mainly an attribution-footer issue on the setup screen. MiniMax M3 does not formally clear the contract because of Polish setup labels, but its zero-dependency implementation, passing tests, and observed interaction behavior are stronger than the status alone suggests.",
+        ],
+        runIds: ["owl-alpha-v2", "deepseek-v4-flash-v2", "minimax-m3-v2"],
+      },
+      {
+        id: "gemini-31-vs-35",
+        heading: "Gemini 3.1 Pro vs Gemini 3.5 Flash",
+        paragraphs: [
+          "The Gemini split is useful: Gemini 3.1 Pro High is less visually ambitious, but it follows the behavioral contract more carefully and is easier to trust in the reviewed product loop. Gemini 3.5 Flash High makes stronger design choices, yet the current run has repeated-submit behavior and attribution-localization misses that make it weaker as a spec-following implementation.",
+        ],
+        runIds: ["gemini-3-1-pro-high-v2", "gemini-3-5-flash-high-v2"],
+      },
+      {
+        id: "qwen-date-evidence",
+        heading: "Qwen's 2025 Date Is A Small Evidence Failure",
+        paragraphs: [
+          "Qwen3.7 Max produced a generally solid runnable app, but the footer and documentation say 2025 while the archived run evidence is from 2026. It is a small-looking detail with a real review cost: public artifacts need stable, believable provenance.",
+        ],
+        runIds: ["qwen-3-7-max-v2"],
+      },
+      {
+        id: "polish-footer-declension",
+        heading: "Polish Footer Declension Is A Useful Localization Detail",
+        paragraphs: [
+          'A search through the archived demos found the declined form "Piotra Kacały" in several Polish attribution footers, including GPT 5.5 High, Owl Alpha, Kimi K2.7, DeepSeek V4 Pro, and Big Pickle. That does not override formal failures, but it is a positive signal for Polish users because the footer reads like localized copy rather than a pasted English requirement.',
+        ],
+        runIds: [
+          "gpt-5-5-high-v2",
+          "owl-alpha-v2",
+          "kimi-k2-7-v2",
+          "deepseek-v4-pro-v2",
+          "big-pickle-v2",
+        ],
+      },
+    ],
     resultsHeading: "Results",
     resultsIntro:
       "The results are grouped by benchmark version. The short functional read is deliberately compact; selected cases below explain the distinctions that matter most. Screenshots and archived demos remain available so the applications can be inspected directly.",
     resultGroups: [
       {
         benchmarkVersion: "v2",
-        heading: "v2 Batch",
-        intro:
-          "The first v2 runs use the revised review procedure. They are the current benchmark batch.",
+        heading: "Current Batch",
+        intro: "The current runs use the revised review procedure.",
       },
       {
         benchmarkVersion: "v1",
@@ -1192,6 +1464,7 @@ export const phoneticBenchmarkReports = {
       sourceLoc: "Source LoC",
       testCount: "Automated test evidence",
       functionalRead: "Functional read",
+      evidenceDetails: "Repository evidence",
       details: "Details",
     },
     detailLabels: {
@@ -1213,6 +1486,7 @@ export const phoneticBenchmarkReports = {
       "core behavior": "core behavior",
       "submission documentation": "submission documentation",
       attribution: "attribution",
+      localization: "localization",
       "test workflow": "test workflow",
       "unrunnable output": "unrunnable output",
     },
@@ -1251,23 +1525,24 @@ export const phoneticBenchmarkReports = {
     findings: [
       {
         heading:
-          "The v2 Batch Separates Contract-Clearing Runs From Inspectable Failures",
+          "The Current Batch Separates Contract-Clearing Runs From Inspectable Failures",
         paragraphs: [
-          "Owl Alpha, GPT 5.4 High, and GPT 5.5 High are the useful v2 comparables in this batch. They clear the revised contract while still preserving visible review notes around active-run choices, Polish localization quality, and missing automated-test evidence.",
-          "The remaining eleven v2 runs are not one kind of failure. Several are inspectable applications with narrow formal misses, while Big Pickle and gpt-oss-120b expose harder product behavior gaps. That distinction matters more than a flat pass/fail count.",
+          "Owl Alpha, GPT 5.4 High, GPT 5.5 High, DeepSeek V4 Pro, GLM-5.2, and Kimi K2.7 are the useful comparables in this batch. They clear the revised contract while still preserving visible review notes around active-run choices, Polish localization quality, interaction polish, and missing automated-test evidence.",
+          "The remaining fourteen runs are not one kind of failure. Several are inspectable applications with narrow formal misses, while Big Pickle, Qwen3.7 Max, and gpt-oss-120b expose harder product behavior gaps. That distinction matters more than a flat pass/fail count.",
         ],
       },
       {
         heading: "Useful Results Are Not Limited To One Model Tier",
         paragraphs: [
-          "Several models produced convincing small applications from the same docs-first package. The useful outputs are not limited to the most prominent or most expensive models. That makes experimentation with less obvious, cheaper, or open models a reasonable part of a zero-code workflow.",
+          "Several models produced convincing small applications from the same docs-first package. The useful outputs are not limited to the most prominent or most expensive models. That makes experimentation with less obvious, cheaper, or open models a reasonable part of my zero-code workflow.",
+          "For purchasing decisions, I care about total workflow cost rather than token price alone. A cheap model can become expensive if it generates unnecessary output, loops, misses instructions, or forces repeated debugging; a premium model is only worth keeping if it reduces that total cost.",
         ],
       },
       {
         heading:
           "Formal Compliance And Product Quality Are Different Questions",
         paragraphs: [
-          "The v2 batch currently leaves three comparable submissions and eleven contract-failing submissions, with no unrunnable v2 output. The pattern has shifted from v1: most v2 failures are applications that can be inspected, not outputs that crash before the benchmark can be exercised.",
+          "The current batch leaves six comparable submissions and fourteen contract-failing submissions, with no unrunnable output in this batch. The pattern has shifted from v1: most current failures are applications that can be inspected, not outputs that crash before the benchmark can be exercised.",
           "The v1 snapshot still shows why the split needs context. DeepSeek V4 Pro is functionally strong but fails because it does not document its install, run, and test commands. Nemotron 3 Super also fails, but for a much more important reason: its quiz cannot move past the first symbol.",
           "The contract matters because disciplined delivery matters. The failure type matters because not every miss has the same practical cost.",
         ],
@@ -1275,22 +1550,30 @@ export const phoneticBenchmarkReports = {
       {
         heading: "Obvious UX Needs Still Require Product Judgment",
         paragraphs: [
-          "Keyboard focus remains the clearest repeated example, but v2 adds more interaction-loop details: rapid repeated submits, hint state during language changes, scoring after repeated hints, and suggestion-option stability. The gaps are small in code and obvious in use.",
+          "Keyboard focus remains the clearest repeated example, but the current batch adds more interaction-loop details: rapid repeated submits, hint state during language changes, scoring after repeated hints, and suggestion-option stability. The gaps are small in code and obvious in use.",
           "This is one reason to inspect the actual application rather than treating a generated repository as finished when it builds.",
         ],
       },
       {
         heading: "Public Rankings Do Not Fully Predict Workflow Fit",
         paragraphs: [
-          "The Gemini and Sonnet v2 runs are useful cautions against reading general model rankings as product-workflow recommendations. Both Gemini v2 outputs are runnable and have controlled-runner evidence, but still fail the contract. Sonnet 4.6 Thinking has strong automated-test evidence and working core flows, yet fails on visible model identity and attribution localization.",
+          "The current Gemini and Sonnet runs are useful cautions against reading general model rankings as product-workflow recommendations. Both Gemini current outputs are runnable and have controlled-runner evidence, but still fail the contract. Sonnet 4.6 Thinking has strong automated-test evidence and working core flows, yet fails on visible model identity and attribution localization.",
+          "GLM-5.2 is a good example of why I run a localized benchmark instead of trusting broad coding scores alone. It performs well in public coding benchmarks and clears this contract, but in my scenario the suggestion buttons reshuffle after wrong answers and hints. That is a small implementation detail with real interaction cost in a repetitive training app.",
           "This is not a universal model ranking. Each result is one archived run against one benchmark version of a small product brief.",
         ],
       },
       {
         heading: "Localization Became A Contract-Level Signal",
         paragraphs: [
-          "A repeated v2 miss is not translation of the main UI, but the required attribution footer staying English after the interface switches to Polish. GPT 5.4 High clears the contract while still showing a softer version of the same theme: the Polish UI is understandable, but many diacritics are simplified away.",
+          "A repeated miss in the current batch is not translation of the main UI, but the required attribution footer staying English after the interface switches to Polish. GPT 5.4 High clears the contract while still showing a softer version of the same theme: the Polish UI is understandable, but many diacritics are simplified away.",
           "That makes localization a product-quality signal, not a cosmetic layer to check after the main flow works.",
+        ],
+      },
+      {
+        heading: "Technical Stack Insights: Vite vs. Plain JavaScript",
+        paragraphs: [
+          "Most models default to Vite and TypeScript (e.g., Sonnet, Gemini 3.1 Pro, Opus), reflecting current frontend industry standards. However, the cleanest and often most resilient applications (like Kimi K2.7, Owl Alpha v2, or GPT 5.5 High v2) were built in vanilla JavaScript, with zero build steps or external dependencies.",
+          "For small products, this is a key lesson: zero-dependency means zero vulnerability to 'dependency rot'. Applications written directly using native browser DOM APIs will run unmodified 10 years from now, whereas those reliant on specific, older bundler setups may fail to build without maintenance in the future.",
         ],
       },
       {
@@ -1305,10 +1588,10 @@ export const phoneticBenchmarkReports = {
       {
         id: "first-v2-batch",
         heading:
-          "First v2 Batch: Three Comparables And Eleven Contract Failures",
+          "Current Batch: Six Comparables And Fourteen Contract Failures",
         paragraphs: [
-          "Owl Alpha, GPT 5.4 High, and GPT 5.5 High are the useful v2 comparables in this batch. DeepSeek V4 Flash is functionally okay but formally contract-failing because attribution is missing on initial load; MiMo V2.5 Free has clear docs and a passing runner, but fails attribution localization and keyboard answer locking.",
-          "The other v2 failures widen the pattern. Opus, Gemini 3.5, Sonnet, and Gemini 3.1 are runnable and test-backed but still miss required attribution, identity, or active-run behavior. Gemma 4 26B is blocked by dependency and test-command failures. Laguna M.1 Free has a passing runner but fails scoring and footer localization. North Mini Code Free blocks answer submission after a hint and has disconnected test evidence. Big Pickle and gpt-oss-120b show harder product failures in core behavior.",
+          "In my review, Owl Alpha, GPT 5.4 High, GPT 5.5 High, DeepSeek V4 Pro, GLM-5.2, and Kimi K2.7 are the useful comparables in this batch. My strongest user-facing reads are GPT 5.5 High, Kimi K2.7, and Owl Alpha. GLM-5.2 is still strong with one visible suggestion-ordering issue; DeepSeek V4 Pro clears the contract but has weaker interaction polish.",
+          "I paid attention to the failure type, not just the status. DeepSeek V4 Flash, MiMo V2.5 Free, MiMo V2.5 Pro, MiniMax M3, and Qwen3.7 Max are all inspectable, but fail on attribution, localization, repeated-submit locking, or date evidence. Opus, Gemini 3.5, Sonnet, and Gemini 3.1 are runnable and test-backed but still miss required attribution, identity, or active-run behavior. Gemma 4 26B is blocked by dependency and test-command failures. Laguna M.1 Free has a passing runner but fails scoring and footer localization. North Mini Code Free blocks answer submission after a hint and has disconnected test evidence. Big Pickle and gpt-oss-120b show harder product failures in core behavior.",
         ],
         runIds: [
           "deepseek-v4-flash-v2",
@@ -1325,19 +1608,28 @@ export const phoneticBenchmarkReports = {
           "gpt-5-5-high-v2",
           "big-pickle-v2",
           "gpt-oss-120b-v2",
+          "deepseek-v4-pro-v2",
+          "glm-5-2-v2",
+          "kimi-k2-7-v2",
+          "mimo-v2-5-pro-v2",
+          "minimax-m3-v2",
+          "qwen-3-7-max-v2",
         ],
       },
       {
         id: "reference-baselines",
-        heading: "Current v2 Comparables And Historical v1 Baselines",
+        heading: "Current Comparables And Historical v1 Baselines",
         paragraphs: [
-          "The current contract-clearing v2 references are Owl Alpha, GPT 5.4 High, and GPT 5.5 High. They are useful in different ways: Owl Alpha is conservative and no-build, GPT 5.4 High has strong interaction behavior with localization polish issues, and GPT 5.5 High is compact plain JavaScript but lacks automated runner evidence.",
-          "The earlier v1 baselines remain useful as historical references: GPT 5.5 High and Claude Sonnet 4.6 Thinking were strong in the original snapshot. Sonnet's v2 run is not a contract-clearing baseline because visible model identity and attribution localization fail, despite strong tests.",
+          "For my workflow, the current contract-clearing references are useful in different ways: GPT 5.5 High is the strongest direct user-side reference but lacks automated runner evidence, Kimi K2.7 is the cleanest documented current run, Owl Alpha is conservative and no-build, GPT 5.4 High has strong interaction behavior with localization polish issues, DeepSeek V4 Pro is solid but rougher in interaction polish, and GLM-5.2 is strong with suggestion-ordering friction.",
+          "The earlier v1 baselines remain useful as historical references: GPT 5.5 High and Claude Sonnet 4.6 Thinking were strong in the original snapshot. Sonnet's run in the current batch is not a contract-clearing baseline because visible model identity and attribution localization fail, despite strong tests.",
         ],
         runIds: [
           "owl-alpha-v2",
           "gpt-5-4-high-v2",
           "gpt-5-5-high-v2",
+          "deepseek-v4-pro-v2",
+          "glm-5-2-v2",
+          "kimi-k2-7-v2",
           "gpt-5-5-high",
           "sonnet-4-6-thinking",
           "sonnet-4-6-thinking-v2",
@@ -1345,11 +1637,12 @@ export const phoneticBenchmarkReports = {
       },
       {
         id: "deepseek-narrow-failure",
-        heading: "A Narrow Formal Failure: DeepSeek V4 Pro",
+        heading: "DeepSeek V4 Pro Shows Why Versioned Runs Matter",
         paragraphs: [
-          "DeepSeek V4 Pro is a useful example of why failure types should remain visible. The app is functionally strong and its DECISIONS.md makes restrictive product choices reviewable: restart and language switching are intentionally limited during an active run. The repository still fails the strict submission contract because it does not document install, run, and test commands.",
+          "The v1 DeepSeek V4 Pro run is a useful example of why failure types should remain visible. The app is functionally strong and its DECISIONS.md makes restrictive product choices reviewable, but the repository still fails the strict submission contract because it does not document install, run, and test commands.",
+          "The DeepSeek V4 Pro run in the current batch clears the revised contract with passing runner evidence and correct core scoring behavior. It is still visibly weaker than the strongest comparables in the current batch because suggestion options reshuffle after feedback or hint reveal, and keyboard focus is lost after progression.",
         ],
-        runIds: ["deepseek-v4-pro"],
+        runIds: ["deepseek-v4-pro", "deepseek-v4-pro-v2"],
       },
       {
         id: "gpt-5-4-product-judgment",
@@ -1429,11 +1722,18 @@ export const phoneticBenchmarkReports = {
     eyebrow: "Benchmark pracy agentów AI",
     title: "Phonetic Benchmark Report",
     summary:
-      "Jakościowy przegląd archiwalnych aplikacji webowych zbudowanych na podstawie specyfikacji benchmarku Phonetic Alphabet Trainer. Batch v2 (14 prób) jest aktualną serią benchmarku; oryginalne wyniki v1 pozostają zachowane jako snapshot 15 prób. To nie jest ranking. Liczy się to, czy wynik działa, gdzie się psuje i co mówi o budowaniu małych produktów z agentami AI.",
+      "Jakościowy przegląd 35 archiwalnych aplikacji webowych zbudowanych z tego samego briefu Phonetic Alphabet Trainer. W aktualnym batchu kontrakt spełniają Owl Alpha, GPT 5.4 High, GPT 5.5 High, DeepSeek V4 Pro, GLM-5.2 i Kimi K2.7; pozostałe 14 outputów z aktualnej serii to sprawdzalne błędy. Oryginalny snapshot v1 zostaje zachowany jako historyczne porównanie.",
+    currentSummaryKicker: "Aktualny wynik",
+    currentSummaryHeading: "Dlaczego ten benchmark powstał?",
+    currentSummaryText:
+      "Ten raport to zapis moich testów automatyzacji dostarczania kodu w workflow zero-code. Zamiast polegać na ogólnych rankingach, sprawdzam, jak modele radzą sobie z precyzyjną dokumentacją, ograniczeniami QA, lokalizacją i materiałem z repozytorium. Pokazuję tu realne, powtarzalne wyniki z mojego codziennego workflow i patrzę nie tylko na cenę za tokeny, ale też na koszt poprawek, zapętleń, nadmiarowych tokenów i debugowania.",
+    currentSummaryComparableLabel: "Porównywalne runy",
+    currentSummaryResultsLabel: "Przeczytaj aktualne wyniki",
+    currentSummaryGalleryLabel: "Porównaj screenshoty",
     benchmarkHeading: "Czym Jest Ten Benchmark",
     benchmarkParagraphs: [
-      "Każdy model dostał pakiet dokumentacji, stałe dane benchmarku i bezpośrednie polecenie implementacji aplikacji webowej. Próby są sprawdzane według kontraktu właściwego dla swojej wersji benchmarku i zachowane jako archiwalne demo.",
-      "Wyniki v1 są oryginalnym snapshotem 15 prób. Wyniki v2 używają zmienionej procedury przeglądu, która standaryzuje dowody z runnerów testowych i dokładniej śledzi jakość lokalizacji, i należy je czytać jako aktualny batch, a nie jako dopisanie do płaskiego leaderboardu v1.",
+      "Każdy model dostał pakiet dokumentacji, stałe dane benchmarku i bezpośrednie polecenie implementacji aplikacji webowej. Każdą próbę sprawdzam według kontraktu właściwego dla swojej wersji benchmarku i zachowuję jako archiwalne demo.",
+      "Wyniki v1 są oryginalnym snapshotem 15 prób. Aktualne wyniki używają zmienionej procedury przeglądu, która standaryzuje dowody z runnerów testowych i dokładniej śledzi jakość lokalizacji, i należy je czytać jako aktualny batch, a nie jako dopisanie do płaskiego leaderboardu v1.",
       "Zadanie jest celowo niewielkie. Dzięki temu łatwiej sprawdzić detale ważne w rzeczywistym użyciu: czy główna ścieżka działa, czy wymagane zachowania przetrwały implementację, czy interfejs jest stabilny, czy powtarzalna obsługa z klawiatury pozostaje wygodna i czy repozytorium nadal jest zrozumiałe po zakończeniu pracy agenta.",
     ],
     readingHeading: "Jak Czytać Wyniki",
@@ -1446,16 +1746,82 @@ export const phoneticBenchmarkReports = {
       unrunnable: "nie da się sensownie przejść zaimplementowanego zachowania.",
     },
     evidenceText:
-      "Negatywny status nie jest oceną jakości. Typ problemu pozostaje widoczny, bo poszczególne błędy mają różną wagę praktyczną. Brak dokumentacji workflow w dobrej aplikacji nie jest tym samym problemem co quiz, który nie przechodzi dalej niż pierwsze pytanie. Liczba linii kodu źródłowego i liczba statycznie policzonych testów automatycznych są materiałem z repozytorium: pokazują kształt implementacji, ale same nie dowodzą jakości kodu ani pokrycia testami. Jeśli v2 comparative score pojawia się w eksportach machine-readable, dotyczy wyłącznie prób v2.",
+      "Negatywny status nie jest oceną jakości. Typ problemu pozostaje widoczny, bo poszczególne błędy mają różną wagę praktyczną. Brak dokumentacji workflow w dobrej aplikacji nie jest tym samym problemem co quiz, który nie przechodzi dalej niż pierwsze pytanie. Liczba linii kodu źródłowego i liczba statycznie policzonych testów automatycznych są materiałem z repozytorium: pokazują kształt implementacji, ale same nie dowodzą jakości kodu ani pokrycia testami. Jeśli wynik porównawczy (comparative score) pojawia się w eksportach machine-readable, dotyczy wyłącznie aktualnych prób.",
+    spotlightHeading: "Aktualny Odczyt Batcha",
+    spotlightIntro:
+      "Te notatki są moim odczytem tabeli, nie uniwersalnym rankingiem. Dla mojego workflow najważniejsze jest to, czy model potrafi zbudować mały produkt webowy i jednocześnie pilnować ścisłej specyfikacji: zrealizować wszystkie wymagane zachowania, zachować wymagane dowody i nie wychodzić poza ustalony zakres.",
+    spotlights: [
+      {
+        id: "contract-clearing-models",
+        heading: "Modele Spełniające Kontrakt",
+        paragraphs: [
+          "W moich testach aktualny zestaw spełniający kontrakt to Owl Alpha, GPT 5.4 High, GPT 5.5 High, DeepSeek V4 Pro, GLM-5.2 i Kimi K2.7. To właściwy punkt startowy do porównania jakościowego, bo pozostałe uwagi przy tych runach są obserwacjami jakości produktu, a nie formalnymi blokadami kontraktu.",
+        ],
+        runIds: [
+          "owl-alpha-v2",
+          "gpt-5-4-high-v2",
+          "gpt-5-5-high-v2",
+          "deepseek-v4-pro-v2",
+          "glm-5-2-v2",
+          "kimi-k2-7-v2",
+        ],
+      },
+      {
+        id: "strongest-current-references",
+        heading: "Najmocniejsze Aktualne Referencje",
+        paragraphs: [
+          "Od strony użytkownika moje najmocniejsze aktualne referencje to GPT 5.5 High, Kimi K2.7 i Owl Alpha. GPT 5.5 High ma najlepsze bezpośrednie odczucie produktu w tej serii mimo braku dowodu z automatycznego runnera, Kimi K2.7 jest najczystszym udokumentowanym runem aktualnej serii, a Owl Alpha to wyjątkowo mocny wynik modelu o nieujawnionej tożsamości. Ostateczna preferencja człowieka nadal ma znaczenie, bo benchmark celowo zostawia design i odczucie interakcji do bezpośredniej inspekcji zamiast chować je za jedną liczbą.",
+        ],
+        runIds: ["gpt-5-5-high-v2", "kimi-k2-7-v2", "owl-alpha-v2"],
+      },
+      {
+        id: "positive-surprises",
+        heading: "Pozytywne Niespodzianki",
+        paragraphs: [
+          "Mniej oczywiste nazwy są częścią sygnału. W czasie tych testów DeepSeek V4 Flash i MiniMax M3 wyglądały atrakcyjnie przy pracy wrażliwej na koszt, ale koszt liczę szerzej niż cena za tokeny: znaczenie mają też rozwlekły output, zapętlenia, powtórne poprawki i czas debugowania. DeepSeek V4 Flash działa na tyle dobrze, że jego błąd dotyczy głównie stopki atrybucji na ekranie setupu. MiniMax M3 formalnie nie przechodzi przez polskie etykiety setupu, ale jego zero-dependency implementacja, przechodzące testy i sprawdzone zachowanie interakcji są mocniejsze, niż sugeruje sam status.",
+        ],
+        runIds: ["owl-alpha-v2", "deepseek-v4-flash-v2", "minimax-m3-v2"],
+      },
+      {
+        id: "gemini-31-vs-35",
+        heading: "Gemini 3.1 Pro vs Gemini 3.5 Flash",
+        paragraphs: [
+          "Podział Gemini jest użyteczny: Gemini 3.1 Pro High jest mniej ambitny wizualnie, ale dokładniej pilnuje kontraktu zachowania i łatwiej mu zaufać w sprawdzonej pętli produktu. Gemini 3.5 Flash High podejmuje mocniejsze decyzje projektowe, ale aktualny run ma problem z szybkim powtórnym submitowaniem i lokalizacją atrybucji, więc jest słabszy jako implementacja według specyfikacji.",
+        ],
+        runIds: ["gemini-3-1-pro-high-v2", "gemini-3-5-flash-high-v2"],
+      },
+      {
+        id: "qwen-date-evidence",
+        heading: "Data 2025 W Qwenie To Mały Błąd Evidence",
+        paragraphs: [
+          "Qwen3.7 Max przygotował ogólnie solidną działającą aplikację, ale stopka i dokumentacja wskazują 2025 rok, podczas gdy zarchiwizowany run pochodzi z 2026 roku. To pozornie drobny detal z realnym kosztem w przeglądzie: publiczne artefakty powinny mieć stabilne i wiarygodne pochodzenie.",
+        ],
+        runIds: ["qwen-3-7-max-v2"],
+      },
+      {
+        id: "polish-footer-declension",
+        heading: "Odmiana Nazwiska W Stopce To Dobry Sygnał Lokalizacji",
+        paragraphs: [
+          'Przeszukanie archiwalnych demo znalazło formę "Piotra Kacały" w kilku polskich stopkach atrybucji, m.in. w GPT 5.5 High, Owl Alpha, Kimi K2.7, DeepSeek V4 Pro i Big Pickle. To nie kasuje formalnych błędów, ale dla polskich użytkowników jest pozytywnym sygnałem: stopka brzmi jak zlokalizowany tekst, a nie wklejony angielski wymóg.',
+        ],
+        runIds: [
+          "gpt-5-5-high-v2",
+          "owl-alpha-v2",
+          "kimi-k2-7-v2",
+          "deepseek-v4-pro-v2",
+          "big-pickle-v2",
+        ],
+      },
+    ],
     resultsHeading: "Wyniki",
     resultsIntro:
       "Wyniki są pogrupowane według wersji benchmarku. Krótki opis funkcjonalny jest celowo zwięzły; wybrane przypadki poniżej wyjaśniają najważniejsze różnice. Screenshoty i archiwalne demo pozostają dostępne, żeby aplikacje można było sprawdzić bezpośrednio.",
     resultGroups: [
       {
         benchmarkVersion: "v2",
-        heading: "Batch v2",
+        heading: "Aktualna seria",
         intro:
-          "Pierwsze próby v2 używają zmienionej procedury przeglądu. To aktualny batch benchmarku.",
+          "Próby z tej serii używają zmienionej procedury przeglądu. To aktualny batch benchmarku.",
       },
       {
         benchmarkVersion: "v1",
@@ -1471,6 +1837,7 @@ export const phoneticBenchmarkReports = {
       sourceLoc: "Linie kodu źródłowego",
       testCount: "Dowody testów automatycznych",
       functionalRead: "Odczyt funkcjonalny",
+      evidenceDetails: "Materiał z repozytorium",
       details: "Szczegóły",
     },
     detailLabels: {
@@ -1492,6 +1859,7 @@ export const phoneticBenchmarkReports = {
       "core behavior": "główne zachowanie",
       "submission documentation": "dokumentacja workflow",
       attribution: "atrybucja",
+      localization: "lokalizacja",
       "test workflow": "workflow testów",
       "unrunnable output": "niedziałający wynik",
     },
@@ -1530,22 +1898,23 @@ export const phoneticBenchmarkReports = {
     findings: [
       {
         heading:
-          "Batch v2 Oddziela Wyniki Spełniające Kontrakt Od Sprawdzalnych Błędów",
+          "Aktualna seria oddziela wyniki spełniające kontrakt od sprawdzalnych błędów",
         paragraphs: [
-          "Owl Alpha, GPT 5.4 High i GPT 5.5 High są użytecznymi porównywalnymi wynikami v2 w tym batchu. Przechodzą zmieniony kontrakt, ale wiążą się z uwagami w przeglądzie dotyczącymi decyzji w aktywnej próbie, jakości polskiej lokalizacji i braku dowodu z automatycznych testów.",
-          "Pozostałe jedenaście wyników v2 nie tworzy jednego typu porażki. Część to sprawdzalne aplikacje z wąskimi błędami formalnymi, a Big Pickle i gpt-oss-120b pokazują twardsze braki w zachowaniu produktu. To rozróżnienie jest ważniejsze niż płaski wynik pass/fail.",
+          "Owl Alpha, GPT 5.4 High, GPT 5.5 High, DeepSeek V4 Pro, GLM-5.2 i Kimi K2.7 są użytecznymi porównywalnymi wynikami w tej serii. Przechodzą zmieniony kontrakt, ale wiążą się z uwagami w przeglądzie dotyczącymi decyzji w aktywnej próbie, jakości polskiej lokalizacji, dopracowania interakcji i braku dowodu z automatycznych testów.",
+          "Pozostałe czternaście wyników z aktualnej serii nie tworzy jednego typu porażki. Część to sprawdzalne aplikacje z wąskimi błędami formalnymi, a Big Pickle, Qwen3.7 Max i gpt-oss-120b pokazują twardsze braki w zachowaniu produktu. To rozróżnienie jest ważniejsze niż płaski wynik pass/fail.",
         ],
       },
       {
         heading: "Użyteczne Wyniki Nie Są Ograniczone Do Jednej Półki Modeli",
         paragraphs: [
-          "Kilka modeli przygotowało przekonujące małe aplikacje na podstawie tego samego pakietu dokumentacji. Użyteczne wyniki nie są ograniczone do najbardziej rozpoznawalnych ani najdroższych modeli. Eksperymentowanie z mniej oczywistymi, tańszymi lub otwartymi modelami ma sens także w workflow zero-code.",
+          "Kilka modeli przygotowało przekonujące małe aplikacje na podstawie tego samego pakietu dokumentacji. Użyteczne wyniki nie są ograniczone do najbardziej rozpoznawalnych ani najdroższych modeli. Eksperymentowanie z mniej oczywistymi, tańszymi lub otwartymi modelami ma sens także w moim workflow zero-code.",
+          "Przy decyzjach zakupowych patrzę na całkowity koszt workflow, nie tylko na cenę za tokeny. Tani model może stać się drogi, jeśli generuje niepotrzebnie dużo tekstu, zapętla się, gubi instrukcje albo wymusza wielokrotne debugowanie; drogi model ma sens tylko wtedy, gdy realnie zmniejsza ten całkowity koszt.",
         ],
       },
       {
         heading: "Zgodność Formalna I Jakość Produktu To Dwa Różne Pytania",
         paragraphs: [
-          "Batch v2 ma obecnie trzy wyniki porównywalne i jedenaście wyników niespełniających kontraktu, bez niedziałającego outputu v2. Wzorzec przesunął się względem v1: większość błędów v2 dotyczy aplikacji, które da się sprawdzić, a nie outputów crashujących przed przejściem benchmarku.",
+          "Aktualna seria ma obecnie sześć wyników porównywalnych i czternaście wyników niespełniających kontraktu, bez niedziałającego outputu w tej serii. Wzorzec przesunął się względem v1: większość błędów w aktualnej serii dotyczy aplikacji, które da się sprawdzić, a nie outputów crashujących przed przejściem benchmarku.",
           "Snapshot v1 nadal pokazuje, dlaczego ten podział wymaga kontekstu. DeepSeek V4 Pro jest funkcjonalnie mocny, ale nie dokumentuje komend instalacji, uruchomienia i testów. Nemotron 3 Super również nie spełnia kontraktu, ale z dużo ważniejszego powodu: quiz nie przechodzi dalej niż pierwszy symbol.",
           "Kontrakt jest ważny, bo uporządkowane dostarczenie projektu ma znaczenie. Typ problemu jest ważny, bo nie każdy błąd ma ten sam koszt praktyczny.",
         ],
@@ -1553,7 +1922,7 @@ export const phoneticBenchmarkReports = {
       {
         heading: "Oczywiste Potrzeby UX Nadal Wymagają Oceny Produktowej",
         paragraphs: [
-          "Zarządzanie fokusem przy obsłudze z klawiatury nadal jest najlepszym powtarzającym się przykładem, ale v2 dodaje więcej detali pętli interakcji: szybkie powtórne submitowanie, stan podpowiedzi po zmianie języka, scoring po wielokrotnym użyciu hintu i stabilność opcji w trybie sugestii. Różnice są niewielkie w kodzie i oczywiste podczas używania aplikacji.",
+          "Zarządzanie fokusem przy obsłudze z klawiatury nadal jest najlepszym powtarzającym się przykładem, ale aktualny batch dodaje więcej detali pętli interakcji: szybkie powtórne submitowanie, stan podpowiedzi po zmianie języka, scoring po wielokrotnym użyciu hintu i stabilność opcji w trybie sugestii. Różnice są niewielkie w kodzie i oczywiste podczas używania aplikacji.",
           "To jeden z powodów, dla których samo zbudowanie repozytorium nie powinno kończyć przeglądu wygenerowanego produktu.",
         ],
       },
@@ -1561,15 +1930,23 @@ export const phoneticBenchmarkReports = {
         heading:
           "Publiczne Rankingi Nie Przewidują W Pełni Dopasowania Do Workflow",
         paragraphs: [
-          "Próby Gemini i Sonnet v2 są dobrym ostrzeżeniem przed traktowaniem ogólnych rankingów modeli jako rekomendacji dla konkretnego workflow produktowego. Oba wyniki Gemini v2 są uruchamialne i mają controlled-runner evidence, ale nadal nie spełniają kontraktu. Sonnet 4.6 Thinking ma mocne evidence z testów automatycznych i działające główne flow, a mimo to odpada na widocznej tożsamości modelu i lokalizacji atrybucji.",
+          "Aktualne próby Gemini i Sonnet są dobrym ostrzeżeniem przed traktowaniem ogólnych rankingów modeli jako rekomendacji dla konkretnego workflow produktowego. Oba aktualne wyniki Gemini są uruchamialne i mają controlled-runner evidence, ale nadal nie spełniają kontraktu. Sonnet 4.6 Thinking ma mocne evidence z testów automatycznych i działające główne flow, a mimo to odpada na widocznej tożsamości modelu i lokalizacji atrybucji.",
+          "GLM-5.2 to dobry przykład, dlaczego wolę lokalny benchmark od samych ogólnych wyników kodowania. Model dobrze wypada w publicznych benchmarkach i spełnia ten kontrakt, ale w moim scenariuszu przyciski sugestii przetasowują się po błędnych odpowiedziach i po użyciu hintu. To drobny detal implementacyjny z realnym kosztem interakcji w powtarzalnym ćwiczeniu.",
           "To nie jest uniwersalny ranking modeli. Każdy wynik jest jedną archiwalną próbą dla jednej wersji benchmarku i jednego niewielkiego briefu produktowego.",
         ],
       },
       {
         heading: "Lokalizacja Stała Się Sygnałem Kontraktowym",
         paragraphs: [
-          "Powtarzający się błąd v2 nie dotyczy tłumaczenia głównego UI, tylko wymaganej stopki atrybucji, która zostaje po angielsku po przełączeniu interfejsu na polski. GPT 5.4 High spełnia kontrakt, ale pokazuje łagodniejszą wersję tego samego tematu: polski UI jest zrozumiały, lecz wiele znaków diakrytycznych uproszczono do ASCII.",
+          "Powtarzający się błąd w aktualnym batchu nie dotyczy tłumaczenia głównego UI, tylko wymaganej stopki atrybucji, która zostaje po angielsku po przełączeniu interfejsu na polski. GPT 5.4 High spełnia kontrakt, ale pokazuje łagodniejszą wersję tego samego tematu: polski UI jest zrozumiały, lecz wiele znaków diakrytycznych uproszczono do ASCII.",
           "To sprawia, że lokalizacja jest sygnałem jakości produktu, a nie kosmetyczną warstwą do odhaczenia po działającym flow.",
+        ],
+      },
+      {
+        heading: "Wnioski Technologiczne: Vite kontra Plain JavaScript",
+        paragraphs: [
+          "Większość modeli automatycznie sięga po Vite i TypeScript (np. Sonnet, Gemini 3.1 Pro, Opus), co odzwierciedla standardy współczesnego frontendu. Jednak najczystsze i często najbardziej niezawodne aplikacje (jak Kimi K2.7, Owl Alpha v2 czy GPT 5.5 High v2) powstały w czystym JavaScripcie, bez żadnego procesu budowania i zewnętrznych zależności.",
+          "Dla małych produktów to ważna lekcja: brak zależności (zero-dependency) oznacza odporność na starzenie się kodu. Aplikacje napisane bezpośrednio w DOM API przeglądarki będą działać bez zmian za 10 lat, podczas gdy te oparte na starych wersjach bundlerów mogą wymagać konserwacji przy próbie uruchomienia w przyszłości.",
         ],
       },
       {
@@ -1584,10 +1961,10 @@ export const phoneticBenchmarkReports = {
       {
         id: "first-v2-batch",
         heading:
-          "Pierwszy Batch v2: Trzy Wyniki Porównywalne I Jedenaście Contract Failure",
+          "Aktualna seria: Sześć Wyników Porównywalnych I Czternaście Contract Failure",
         paragraphs: [
-          "Owl Alpha, GPT 5.4 High i GPT 5.5 High są użytecznymi porównywalnymi wynikami v2 w tym batchu. DeepSeek V4 Flash jest funkcjonalnie ok, ale formalnie contract-failing, bo atrybucja jest pusta przy pierwszym załadowaniu; MiMo V2.5 Free ma czytelne docs i przechodzący runner, ale nie przełącza stopki na polski i nie blokuje powtórnego zatwierdzenia z klawiatury.",
-          "Pozostałe błędy v2 poszerzają wzorzec. Opus, Gemini 3.5, Sonnet i Gemini 3.1 są uruchamialne i mają evidence testowe, ale nadal mijają wymagania atrybucji, tożsamości albo zachowania aktywnej próby. Gemma 4 26B blokuje się na dependency i failującej komendzie testowej. Laguna M.1 Free ma przechodzący runner, ale failuje scoring i lokalizację stopki. North Mini Code Free blokuje możliwość zatwierdzenia odpowiedzi po użyciu hintu i ma rozłączone evidence testowe. Big Pickle i gpt-oss-120b mają twardsze błędy w głównym zachowaniu produktu.",
+          "W moim przeglądzie Owl Alpha, GPT 5.4 High, GPT 5.5 High, DeepSeek V4 Pro, GLM-5.2 i Kimi K2.7 są użytecznymi porównywalnymi wynikami w aktualnym batchu. Moje najmocniejsze odczyty od strony użytkownika to GPT 5.5 High, Kimi K2.7 i Owl Alpha. GLM-5.2 nadal jest mocny, z jednym widocznym problemem kolejności sugestii; DeepSeek V4 Pro przechodzi kontrakt, ale ma słabsze dopracowanie interakcji.",
+          "Zwróciłem uwagę na typ błędu, nie tylko na sam status. DeepSeek V4 Flash, MiMo V2.5 Free, MiMo V2.5 Pro, MiniMax M3 i Qwen3.7 Max są sprawdzalne, ale failują na atrybucji, lokalizacji, blokowaniu powtórnych submitów albo dowodzie daty. Opus, Gemini 3.5, Sonnet i Gemini 3.1 są uruchamialne i mają evidence testowe, ale nadal mijają wymagania atrybucji, tożsamości albo zachowania aktywnej próby. Gemma 4 26B blokuje się na dependency i failującej komendzie testowej. Laguna M.1 Free ma przechodzący runner, ale failuje scoring i lokalizację stopki. North Mini Code Free blokuje możliwość zatwierdzenia odpowiedzi po użyciu hintu i ma rozłączone evidence testowe. Big Pickle i gpt-oss-120b mają twardsze błędy w głównym zachowaniu produktu.",
         ],
         runIds: [
           "deepseek-v4-flash-v2",
@@ -1604,19 +1981,28 @@ export const phoneticBenchmarkReports = {
           "gpt-5-5-high-v2",
           "big-pickle-v2",
           "gpt-oss-120b-v2",
+          "deepseek-v4-pro-v2",
+          "glm-5-2-v2",
+          "kimi-k2-7-v2",
+          "mimo-v2-5-pro-v2",
+          "minimax-m3-v2",
+          "qwen-3-7-max-v2",
         ],
       },
       {
         id: "reference-baselines",
-        heading: "Aktualne Wyniki Porównywalne v2 I Historyczne Baseline'y v1",
+        heading: "Aktualne Wyniki Porównywalne I Historyczne Baseline'y v1",
         paragraphs: [
-          "Aktualne referencje v2 spełniające kontrakt to Owl Alpha, GPT 5.4 High i GPT 5.5 High. Każda jest użyteczna inaczej: Owl Alpha jest konserwatywna i bez buildu, GPT 5.4 High ma mocne zachowanie interakcji, ale boryka się z problemami jakości lokalizacji, a GPT 5.5 High jest zwartą aplikacją w plain JavaScript bez dowodu z automatycznego runnera.",
+          "Dla mojego workflow aktualne referencje spełniające kontrakt są użyteczne na różne sposoby: GPT 5.5 High jest najmocniejszą bezpośrednią referencją od strony użytkownika, ale nie ma dowodu z automatycznego runnera, Kimi K2.7 jest najczystszym udokumentowanym runem aktualnej serii, Owl Alpha jest konserwatywna i bez buildu, GPT 5.4 High ma mocne zachowanie interakcji, ale boryka się z problemami jakości lokalizacji, DeepSeek V4 Pro jest solidny, ale mniej dopracowany interakcyjnie, a GLM-5.2 jest mocny z tarciem w kolejności sugestii.",
           "Wcześniejsze baseline'y v1 pozostają użyteczne jako historyczne punkty odniesienia: GPT 5.5 High i Claude Sonnet 4.6 Thinking były mocne w oryginalnym snapshotcie. Run Sonnet v2 nie jest baseline'em spełniającym kontrakt, bo failuje widoczna tożsamość modelu i lokalizacja atrybucji, mimo mocnych testów.",
         ],
         runIds: [
           "owl-alpha-v2",
           "gpt-5-4-high-v2",
           "gpt-5-5-high-v2",
+          "deepseek-v4-pro-v2",
+          "glm-5-2-v2",
+          "kimi-k2-7-v2",
           "gpt-5-5-high",
           "sonnet-4-6-thinking",
           "sonnet-4-6-thinking-v2",
@@ -1624,11 +2010,12 @@ export const phoneticBenchmarkReports = {
       },
       {
         id: "deepseek-narrow-failure",
-        heading: "Wąski Błąd Formalny: DeepSeek V4 Pro",
+        heading: "DeepSeek V4 Pro Pokazuje Znaczenie Wersjonowanych Prób",
         paragraphs: [
-          "DeepSeek V4 Pro dobrze pokazuje, dlaczego warto zachować widoczne typy problemów. Aplikacja jest funkcjonalnie mocna, a DECISIONS.md pozwala ocenić restrykcyjne decyzje produktowe: restart i zmiana języka są celowo ograniczone podczas aktywnej próby. Repozytorium nadal nie spełnia rygorystycznego kontraktu dostarczenia projektu, bo nie dokumentuje komend instalacji, uruchomienia i testów.",
+          "Run v1 DeepSeek V4 Pro dobrze pokazuje, dlaczego warto zachować widoczne typy problemów. Aplikacja jest funkcjonalnie mocna, a DECISIONS.md pozwala ocenić restrykcyjne decyzje produktowe, ale repozytorium nadal nie spełnia rygorystycznego kontraktu dostarczenia projektu, bo nie dokumentuje komend instalacji, uruchomienia i testów.",
+          "Run DeepSeek V4 Pro z aktualnej serii przechodzi zmieniony kontrakt, ma passing runner evidence i poprawne główne zachowanie scoringu. Nadal jest widocznie słabszy od najlepszych aktualnych prób, bo opcje sugestii przetasowują się po feedbacku lub podpowiedzi, a fokus klawiatury ginie po przejściu dalej.",
         ],
-        runIds: ["deepseek-v4-pro"],
+        runIds: ["deepseek-v4-pro", "deepseek-v4-pro-v2"],
       },
       {
         id: "gpt-5-4-product-judgment",
@@ -1640,10 +2027,11 @@ export const phoneticBenchmarkReports = {
       },
       {
         id: "gemini-hint-failure",
-        heading: "Gemini Poprawia Się W v2, Ale Nie Spełnia Kontraktu",
+        heading:
+          "Gemini Poprawia Się w Aktualnej Serii, Ale Nie Spełnia Kontraktu",
         paragraphs: [
-          "Run v1 Gemini 3.1 Pro High ma twardy błąd wymaganego zachowania: podpowiedź klawiaturowa nie ujawnia odpowiedzi. W v2 wyniki Gemini są bardziej używalne i mają controlled-runner evidence, ale nadal nie spełniają kontraktu.",
-          "Gemini 3.5 Flash High v2 nie lokalizuje atrybucji i może pomijać symbole przy szybkim powtórnym submitowaniu z klawiatury. Gemini 3.1 Pro High v2 ukrywa ujawnioną podpowiedź po zmianie języka w aktywnej próbie i również nie lokalizuje atrybucji.",
+          "Run v1 Gemini 3.1 Pro High ma twardy błąd wymaganego zachowania: podpowiedź klawiaturowa nie ujawnia odpowiedzi. W aktualnym batchu wyniki Gemini są bardziej używalne i mają controlled-runner evidence, ale nadal nie spełniają kontraktu.",
+          "Gemini 3.5 Flash High nie lokalizuje atrybucji i może pomijać symbole przy szybkim powtórnym submitowaniu z klawiatury. Gemini 3.1 Pro High ukrywa ujawnioną podpowiedź po zmianie języka w aktywnej próbie i również nie lokalizuje atrybucji.",
         ],
         runIds: [
           "gemini-3-1-pro-high",
@@ -1780,7 +2168,7 @@ export const phoneticBenchmarkGalleries = {
     resultGroups: [
       {
         benchmarkVersion: "v2",
-        heading: "Batch v2",
+        heading: "Aktualna seria",
         intro:
           "Aktualny batch benchmarku, pokazany przed oryginalnym snapshotem.",
       },
