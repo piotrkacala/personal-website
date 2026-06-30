@@ -715,6 +715,34 @@ const runData = [
     stack:
       "Vite 6.3.5, vanilla JavaScript ES modules, plain browser DOM APIs, Vitest 3.2.4",
   },
+  {
+    id: "nemotron-3-ultra-v2",
+    executionOrder: 21,
+    model: "Nemotron 3 Ultra",
+    runDate: "2026-06-26",
+    benchmarkVersion: "v2",
+    status: "contract-failing",
+    failureTypes: ["core behavior", "attribution"],
+    sourceLoc: 1102,
+    testCount: 0,
+    testEvidence:
+      "0 framework-style static cases; no automated test runner evidence in archived artifact",
+    stack: "Vite, vanilla JavaScript, plain browser DOM APIs",
+  },
+  {
+    id: "hy3-preview-v2",
+    executionOrder: 22,
+    model: "Hy3 Preview",
+    runDate: "2026-06-30",
+    benchmarkVersion: "v2",
+    status: "contract-failing",
+    failureTypes: ["core behavior", "attribution", "localization"],
+    sourceLoc: 722,
+    testCount: 0,
+    testEvidence:
+      "0 framework-style static cases; no automated test runner evidence in archived artifact",
+    stack: "Vite, vanilla JavaScript, plain browser DOM APIs",
+  },
 ] as const satisfies readonly BenchmarkRunData[];
 
 export type BenchmarkRunId = (typeof runData)[number]["id"];
@@ -739,7 +767,7 @@ export const phoneticBenchmarkMetadata = {
   coveredBenchmarkVersions: ["v1", "v2"],
   currentBenchmarkVersion: "v2",
   publishedDate: "2026-05-26",
-  updatedDate: "2026-06-23",
+  updatedDate: "2026-06-30",
   coveredThroughDate: getLatestRunDate(),
 } as const satisfies BenchmarkMetadata;
 
@@ -1113,6 +1141,33 @@ const runObservations = {
       "Suggestion-mode hint reveal reshuffles answer buttons.",
     ],
   },
+  "nemotron-3-ultra-v2": {
+    observedStrengths: [
+      "The application starts and can enter the exercise flow.",
+      "Keyboard mode includes autofocus and a result screen with clean and hinted question counts.",
+      "Attribution includes the model label, canonical model ID, fixed date, and piotrkacala.pl.",
+    ],
+    observedWeaknesses: [
+      "A wrong suggestion-mode answer disables all options, blocking progress on that question.",
+      "The hint container is visibly present before a hint is requested.",
+      "The attribution footer remains English after switching the UI to Polish.",
+      "No automated test runner evidence is present in the archived artifact.",
+    ],
+  },
+  "hy3-preview-v2": {
+    observedStrengths: [
+      "The application starts and can enter the exercise flow.",
+      "The interface includes both alphabets, both exercise modes, fixed-data suggestion options, and final scoring.",
+      "The archived artifact keeps benchmark data separate from the HTML shell.",
+    ],
+    observedWeaknesses: [
+      "Rapid repeated suggestion clicks can skip symbols.",
+      "The footer attribution spells Piotr Kacała's name without the Polish diacritic.",
+      "The required attribution footer remains English after switching the UI to Polish.",
+      "The hint prefix remains English in the Polish exercise flow.",
+      "No automated test runner evidence is present in the archived artifact.",
+    ],
+  },
 } as const satisfies Record<BenchmarkRunId, BenchmarkRunObservations>;
 
 const functionalReads = {
@@ -1187,6 +1242,10 @@ const functionalReads = {
       "Functionally strong zero-dependency run with complete submission artifacts, 47 passing node:test cases, and clean observed keyboard, suggestion, active language-switching, full-run, and final-scoring behavior. Formally contract-failing because the Polish setup screen leaves visible English count labels.",
     "qwen-3-7-max-v2":
       "Runnable submission with complete docs, passing controlled-runner evidence, and a generally solid app, but formally contract-failing. Rapid repeated keyboard submits and repeated suggestion clicks can skip symbols; the Polish UI leaves the attribution footer in English; and the displayed implementation date conflicts with the 2026 run evidence.",
+    "nemotron-3-ultra-v2":
+      "Runnable Vite submission, but formally contract-failing. A wrong suggestion-mode answer disables every option and blocks progress on that question, and the attribution footer stays English after switching the UI to Polish.",
+    "hy3-preview-v2":
+      "Runnable Vite submission, but formally contract-failing. Rapid repeated suggestion clicks can skip symbols, the attribution misspells Piotr Kacała's name, and Polish exercise copy still exposes an English hint prefix.",
   },
   pl: {
     "gpt-5-4-high":
@@ -1259,6 +1318,10 @@ const functionalReads = {
       "Funkcjonalnie mocny zero-dependency run z kompletnymi artefaktami submission, 47 przechodzącymi testami node:test i czystym zachowaniem klawiatury, sugestii, aktywnej zmiany języka, pełnej próby i finalnego scoringu. Formalnie contract-failing, bo polski ekran setupu zostawia widoczne angielskie etykiety liczby symboli.",
     "qwen-3-7-max-v2":
       "Działający run z kompletną dokumentacją, przechodzącym controlled runnerem i ogólnie solidną aplikacją, ale formalnie contract-failing. Szybkie powtórne submity z klawiatury i kliknięcia sugestii mogą pomijać symbole; polski UI zostawia stopkę atrybucji po angielsku; a pokazana data implementacji kłóci się z dowodami z 2026 roku.",
+    "nemotron-3-ultra-v2":
+      "Działający run w Vite, ale formalnie contract-failing. Błędna odpowiedź w trybie sugestii blokuje wszystkie opcje i zatrzymuje progres na tym pytaniu, a stopka atrybucji zostaje po angielsku po przełączeniu UI na polski.",
+    "hy3-preview-v2":
+      "Działający run w Vite, ale formalnie contract-failing. Szybkie powtórne kliknięcia sugestii mogą pomijać symbole, atrybucja zapisuje nazwisko Piotra Kacały bez polskiego znaku, a polskie ćwiczenie nadal pokazuje angielski prefiks hintu.",
   },
 } as const satisfies Record<
   BenchmarkReportLang,
@@ -1350,7 +1413,7 @@ export const phoneticBenchmarkReports = {
     eyebrow: "AI agent development benchmark",
     title: "Phonetic Benchmark Report",
     summary:
-      "A qualitative review of 35 archived web applications built from the same Phonetic Alphabet Trainer brief. In the current batch, Owl Alpha, GPT 5.4 High, GPT 5.5 High, DeepSeek V4 Pro, GLM-5.2, and Kimi K2.7 clear the contract; 14 other outputs remain inspectable failures. The original v1 snapshot stays preserved for historical comparison.",
+      "A qualitative review of 37 archived web applications built from the same Phonetic Alphabet Trainer brief. In the current batch, Owl Alpha, GPT 5.4 High, GPT 5.5 High, DeepSeek V4 Pro, GLM-5.2, and Kimi K2.7 clear the contract; 16 other outputs remain inspectable failures. The original v1 snapshot stays preserved for historical comparison.",
     currentSummaryKicker: "Current outcome",
     currentSummaryHeading: "Why this benchmark exists",
     currentSummaryText:
@@ -1528,7 +1591,7 @@ export const phoneticBenchmarkReports = {
           "The Current Batch Separates Contract-Clearing Runs From Inspectable Failures",
         paragraphs: [
           "Owl Alpha, GPT 5.4 High, GPT 5.5 High, DeepSeek V4 Pro, GLM-5.2, and Kimi K2.7 are the useful comparables in this batch. They clear the revised contract while still preserving visible review notes around active-run choices, Polish localization quality, interaction polish, and missing automated-test evidence.",
-          "The remaining fourteen runs are not one kind of failure. Several are inspectable applications with narrow formal misses, while Big Pickle, Qwen3.7 Max, and gpt-oss-120b expose harder product behavior gaps. That distinction matters more than a flat pass/fail count.",
+          "The remaining sixteen runs are not one kind of failure. Several are inspectable applications with narrow formal misses, while Big Pickle, Qwen3.7 Max, and gpt-oss-120b expose harder product behavior gaps. That distinction matters more than a flat pass/fail count.",
         ],
       },
       {
@@ -1542,7 +1605,7 @@ export const phoneticBenchmarkReports = {
         heading:
           "Formal Compliance And Product Quality Are Different Questions",
         paragraphs: [
-          "The current batch leaves six comparable submissions and fourteen contract-failing submissions, with no unrunnable output in this batch. The pattern has shifted from v1: most current failures are applications that can be inspected, not outputs that crash before the benchmark can be exercised.",
+          "The current batch leaves six comparable submissions and sixteen contract-failing submissions, with no unrunnable output in this batch. The pattern has shifted from v1: most current failures are applications that can be inspected, not outputs that crash before the benchmark can be exercised.",
           "The v1 snapshot still shows why the split needs context. DeepSeek V4 Pro is functionally strong but fails because it does not document its install, run, and test commands. Nemotron 3 Super also fails, but for a much more important reason: its quiz cannot move past the first symbol.",
           "The contract matters because disciplined delivery matters. The failure type matters because not every miss has the same practical cost.",
         ],
@@ -1722,7 +1785,7 @@ export const phoneticBenchmarkReports = {
     eyebrow: "Benchmark pracy agentów AI",
     title: "Phonetic Benchmark Report",
     summary:
-      "Jakościowy przegląd 35 archiwalnych aplikacji webowych zbudowanych z tego samego briefu Phonetic Alphabet Trainer. W aktualnym batchu kontrakt spełniają Owl Alpha, GPT 5.4 High, GPT 5.5 High, DeepSeek V4 Pro, GLM-5.2 i Kimi K2.7; pozostałe 14 outputów z aktualnej serii to sprawdzalne błędy. Oryginalny snapshot v1 zostaje zachowany jako historyczne porównanie.",
+      "Jakościowy przegląd 37 archiwalnych aplikacji webowych zbudowanych z tego samego briefu Phonetic Alphabet Trainer. W aktualnym batchu kontrakt spełniają Owl Alpha, GPT 5.4 High, GPT 5.5 High, DeepSeek V4 Pro, GLM-5.2 i Kimi K2.7; pozostałe 16 outputów z aktualnej serii to sprawdzalne błędy. Oryginalny snapshot v1 zostaje zachowany jako historyczne porównanie.",
     currentSummaryKicker: "Aktualny wynik",
     currentSummaryHeading: "Dlaczego ten benchmark powstał?",
     currentSummaryText:
@@ -1901,7 +1964,7 @@ export const phoneticBenchmarkReports = {
           "Aktualna seria oddziela wyniki spełniające kontrakt od sprawdzalnych błędów",
         paragraphs: [
           "Owl Alpha, GPT 5.4 High, GPT 5.5 High, DeepSeek V4 Pro, GLM-5.2 i Kimi K2.7 są użytecznymi porównywalnymi wynikami w tej serii. Przechodzą zmieniony kontrakt, ale wiążą się z uwagami w przeglądzie dotyczącymi decyzji w aktywnej próbie, jakości polskiej lokalizacji, dopracowania interakcji i braku dowodu z automatycznych testów.",
-          "Pozostałe czternaście wyników z aktualnej serii nie tworzy jednego typu porażki. Część to sprawdzalne aplikacje z wąskimi błędami formalnymi, a Big Pickle, Qwen3.7 Max i gpt-oss-120b pokazują twardsze braki w zachowaniu produktu. To rozróżnienie jest ważniejsze niż płaski wynik pass/fail.",
+          "Pozostałe szesnaście wyników z aktualnej serii nie tworzy jednego typu porażki. Część to sprawdzalne aplikacje z wąskimi błędami formalnymi, a Big Pickle, Qwen3.7 Max i gpt-oss-120b pokazują twardsze braki w zachowaniu produktu. To rozróżnienie jest ważniejsze niż płaski wynik pass/fail.",
         ],
       },
       {
@@ -1914,7 +1977,7 @@ export const phoneticBenchmarkReports = {
       {
         heading: "Zgodność Formalna I Jakość Produktu To Dwa Różne Pytania",
         paragraphs: [
-          "Aktualna seria ma obecnie sześć wyników porównywalnych i czternaście wyników niespełniających kontraktu, bez niedziałającego outputu w tej serii. Wzorzec przesunął się względem v1: większość błędów w aktualnej serii dotyczy aplikacji, które da się sprawdzić, a nie outputów crashujących przed przejściem benchmarku.",
+          "Aktualna seria ma obecnie sześć wyników porównywalnych i szesnaście wyników niespełniających kontraktu, bez niedziałającego outputu w tej serii. Wzorzec przesunął się względem v1: większość błędów w aktualnej serii dotyczy aplikacji, które da się sprawdzić, a nie outputów crashujących przed przejściem benchmarku.",
           "Snapshot v1 nadal pokazuje, dlaczego ten podział wymaga kontekstu. DeepSeek V4 Pro jest funkcjonalnie mocny, ale nie dokumentuje komend instalacji, uruchomienia i testów. Nemotron 3 Super również nie spełnia kontraktu, ale z dużo ważniejszego powodu: quiz nie przechodzi dalej niż pierwszy symbol.",
           "Kontrakt jest ważny, bo uporządkowane dostarczenie projektu ma znaczenie. Typ problemu jest ważny, bo nie każdy błąd ma ten sam koszt praktyczny.",
         ],

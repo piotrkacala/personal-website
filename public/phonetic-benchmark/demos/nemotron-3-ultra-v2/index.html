@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="app.title">Phonetic Trainer</title>
+  <script type="module" crossorigin src="./assets/index-CK20EO3r.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-C5Ifee-O.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <h1 data-i18n="app.title">Phonetic Trainer</h1>
+    </header>
+
+    <main class="app-main">
+      <!-- Setup Screen -->
+      <section id="setup-screen" class="screen active" aria-labelledby="setup-heading">
+        <h2 id="setup-heading" data-i18n="setup.title">Setup Exercise</h2>
+        
+        <div class="setup-group">
+          <label for="language-select" data-i18n="setup.language">Interface Language</label>
+          <select id="language-select">
+            <option value="en" data-i18n="lang.english">English</option>
+            <option value="pl" data-i18n="lang.polish">Polski</option>
+          </select>
+        </div>
+
+        <div class="setup-group">
+          <label for="alphabet-select" data-i18n="setup.alphabet">Phonetic Alphabet</label>
+          <select id="alphabet-select">
+            <option value="polish" data-i18n="alphabet.polish">Polish</option>
+            <option value="nato" data-i18n="alphabet.nato">NATO</option>
+          </select>
+        </div>
+
+        <div class="setup-group">
+          <label for="mode-select" data-i18n="setup.mode">Exercise Mode</label>
+          <select id="mode-select">
+            <option value="keyboard" data-i18n="mode.keyboard">Keyboard</option>
+            <option value="suggestion" data-i18n="mode.suggestion">Suggestion</option>
+          </select>
+        </div>
+
+        <button id="start-btn" class="btn btn-primary" data-i18n="setup.start">Start Exercise</button>
+      </section>
+
+      <!-- Run Screen -->
+      <section id="run-screen" class="screen" aria-labelledby="run-heading" hidden>
+        <div class="run-header">
+          <h2 id="run-heading" data-i18n="run.title">Exercise in Progress</h2>
+          <div class="progress-info">
+            <span id="progress-text" data-i18n="run.progress">Question 1 of 26</span>
+          </div>
+        </div>
+
+        <div class="run-content">
+          <div class="symbol-display">
+            <span id="current-symbol" class="symbol" aria-live="polite"></span>
+          </div>
+
+          <!-- Keyboard Mode -->
+          <div id="keyboard-mode" class="mode-input hidden">
+            <label for="answer-input" class="visually-hidden" data-i18n="run.enterCodeword">Enter codeword</label>
+            <input type="text" id="answer-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-describedby="input-hint">
+            <div id="input-hint" class="input-hint" data-i18n="run.typeAnswer">Type the codeword and press Enter</div>
+            <div id="keyboard-feedback" class="feedback hidden" aria-live="polite"></div>
+          </div>
+
+          <!-- Suggestion Mode -->
+          <div id="suggestion-mode" class="mode-input hidden">
+            <div id="suggestion-buttons" class="suggestion-buttons" role="group" aria-label="Answer options"></div>
+            <div id="suggestion-feedback" class="feedback hidden" aria-live="polite"></div>
+          </div>
+
+          <!-- Hint Display -->
+          <div id="hint-display" class="hint-display hidden" aria-live="polite">
+            <span id="hint-text"></span>
+          </div>
+
+          <div class="run-actions">
+            <button id="hint-btn" class="btn btn-secondary" data-i18n="run.hint">Show Hint</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Result Screen -->
+      <section id="result-screen" class="screen" aria-labelledby="result-heading" hidden>
+        <h2 id="result-heading" data-i18n="result.title">Exercise Complete</h2>
+        
+        <div class="result-summary">
+          <div class="result-item">
+            <span class="result-label" data-i18n="result.score">Final Score</span>
+            <span id="final-score" class="result-value">100%</span>
+          </div>
+          <div class="result-item">
+            <span class="result-label" data-i18n="result.alphabet">Alphabet</span>
+            <span id="result-alphabet" class="result-value"></span>
+          </div>
+          <div class="result-item">
+            <span class="result-label" data-i18n="result.mode">Mode</span>
+            <span id="result-mode" class="result-value"></span>
+          </div>
+          <div class="result-item">
+            <span class="result-label" data-i18n="result.cleanQuestions">Clean Questions</span>
+            <span id="result-clean" class="result-value"></span>
+          </div>
+          <div class="result-item">
+            <span class="result-label" data-i18n="result.hintedQuestions">Hinted Questions</span>
+            <span id="result-hinted" class="result-value"></span>
+          </div>
+          <div class="result-item">
+            <span class="result-label" data-i18n="result.totalQuestions">Total Questions</span>
+            <span id="result-total" class="result-value"></span>
+          </div>
+        </div>
+
+        <div class="result-actions">
+          <button id="restart-btn" class="btn btn-primary" data-i18n="result.restart">Start New Exercise</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p id="attribution" class="attribution"></p>
+    </footer>
+  </div>
+
+</body>
+</html>

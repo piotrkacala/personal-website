@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phonetic Benchmark</title>
+  <script type="module" crossorigin src="./assets/index-JVU7N6vl.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DfE-ZI0a.css">
+</head>
+<body>
+  <div id="app">
+    <div id="setup-screen" class="screen active">
+      <h1 id="title">Phonetic Benchmark</h1>
+      <div class="setup-group">
+        <label id="label-language">Interface Language:</label>
+        <select id="language-select">
+          <option value="en">English</option>
+          <option value="pl">Polski</option>
+        </select>
+      </div>
+      <div class="setup-group">
+        <label id="label-alphabet">Alphabet:</label>
+        <select id="alphabet-select">
+          <option value="polish">Polish</option>
+          <option value="nato">NATO</option>
+        </select>
+      </div>
+      <div class="setup-group">
+        <label id="label-mode">Exercise Mode:</label>
+        <select id="mode-select">
+          <option value="keyboard">Keyboard Mode</option>
+          <option value="suggestion">Suggestion Mode</option>
+        </select>
+      </div>
+      <button id="start-btn" class="primary-btn">Start</button>
+    </div>
+
+    <div id="exercise-screen" class="screen">
+      <div id="progress-info"></div>
+      <div id="symbol-display"></div>
+      <div id="keyboard-input" class="input-mode">
+        <input type="text" id="answer-input" placeholder="Type your answer...">
+        <button id="submit-btn">Submit</button>
+      </div>
+      <div id="suggestion-input" class="input-mode">
+        <div id="suggestion-buttons"></div>
+      </div>
+      <button id="hint-btn">Hint</button>
+      <div id="hint-display" class="hidden"></div>
+      <div id="feedback"></div>
+    </div>
+
+    <div id="result-screen" class="screen">
+      <h2 id="result-title">Result</h2>
+      <div id="result-score"></div>
+      <div id="result-details"></div>
+      <button id="restart-btn" class="primary-btn">Restart</button>
+    </div>
+  </div>
+
+  <footer id="attribution">
+    Phonetic Benchmark by Piotr Kacala (piotrkacala.pl). Developed by tencent/hy3-preview (openrouter/tencent/hy3-preview) on 2026-06-30.
+  </footer>
+
+</body>
+</html>

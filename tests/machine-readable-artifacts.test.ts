@@ -40,6 +40,8 @@ const phoneticBenchmarkRuns = [
   { heading: "MiMo V2.5 Pro", id: "mimo-v2-5-pro-v2" },
   { heading: "MiniMax M3", id: "minimax-m3-v2" },
   { heading: "Qwen3.7 Max", id: "qwen-3-7-max-v2" },
+  { heading: "Nemotron 3 Ultra", id: "nemotron-3-ultra-v2" },
+  { heading: "Hy3 Preview", id: "hy3-preview-v2" },
   { heading: "GPT 5.4 High", id: "gpt-5-4-high" },
   { heading: "GPT 5.5 High", id: "gpt-5-5-high" },
   { heading: "Gemini 3.5 Flash High", id: "gemini-3-5-flash-high" },
@@ -631,7 +633,7 @@ test("benchmark structured data covers versioned runs and selected screenshot ca
   const statusCounts = new Map<string, number>();
   const versionCounts = new Map<string, number>();
 
-  assert.equal(report.runs.length, 35);
+  assert.equal(report.runs.length, 37);
 
   report.runs.forEach((run) => {
     statusCounts.set(run.status, (statusCounts.get(run.status) ?? 0) + 1);
@@ -650,12 +652,12 @@ test("benchmark structured data covers versioned runs and selected screenshot ca
 
   assert.deepEqual(Object.fromEntries(statusCounts), {
     comparable: 12,
-    "contract-failing": 22,
+    "contract-failing": 24,
     unrunnable: 1,
   });
   assert.deepEqual(Object.fromEntries(versionCounts), {
     v1: 15,
-    v2: 20,
+    v2: 22,
   });
   assert.deepEqual(
     report.spotlights.map((spotlight) => spotlight.id),
@@ -725,15 +727,15 @@ test("benchmark publication metadata derives coverage and avoids inferred infere
   const results = getPhoneticBenchmarkResultsData();
 
   assert.equal(phoneticBenchmarkMetadata.publishedDate, "2026-05-26");
-  assert.equal(phoneticBenchmarkMetadata.updatedDate, "2026-06-23");
-  assert.equal(phoneticBenchmarkMetadata.coveredThroughDate, "2026-06-23");
+  assert.equal(phoneticBenchmarkMetadata.updatedDate, "2026-06-30");
+  assert.equal(phoneticBenchmarkMetadata.coveredThroughDate, "2026-06-30");
   assert.deepEqual(phoneticBenchmarkMetadata.coveredBenchmarkVersions, [
     "v1",
     "v2",
   ]);
   assert.equal(phoneticBenchmarkMetadata.currentBenchmarkVersion, "v2");
-  assert.equal(results.runs.length, 35);
-  assert.equal(results.benchmark.coveredThroughDate, "2026-06-23");
+  assert.equal(results.runs.length, 37);
+  assert.equal(results.benchmark.coveredThroughDate, "2026-06-30");
   assert.deepEqual(results.benchmark.coveredBenchmarkVersions, ["v1", "v2"]);
   assert.equal(results.benchmark.currentBenchmarkVersion, "v2");
 
@@ -781,9 +783,9 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
   );
   assert.deepEqual(results.benchmark.coveredBenchmarkVersions, ["v1", "v2"]);
   assert.equal(results.benchmark.currentBenchmarkVersion, "v2");
-  assert.equal(results.runs.length, 35);
+  assert.equal(results.runs.length, 37);
   assert.deepEqual(
-    results.runs.slice(0, 20).map((run) => run.id),
+    results.runs.slice(0, 22).map((run) => run.id),
     [
       "big-pickle-v2",
       "deepseek-v4-flash-v2",
@@ -805,6 +807,8 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
       "mimo-v2-5-pro-v2",
       "minimax-m3-v2",
       "qwen-3-7-max-v2",
+      "nemotron-3-ultra-v2",
+      "hy3-preview-v2",
     ],
   );
   results.runs.forEach((run) => {
@@ -923,6 +927,14 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
     "32 framework-style static cases; controlled runner reported 32 tests passing",
   );
   assert.equal(
+    results.runs.find((run) => run.id === "nemotron-3-ultra-v2")?.testEvidence,
+    "0 framework-style static cases; no automated test runner evidence in archived artifact",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "hy3-preview-v2")?.testEvidence,
+    "0 framework-style static cases; no automated test runner evidence in archived artifact",
+  );
+  assert.equal(
     results.runs.find((run) => run.id === "owl-alpha-v2")?.comparativeScore,
     87,
   );
@@ -933,9 +945,9 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
 
   const csvLines = csvContent.trimEnd().split("\n");
 
-  assert.equal(csvLines.length, 36);
+  assert.equal(csvLines.length, 38);
   assert.deepEqual(
-    csvLines.slice(1, 21).map((line) => line.split(",")[0]),
+    csvLines.slice(1, 23).map((line) => line.split(",")[0]),
     [
       "big-pickle-v2",
       "deepseek-v4-flash-v2",
@@ -957,6 +969,8 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
       "mimo-v2-5-pro-v2",
       "minimax-m3-v2",
       "qwen-3-7-max-v2",
+      "nemotron-3-ultra-v2",
+      "hy3-preview-v2",
     ],
   );
   assert.match(
@@ -1034,6 +1048,14 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
   assert.match(
     csvContent,
     /qwen-3-7-max-v2,20,Qwen3\.7 Max,2026-06-23,v2,contract-failing,core behavior \| submission documentation \| attribution,1083,32,32 framework-style static cases; controlled runner reported 32 tests passing,,/,
+  );
+  assert.match(
+    csvContent,
+    /nemotron-3-ultra-v2,21,Nemotron 3 Ultra,2026-06-26,v2,contract-failing,core behavior \| attribution,1102,0,0 framework-style static cases; no automated test runner evidence in archived artifact,,/,
+  );
+  assert.match(
+    csvContent,
+    /hy3-preview-v2,22,Hy3 Preview,2026-06-30,v2,contract-failing,core behavior \| attribution \| localization,722,0,0 framework-style static cases; no automated test runner evidence in archived artifact,,/,
   );
   assert.doesNotMatch(
     csvLines[0],
@@ -1168,7 +1190,7 @@ test("methodology and every run record have generated markdown discovery surface
 
 test("benchmark galleries expose versioned screenshots and explicit demo links", () => {
   for (const gallery of Object.values(phoneticBenchmarkGalleries)) {
-    assert.equal(gallery.runs.length, 35);
+    assert.equal(gallery.runs.length, 37);
     assert.deepEqual(
       gallery.resultGroups.map((group) => group.benchmarkVersion),
       ["v2", "v1"],
@@ -1183,7 +1205,7 @@ test("benchmark galleries expose versioned screenshots and explicit demo links",
       gallery.runs
         .filter((run) => run.benchmarkVersion === "v2")
         .map((run) => run.executionOrder),
-      Array.from({ length: 20 }, (_, index) => index + 1),
+      Array.from({ length: 22 }, (_, index) => index + 1),
     );
 
     gallery.runs.forEach((run) => {
