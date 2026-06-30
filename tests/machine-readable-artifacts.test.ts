@@ -135,7 +135,7 @@ test("getMachineReadableArtifacts returns the expected artifact inventory", () =
 test("English homepage markdown keeps its key structure and references", () => {
   const content = getArtifactContent("/index.md");
 
-  assert.match(content, /^# Piotr Kacała — Product Builder$/m);
+  assert.match(content, /^# Piotr Kacała$/m);
   assert.match(
     content,
     /^> Personal website of Piotr Kacała\. AI agents are the build interface\. The differentiator is judgment across product, design, QA, and development\.$/m,
@@ -187,7 +187,7 @@ test("English homepage markdown keeps its key structure and references", () => {
 test("Polish homepage markdown keeps its key structure and references", () => {
   const content = getArtifactContent("/pl/index.md");
 
-  assert.match(content, /^# Piotr Kacała — Product Builder$/m);
+  assert.match(content, /^# Piotr Kacała$/m);
   assert.match(
     content,
     /^> Strona Piotra Kacały\. Agenty AI są interfejsem budowy\. Wyróżnikiem są ocena i decyzje na styku produktu, designu, QA i developmentu\.$/m,

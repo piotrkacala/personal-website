@@ -4,11 +4,11 @@ export const en = {
   lang: "en",
   title: "Piotr Kacala",
   metadata: {
-    title: "Piotr Kacała — Product Builder",
+    title: "Piotr Kacała",
     description:
       "Personal website of Piotr Kacała. AI agents are the build interface. The differentiator is judgment across product, design, QA, and development.",
     openGraph: {
-      title: "Piotr Kacała — Product Builder",
+      title: "Piotr Kacała",
       description:
         "AI agents are the build interface. The differentiator is judgment across product, design, QA, and development.",
       type: "website",

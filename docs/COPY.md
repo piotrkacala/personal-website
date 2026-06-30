@@ -253,16 +253,16 @@ The finalized localized public strings live in `src/i18n/en.ts` and `src/i18n/pl
 
 **Finalized values (EN, June 2026):**
 
-- `<title>`: `Piotr Kacała — Product Builder`
+- `<title>`: `Piotr Kacała`
 - `meta description`: `Personal website of Piotr Kacała. AI agents are the build interface. The differentiator is judgment across product, design, QA, and development.`
-- `og:title`: `Piotr Kacała — Product Builder`
+- `og:title`: `Piotr Kacała`
 - `og:description`: `AI agents are the build interface. The differentiator is judgment across product, design, QA, and development.`
 
 **Finalized values (PL, June 2026):**
 
-- `<title>`: `Piotr Kacała — Product Builder`
+- `<title>`: `Piotr Kacała`
 - `meta description`: `Strona Piotra Kacały. Agenty AI są interfejsem budowy. Wyróżnikiem są ocena i decyzje na styku produktu, designu, QA i developmentu.`
-- `og:title`: `Piotr Kacała — Product Builder`
+- `og:title`: `Piotr Kacała`
 - `og:description`: `Agenty AI są interfejsem budowy. Wyróżnikiem są ocena i decyzje na styku produktu, designu, QA i developmentu.`
 
 **OG image direction (v1):**
