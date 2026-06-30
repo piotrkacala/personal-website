@@ -1183,7 +1183,7 @@ const functionalReads = {
     "sonnet-4-6-thinking":
       "A strong baseline with tests. Its small UX miss is that revealing a hint in suggestion mode reshuffles button positions.",
     "owl-alpha":
-      "Functionally usable with 35 static automated test cases, but formally non-compliant. The repetitive exercise loop also contains several avoidable interaction frictions.",
+      "Functionally usable with 35 static automated test cases, but formally non-compliant. The repetitive exercise loop also contains several avoidable interaction frictions. The Owl Alpha label was later disclosed as LongCat-2.0.",
     "gemma-4-26b":
       "The final app is usable, but formally non-compliant and fragile around keyboard focus.",
     "nemotron-3-super":
@@ -1215,7 +1215,7 @@ const functionalReads = {
     "north-mini-code-free-v2":
       "Server-backed submission with a runnable UI and passing verification script, but formally contract-failing. Attribution is generic and runtime-dated, hint use blocks submitting the answer for that question, and the package test command does not run the submitted Jest-style tests.",
     "owl-alpha-v2":
-      "Strong no-build run with clear docs, passing controlled-runner evidence, and good observed behavior. It makes a restrictive but coherent decision to lock language and omit reset during an active run.",
+      "Strong no-build run with clear docs, passing controlled-runner evidence, and good observed behavior. It makes a restrictive but coherent decision to lock language and omit reset during an active run. The Owl Alpha label was later disclosed as LongCat-2.0.",
     "opus-4-6-thinking-v2":
       "Runnable submission with strong tests and correct core flows, but formally contract-failing because the required attribution footer does not switch to Polish when the UI language changes. The repeated full-card fade on setup and quiz re-renders is also distracting.",
     "gemini-3-5-flash-high-v2":
@@ -1259,7 +1259,7 @@ const functionalReads = {
     "sonnet-4-6-thinking":
       "Mocny baseline z testami. Drobny problem UX: ujawnienie podpowiedzi w trybie sugestii przetasowuje pozycje przycisków.",
     "owl-alpha":
-      "Funkcjonalnie używalna, z 35 statycznie znalezionymi przypadkami testowymi, ale formalnie niezgodna. Pętla ćwiczenia zawiera też kilka zbędnych tarć.",
+      "Funkcjonalnie używalna, z 35 statycznie znalezionymi przypadkami testowymi, ale formalnie niezgodna. Pętla ćwiczenia zawiera też kilka zbędnych tarć. Etykieta Owl Alpha została później ujawniona jako LongCat-2.0.",
     "gemma-4-26b":
       "Finalna aplikacja jest używalna, ale formalnie niezgodna i krucha pod kątem fokusu.",
     "nemotron-3-super":
@@ -1291,7 +1291,7 @@ const functionalReads = {
     "north-mini-code-free-v2":
       "Server-backed run z działającym UI i przechodzącym skryptem weryfikacji, ale formalnie contract-failing. Atrybucja jest generyczna i runtime-dated, użycie hintu blokuje możliwość zatwierdzenia odpowiedzi na to pytanie, a komenda testowa nie uruchamia dostarczonych testów w stylu Jest.",
     "owl-alpha-v2":
-      "Mocny run bez buildu, z czytelną dokumentacją, przechodzącym controlled runnerem i dobrym zachowaniem w sprawdzonym flow. Restrykcyjnie, ale spójnie blokuje zmianę języka i reset podczas aktywnej próby.",
+      "Mocny run bez buildu, z czytelną dokumentacją, przechodzącym controlled runnerem i dobrym zachowaniem w sprawdzonym flow. Restrykcyjnie, ale spójnie blokuje zmianę języka i reset podczas aktywnej próby. Etykieta Owl Alpha została później ujawniona jako LongCat-2.0.",
     "opus-4-6-thinking-v2":
       "Działający run z mocnymi testami i poprawnymi głównymi flow, ale formalnie contract-failing, bo wymagana stopka z atrybucją nie przełącza się na polski po zmianie języka UI. Powtarzające się wygaszanie (fade) całej karty na setupie i w quizie też przeszkadza.",
     "gemini-3-5-flash-high-v2":
@@ -1461,7 +1461,7 @@ export const phoneticBenchmarkReports = {
         id: "strongest-current-references",
         heading: "Strongest Current References",
         paragraphs: [
-          "From the user side, my strongest current references are GPT 5.5 High, Kimi K2.7, and Owl Alpha. GPT 5.5 High has the best direct product feel in this batch despite missing automated-runner evidence, Kimi K2.7 is the cleanest documented current run, and Owl Alpha is an unusually strong undisclosed-model result. A final human preference still matters because the benchmark deliberately keeps design taste and interaction feel inspectable rather than hiding them behind one score.",
+          "From the user side, my strongest current references are GPT 5.5 High, Kimi K2.7, and Owl Alpha. GPT 5.5 High has the best direct product feel in this batch despite missing automated-runner evidence, Kimi K2.7 is the cleanest documented current run, and Owl Alpha, later disclosed as LongCat-2.0, is an unusually strong result. A final human preference still matters because the benchmark deliberately keeps design taste and interaction feel inspectable rather than hiding them behind one score.",
         ],
         runIds: ["gpt-5-5-high-v2", "kimi-k2-7-v2", "owl-alpha-v2"],
       },
@@ -1833,7 +1833,7 @@ export const phoneticBenchmarkReports = {
         id: "strongest-current-references",
         heading: "Najmocniejsze Aktualne Referencje",
         paragraphs: [
-          "Od strony użytkownika moje najmocniejsze aktualne referencje to GPT 5.5 High, Kimi K2.7 i Owl Alpha. GPT 5.5 High ma najlepsze bezpośrednie odczucie produktu w tej serii mimo braku dowodu z automatycznego runnera, Kimi K2.7 jest najczystszym udokumentowanym runem aktualnej serii, a Owl Alpha to wyjątkowo mocny wynik modelu o nieujawnionej tożsamości. Ostateczna preferencja człowieka nadal ma znaczenie, bo benchmark celowo zostawia design i odczucie interakcji do bezpośredniej inspekcji zamiast chować je za jedną liczbą.",
+          "Od strony użytkownika moje najmocniejsze aktualne referencje to GPT 5.5 High, Kimi K2.7 i Owl Alpha. GPT 5.5 High ma najlepsze bezpośrednie odczucie produktu w tej serii mimo braku dowodu z automatycznego runnera, Kimi K2.7 jest najczystszym udokumentowanym runem aktualnej serii, a Owl Alpha, później ujawniony jako LongCat-2.0, to wyjątkowo mocny wynik. Ostateczna preferencja człowieka nadal ma znaczenie, bo benchmark celowo zostawia design i odczucie interakcji do bezpośredniej inspekcji zamiast chować je za jedną liczbą.",
         ],
         runIds: ["gpt-5-5-high-v2", "kimi-k2-7-v2", "owl-alpha-v2"],
       },
