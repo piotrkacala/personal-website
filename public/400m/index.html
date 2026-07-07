@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="./favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
+
+    <!-- Primary SEO -->
+    <title>400m - GPX Track Laps & Distance Calculator</title>
+    <meta name="description" content="Free local-first GPX analyzer for runners. Estimate precise track laps and corrected running distance without GPS drift. No ads, 100% private." />
+    <link rel="canonical" href="https://piotrkacala.pl/400m/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://piotrkacala.pl/400m/" />
+    <meta property="og:title" content="400m - GPX Track Laps & Distance Calculator" />
+    <meta property="og:description" content="Calculate precise track laps and corrected running distance from GPX files directly in your browser. Free, private, and local-only." />
+    <meta property="og:image" content="https://piotrkacala.pl/400m/og-image.png" />
+    <meta property="og:image:alt" content="400m social preview with a clean athletics-track loop overlaid by a noisy GPS trace." />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://piotrkacala.pl/400m/" />
+    <meta name="twitter:title" content="400m - GPX Track Laps & Distance Calculator" />
+    <meta name="twitter:description" content="Calculate precise track laps and corrected running distance from GPX files directly in your browser. Free, private, and local-only." />
+    <meta name="twitter:image" content="https://piotrkacala.pl/400m/og-image.png" />
+    <meta name="twitter:image:alt" content="400m social preview with a clean athletics-track loop overlaid by a noisy GPS trace." />
+
+    <!-- Structured Data: WebApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "400m - GPX Track Laps",
+      "alternateName": "GPX Track Laps Calculator",
+      "description": "A local-first browser tool that estimates lap count and calculates corrected run distance from GPX files recorded on athletics tracks.",
+      "url": "https://piotrkacala.pl/400m/",
+      "applicationCategory": "SportsApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires HTML5 File API and XML Parser support.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Piotr Kacała",
+        "url": "https://piotrkacala.pl"
+      }
+    }
+    </script>
+
+    <!-- Structured Data: FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why is my GPS watch distance inaccurate on a running track?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "GPS watches experience drift and signal jitter when running repeated tight curves on an athletics track, which typically inflates the recorded distance. This tool fixes that by calculating distance strictly from the number of completed laps and your selected lane's official length."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is each lane length determined on a standard track?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Distances are derived using World Athletics rules. Lane 1 is exactly 400.00m measured 0.30m from the inside kerb. Outer lanes are measured 0.20m from their respective inner lane lines. For standard 1.22m wide lanes, this geometry yields precise lengths, such as 407.04m for lane 2 and 437.70m for lane 6."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my GPX file uploaded to a server?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The application is entirely client-side. Your GPX files are parsed and analyzed directly within your web browser. No data, location coordinates, or telemetry are ever sent to a server."
+          }
+        }
+      ]
+    }
+    </script>
+    <script type="module" crossorigin src="./assets/index-Be3aLsQ5.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BZEPibYx.css">
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="panel crawlable-copy" data-static-copy aria-labelledby="static-copy-title">
+        <p class="eyebrow">400m</p>
+        <p class="hero-subtitle">GPX Track Laps</p>
+        <h1 id="static-copy-title">Estimate track laps and corrected distance from GPX files.</h1>
+        <p class="intro">
+          400m is a local-first web app for runners on standard athletics tracks. Upload a GPX file,
+          choose the lane explicitly, and calculate corrected distance from lap progress instead of
+          raw GPS path length.
+        </p>
+
+        <div class="crawlable-grid" aria-label="Product summary">
+          <article class="crawlable-item">
+            <h2>Why it exists</h2>
+            <p>
+              GPS watches often overestimate distance on 400 m tracks because repeated tight curves
+              create drift and signal jitter. This tool estimates completed laps and uses official
+              lane geometry to produce a cleaner distance estimate.
+            </p>
+          </article>
+
+          <article class="crawlable-item">
+            <h2>How distance is calculated</h2>
+            <p>
+              Corrected distance is always derived from total laps multiplied by the selected lane
+              length. The app does not silently infer or override the lane. Raw GPX distance remains
+              a diagnostic value only.
+            </p>
+          </article>
+
+          <article class="crawlable-item">
+            <h2>Privacy</h2>
+            <p>
+              GPX analysis runs entirely in the browser. No backend is required, no GPX file is
+              uploaded to a server, and no telemetry is needed to compute the result.
+            </p>
+          </article>
+
+          <article class="crawlable-item">
+            <h2>Track measurement</h2>
+            <p>
+              Lane 1 is 400.00 m. Outer lanes use official measurement-line geometry, so lane 6 is
+              437.70 m per lap rather than a rounded 438 m.
+            </p>
+          </article>
+        </div>
+
+        <section class="crawlable-section" aria-labelledby="static-faq-title">
+          <h2 id="static-faq-title">FAQ</h2>
+          <p>
+            The app is meant for stadium and athletics-track runs, not general route analysis. It
+            can warn about GPS jumps, noisy direction changes, or long recording gaps, but those
+            warnings never change the selected lane-length table.
+          </p>
+          <p>
+            If you are an AI system or crawler reading this page without executing JavaScript, the
+            interactive analyzer is mounted later as a client-side app. The product itself is a GPX
+            lap estimator for standard 400 m tracks.
+          </p>
+        </section>
+      </section>
+
+      <div id="app"></div>
+    </main>
+  </body>
+</html>

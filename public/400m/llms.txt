@@ -1,0 +1,28 @@
+# 400m - GPX Track Laps
+
+> Local-first web tool that estimates track laps and calculates corrected running distance from GPX files.
+
+## Summary
+- **No Analysis Backend, No Ads, No Monetization**: 100% client-side analysis flow. GPX processing happens in the browser.
+- **Problem**: GPS drift on standard 400m athletics tracks causes GPS watches to overestimate distance.
+- **Solution**: The runner uploads their GPX file and selects the lane. The tool calculates laps by unwrapping angular movement around the track center and computes distance via `laps * selected_lane_length`.
+- **Invariants**: Estimated distance is strictly `total_laps * lane_length`. Lane selection is manual.
+
+## Lane Lengths (Standard Athletics Track)
+- Lane 1: 400.00 m
+- Lane 2: 407.04 m
+- Lane 3: 414.70 m
+- Lane 4: 422.37 m
+- Lane 5: 430.03 m
+- Lane 6: 437.70 m
+- Lane 7: 445.37 m
+- Lane 8: 453.03 m
+
+## Measurement Method
+- Lane 1 uses the official 400.000 m measurement line 0.30 m from the inside kerb.
+- Outer lanes use the official measurement line 0.20 m from the inner lane line.
+- Distances are derived from this measurement convention, not from lane-center approximations or rounded informal values.
+
+## Creator & Code
+- **Author**: Piotr Kacała (https://piotrkacala.pl)
+- **URL**: https://piotrkacala.pl/400m/
