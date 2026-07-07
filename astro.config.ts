@@ -1,6 +1,6 @@
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
-import { machineReadableArtifacts } from "./src/integrations/machine-readable-artifacts.mjs";
+import { machineReadableArtifacts } from "./src/integrations/machine-readable-artifacts";
 
 export default defineConfig({
   output: "static",

@@ -1,14 +1,13 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { getMachineReadableArtifacts } from "../i18n/machine-readable";
 
 export function machineReadableArtifacts() {
   return {
     name: "machine-readable-artifacts",
     hooks: {
       "astro:build:done": async ({ dir, logger }) => {
-        const { getMachineReadableArtifacts } =
-          await import("../i18n/machine-readable.ts");
         const distDir = fileURLToPath(dir);
 
         await Promise.all(
