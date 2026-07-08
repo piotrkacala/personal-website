@@ -1,0 +1,55 @@
+/llms.txt
+  Content-Type: text/plain; charset=UTF-8
+
+/*.md
+  Content-Type: text/markdown; charset=UTF-8
+
+# Link alternate headers for EN HTML pages
+/
+  Link: </index.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
+
+/index.html
+  Link: </index.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
+
+/consulting/
+  Link: </consulting.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
+
+/consulting/index.html
+  Link: </consulting.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
+
+/phonetic-benchmark/
+  Link: </phonetic-benchmark/index.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
+
+/phonetic-benchmark/index.html
+  Link: </phonetic-benchmark/index.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
+
+/phonetic-benchmark/methodology/
+  Link: </phonetic-benchmark/methodology/index.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
+
+/phonetic-benchmark/methodology/index.html
+  Link: </phonetic-benchmark/methodology/index.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
+
+/phonetic-benchmark/runs/:run_id/
+  Link: </phonetic-benchmark/runs/:run_id/index.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
+
+/phonetic-benchmark/runs/:run_id/index.html
+  Link: </phonetic-benchmark/runs/:run_id/index.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
+
+# Link alternate headers for PL HTML pages
+/pl/
+  Link: </pl/index.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
+
+/pl/index.html
+  Link: </pl/index.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
+
+/pl/consulting/
+  Link: </pl/consulting.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
+
+/pl/consulting/index.html
+  Link: </pl/consulting.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
+
+/pl/phonetic-benchmark/
+  Link: </pl/phonetic-benchmark/index.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
+
+/pl/phonetic-benchmark/index.html
+  Link: </pl/phonetic-benchmark/index.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
