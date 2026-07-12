@@ -42,6 +42,10 @@ const phoneticBenchmarkRuns = [
   { heading: "Qwen3.7 Max", id: "qwen-3-7-max-v2" },
   { heading: "Nemotron 3 Ultra", id: "nemotron-3-ultra-v2" },
   { heading: "Hy3 Preview", id: "hy3-preview-v2" },
+  { heading: "Hy3 Free", id: "hy3-free-v2" },
+  { heading: "GPT 5.6 Sol", id: "gpt-5-6-sol-v2" },
+  { heading: "GPT 5.6 Terra", id: "gpt-5-6-terra-v2" },
+  { heading: "GPT 5.6 Luna", id: "gpt-5-6-luna-v2" },
   { heading: "GPT 5.4 High", id: "gpt-5-4-high" },
   { heading: "GPT 5.5 High", id: "gpt-5-5-high" },
   { heading: "Gemini 3.5 Flash High", id: "gemini-3-5-flash-high" },
@@ -633,7 +637,7 @@ test("benchmark structured data covers versioned runs and selected screenshot ca
   const statusCounts = new Map<string, number>();
   const versionCounts = new Map<string, number>();
 
-  assert.equal(report.runs.length, 37);
+  assert.equal(report.runs.length, 41);
 
   report.runs.forEach((run) => {
     statusCounts.set(run.status, (statusCounts.get(run.status) ?? 0) + 1);
@@ -651,13 +655,13 @@ test("benchmark structured data covers versioned runs and selected screenshot ca
   });
 
   assert.deepEqual(Object.fromEntries(statusCounts), {
-    comparable: 12,
-    "contract-failing": 24,
+    comparable: 14,
+    "contract-failing": 26,
     unrunnable: 1,
   });
   assert.deepEqual(Object.fromEntries(versionCounts), {
     v1: 15,
-    v2: 22,
+    v2: 26,
   });
   assert.deepEqual(
     report.spotlights.map((spotlight) => spotlight.id),
@@ -727,15 +731,15 @@ test("benchmark publication metadata derives coverage and avoids inferred infere
   const results = getPhoneticBenchmarkResultsData();
 
   assert.equal(phoneticBenchmarkMetadata.publishedDate, "2026-05-26");
-  assert.equal(phoneticBenchmarkMetadata.updatedDate, "2026-06-30");
-  assert.equal(phoneticBenchmarkMetadata.coveredThroughDate, "2026-06-30");
+  assert.equal(phoneticBenchmarkMetadata.updatedDate, "2026-07-12");
+  assert.equal(phoneticBenchmarkMetadata.coveredThroughDate, "2026-07-12");
   assert.deepEqual(phoneticBenchmarkMetadata.coveredBenchmarkVersions, [
     "v1",
     "v2",
   ]);
   assert.equal(phoneticBenchmarkMetadata.currentBenchmarkVersion, "v2");
-  assert.equal(results.runs.length, 37);
-  assert.equal(results.benchmark.coveredThroughDate, "2026-06-30");
+  assert.equal(results.runs.length, 41);
+  assert.equal(results.benchmark.coveredThroughDate, "2026-07-12");
   assert.deepEqual(results.benchmark.coveredBenchmarkVersions, ["v1", "v2"]);
   assert.equal(results.benchmark.currentBenchmarkVersion, "v2");
 
@@ -768,7 +772,7 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
       testEvidence?: string;
       detailsUrl: string;
       markdownUrl: string;
-      observations: {
+      observations?: {
         observedStrengths: string[];
         observedWeaknesses: string[];
       };
@@ -783,9 +787,9 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
   );
   assert.deepEqual(results.benchmark.coveredBenchmarkVersions, ["v1", "v2"]);
   assert.equal(results.benchmark.currentBenchmarkVersion, "v2");
-  assert.equal(results.runs.length, 37);
+  assert.equal(results.runs.length, 41);
   assert.deepEqual(
-    results.runs.slice(0, 22).map((run) => run.id),
+    results.runs.slice(0, 26).map((run) => run.id),
     [
       "big-pickle-v2",
       "deepseek-v4-flash-v2",
@@ -809,6 +813,10 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
       "qwen-3-7-max-v2",
       "nemotron-3-ultra-v2",
       "hy3-preview-v2",
+      "hy3-free-v2",
+      "gpt-5-6-sol-v2",
+      "gpt-5-6-terra-v2",
+      "gpt-5-6-luna-v2",
     ],
   );
   results.runs.forEach((run) => {
@@ -820,8 +828,10 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
       run.markdownUrl,
       `https://piotrkacala.pl/phonetic-benchmark/runs/${run.id}/index.md`,
     );
-    assert.ok(run.observations.observedStrengths.length > 0);
-    assert.ok(run.observations.observedWeaknesses.length > 0);
+    if (run.observations) {
+      assert.ok(run.observations.observedStrengths.length > 0);
+      assert.ok(run.observations.observedWeaknesses.length > 0);
+    }
     assert.ok(run.interpretationLimitations.length > 0);
   });
   assert.equal(
@@ -935,6 +945,22 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
     "0 framework-style static cases; no automated test runner evidence in archived artifact",
   );
   assert.equal(
+    results.runs.find((run) => run.id === "hy3-free-v2")?.testEvidence,
+    "22 framework-style static cases; controlled runner reported 17 passed, 5 failed",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "gpt-5-6-sol-v2")?.testEvidence,
+    "10 framework-style static cases; controlled runner reported 10 passed, 0 failed",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "gpt-5-6-terra-v2")?.testEvidence,
+    "6 framework-style static cases; controlled runner reported 6 passed, 0 failed",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "gpt-5-6-luna-v2")?.testEvidence,
+    "4 framework-style static cases; controlled runner reported 4 passed, 0 failed",
+  );
+  assert.equal(
     results.runs.find((run) => run.id === "owl-alpha-v2")?.comparativeScore,
     87,
   );
@@ -945,9 +971,9 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
 
   const csvLines = csvContent.trimEnd().split("\n");
 
-  assert.equal(csvLines.length, 38);
+  assert.equal(csvLines.length, 42);
   assert.deepEqual(
-    csvLines.slice(1, 23).map((line) => line.split(",")[0]),
+    csvLines.slice(1, 27).map((line) => line.split(",")[0]),
     [
       "big-pickle-v2",
       "deepseek-v4-flash-v2",
@@ -971,6 +997,10 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
       "qwen-3-7-max-v2",
       "nemotron-3-ultra-v2",
       "hy3-preview-v2",
+      "hy3-free-v2",
+      "gpt-5-6-sol-v2",
+      "gpt-5-6-terra-v2",
+      "gpt-5-6-luna-v2",
     ],
   );
   assert.match(
@@ -1057,6 +1087,22 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
     csvContent,
     /hy3-preview-v2,22,Hy3 Preview,2026-06-30,v2,contract-failing,core behavior \| attribution \| localization,722,0,0 framework-style static cases; no automated test runner evidence in archived artifact,,/,
   );
+  assert.match(
+    csvContent,
+    /hy3-free-v2,23,Hy3 Free,2026-07-07,v2,contract-failing,test workflow,1424,22,"22 framework-style static cases; controlled runner reported 17 passed, 5 failed",,/,
+  );
+  assert.match(
+    csvContent,
+    /gpt-5-6-sol-v2,24,GPT 5\.6 Sol,2026-07-11,v2,comparable,,1189,10,"10 framework-style static cases; controlled runner reported 10 passed, 0 failed",94,/,
+  );
+  assert.match(
+    csvContent,
+    /gpt-5-6-terra-v2,25,GPT 5\.6 Terra,2026-07-11,v2,comparable,,660,6,"6 framework-style static cases; controlled runner reported 6 passed, 0 failed",87,/,
+  );
+  assert.match(
+    csvContent,
+    /gpt-5-6-luna-v2,26,GPT 5\.6 Luna,2026-07-12,v2,contract-failing,core behavior \| attribution \| submission documentation,600,4,"4 framework-style static cases; controlled runner reported 4 passed, 0 failed",,/,
+  );
   assert.doesNotMatch(
     csvLines[0],
     /provider|gateway|canonical_model_id|model_variant|effort/i,
@@ -1137,8 +1183,13 @@ test("methodology and every run record have generated markdown discovery surface
       ),
     );
     assert.match(content, /^## Run Record$/m);
-    assert.match(content, /^## Observed Strengths$/m);
-    assert.match(content, /^## Observed Weaknesses$/m);
+    if (run.observations) {
+      assert.match(content, /^## Observed Strengths$/m);
+      assert.match(content, /^## Observed Weaknesses$/m);
+    } else {
+      assert.doesNotMatch(content, /^## Observed Strengths$/m);
+      assert.doesNotMatch(content, /^## Observed Weaknesses$/m);
+    }
     assert.match(content, /^## Evidence$/m);
     assert.match(content, /^## Interpretation Limits$/m);
     assert.match(content, /not a general model review or universal ranking/);
@@ -1190,7 +1241,7 @@ test("methodology and every run record have generated markdown discovery surface
 
 test("benchmark galleries expose versioned screenshots and explicit demo links", () => {
   for (const gallery of Object.values(phoneticBenchmarkGalleries)) {
-    assert.equal(gallery.runs.length, 37);
+    assert.equal(gallery.runs.length, 41);
     assert.deepEqual(
       gallery.resultGroups.map((group) => group.benchmarkVersion),
       ["v2", "v1"],
@@ -1205,7 +1256,7 @@ test("benchmark galleries expose versioned screenshots and explicit demo links",
       gallery.runs
         .filter((run) => run.benchmarkVersion === "v2")
         .map((run) => run.executionOrder),
-      Array.from({ length: 22 }, (_, index) => index + 1),
+      Array.from({ length: 26 }, (_, index) => index + 1),
     );
 
     gallery.runs.forEach((run) => {

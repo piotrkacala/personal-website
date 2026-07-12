@@ -41,7 +41,7 @@ export interface BenchmarkRunCopy extends BenchmarkRunData {
   demoUrl: string;
   detailsUrl: string;
   markdownUrl: string;
-  observations: BenchmarkRunObservations;
+  observations?: BenchmarkRunObservations;
 }
 
 export interface BenchmarkNarrativeSection {
@@ -743,6 +743,68 @@ const runData = [
       "0 framework-style static cases; no automated test runner evidence in archived artifact",
     stack: "Vite, vanilla JavaScript, plain browser DOM APIs",
   },
+  {
+    id: "hy3-free-v2",
+    executionOrder: 23,
+    model: "Hy3 Free",
+    runDate: "2026-07-07",
+    benchmarkVersion: "v2",
+    status: "contract-failing",
+    failureTypes: ["test workflow"],
+    sourceLoc: 1424,
+    testCount: 22,
+    testEvidence:
+      "22 framework-style static cases; controlled runner reported 17 passed, 5 failed",
+    stack:
+      "plain HTML/CSS, vanilla JavaScript ES modules, zero-dependency Node.js static server, node:test",
+  },
+  {
+    id: "gpt-5-6-sol-v2",
+    executionOrder: 24,
+    model: "GPT 5.6 Sol",
+    runDate: "2026-07-11",
+    benchmarkVersion: "v2",
+    status: "comparable",
+    failureTypes: [],
+    sourceLoc: 1189,
+    testCount: 10,
+    testEvidence:
+      "10 framework-style static cases; controlled runner reported 10 passed, 0 failed",
+    stack:
+      "plain JavaScript, browser-native modules, custom Node static server, node:test",
+    comparativeScore: 94,
+  },
+  {
+    id: "gpt-5-6-terra-v2",
+    executionOrder: 25,
+    model: "GPT 5.6 Terra",
+    runDate: "2026-07-11",
+    benchmarkVersion: "v2",
+    status: "comparable",
+    failureTypes: [],
+    sourceLoc: 660,
+    testCount: 6,
+    testEvidence:
+      "6 framework-style static cases; controlled runner reported 6 passed, 0 failed",
+    stack:
+      "plain JavaScript, browser ES modules, custom Node static server, node:test",
+    comparativeScore: 87,
+  },
+  {
+    id: "gpt-5-6-luna-v2",
+    executionOrder: 26,
+    model: "GPT 5.6 Luna",
+    runDate: "2026-07-12",
+    benchmarkVersion: "v2",
+    status: "contract-failing",
+    failureTypes: ["core behavior", "attribution", "submission documentation"],
+    sourceLoc: 600,
+    testCount: 4,
+    testEvidence:
+      "4 framework-style static cases; controlled runner reported 4 passed, 0 failed",
+    stack:
+      "plain JavaScript, browser ES modules, custom Node static server, node:test",
+  },
 ] as const satisfies readonly BenchmarkRunData[];
 
 export type BenchmarkRunId = (typeof runData)[number]["id"];
@@ -767,11 +829,13 @@ export const phoneticBenchmarkMetadata = {
   coveredBenchmarkVersions: ["v1", "v2"],
   currentBenchmarkVersion: "v2",
   publishedDate: "2026-05-26",
-  updatedDate: "2026-06-30",
+  updatedDate: "2026-07-12",
   coveredThroughDate: getLatestRunDate(),
 } as const satisfies BenchmarkMetadata;
 
-const runObservations = {
+const runObservations: Partial<
+  Record<BenchmarkRunId, BenchmarkRunObservations>
+> = {
   "gpt-5-4-high": {
     observedStrengths: ["Clears the v1 contract.", "Includes automated tests."],
     observedWeaknesses: [
@@ -1168,7 +1232,7 @@ const runObservations = {
       "No automated test runner evidence is present in the archived artifact.",
     ],
   },
-} as const satisfies Record<BenchmarkRunId, BenchmarkRunObservations>;
+};
 
 const functionalReads = {
   en: {
@@ -1246,6 +1310,14 @@ const functionalReads = {
       "Runnable Vite submission, but formally contract-failing. A wrong suggestion-mode answer disables every option and blocks progress on that question, and the attribution footer stays English after switching the UI to Polish.",
     "hy3-preview-v2":
       "Runnable Vite submission, but formally contract-failing. Rapid repeated suggestion clicks can skip symbols, the attribution misspells Piotr Kacała's name, and Polish exercise copy still exposes an English hint prefix.",
+    "hy3-free-v2":
+      "A surprisingly strong vanilla JavaScript v2 run: the browser flow is clear, localized, focus-stable, and uses fixed benchmark data correctly in targeted review. It remains formally contract-failing because the documented test command fails in the controlled runner, while the main observed app behavior is otherwise solid.",
+    "gpt-5-6-sol-v2":
+      "Comparable v2 submission with complete durable artifacts, dependency-free browser-native JavaScript, passing controlled-runner evidence, and clean targeted browser probes. It handles active-run exit confirmation well, localizes the Polish footer naturally, and shows no confirmed contract failures in this pass.",
+    "gpt-5-6-terra-v2":
+      "Comparable v2 submission with complete durable artifacts, passing controlled-runner evidence, clean suggestion-mode and final scoring probes, and a prepared nested-path demo. The main UX weakness is that keyboard focus is lost after a correct answer advances to the next symbol.",
+    "gpt-5-6-luna-v2":
+      "Runnable v2 submission with a compact dependency-free workflow and passing controlled-runner evidence, but formally contract-failing. Rapid repeated keyboard submits and repeated suggestion clicks can skip symbols, and the visible/submission attribution is underspecified for the recorded GPT 5.6 Luna run.",
   },
   pl: {
     "gpt-5-4-high":
@@ -1322,6 +1394,14 @@ const functionalReads = {
       "Działający run w Vite, ale formalnie contract-failing. Błędna odpowiedź w trybie sugestii blokuje wszystkie opcje i zatrzymuje progres na tym pytaniu, a stopka atrybucji zostaje po angielsku po przełączeniu UI na polski.",
     "hy3-preview-v2":
       "Działający run w Vite, ale formalnie contract-failing. Szybkie powtórne kliknięcia sugestii mogą pomijać symbole, atrybucja zapisuje nazwisko Piotra Kacały bez polskiego znaku, a polskie ćwiczenie nadal pokazuje angielski prefiks hintu.",
+    "hy3-free-v2":
+      "Pozytywnie zaskakujący run v2 w vanilla JavaScript: sprawdzony flow w przeglądarce jest czytelny, zlokalizowany, stabilny pod kątem fokusu i poprawnie używa stałych danych benchmarku. Formalnie pozostaje contract-failing, bo udokumentowana komenda testowa failuje w controlled runnerze, mimo że główne zachowanie aplikacji jest solidne.",
+    "gpt-5-6-sol-v2":
+      "Porównywalny run v2 z kompletnymi, trwałymi artefaktami, browser-native JavaScript bez zależności, przechodzącym controlled runnerem i czystymi targetowanymi probe'ami przeglądarkowymi. Dobrze obsługuje potwierdzenie wyjścia z runu, naturalnie lokalizuje polską stopkę i nie ma potwierdzonych błędów kontraktu.",
+    "gpt-5-6-terra-v2":
+      "Porównywalny run v2 z kompletnymi artefaktami, przechodzącym controlled runnerem, czystymi probe'ami trybu sugestii i finalnego scoringu oraz przygotowanym demo pod zagnieżdżoną ścieżkę. Główna słabość UX: fokus klawiatury ginie po przejściu poprawnej odpowiedzi do następnego symbolu.",
+    "gpt-5-6-luna-v2":
+      "Działający run v2 ze zwartym workflow bez zależności i przechodzącym controlled runnerem, ale formalnie contract-failing. Szybkie powtórne submity z klawiatury oraz kliknięcia sugestii mogą pomijać symbole, a widoczna i dostarczona atrybucja jest zbyt mało precyzyjna dla zapisanego runu GPT 5.6 Luna.",
   },
 } as const satisfies Record<
   BenchmarkReportLang,

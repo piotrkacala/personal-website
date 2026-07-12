@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f0e8">
+    <meta name="description" content="Practice the Polish and NATO phonetic alphabets.">
+    <link rel="icon" href="data:,">
+    <title>Phonetic Benchmark</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="site-header">
+        <a class="wordmark" href="#" data-action="home" aria-label="Phonetic Benchmark home">
+          <span class="wordmark-mark" aria-hidden="true">⌁</span>
+          <span>Phonetic<span class="wordmark-accent">/</span>Lab</span>
+        </a>
+        <div class="header-tools">
+          <span class="header-kicker" data-i18n="headerKicker">PHONETIC BENCHMARK · V2</span>
+          <div class="language-picker" aria-label="Interface language">
+            <button type="button" class="language-button is-active" data-language="en">EN</button>
+            <button type="button" class="language-button" data-language="pl">PL</button>
+          </div>
+        </div>
+      </header>
+
+      <main id="app" tabindex="-1"></main>
+
+      <footer class="site-footer">
+        <span data-i18n="footerCredit">Phonetic Benchmark by Piotr Kacała · piotrkacala.pl</span>
+        <span class="footer-dot">•</span>
+        <span>Developed by Codex (GPT-5) · 2026-07-12</span>
+      </footer>
+    </div>
+    <div id="live-region" class="sr-only" aria-live="polite"></div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

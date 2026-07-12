@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Practice Polish and NATO phonetic alphabets." />
+    <title>Signal · Phonetic practice</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="src/styles.css" />
+    <script type="module" src="src/app.js"></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="topbar">
+        <a class="brand" href="#main-content">
+          <span class="brand-mark" aria-hidden="true">⌁</span>
+          <span>signal</span>
+        </a>
+        <label class="language-control" for="language-select">
+          <span class="visually-hidden" id="language-label">Interface language</span>
+          <select id="language-select" aria-labelledby="language-label"></select>
+        </label>
+      </header>
+      <main id="main-content" tabindex="-1"></main>
+      <footer id="footer"></footer>
+    </div>
+  </body>
+</html>

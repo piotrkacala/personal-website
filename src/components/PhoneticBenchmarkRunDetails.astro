@@ -52,27 +52,29 @@ const { run } = Astro.props;
     </dl>
   </section>
 
-  <section>
-    <h2>Observed Strengths</h2>
-    <ul>
-      {
-        run.observations.observedStrengths.map((observation) => (
-          <li>{observation}</li>
-        ))
-      }
-    </ul>
-  </section>
+  {
+    run.observations && (
+      <>
+        <section>
+          <h2>Observed Strengths</h2>
+          <ul>
+            {run.observations.observedStrengths.map((observation) => (
+              <li>{observation}</li>
+            ))}
+          </ul>
+        </section>
 
-  <section>
-    <h2>Observed Weaknesses</h2>
-    <ul>
-      {
-        run.observations.observedWeaknesses.map((observation) => (
-          <li>{observation}</li>
-        ))
-      }
-    </ul>
-  </section>
+        <section>
+          <h2>Observed Weaknesses</h2>
+          <ul>
+            {run.observations.observedWeaknesses.map((observation) => (
+              <li>{observation}</li>
+            ))}
+          </ul>
+        </section>
+      </>
+    )
+  }
 
   <section>
     <h2>Evidence</h2>
