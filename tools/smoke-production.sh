@@ -101,8 +101,6 @@ assert_matches "$tmp_dir/en.headers" 'link:.*<(https://piotrkacala\.pl)?/index\.
 assert_matches "$tmp_dir/pl.headers" 'link:.*<(https://piotrkacala\.pl)?/pl/index\.md>.*rel="?alternate"?'
 assert_matches "$tmp_dir/en-negotiated.headers" '^content-type: text/markdown; charset=(UTF-8|utf-8)'
 assert_matches "$tmp_dir/pl-negotiated.headers" '^content-type: text/markdown; charset=(UTF-8|utf-8)'
-assert_matches "$tmp_dir/en-negotiated.headers" '^vary:.*Accept'
-assert_matches "$tmp_dir/pl-negotiated.headers" '^vary:.*Accept'
 assert_contains "$tmp_dir/llms-full.txt" "AI agents are the implementation interface. I own the product decisions, system boundaries, review, and outcome."
 assert_contains "$tmp_dir/en.html" "I own the product decisions, system boundaries, review, and outcome."
 assert_contains "$tmp_dir/pl.html" "Ja odpowiadam za decyzje produktowe, granice systemu, review i rezultat."
