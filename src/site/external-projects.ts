@@ -113,7 +113,7 @@ export const externalProjectProfiles: readonly ExternalProjectProfile[] = [
     title: "Surfaced",
     companionPath: "/projects/surfaced.md",
     summary:
-      "Surfaced is a browser extension that tracks scroll depth and adds escalating reminders when a user goes too far into infinite scroll. It was the first project built from scratch with a docs-driven, zero-code AI-agent workflow.",
+      "Surfaced is a browser extension that tracks scroll depth and adds escalating reminders when someone scrolls too far through an interface with no natural endpoint. It was Piotr's first project built from scratch: he wrote a docs-first specification, then used AI agents for implementation.",
     status:
       "Public browser extension available from Firefox Add-ons and the Chrome Web Store.",
     type: "Browser extension",
@@ -140,45 +140,13 @@ export const externalProjectProfiles: readonly ExternalProjectProfile[] = [
       {
         heading: "Project role",
         items: [
-          "First project built from scratch with a docs-driven, zero-code workflow.",
+          "First project built from scratch after a docs-first specification, with AI agents used for implementation.",
           "Passed Mozilla's public add-on review.",
         ],
       },
     ],
     discoveryNotes: [
       "This markdown file is a companion profile owned by the public personal-site repo.",
-    ],
-  },
-  {
-    slug: "client-audit-platform",
-    title: "Private client audit platform",
-    companionPath: "/projects/client-audit-platform.md",
-    summary:
-      "This private client audit platform is a dated record of the first full production project built spec-first for a real customer.",
-    status: "Private client project. Snapshot dated April 2026.",
-    type: "Client audit platform",
-    linksHeading: "Public runtime",
-    publicLinks: [{ label: "Runtime", note: "No public runtime link." }],
-    sections: [
-      {
-        heading: "Public snapshot",
-        items: [
-          "As of April 2026: approximately 21,000 lines of production code.",
-          "As of April 2026: approximately 9,400 lines of tests.",
-          "As of April 2026: 295 commits.",
-        ],
-      },
-      {
-        heading: "Publication boundary",
-        items: [
-          "This profile is a dated private-project record, not a public runtime claim.",
-          "Private customer data and implementation details are intentionally excluded.",
-        ],
-      },
-    ],
-    discoveryNotes: [
-      "This markdown file is a companion profile owned by the public personal-site repo.",
-      "There is no public runtime link for this private client project.",
     ],
   },
 ] as const;

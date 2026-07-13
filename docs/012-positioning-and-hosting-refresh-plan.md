@@ -3,8 +3,11 @@
 Implementation handoff for aligning the public website with the July 2026 positioning decisions and
 the completed migration from classic shared hosting to Cloudflare Pages.
 
-This document defines a later implementation task. Creating it does not authorize copy, code,
-generated-artifact, deployment, or unrelated benchmark-demo changes.
+**Status:** implemented locally on 2026-07-13. Production deployment and the required post-deploy
+smoke check remain pending. Exact Pages dashboard settings and the `public/400m/` refresh procedure
+remain explicit backlog items because they have not been verified from their operational sources.
+
+The original plan below remains as the implementation and acceptance record.
 
 ---
 

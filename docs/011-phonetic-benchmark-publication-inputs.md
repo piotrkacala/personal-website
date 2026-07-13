@@ -2,6 +2,10 @@
 
 Public-safe source material for the Phonetic Benchmark run-discovery implementation.
 
+**Status:** historical `v1` publication input record. The canonical current source, including all
+`v2` runs, is `src/site/phonetic-benchmark.ts`; generated public artifacts and regression tests
+must derive from that typed source.
+
 This document copies the approved factual inputs needed by the personal-site repository. It is
 deliberately self-contained:
 
@@ -277,16 +281,16 @@ Keep the public limitation concise:
 
 ---
 
-## Report Snapshot
+## Archived v1 Report Snapshot
 
-Current strict `v1` snapshot:
+Strict `v1` snapshot retained for provenance:
 
 - archived runs: `15`
 - `comparable`: `6`
 - `contract-failing`: `8`
 - `unrunnable`: `1`
 
-Current evidence coverage:
+Archived `v1` evidence coverage:
 
 - every run has an archived demo
 - every run has a screenshot
@@ -307,9 +311,9 @@ For the report as a whole:
 
 - `publishedDate`: first public publication date of the report: `2026-05-26`
 - `updatedDate`: date of the most recent deployed public change to report narrative, methodology, or
-  run data: `2026-06-02`
+  run data: `2026-07-13`
 - `coveredThroughDate`: latest included `runDate`, derived mechanically from run data; current value:
-  `2026-06-01`
+  `2026-07-12`
 
 Do not update report-level `updatedDate` for formatting-only or internal documentation changes that
 do not alter the deployed public benchmark surface.

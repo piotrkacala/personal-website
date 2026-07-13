@@ -1,13 +1,23 @@
 ---
 interface Props {
   headline: string;
+  statement: string;
   expansion: string;
 }
 
-const { headline, expansion } = Astro.props;
+const { headline, statement, expansion } = Astro.props;
 ---
 
 <section class="document-section" aria-labelledby="hero-heading">
   <h1 id="hero-heading">{headline}</h1>
+  <p class="hero-statement">{statement}</p>
   <p>{expansion}</p>
 </section>
+
+<style>
+  .hero-statement {
+    max-width: 48ch;
+    font-size: clamp(1.2rem, 1.1rem + 0.42vw, 1.4rem);
+    line-height: 1.42;
+  }
+</style>

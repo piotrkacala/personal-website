@@ -1,5 +1,5 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist", "public/phonetic-benchmark/demos"]
+  "exclude": ["dist", "public/400m", "public/phonetic-benchmark/demos"]
 }

@@ -4,9 +4,8 @@
 
 A static personal website built with Astro. The bilingual homepage remains the primary visitor flow,
 with static proof-artifact pages and generated machine-readable discovery routes alongside it. No
-backend, no database, no auth. Built output is a folder of static files uploaded to classic shared
-hosting via FTP. Production runs over HTTPS behind Cloudflare. The repo is public — its structure,
-commit history, and agent instructions are part of the portfolio.
+backend, no database, no auth. Cloudflare Pages serves the generated static output. The repo is
+public — its structure, commit history, and agent instructions are part of the portfolio.
 
 ---
 
@@ -83,7 +82,7 @@ commit history, and agent instructions are part of the portfolio.
 | JS         | Zero JS by default; add only if interaction requires it                   |
 | i18n       | Astro built-in i18n routing — `/` (EN) and `/pl/` (PL)                    |
 | Routing    | Static homepage, consulting, proof-artifact, and custom `404.html` routes |
-| Deployment | `astro build` output uploaded manually via FTP to shared hosting          |
+| Deployment | Cloudflare Pages serves the static `dist/` build output                   |
 
 No client-side routing. No state management. No API calls. The page is a document.
 
@@ -98,7 +97,7 @@ Build output now includes:
 - `/index.md` ← generated English markdown version of the homepage
 - `/pl/index.md` ← generated Polish markdown version of the homepage
 - `/consulting.md` and `/pl/consulting.md` ← generated consulting offer markdown
-- `/projects/<slug>.md` ← companion markdown profiles for linked projects and dated private-project records
+- `/projects/<slug>.md` ← companion markdown profiles for linked public projects
 - `/phonetic-benchmark/index.md` and `/pl/phonetic-benchmark/index.md` ← generated report markdown
 - `/phonetic-benchmark/methodology/index.md` ← generated canonical English methodology markdown
 - `/phonetic-benchmark/runs/<run-id>/index.md` ← generated canonical English run-details records
@@ -120,16 +119,13 @@ actual public pages.
 ### Companion project profiles
 
 Some projects or tools may be linked from this site while being deployed outside this Astro app's
-route tree, including tools that live under the same domain on separately managed paths. A dated
-private-project record can use the same profile mechanism when there is intentionally no runtime
-link.
+route tree, including tools that live under the same domain on separately managed paths.
 
 For those cases, this repo acts as a discovery and metadata layer, not as the runtime owner of the tool path. The correct pattern is:
 
 - keep the live project URL as the canonical runtime location when one exists
 - expose a repo-controlled companion markdown profile under a non-conflicting path such as `/projects/<slug>.md`
 - avoid creating Astro routes that would shadow separately deployed paths like `/400m/`
-- state the publication boundary explicitly for private-project records
 
 This keeps machine-readable discovery inside the public repo without creating deploy collisions between the personal site and linked tools.
 
@@ -137,15 +133,14 @@ This keeps machine-readable discovery inside the public repo without creating de
 
 ## Infrastructure
 
-| Component  | Tool / Status                                |
-| ---------- | -------------------------------------------- |
-| Hosting    | Classic shared hosting (FTP)                 |
-| CDN / TLS  | Cloudflare in front of the origin            |
-| Build      | `astro build` → produces `dist/`             |
-| Deploy     | Manual FTP upload of `dist/`                 |
-| CI/CD      | None at launch — manual deploy is sufficient |
-| Domain     | `piotrkacala.pl`                             |
-| Error page | Custom static `404.html`                     |
+| Component  | Tool / Status                       |
+| ---------- | ----------------------------------- |
+| Hosting    | Cloudflare Pages                    |
+| CDN / TLS  | Cloudflare                          |
+| Build      | `npm run build` → produces `dist/`  |
+| Deploy     | Cloudflare Pages project deployment |
+| Domain     | `piotrkacala.pl`                    |
+| Error page | Custom static `404.html`            |
 
 Static discovery files such as `robots.txt` and `llms.txt` live in `public/` and are copied into the
 final build. Generated machine-readable files such as `sitemap.xml`, `index.md`, `pl/index.md`, and
@@ -155,12 +150,29 @@ the HTML output.
 Companion markdown profiles follow the same deploy rule: they are static artifacts owned by this
 repo and must not conflict with separately deployed application paths on the same domain.
 
-After each FTP upload, run `npm run smoke:production`. It verifies EN and PL homepage and consulting
+After each production deployment, run `npm run smoke:production`. It verifies EN and PL homepage and consulting
 HTML, explicit consulting markdown, explicit and negotiated homepage markdown, Cloudflare `Link`
 alternate headers, `llms.txt`, `llms-full.txt`, and sitemap discovery and direct availability for
 the companion profiles.
 
-Production currently uses a thin Cloudflare-only layer for route-scoped markdown negotiation on `/` and `/pl/`, returning markdown for clients that explicitly send `Accept: text/markdown`. That same edge layer also adds route-scoped `Link` alternate headers and keeps markdown-negotiated requests out of edge cache as a simple correctness guardrail. It remains intentionally separate from the repo-controlled artifact generation and should stay narrow: preserve `Vary: Accept`, expose markdown alternates where useful, and avoid taking ownership of external tool routes. See `docs/008-cloudflare-markdown-edge-follow-up.md` for the repo-safe operational scope and current state.
+The repository verifies only the build command (`npm run build`), output directory (`dist/`), public
+route contract, and post-deploy smoke command. The Pages project name, owning account, connected
+repository and production branch, Node/runtime version, environment variables, preview behavior,
+and custom-domain/DNS ownership are Cloudflare dashboard settings that are not recorded here. Verify
+them in the dashboard before operational changes.
+
+`public/400m/` is a checked-in build of a separately managed utility. Astro copies it into `dist/`
+without taking ownership of `/400m/`. The source and refresh procedure for that checked-in build are
+not documented in this repository; preserve the directory until that ownership is verified.
+
+Production currently uses a thin Cloudflare layer for route-scoped markdown negotiation on `/` and
+`/pl/`, returning markdown for clients that explicitly send `Accept: text/markdown`. Production
+responses also expose route-scoped `Link` alternates. Cache-rule ownership and exact edge settings
+must be verified in the Cloudflare dashboard. The layer remains intentionally separate from
+repo-controlled artifact generation and should stay narrow: preserve `Vary: Accept`, expose markdown
+alternates where useful, and avoid taking ownership of external tool routes. See
+`docs/008-cloudflare-markdown-edge-follow-up.md` for the repo-safe operational scope and current
+state.
 
 ---
 

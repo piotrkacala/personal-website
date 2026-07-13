@@ -2,4 +2,5 @@ dist/
 .astro/
 .codex/
 node_modules/
+public/400m/
 public/phonetic-benchmark/demos/

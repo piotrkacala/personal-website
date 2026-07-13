@@ -1,6 +1,6 @@
 # Cloudflare Markdown Edge Follow-up
 
-Repo-safe operational notes for the small Cloudflare layer that sits in front of the static hosting.
+Repo-safe operational notes for the small Cloudflare layer around the Cloudflare Pages deployment.
 
 This document is intentionally narrow:
 
@@ -16,18 +16,28 @@ The goal is to protect the existing markdown discovery layer and, where useful, 
 
 ## Current Production State
 
-As of 2026-05-22, production uses Cloudflare for a narrow markdown-discovery layer on the homepage routes.
+Production is now hosted on Cloudflare Pages. The exact migration date is not recorded here.
+
+A public HTTP check on 2026-07-13 verified:
 
 Currently live:
 
 - `/index.md` and `/pl/index.md` are served with `content-type: text/markdown; charset=utf-8`
 - `GET /` with `Accept: text/markdown` returns the markdown homepage variant
 - `GET /pl/` with `Accept: text/markdown` returns the markdown homepage variant
-- negotiated homepage responses preserve `Vary: Accept`
 - HTML responses on `/` and `/pl/` include `Link` alternate headers pointing at `/index.md` and `/pl/index.md`
-- markdown-negotiated requests on `/` and `/pl/` have an explicit Cloudflare `Bypass cache` rule as a guardrail
 - the behavior is intentionally limited to `/` and `/pl/`
 - `/projects/400m.md` exists as a companion profile, but `400m` does not have its own negotiation layer
+
+The same check found two operational differences from the earlier documented target:
+
+- negotiated responses did not expose `Vary: Accept`
+- homepage HTML returned both the repo-controlled relative `Link` header and a second absolute
+  Cloudflare-managed `Link` header
+
+The missing `Vary` header must be checked again after the repo `_headers` update is deployed. The
+duplicate `Link` header is not a content failure, but its ownership should be simplified only after
+the Pages and edge settings are inspected in the Cloudflare dashboard.
 
 Still out of scope:
 
@@ -49,8 +59,8 @@ The repo-controlled Phase 1 work already ships the real artifacts:
 - `/llms-full.txt`
 - `/projects/400m.md`
 
-Production also uses Cloudflare in front of classic shared hosting.
-That edge layer can add a thin operational follow-up for the root routes without changing the repo-owned content model.
+Cloudflare Pages now serves the static site directly. A narrow edge configuration still negotiates
+homepage markdown without changing the repo-owned content model.
 
 ---
 
@@ -94,8 +104,9 @@ External tool surfaces stay on the companion-profile pattern unless they earn a 
 
 ### 1. Cache correctness for markdown negotiation
 
-The current production behavior already negotiates markdown on `/` and `/pl/`.
-Cloudflare also applies an explicit `Bypass cache` rule to markdown-negotiated requests on those two routes.
+The current production behavior negotiates markdown on `/` and `/pl/`. The earlier configuration
+used an explicit cache-bypass rule, but rule presence must be confirmed in the dashboard rather than
+inferred from response headers.
 
 Minimum acceptable outcome:
 
@@ -106,7 +117,7 @@ Minimum acceptable outcome:
 - responses for negotiated routes preserve `Vary: Accept`
 - cached HTML and cached markdown do not collapse into one variant
 
-Chosen implementation:
+Previously chosen implementation:
 
 - bypass edge caching for markdown-negotiated requests on `/` and `/pl/`
 
@@ -149,7 +160,8 @@ Minimum checks:
 3. `GET /pl/` with default `Accept` returns HTML.
 4. `GET /pl/` with `Accept: text/markdown` returns markdown.
 5. Negotiated responses include `content-type: text/markdown; charset=utf-8`.
-6. Negotiated responses include `vary: Accept`.
+6. Negotiated responses include `Vary: Accept`; this was not present in the 2026-07-13 check and
+   remains a required follow-up after deployment.
 7. HTML route responses include the expected `Link` alternate header.
 8. Repeated requests confirm cache behavior does not mix HTML and markdown variants.
 

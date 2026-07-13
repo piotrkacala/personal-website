@@ -10,6 +10,7 @@ export default [
       ".astro/",
       "node_modules/",
       ".codex/",
+      "public/400m/",
       "public/phonetic-benchmark/demos/",
     ],
   },

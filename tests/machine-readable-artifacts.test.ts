@@ -13,6 +13,7 @@ import {
   getPhoneticBenchmarkRunSchemas,
   phoneticBenchmarkMetadata,
   phoneticBenchmarkGalleries,
+  phoneticBenchmarkPublicationStats,
   phoneticBenchmarkReports,
   phoneticBenchmarkRuns as benchmarkRunData,
 } from "../src/site/phonetic-benchmark.ts";
@@ -43,9 +44,9 @@ const phoneticBenchmarkRuns = [
   { heading: "Nemotron 3 Ultra", id: "nemotron-3-ultra-v2" },
   { heading: "Hy3 Preview", id: "hy3-preview-v2" },
   { heading: "Hy3 Free", id: "hy3-free-v2" },
-  { heading: "GPT 5.6 Sol", id: "gpt-5-6-sol-v2" },
-  { heading: "GPT 5.6 Terra", id: "gpt-5-6-terra-v2" },
-  { heading: "GPT 5.6 Luna", id: "gpt-5-6-luna-v2" },
+  { heading: "GPT 5.6 Sol High", id: "gpt-5-6-sol-v2" },
+  { heading: "GPT 5.6 Terra High", id: "gpt-5-6-terra-v2" },
+  { heading: "GPT 5.6 Luna High", id: "gpt-5-6-luna-v2" },
   { heading: "GPT 5.4 High", id: "gpt-5-4-high" },
   { heading: "GPT 5.5 High", id: "gpt-5-5-high" },
   { heading: "Gemini 3.5 Flash High", id: "gemini-3-5-flash-high" },
@@ -65,6 +66,51 @@ const phoneticBenchmarkRuns = [
 
 function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&");
+}
+
+function parseCsv(content: string): readonly Record<string, string>[] {
+  const rows: string[][] = [];
+  let row: string[] = [];
+  let field = "";
+  let quoted = false;
+
+  for (let index = 0; index < content.length; index += 1) {
+    const character = content[index];
+
+    if (character === '"') {
+      if (quoted && content[index + 1] === '"') {
+        field += '"';
+        index += 1;
+      } else {
+        quoted = !quoted;
+      }
+    } else if (character === "," && !quoted) {
+      row.push(field);
+      field = "";
+    } else if (character === "\n" && !quoted) {
+      row.push(field.replace(/\r$/u, ""));
+      rows.push(row);
+      row = [];
+      field = "";
+    } else {
+      field += character;
+    }
+  }
+
+  if (field || row.length > 0) {
+    row.push(field);
+    rows.push(row);
+  }
+
+  const [headers, ...dataRows] = rows;
+
+  return dataRows
+    .filter((dataRow) => dataRow.some(Boolean))
+    .map((dataRow) =>
+      Object.fromEntries(
+        headers.map((header, index) => [header, dataRow[index] ?? ""]),
+      ),
+    );
 }
 
 function getArtifactsByPath() {
@@ -130,7 +176,6 @@ test("getMachineReadableArtifacts returns the expected artifact inventory", () =
       "/pl/consulting.md",
       "/pl/phonetic-benchmark/index.md",
       "/projects/400m.md",
-      "/projects/client-audit-platform.md",
       "/projects/phonetic-alphabet-trainer.md",
       "/projects/surfaced.md",
       "/sitemap.xml",
@@ -144,9 +189,13 @@ test("English homepage markdown keeps its key structure and references", () => {
   assert.match(content, /^# Piotr Kacała$/m);
   assert.match(
     content,
-    /^> Personal website of Piotr Kacała\. AI agents are the build interface\. The differentiator is judgment across product, design, QA, and development\.$/m,
+    /^> Piotr Kacała is a Product Builder who owns product decisions, system boundaries, review, and outcomes while AI agents provide the implementation interface\.$/m,
   );
   assert.match(content, /^## Product Builder$/m);
+  assert.match(
+    content,
+    /^AI agents are the implementation interface\. I own the product decisions, system boundaries, review, and outcome\.$/m,
+  );
   assert.match(content, /^## Projects$/m);
   assert.match(content, /^### 1\. Phonetic Alphabet Trainer$/m);
   assert.match(content, /^### 2\. Surfaced$/m);
@@ -166,8 +215,8 @@ test("English homepage markdown keeps its key structure and references", () => {
     content,
     /^- Gallery: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/gallery\/$/m,
   );
-  assert.match(content, /^### 5\. Phonetic Benchmark$/m);
-  assert.match(content, /^Private client project — no public runtime link\.$/m);
+  assert.match(content, /^### 4\. Phonetic Benchmark$/m);
+  assert.match(content, /41 archived outputs: 26 in the current v2 batch/);
   assert.match(
     content,
     /^- Methodology: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/methodology\/$/m,
@@ -177,6 +226,7 @@ test("English homepage markdown keeps its key structure and references", () => {
     /^- Public benchmark package: https:\/\/github\.com\/piotrkacala\/phonetic-benchmark$/m,
   );
   assert.doesNotMatch(content, /experienced CEO|#### As of April 2026/);
+  assert.doesNotMatch(content, /Private client|client-audit-platform/i);
   assert.match(content, /^- Tool: https:\/\/piotrkacala\.pl\/400m\/$/m);
   assert.match(
     content,
@@ -186,7 +236,7 @@ test("English homepage markdown keeps its key structure and references", () => {
   assert.match(content, /^Get in touch: kontakt@piotrkacala\.pl$/m);
   assert.match(
     content,
-    /^Looking for product consulting\? See how I work\.: https:\/\/piotrkacala\.pl\/consulting\/$/m,
+    /^\[Looking for product consulting\? See how I work\.\]\(https:\/\/piotrkacala\.pl\/consulting\/\)$/m,
   );
 });
 
@@ -196,9 +246,13 @@ test("Polish homepage markdown keeps its key structure and references", () => {
   assert.match(content, /^# Piotr Kacała$/m);
   assert.match(
     content,
-    /^> Strona Piotra Kacały\. Agenty AI są interfejsem budowy\. Wyróżnikiem są ocena i decyzje na styku produktu, designu, QA i developmentu\.$/m,
+    /^> Piotr Kacała jest Product Builderem odpowiedzialnym za decyzje produktowe, granice systemu, review i rezultat; agenty AI są interfejsem implementacji\.$/m,
   );
   assert.match(content, /^## Product Builder$/m);
+  assert.match(
+    content,
+    /^Agenty AI są interfejsem implementacji\. Ja odpowiadam za decyzje produktowe, granice systemu, review i rezultat\.$/m,
+  );
   assert.match(content, /^## Projekty$/m);
   assert.match(content, /^### 2\. Surfaced$/m);
   assert.match(
@@ -217,12 +271,9 @@ test("Polish homepage markdown keeps its key structure and references", () => {
     content,
     /^- Galeria: https:\/\/piotrkacala\.pl\/pl\/phonetic-benchmark\/gallery\/$/m,
   );
-  assert.match(content, /^### 4\. Ta strona$/m);
-  assert.match(content, /^### 5\. Phonetic Benchmark$/m);
-  assert.match(
-    content,
-    /^Prywatny projekt kliencki — bez publicznego linku do działającej aplikacji\.$/m,
-  );
+  assert.match(content, /^### 3\. Ta strona$/m);
+  assert.match(content, /^### 4\. Phonetic Benchmark$/m);
+  assert.match(content, /41 archiwalnych wyników: 26 w aktualnym batchu v2/);
   assert.match(
     content,
     /^- Metodologia \(EN\): https:\/\/piotrkacala\.pl\/phonetic-benchmark\/methodology\/$/m,
@@ -232,6 +283,7 @@ test("Polish homepage markdown keeps its key structure and references", () => {
     /^- Publiczny pakiet benchmarku: https:\/\/github\.com\/piotrkacala\/phonetic-benchmark$/m,
   );
   assert.doesNotMatch(content, /doświadczony CEO|#### Stan na kwiecień 2026/);
+  assert.doesNotMatch(content, /Prywatn.*klient|client-audit-platform/i);
   assert.match(content, /^- Narzędzie: https:\/\/piotrkacala\.pl\/400m\/$/m);
   assert.match(
     content,
@@ -241,7 +293,7 @@ test("Polish homepage markdown keeps its key structure and references", () => {
   assert.match(content, /^Napisz do mnie: kontakt@piotrkacala\.pl$/m);
   assert.match(
     content,
-    /^Szukasz wsparcia produktowego\? Zobacz, jak pracuję\.: https:\/\/piotrkacala\.pl\/pl\/consulting\/$/m,
+    /^\[Szukasz wsparcia produktowego\? Zobacz, jak pracuję\.\]\(https:\/\/piotrkacala\.pl\/pl\/consulting\/\)$/m,
   );
 });
 
@@ -254,7 +306,8 @@ test("consulting markdown publishes the localized offer from shared copy", () =>
   assert.match(english, /^## Start with the scope$/m);
   assert.match(english, /^- practical product brief$/m);
   assert.match(english, /^## From scope to delivery$/m);
-  assert.match(english, /^## AI is part of the method$/m);
+  assert.match(english, /^## AI is the implementation method$/m);
+  assert.match(english, /I remain responsible for the product decisions/);
   assert.match(english, /^## Good fit$/m);
   assert.match(english, /^## Not a fit$/m);
   assert.match(english, /^## Selected work$/m);
@@ -273,9 +326,10 @@ test("consulting markdown publishes the localized offer from shared copy", () =>
   assert.match(polish, /^## Zacznijmy od zakresu$/m);
   assert.match(polish, /^- praktyczny brief produktowy$/m);
   assert.match(polish, /^## Od zakresu do wdrożenia$/m);
-  assert.match(polish, /^## AI jest częścią metody$/m);
+  assert.match(polish, /^## AI jest metodą implementacji$/m);
+  assert.match(polish, /Ja nadal odpowiadam za decyzje produktowe/);
   assert.match(polish, /^## Dobre dopasowanie$/m);
-  assert.match(polish, /^## Słabe dopasowanie$/m);
+  assert.match(polish, /^## Kiedy lepiej wybrać kogoś innego$/m);
   assert.match(polish, /^## Wybrane projekty$/m);
   assert.match(
     polish,
@@ -297,7 +351,7 @@ test("llms-full.txt carries the consolidated public references", () => {
   assert.match(content, /^## Canonical summary$/m);
   assert.match(
     content,
-    /^AI agents are the build interface\. The differentiator is judgment across product, design, QA, and development\.$/m,
+    /^AI agents are the implementation interface\. I own the product decisions, system boundaries, review, and outcome\.$/m,
   );
   assert.match(content, /^- English homepage: https:\/\/piotrkacala\.pl\/$/m);
   assert.match(
@@ -368,10 +422,7 @@ test("llms-full.txt carries the consolidated public references", () => {
     content,
     /^- Surfaced — Companion profile: https:\/\/piotrkacala\.pl\/projects\/surfaced\.md$/m,
   );
-  assert.match(
-    content,
-    /^- Private client audit platform — Companion profile: https:\/\/piotrkacala\.pl\/projects\/client-audit-platform\.md$/m,
-  );
+  assert.doesNotMatch(content, /Private client|client-audit-platform/i);
   assert.match(
     content,
     /^- Phonetic Alphabet Trainer — Link: https:\/\/piotrkacala\.github\.io\/phonetic\/$/m,
@@ -449,6 +500,7 @@ test("English Phonetic Benchmark markdown publishes all runs without private wor
     content,
     /^### Polish Footer Declension Is A Useful Localization Detail$/m,
   );
+  assert.match(content, /including GPT 5\.6 Sol High, GPT 5\.5 High/);
   assert.match(content, /^## What The Runs Show$/m);
   assert.match(content, /^## Selected Case Notes$/m);
   assert.match(content, /^## Archived Demos$/m);
@@ -525,6 +577,7 @@ test("Polish Phonetic Benchmark markdown carries localized narrative and all dem
     content,
     /^### Odmiana Nazwiska W Stopce To Dobry Sygnał Lokalizacji$/m,
   );
+  assert.match(content, /m\.in\. w GPT 5\.6 Sol High, GPT 5\.5 High/);
   assert.match(content, /^## Wyniki$/m);
   assert.match(content, /^### Aktualna seria$/m);
   assert.match(content, /^### Snapshot v1$/m);
@@ -682,56 +735,34 @@ test("benchmark structured data covers versioned runs and selected screenshot ca
       );
     });
   });
-  assert.deepEqual(
-    report.caseNotes.flatMap((caseNote) => caseNote.runIds).sort(),
-    [
-      "big-pickle-v2",
-      "deepseek-v4-flash-v2",
-      "deepseek-v4-pro",
-      "deepseek-v4-pro-v2",
-      "deepseek-v4-pro-v2",
-      "deepseek-v4-pro-v2",
-      "gemini-3-1-pro-high",
-      "gemini-3-1-pro-high-v2",
-      "gemini-3-1-pro-high-v2",
-      "gemini-3-5-flash-high-v2",
-      "gemini-3-5-flash-high-v2",
-      "gemma-4-26b-v2",
-      "glm-5-2-v2",
-      "glm-5-2-v2",
-      "gpt-5-4-high",
-      "gpt-5-4-high-v2",
-      "gpt-5-4-high-v2",
-      "gpt-5-5-high",
-      "gpt-5-5-high-v2",
-      "gpt-5-5-high-v2",
-      "gpt-oss-120b",
-      "gpt-oss-120b-v2",
-      "gpt-oss-120b-v2",
-      "kimi-k2-7-v2",
-      "kimi-k2-7-v2",
-      "laguna-m-1-v2",
-      "mimo-v2-5-free-v2",
-      "mimo-v2-5-pro-v2",
-      "minimax-m3-v2",
-      "nemotron-3-super",
-      "north-mini-code-free-v2",
-      "opus-4-6-thinking-v2",
-      "owl-alpha-v2",
-      "owl-alpha-v2",
-      "qwen-3-7-max-v2",
-      "sonnet-4-6-thinking",
-      "sonnet-4-6-thinking-v2",
-      "sonnet-4-6-thinking-v2",
-    ],
-  );
+  report.caseNotes.forEach((caseNote) => {
+    caseNote.runIds.forEach((runId) => {
+      assert.ok(
+        report.runs.some((run) => run.id === runId),
+        `${caseNote.id} references ${runId}`,
+      );
+    });
+  });
+  for (const runId of [
+    "hy3-free-v2",
+    "gpt-5-6-sol-v2",
+    "gpt-5-6-terra-v2",
+    "gpt-5-6-luna-v2",
+  ]) {
+    assert.ok(
+      report.caseNotes.some((caseNote) =>
+        (caseNote.runIds as readonly string[]).includes(runId),
+      ),
+      `Current narrative references ${runId}`,
+    );
+  }
 });
 
 test("benchmark publication metadata derives coverage and avoids inferred inference settings", () => {
   const results = getPhoneticBenchmarkResultsData();
 
   assert.equal(phoneticBenchmarkMetadata.publishedDate, "2026-05-26");
-  assert.equal(phoneticBenchmarkMetadata.updatedDate, "2026-07-12");
+  assert.equal(phoneticBenchmarkMetadata.updatedDate, "2026-07-13");
   assert.equal(phoneticBenchmarkMetadata.coveredThroughDate, "2026-07-12");
   assert.deepEqual(phoneticBenchmarkMetadata.coveredBenchmarkVersions, [
     "v1",
@@ -753,6 +784,173 @@ test("benchmark publication metadata derives coverage and avoids inferred infere
     serialized,
     /Missing inference-effort metadata must not be interpreted as a known provider default/,
   );
+});
+
+test("benchmark publication facts stay synchronized across narrative, JSON, CSV, and markdown", () => {
+  assert.deepEqual(phoneticBenchmarkPublicationStats, {
+    totalRunCount: 41,
+    v1: {
+      runCount: 15,
+      statusCounts: {
+        comparable: 6,
+        contractFailing: 8,
+        unrunnable: 1,
+      },
+      failureTypeCounts: {
+        "core behavior": 2,
+        "submission documentation": 6,
+        attribution: 6,
+        localization: 0,
+        "test workflow": 1,
+        "unrunnable output": 1,
+      },
+      sourceLoc: 16818,
+      staticTestCount: 260,
+      recordedTestEvidenceCount: 0,
+      comparativeScoreCount: 0,
+      comparableRunIds: [
+        "gpt-5-4-high",
+        "gpt-5-5-high",
+        "sonnet-4-6-thinking",
+        "laguna-m-1",
+        "mimo-v2-5-pro",
+        "kimi-k2-6",
+      ],
+      comparableModels: [
+        "GPT 5.4 High",
+        "GPT 5.5 High",
+        "Claude Sonnet 4.6 Thinking",
+        "Laguna M.1",
+        "MiMo V2.5 Pro",
+        "Kimi K2.6",
+      ],
+    },
+    v2: {
+      runCount: 26,
+      statusCounts: {
+        comparable: 8,
+        contractFailing: 18,
+        unrunnable: 0,
+      },
+      failureTypeCounts: {
+        "core behavior": 12,
+        "submission documentation": 6,
+        attribution: 14,
+        localization: 2,
+        "test workflow": 4,
+        "unrunnable output": 1,
+      },
+      sourceLoc: 30362,
+      staticTestCount: 612,
+      recordedTestEvidenceCount: 26,
+      comparativeScoreCount: 8,
+      comparableRunIds: [
+        "owl-alpha-v2",
+        "gpt-5-4-high-v2",
+        "gpt-5-5-high-v2",
+        "deepseek-v4-pro-v2",
+        "glm-5-2-v2",
+        "kimi-k2-7-v2",
+        "gpt-5-6-sol-v2",
+        "gpt-5-6-terra-v2",
+      ],
+      comparableModels: [
+        "Owl Alpha",
+        "GPT 5.4 High",
+        "GPT 5.5 High",
+        "DeepSeek V4 Pro",
+        "GLM-5.2",
+        "Kimi K2.7",
+        "GPT 5.6 Sol High",
+        "GPT 5.6 Terra High",
+      ],
+    },
+  });
+
+  const json = JSON.parse(
+    getArtifactContent("/phonetic-benchmark/results.json"),
+  ) as { runs: typeof benchmarkRunData };
+  const csvRows = parseCsv(
+    getArtifactContent("/phonetic-benchmark/results.csv"),
+  );
+
+  assert.equal(
+    json.runs.length,
+    phoneticBenchmarkPublicationStats.totalRunCount,
+  );
+  assert.equal(csvRows.length, phoneticBenchmarkPublicationStats.totalRunCount);
+  assert.match(
+    phoneticBenchmarkReports.en.summary,
+    /41 archived web applications/,
+  );
+  assert.match(
+    phoneticBenchmarkReports.en.summary,
+    /18 other outputs remain inspectable failures/,
+  );
+  assert.match(
+    phoneticBenchmarkReports.pl.summary,
+    /41 archiwalnych aplikacji webowych/,
+  );
+  assert.deepEqual(
+    phoneticBenchmarkReports.en.spotlights[0].runIds,
+    phoneticBenchmarkPublicationStats.v2.comparableRunIds,
+  );
+  phoneticBenchmarkPublicationStats.v2.comparableModels.forEach((model) => {
+    assert.match(phoneticBenchmarkReports.en.summary, new RegExp(model));
+    assert.match(phoneticBenchmarkReports.pl.summary, new RegExp(model));
+  });
+
+  benchmarkRunData.forEach((sourceRun) => {
+    const jsonRun = json.runs.find((run) => run.id === sourceRun.id);
+    const csvRun = csvRows.find((run) => run.run_id === sourceRun.id);
+    const runMarkdown = getArtifactContent(
+      `/phonetic-benchmark/runs/${sourceRun.id}/index.md`,
+    );
+
+    assert.ok(jsonRun, `JSON contains ${sourceRun.id}`);
+    assert.ok(csvRun, `CSV contains ${sourceRun.id}`);
+    assert.equal(jsonRun.benchmarkVersion, sourceRun.benchmarkVersion);
+    assert.equal(jsonRun.status, sourceRun.status);
+    assert.deepEqual(jsonRun.failureTypes, sourceRun.failureTypes);
+    assert.equal(jsonRun.sourceLoc, sourceRun.sourceLoc);
+    assert.equal(jsonRun.testCount, sourceRun.testCount);
+    assert.equal(jsonRun.testEvidence, sourceRun.testEvidence);
+    assert.equal(jsonRun.comparativeScore, sourceRun.comparativeScore);
+    assert.equal(csvRun.benchmark_version, sourceRun.benchmarkVersion);
+    assert.equal(csvRun.status, sourceRun.status);
+    assert.equal(csvRun.failure_types, sourceRun.failureTypes.join(" | "));
+    assert.equal(csvRun.source_loc, String(sourceRun.sourceLoc));
+    assert.equal(csvRun.static_automated_tests, String(sourceRun.testCount));
+    assert.equal(
+      csvRun.test_evidence,
+      sourceRun.testEvidence ?? String(sourceRun.testCount),
+    );
+    assert.equal(
+      csvRun.comparative_score,
+      sourceRun.comparativeScore === undefined
+        ? ""
+        : String(sourceRun.comparativeScore),
+    );
+    assert.match(
+      runMarkdown,
+      new RegExp(`^- Source LoC: ${sourceRun.sourceLoc}$`, "m"),
+    );
+    assert.match(
+      runMarkdown,
+      new RegExp(
+        `^- Automated test evidence: ${escapeRegExp(sourceRun.testEvidence ?? String(sourceRun.testCount))}$`,
+        "m",
+      ),
+    );
+    if (sourceRun.comparativeScore === undefined) {
+      assert.doesNotMatch(runMarkdown, /^- Comparative score:/m);
+    } else {
+      assert.match(
+        runMarkdown,
+        new RegExp(`^- Comparative score: ${sourceRun.comparativeScore}$`, "m"),
+      );
+    }
+  });
 });
 
 test("benchmark JSON and CSV exports publish one neutral record per run", () => {
@@ -893,11 +1091,15 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
   );
   assert.equal(
     results.runs.find((run) => run.id === "gpt-5-5-high-v2")?.testEvidence,
-    "0 framework-style static cases; no automated test runner evidence in archived artifact",
+    "6 framework-style static cases; controlled runner reported 6 tests passing",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "gpt-5-5-high-v2")?.comparativeScore,
+    89,
   );
   assert.equal(
     results.runs.find((run) => run.id === "gpt-oss-120b-v2")?.testEvidence,
-    "0 framework-style static cases; no automated test runner evidence in archived artifact",
+    "0 framework-style static cases; no substantive automated test workflow; controlled runner blocked by dependency-policy failure",
   );
   assert.equal(
     results.runs.find((run) => run.id === "deepseek-v4-pro-v2")?.testEvidence,
@@ -938,11 +1140,11 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
   );
   assert.equal(
     results.runs.find((run) => run.id === "nemotron-3-ultra-v2")?.testEvidence,
-    "0 framework-style static cases; no automated test runner evidence in archived artifact",
+    "35 framework-style static cases; local npm test passed as 3 passing test files; controlled runner blocked by dependency-policy failure",
   );
   assert.equal(
     results.runs.find((run) => run.id === "hy3-preview-v2")?.testEvidence,
-    "0 framework-style static cases; no automated test runner evidence in archived artifact",
+    "20 framework-style static cases; controlled runner reported 20 passed, 0 failed",
   );
   assert.equal(
     results.runs.find((run) => run.id === "hy3-free-v2")?.testEvidence,
@@ -1049,11 +1251,11 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
   );
   assert.match(
     csvContent,
-    /gpt-5-5-high-v2,13,GPT 5\.5 High,2026-06-15,v2,comparable,,1056,0,0 framework-style static cases; no automated test runner evidence in archived artifact,,/,
+    /gpt-5-5-high-v2,13,GPT 5\.5 High,2026-06-15,v2,comparable,,1253,6,6 framework-style static cases; controlled runner reported 6 tests passing,89,/,
   );
   assert.match(
     csvContent,
-    /gpt-oss-120b-v2,14,gpt-oss-120b,2026-06-15,v2,contract-failing,core behavior \| submission documentation \| attribution \| test workflow,187,0,0 framework-style static cases; no automated test runner evidence in archived artifact,,/,
+    /gpt-oss-120b-v2,14,gpt-oss-120b,2026-06-13,v2,contract-failing,core behavior \| submission documentation \| attribution \| test workflow,237,0,0 framework-style static cases; no substantive automated test workflow; controlled runner blocked by dependency-policy failure,,/,
   );
   assert.match(
     csvContent,
@@ -1081,11 +1283,11 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
   );
   assert.match(
     csvContent,
-    /nemotron-3-ultra-v2,21,Nemotron 3 Ultra,2026-06-26,v2,contract-failing,core behavior \| attribution,1102,0,0 framework-style static cases; no automated test runner evidence in archived artifact,,/,
+    /nemotron-3-ultra-v2,21,Nemotron 3 Ultra,2026-06-26,v2,contract-failing,core behavior \| attribution,1317,35,35 framework-style static cases; local npm test passed as 3 passing test files; controlled runner blocked by dependency-policy failure,,/,
   );
   assert.match(
     csvContent,
-    /hy3-preview-v2,22,Hy3 Preview,2026-06-30,v2,contract-failing,core behavior \| attribution \| localization,722,0,0 framework-style static cases; no automated test runner evidence in archived artifact,,/,
+    /hy3-preview-v2,22,Hy3 Preview,2026-06-30,v2,contract-failing,core behavior \| localization \| unrunnable output,979,20,"20 framework-style static cases; controlled runner reported 20 passed, 0 failed",,/,
   );
   assert.match(
     csvContent,
@@ -1093,15 +1295,15 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
   );
   assert.match(
     csvContent,
-    /gpt-5-6-sol-v2,24,GPT 5\.6 Sol,2026-07-11,v2,comparable,,1189,10,"10 framework-style static cases; controlled runner reported 10 passed, 0 failed",94,/,
+    /gpt-5-6-sol-v2,24,GPT 5\.6 Sol High,2026-07-11,v2,comparable,,1189,10,"10 framework-style static cases; controlled runner reported 10 passed, 0 failed",94,/,
   );
   assert.match(
     csvContent,
-    /gpt-5-6-terra-v2,25,GPT 5\.6 Terra,2026-07-11,v2,comparable,,660,6,"6 framework-style static cases; controlled runner reported 6 passed, 0 failed",87,/,
+    /gpt-5-6-terra-v2,25,GPT 5\.6 Terra High,2026-07-11,v2,comparable,,660,6,"6 framework-style static cases; controlled runner reported 6 passed, 0 failed",87,/,
   );
   assert.match(
     csvContent,
-    /gpt-5-6-luna-v2,26,GPT 5\.6 Luna,2026-07-12,v2,contract-failing,core behavior \| attribution \| submission documentation,600,4,"4 framework-style static cases; controlled runner reported 4 passed, 0 failed",,/,
+    /gpt-5-6-luna-v2,26,GPT 5\.6 Luna High,2026-07-12,v2,contract-failing,core behavior \| attribution \| submission documentation,600,4,"4 framework-style static cases; controlled runner reported 4 passed, 0 failed",,/,
   );
   assert.doesNotMatch(
     csvLines[0],
@@ -1328,7 +1530,6 @@ test("static discovery files include consulting, report, and gallery paths", () 
     "/projects/400m.md",
     "/projects/phonetic-alphabet-trainer.md",
     "/projects/surfaced.md",
-    "/projects/client-audit-platform.md",
   ]) {
     assert.match(
       llms,
@@ -1344,6 +1545,8 @@ test("static discovery files include consulting, report, and gallery paths", () 
       ),
     );
   }
+  assert.doesNotMatch(llms, /client-audit-platform|Private client/i);
+  assert.doesNotMatch(sitemap, /client-audit-platform/i);
 
   for (const pathname of [
     "/consulting/",
@@ -1394,6 +1597,28 @@ test("shared layout exposes llms.txt and keeps repeated navigation out of snippe
   );
   assert.match(layout, /<header\s+class="site-header[^"]*"/);
   assert.match(layout, /data-nosnippet/);
+});
+
+test("Cloudflare Pages headers preserve machine-readable types and negotiated homepage variants", () => {
+  const headers = readFileSync("public/_headers", "utf8");
+
+  assert.match(
+    headers,
+    /\/phonetic-benchmark\/results\.json\n[ ]{2}Content-Type: application\/json; charset=UTF-8/,
+  );
+  assert.match(
+    headers,
+    /\/phonetic-benchmark\/results\.csv\n[ ]{2}Content-Type: text\/csv; charset=UTF-8/,
+  );
+
+  for (const route of ["/", "/index.html", "/pl/", "/pl/index.html"]) {
+    assert.match(
+      headers,
+      new RegExp(
+        `(?:^|\\n)${escapeRegExp(route)}\\n  Link: [^\\n]+text/markdown[^\\n]+\\n  Vary: Accept(?:\\n|$)`,
+      ),
+    );
+  }
 });
 
 test("consulting routes expose localized alternates and the shared page component", () => {
@@ -1623,9 +1848,6 @@ test("400m companion profile is generated with high-signal operating details", (
 test("project companion profiles publish public-safe discovery records", () => {
   const phonetic = getArtifactContent("/projects/phonetic-alphabet-trainer.md");
   const surfaced = getArtifactContent("/projects/surfaced.md");
-  const clientAuditPlatform = getArtifactContent(
-    "/projects/client-audit-platform.md",
-  );
 
   assert.match(phonetic, /^# Phonetic Alphabet Trainer$/m);
   assert.match(
@@ -1643,18 +1865,10 @@ test("project companion profiles publish public-safe discovery records", () => {
     /^- Firefox Add-ons: https:\/\/addons\.mozilla\.org\/firefox\/addon\/surfaced\/$/m,
   );
   assert.match(surfaced, /^- Passed Mozilla's public add-on review\.$/m);
-
-  assert.match(clientAuditPlatform, /^# Private client audit platform$/m);
-  assert.match(clientAuditPlatform, /^- Runtime: No public runtime link\.$/m);
-  assert.match(
-    clientAuditPlatform,
-    /^- This profile is a dated private-project record, not a public runtime claim\.$/m,
+  assert.doesNotMatch(
+    [...getArtifactsByPath().keys()].join("\n"),
+    /client-audit-platform/i,
   );
-  assert.match(
-    clientAuditPlatform,
-    /^- Private customer data and implementation details are intentionally excluded\.$/m,
-  );
-  assert.doesNotMatch(clientAuditPlatform, /API routes|database models/i);
 });
 
 test("machine-readable links do not depend on visible label punctuation", () => {

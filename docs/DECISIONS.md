@@ -346,3 +346,57 @@ preserve the former domain-based companion slug as a public alias.
 The project matters as evidence of production delivery, not as a brand or public runtime. A neutral
 label explains the project immediately and avoids coupling durable portfolio materials to an
 expiring domain.
+
+---
+
+## ADR-019 — Cloudflare Pages supersedes FTP as the current deployment target
+
+**Date:** 2026-07-13
+**Status:** Accepted
+
+**Context:**
+The static site was originally uploaded manually to classic shared hosting under ADR-002. Production
+has since moved to Cloudflare Pages. The migration date and dashboard-level project configuration are
+not recorded in this public repository.
+
+**Decision:**
+Cloudflare Pages is the current production host and supersedes ADR-002 for current deployment.
+ADR-002 remains the historical record of the original hosting choice.
+
+The repository-owned deployment contract is intentionally narrow:
+
+- `npm run build` produces the complete static site in `dist/`
+- static output and the no-SSR invariant remain unchanged
+- `public/400m/` is copied into `dist/` without an Astro route taking ownership of `/400m/`
+- `npm run smoke:production` is required after a production deployment
+
+Project name, account ownership, connected repository and production branch, Node/runtime version,
+environment variables, preview behavior, and custom-domain/DNS ownership must be verified in the
+Cloudflare dashboard before configuration changes. They must not be inferred from the repository.
+
+**Reasoning:**
+Pages matches the existing static artifact model and removes manual FTP from current operations
+without requiring SSR, API routes, a CMS, or a second content system. Keeping unverified dashboard
+settings out of the public instructions prevents plausible-looking deployment guidance from becoming
+operational misinformation.
+
+---
+
+## ADR-020 — Retired private client work is removed from active public proof
+
+**Date:** 2026-07-13
+**Status:** Accepted
+
+**Context:**
+ADR-018 introduced a neutral public label and companion profile for private client work. That project
+is no longer approved as active public proof.
+
+**Decision:**
+Remove the project from the homepage, consulting proof, discovery files, generated output, companion
+profiles, and future case-study plans. Do not replace it with an anonymized, synthetic, or closure
+case study. ADR-018 remains as the historical record of the earlier publication decision.
+
+**Reasoning:**
+Public proof should remain inspectable, current, and approved for publication. Removing a retired
+private project is clearer than preserving claims that readers cannot independently verify or that
+no longer belong in the public portfolio.

@@ -1,9 +1,10 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import type { AstroIntegration } from "astro";
 import { getMachineReadableArtifacts } from "../i18n/machine-readable";
 
-export function machineReadableArtifacts() {
+export function machineReadableArtifacts(): AstroIntegration {
   return {
     name: "machine-readable-artifacts",
     hooks: {

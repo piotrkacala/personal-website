@@ -12,17 +12,16 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 
 ## Now — post-launch polish
 
-- [ ] Run `npm run smoke:production` after each FTP deployment
-- [ ] Remove the superseded domain-based companion profile file from FTP hosting during the next deploy
+- [ ] Run `npm run smoke:production` after each Cloudflare Pages production deployment
+- [ ] Record verified Cloudflare Pages dashboard settings: project/account owner, connected repo and
+      production branch, Node/runtime, environment variables, preview behavior, and domain/DNS owner
+- [ ] Document the source and refresh procedure for the checked-in `public/400m/` build
+- [ ] Verify `Vary: Accept` after the next deploy; the 2026-07-13 production check returned negotiated
+      Markdown correctly but did not expose the documented `Vary` response header
 
 ## Later
 
 - [ ] Keep polishing the public repo as a readable portfolio artifact when useful
-- [ ] Explore a public private-client-audit-platform case-study page with a clearly scoped, publication-safe snapshot
-
-## Ideas — not decided
-
-- Showing a timeline of the learning curve (Phonetic → Surfaced → private client audit platform) visually, not just textually
 
 ## Rejected
 
@@ -31,11 +30,25 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 - CMS — unjustified complexity for one-author static site (see ADR-006)
 - Skills/tech list — belongs on CV, not here
 - Contact form with backend — email link is sufficient for v1
+- Public case study for the retired private client project — the project is no longer approved as
+  public proof; do not replace it with an anonymized or synthetic case study
+- Manual removal of the superseded companion profile from FTP hosting — FTP is no longer the active
+  deployment path; absence of the retired route is now verified by the post-deploy Pages smoke check
+- Learning-curve timeline built around Phonetic, Surfaced, and the retired private client project —
+  it depends on proof that is no longer approved for active publication
 
 ---
 
 ## Done
 
+- [x] Benchmark publication source reconciled across 41 runs, including the four newest v2 results,
+      with cross-format JSON, CSV, Markdown, narrative, evidence, and score checks (2026-07-13)
+- [x] Homepage, consulting, and benchmark layouts inspected in Chromium at desktop and mobile sizes;
+      long mobile project links fixed without changing the visual system (2026-07-13)
+- [x] Responsibility-first positioning propagated through EN/PL profile, consulting, metadata, and
+      machine-readable sources; retired private client proof removed (2026-07-13)
+- [x] Current Cloudflare Pages hosting documented without inventing unverified dashboard settings
+      (2026-07-13)
 - [x] Focused bilingual consulting surface added with generated markdown, discovery entries, sitemap coverage, and production smoke checks while keeping the homepage compact (2026-06-02)
 - [x] Homepage proof hierarchy refreshed with a dedicated Phonetic Benchmark entry and a compact private-project treatment for the private client audit platform (2026-06-02)
 - [x] Companion profiles added for Phonetic Alphabet Trainer, Surfaced, and the private client audit platform (2026-06-02)

@@ -1,4 +1,5 @@
 import type { SiteCopy } from "./schema.ts";
+import { phoneticBenchmarkPublicationStats } from "../site/phonetic-benchmark.ts";
 
 export const pl = {
   lang: "pl",
@@ -6,11 +7,11 @@ export const pl = {
   metadata: {
     title: "Piotr Kacała",
     description:
-      "Strona Piotra Kacały. Agenty AI są interfejsem budowy. Wyróżnikiem są ocena i decyzje na styku produktu, designu, QA i developmentu.",
+      "Piotr Kacała jest Product Builderem odpowiedzialnym za decyzje produktowe, granice systemu, review i rezultat; agenty AI są interfejsem implementacji.",
     openGraph: {
       title: "Piotr Kacała",
       description:
-        "Agenty AI są interfejsem budowy. Wyróżnikiem są ocena i decyzje na styku produktu, designu, QA i developmentu.",
+        "Agenty AI są interfejsem implementacji. Ja odpowiadam za decyzje produktowe, granice systemu, review i rezultat.",
       type: "website",
       locale: "pl_PL",
       siteName: "Piotr Kacała",
@@ -30,12 +31,14 @@ export const pl = {
   },
   hero: {
     headline: "Product Builder",
+    statement:
+      "Agenty AI są interfejsem implementacji. Ja odpowiadam za decyzje produktowe, granice systemu, review i rezultat.",
     expansion:
-      "W IT jestem od 2013 roku, na styku developmentu, designu, produktu i QA — nigdy przywiązany do jednego narzędzia, zawsze skupiony na rezultacie. Od początku 2026 buduję w całości przez agenty AI, zero-code. Przewaga nie leży w toolingu, tylko w tym, że wiem, jakie pytania zadać, zanim problem w ogóle się ujawni, i potrafię promptować w języku danej domeny: jak developer, QA engineer, designer albo product manager. AI działa najlepiej właśnie na takim materiale. Interfejs stał się pisaniem, a ja przez całą karierę pracowałem przede wszystkim w tekście.",
+      "Od 2013 roku pracuję na styku developmentu, designu, produktu i QA. Dzięki temu potrafię zamienić niejasny pomysł w konkretny system, prowadzić agenty językiem każdej z tych domen, zintegrować rezultat i zdecydować, co jest gotowe do wdrożenia.",
   },
   projects: {
     heading: "Projekty",
-    arc: "Każdy projekt to świadomie wybrany kolejny krok. Sprawdzenie AI na istniejącym codebase. Budowa od zera, docs-first, zero-code. Pełny produkt dla realnego klienta. Ta strona jako publiczny artifact. Potem publiczna ewaluacja agentów programistycznych.",
+    arc: "Publiczne projekty pokazują tę metodę z różnych stron: istniejący codebase, opublikowane rozszerzenie zbudowane z pisemnej specyfikacji, to repozytorium jako sprawdzalny artefakt workflow i zadaniowy benchmark z archiwalnymi wynikami.",
     items: [
       {
         title: "Phonetic Alphabet Trainer",
@@ -43,7 +46,7 @@ export const pl = {
         blocks: [
           {
             type: "paragraph",
-            text: "Istniejący projekt w React, otwarty ponownie, żeby sprawdzić, jak AI radzi sobie z istniejącym codebase — i porównać modele oraz IDE. Po drodze wyszły na jaw brakujące litery w oficjalnym alfabecie fonetycznym Ministerstwa Obrony Narodowej. Działa po angielsku i po polsku, ma scoring, dwa tryby odpowiedzi i śledzenie serii.",
+            text: "Otworzyłem ponownie istniejący projekt w React, żeby sprawdzić, jak AI radzi sobie z istniejącym codebase i porównać modele oraz IDE. Po drodze odkryłem, że opublikowany przez Ministerstwo Obrony Narodowej alfabet fonetyczny pomija część liter. Aplikacja działa po polsku i angielsku, ma punktację, dwa tryby odpowiedzi i śledzenie serii.",
           },
           {
             type: "paragraph",
@@ -65,12 +68,12 @@ export const pl = {
         blocks: [
           {
             type: "paragraph",
-            text: "Pierwszy projekt zbudowany od zera, docs-driven, zero-code. Rozszerzenie do przeglądarki, które śledzi głębokość scrolla i powiadamia, gdy zajdziesz za daleko — trzy strefy głębokości i rosnący poziom pilności. Przeszło publiczny review Mozilli i jest dostępne w Firefox Add-ons oraz Chrome Web Store.",
+            text: "Surfaced był moim pierwszym projektem zbudowanym od zera: napisałem docs-first specyfikację, a do implementacji wykorzystałem agenty AI. Rozszerzenie śledzi głębokość scrolla i dodaje coraz bardziej bezpośrednie przypomnienia w miarę zagłębiania się użytkownika w interfejs bez naturalnego końca. Przeszło publiczny review Mozilli i jest dostępne w Firefox Add-ons oraz Chrome Web Store.",
           },
           {
             type: "link",
             href: "https://addons.mozilla.org/firefox/addon/surfaced/",
-            label: "Firefox: addons.mozilla.org/firefox/addon/surfaced/",
+            label: "Firefox Add-ons: Surfaced",
             machineLabel: "Firefox Add-ons",
             external: true,
             externalLabel: "(otwiera się w nowej karcie)",
@@ -78,25 +81,10 @@ export const pl = {
           {
             type: "link",
             href: "https://chromewebstore.google.com/detail/surfaced/bpbidikjpaffmpcbincadomhbfnoaaem",
-            label:
-              "Chrome: chromewebstore.google.com/detail/surfaced/bpbidikjpaffmpcbincadomhbfnoaaem",
+            label: "Chrome Web Store: Surfaced",
             machineLabel: "Chrome Web Store",
             external: true,
             externalLabel: "(otwiera się w nowej karcie)",
-          },
-        ],
-      },
-      {
-        title: "Prywatna platforma do audytów",
-        blocks: [
-          {
-            type: "paragraph",
-            text: "Pierwszy pełny projekt produkcyjny, zbudowany spec-first dla realnego klienta. Stan na kwiecień 2026: ~21,000 linii kodu produkcyjnego, ~9,400 linii testów i 295 commitów.",
-          },
-          {
-            type: "paragraph",
-            text: "Prywatny projekt kliencki — bez publicznego linku do działającej aplikacji.",
-            tone: "aside",
           },
         ],
       },
@@ -105,7 +93,7 @@ export const pl = {
         blocks: [
           {
             type: "paragraph",
-            text: "Zbudowana tak samo — spec-first, docs-driven, zero-code — ale z jednym dodatkiem: agent orkiestrujący, który samodzielnie przechodził przez plan implementacji, generował prompty, czytał wyniki i obsługiwał przegląd zmian. To pierwszy projekt, w którym workflow zarządzał samym sobą. Repo jest publiczne i celowo czytelne: AGENTS.md, pełny katalog docs, czysta historia commitów.",
+            text: "To repozytorium pokazuje metodę pracy w sprawdzalnej formie. Ja definiuję produkt, model treści, granice systemu i kryteria review; agenty implementują według dokumentacji; ja integruję i weryfikuję rezultat. Repo jest publiczne i celowo czytelne — razem z AGENTS.md, katalogiem docs, testami i historią commitów.",
           },
           {
             type: "paragraph",
@@ -135,7 +123,7 @@ export const pl = {
         blocks: [
           {
             type: "paragraph",
-            text: "Praktyczna, zadaniowa ewaluacja outputów agentów programistycznych. Modele dostają docs-first brief tej samej małej aplikacji webowej; v2 jest teraz aktualnym batchem, a oryginalne wyniki v1 pozostają zarchiwizowanym snapshotem. Każdy wynik zachowuję i sprawdzam pod kątem zgodności z kontraktem, UX, testów i jakości dostarczenia. To nie jest uniwersalny ranking modeli.",
+            text: `Praktyczna, zadaniowa ewaluacja outputów agentów programistycznych. Raport obejmuje teraz ${phoneticBenchmarkPublicationStats.totalRunCount} archiwalnych wyników: ${phoneticBenchmarkPublicationStats.v2.runCount} w aktualnym batchu v2 i ${phoneticBenchmarkPublicationStats.v1.runCount} w oryginalnym snapshocie v1. Definiuję kontrakt i sprawdzam każdy wynik pod kątem wymaganego zachowania, UX, testów i materiałów potwierdzających sposób dostarczenia. To nie jest uniwersalny ranking modeli.`,
           },
           {
             type: "link",
@@ -182,11 +170,11 @@ export const pl = {
     metadata: {
       title: "Consulting | Piotr Kacała",
       description:
-        "Consulting produktowy i kompleksowa realizacja oprogramowania dla founderów i małych zespołów: doprecyzowanie zakresu, specyfikacja, budowa, testy, deploy i iteracja.",
+        "Consulting produktowy i realizacja oprogramowania dla founderów i małych zespołów, z jasną odpowiedzialnością za decyzje produktowe, granice systemu, review i rezultat.",
       openGraph: {
         title: "Consulting | Piotr Kacała",
         description:
-          "Consulting produktowy i kompleksowa realizacja oprogramowania dla founderów i małych zespołów: doprecyzowanie zakresu, specyfikacja, budowa, testy, deploy i iteracja.",
+          "Consulting produktowy i realizacja oprogramowania dla founderów i małych zespołów, z jasną odpowiedzialnością za decyzje, granice systemu, review i rezultat.",
         type: "website",
         locale: "pl_PL",
         siteName: "Piotr Kacała",
@@ -202,18 +190,18 @@ export const pl = {
     eyebrow: "Consulting",
     title: "Od niejasnego pomysłu do działającego produktu.",
     intro:
-      "Pracuję z founderami i małymi zespołami, które chcą zamienić pomysł w użyteczny produkt bez budowania całego zespołu produktowego. Doprecyzowuję zakres, piszę praktyczną specyfikację, buduję system, testuję go, wdrażam i rozwijam.",
+      "Pracuję z founderami i małymi zespołami, które chcą zamienić pomysł w użyteczny produkt bez budowania całego zespołu produktowego. Biorę odpowiedzialność za doprecyzowanie zakresu, decyzje produktowe w jego ramach i cały cykl realizacji: specyfikację, granice systemu, review, integrację, wdrożenie i iterację.",
     homeLabel: "Wróć na stronę główną",
     scope: {
       heading: "Zacznijmy od zakresu",
       paragraphs: [
-        "Jeśli pomysł jest jeszcze nieprecyzyjny, pierwszym sensownym krokiem jest krótki, zamknięty etap doprecyzowania produktu. Celem nie jest duży dokument strategiczny. Chodzi o to, żeby projekt stał się wystarczająco konkretny do realizacji. Ten etap może też wcześnie pokazać, że jeszcze nie warto go budować.",
+        "Jeśli pomysł jest jeszcze nieprecyzyjny, pierwszym sensownym krokiem jest doprecyzowanie produktu z jasno określonym rezultatem. Celem nie jest duży dokument strategiczny. Chodzi o to, żeby projekt stał się wystarczająco konkretny do realizacji. Ten etap może też wcześnie pokazać, że jeszcze nie warto go budować.",
         "Jeśli masz już konkretny brief, możemy od razu przejść do planu budowy.",
       ],
       deliverablesHeading: "Etap doprecyzowania obejmuje:",
       deliverables: [
         "praktyczny brief produktowy",
-        "skupiony pierwszy zakres i jawna lista rzeczy na później",
+        "ograniczony zakres pierwszej wersji i jawna lista rzeczy na później",
         "najważniejsze user flows, ograniczenia i ryzyka",
         "rekomendowany kolejny krok",
         "notatki architektoniczne i zarys implementacji, jeśli pomysł jest gotowy do realizacji",
@@ -226,9 +214,9 @@ export const pl = {
       ],
     },
     ai: {
-      heading: "AI jest częścią metody",
+      heading: "AI jest metodą implementacji",
       paragraphs: [
-        "Buduję przez workflow oparte na agentach AI. Wartość nie polega na tym, że model pisze kod. Polega na takim ułożeniu pracy, żeby działać szybko bez obniżania poprzeczki dla oceny, review i jakości.",
+        "Agenty AI generują implementację. Ja nadal odpowiadam za decyzje produktowe, granice systemu, review, integrację i rezultat. Zmienił się interfejs pracy, nie odpowiedzialność.",
         "Jeśli AI ma być częścią samego produktu, pomagam też zaprojektować rolę modelu: co powinien robić, czego nie wolno mu rozstrzygać, z jakich narzędzi może korzystać, co może zapisywać i jakie guardrails kształtują doświadczenie użytkownika.",
       ],
     },
@@ -238,19 +226,19 @@ export const pl = {
         "founderzy na wczesnym etapie z pomysłem, który potrzebuje struktury",
         "małe firmy bez pełnego zespołu produktowego",
         "prototypy, narzędzia wewnętrzne, automatyzacje i pierwsze wersje produkcyjne",
-        "praca, w której liczy się ownership i praktyczne decyzje, a nie realizacja kolejki ticketów",
+        "praca, w której liczą się odpowiedzialność i praktyczne decyzje, a nie realizacja kolejki ticketów",
       ],
-      notHeading: "Słabe dopasowanie",
+      notHeading: "Kiedy lepiej wybrać kogoś innego",
       notItems: [
-        "wąski staff augmentation",
+        "staff augmentation bez szerszej odpowiedzialności",
         "realizacja samych ticketów bez kontekstu produktowego",
-        "projekty szukające przede wszystkim głębokiej specjalizacji w jednym frameworku",
+        "projekty wymagające przede wszystkim głębokiej specjalizacji w jednym frameworku",
         "odpowiedzialność za rezultat bez uprawnień do podejmowania decyzji potrzebnych do jego dostarczenia",
       ],
     },
     selectedWork: {
       heading: "Wybrane projekty",
-      body: "Strona główna pokazuje kolejne etapy: opublikowane rozszerzenie do przeglądarki, prywatną platformę produkcyjną dla realnego klienta, publiczną stronę z czytelną dokumentacją, niewielkie użyteczne narzędzia i opublikowany benchmark agentów programistycznych z wynikami, które można samodzielnie sprawdzić.",
+      body: `Strona główna prowadzi do opublikowanego rozszerzenia, publicznego repozytorium z czytelną dokumentacją, local-first narzędzia i zadaniowego benchmarku agentów programistycznych z ${phoneticBenchmarkPublicationStats.totalRunCount} wynikami, które można samodzielnie sprawdzić.`,
       linkLabel: "Zobacz wybrane projekty",
       href: "/pl/#projects",
     },

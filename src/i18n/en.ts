@@ -1,4 +1,5 @@
 import type { SiteCopy } from "./schema.ts";
+import { phoneticBenchmarkPublicationStats } from "../site/phonetic-benchmark.ts";
 
 export const en = {
   lang: "en",
@@ -6,11 +7,11 @@ export const en = {
   metadata: {
     title: "Piotr Kacała",
     description:
-      "Personal website of Piotr Kacała. AI agents are the build interface. The differentiator is judgment across product, design, QA, and development.",
+      "Piotr Kacała is a Product Builder who owns product decisions, system boundaries, review, and outcomes while AI agents provide the implementation interface.",
     openGraph: {
       title: "Piotr Kacała",
       description:
-        "AI agents are the build interface. The differentiator is judgment across product, design, QA, and development.",
+        "AI agents are the implementation interface. I own the product decisions, system boundaries, review, and outcome.",
       type: "website",
       locale: "en_US",
       siteName: "Piotr Kacała",
@@ -30,19 +31,21 @@ export const en = {
   },
   hero: {
     headline: "Product Builder",
+    statement:
+      "AI agents are the implementation interface. I own the product decisions, system boundaries, review, and outcome.",
     expansion:
-      "In IT since 2013, across development, design, product, and QA — never tied to a single tool, always focused on output. Since early 2026, I build entirely through AI agents, zero-code. The competitive edge isn't the tooling — it's knowing which questions to ask before the problem surfaces, and being able to prompt in the language of the domain: like a developer, a QA engineer, a designer, or a product manager. AI performs best on exactly that kind of material. The interface became writing, and I've been text-native my whole career.",
+      "I have worked across development, design, product, and QA since 2013. That range lets me turn ambiguous ideas into scoped systems, direct agents in the language of each discipline, integrate the result, and decide what is ready to ship.",
   },
   projects: {
     heading: "Projects",
-    arc: "Each project marks a deliberate next step. Testing AI on an existing codebase. Building from scratch, docs-first, zero-code. Delivering a full product for a real customer. Building this site as a public artifact. Then making coding-agent evaluation public.",
+    arc: "The public work shows the method from different angles: an existing codebase, a released extension built from a written specification, this repository as an inspectable workflow artifact, and a task-specific benchmark with archived results.",
     items: [
       {
         title: "Phonetic Alphabet Trainer",
         blocks: [
           {
             type: "paragraph",
-            text: "An existing React project, reopened to test how AI handles a real codebase — and to compare models and IDEs. Along the way, discovered missing letters in the official Polish Ministry of Defence phonetic alphabet. Ships in English and Polish with scoring, two answer modes, and streak tracking.",
+            text: "I reopened an existing React project to test how AI handles a real codebase and compare models and IDEs. Along the way, I discovered that the published Polish Ministry of Defence phonetic alphabet omits some letters. The app ships in English and Polish, with scoring, two answer modes, and streak tracking.",
           },
           {
             type: "paragraph",
@@ -63,12 +66,12 @@ export const en = {
         blocks: [
           {
             type: "paragraph",
-            text: "First project built from scratch, docs-driven, zero-code. A browser extension that tracks scroll depth and notifies you when you've gone too far — three depth zones with escalating urgency. Passed Mozilla's public review and is available from Firefox Add-ons and the Chrome Web Store.",
+            text: "Surfaced was my first project built from scratch: I wrote a docs-first specification, then used AI agents for implementation. The browser extension tracks scroll depth and adds increasingly direct reminders when someone scrolls too far through an interface with no natural endpoint. It passed Mozilla's public review and is available from Firefox Add-ons and the Chrome Web Store.",
           },
           {
             type: "link",
             href: "https://addons.mozilla.org/firefox/addon/surfaced/",
-            label: "Firefox: addons.mozilla.org/firefox/addon/surfaced/",
+            label: "Firefox Add-ons: Surfaced",
             machineLabel: "Firefox Add-ons",
             external: true,
             externalLabel: "(opens in a new tab)",
@@ -76,25 +79,10 @@ export const en = {
           {
             type: "link",
             href: "https://chromewebstore.google.com/detail/surfaced/bpbidikjpaffmpcbincadomhbfnoaaem",
-            label:
-              "Chrome: chromewebstore.google.com/detail/surfaced/bpbidikjpaffmpcbincadomhbfnoaaem",
+            label: "Chrome Web Store: Surfaced",
             machineLabel: "Chrome Web Store",
             external: true,
             externalLabel: "(opens in a new tab)",
-          },
-        ],
-      },
-      {
-        title: "Private client audit platform",
-        blocks: [
-          {
-            type: "paragraph",
-            text: "First full production project, built spec-first for a real customer. As of April 2026: ~21,000 lines of production code, ~9,400 lines of tests, and 295 commits.",
-          },
-          {
-            type: "paragraph",
-            text: "Private client project — no public runtime link.",
-            tone: "aside",
           },
         ],
       },
@@ -103,7 +91,7 @@ export const en = {
         blocks: [
           {
             type: "paragraph",
-            text: "Built the same way — spec-first, docs-driven, zero-code — but with one addition: an orchestrator agent that stepped through the implementation plan autonomously, generating prompts, reading results, handling review. The first project where the workflow managed itself. The repo is public and intentionally readable: AGENTS.md, full docs directory, clean commit history.",
+            text: "This repository makes the working method inspectable. I define the product, content model, system boundaries, and review criteria; agents implement against the documentation; I integrate and verify the result. The repo is public and intentionally readable, including AGENTS.md, the docs directory, tests, and commit history.",
           },
           {
             type: "paragraph",
@@ -132,7 +120,7 @@ export const en = {
         blocks: [
           {
             type: "paragraph",
-            text: "A practical, task-specific evaluation of coding-agent outputs. Models receive a docs-first brief for the same small browser app; v2 is now the current batch and the original v1 results remain archived as a snapshot. I preserve every result and review contract compliance, UX behavior, testing, and delivery quality. This is not a universal model ranking.",
+            text: `A practical, task-specific evaluation of coding-agent outputs. The report now covers ${phoneticBenchmarkPublicationStats.totalRunCount} archived outputs: ${phoneticBenchmarkPublicationStats.v2.runCount} in the current v2 batch and ${phoneticBenchmarkPublicationStats.v1.runCount} in the original v1 snapshot. I define the contract and review each result for required behavior, UX, testing, and delivery evidence. This is not a universal model ranking.`,
           },
           {
             type: "link",
@@ -179,11 +167,11 @@ export const en = {
     metadata: {
       title: "Consulting | Piotr Kacała",
       description:
-        "Product consulting and complete software delivery for founders and small teams: clarify the scope, write the spec, build, test, deploy, and iterate.",
+        "Product consulting and software delivery for founders and small teams, with clear human ownership of product decisions, system boundaries, review, and outcomes.",
       openGraph: {
         title: "Consulting | Piotr Kacała",
         description:
-          "Product consulting and complete software delivery for founders and small teams: clarify the scope, write the spec, build, test, deploy, and iterate.",
+          "Product consulting and software delivery with clear ownership of product decisions, system boundaries, review, and outcomes.",
         type: "website",
         locale: "en_US",
         siteName: "Piotr Kacała",
@@ -199,18 +187,18 @@ export const en = {
     eyebrow: "Consulting",
     title: "From rough product idea to shipped software.",
     intro:
-      "I work with founders and small teams that need to turn an idea into a usable product without assembling a full product team. I clarify the scope, write the practical specification, build the system, test it, deploy it, and iterate.",
+      "I work with founders and small teams that need to turn an idea into a usable product without assembling a full product team. I take responsibility for shaping the scope, making product decisions within it, and carrying the delivery loop: specification, system boundaries, review, integration, deployment, and iteration.",
     homeLabel: "Back to homepage",
     scope: {
       heading: "Start with the scope",
       paragraphs: [
-        "If the idea is still rough, the first useful step is a short product scoping pass with a defined scope. The goal is not to produce a large strategy document. It is to make the project concrete enough to build. It may also identify early that the project should not be built yet.",
+        "If the idea is still rough, the first useful step is a focused product scoping pass with a defined outcome. The goal is not to produce a large strategy document. It is to make the project concrete enough to build. It may also identify early that the project should not be built yet.",
         "If you already have a clear brief, we can go directly to build planning.",
       ],
       deliverablesHeading: "The scoping pass produces:",
       deliverables: [
         "practical product brief",
-        "focused first scope and explicit list of things to leave for later",
+        "focused initial scope and explicit list of things to leave for later",
         "key user flows, constraints, and risks",
         "recommended next step",
         "architecture notes and implementation outline when the idea is ready to build",
@@ -223,9 +211,9 @@ export const en = {
       ],
     },
     ai: {
-      heading: "AI is part of the method",
+      heading: "AI is the implementation method",
       paragraphs: [
-        "I build through AI agent workflows. The value is not that a model writes code. The value is structuring the work well enough to move quickly without lowering the bar for judgment, review, or quality.",
+        "AI agents generate implementation. I remain responsible for the product decisions, system boundaries, review, integration, and outcome. The working interface changed; the ownership did not.",
         "If AI belongs inside the product itself, I also help define the model's role: what it should do, what it must not decide, which tools it can use, what it may persist, and which guardrails shape the experience.",
       ],
     },
@@ -241,13 +229,13 @@ export const en = {
       notItems: [
         "narrow staff augmentation",
         "execution limited to tickets without product context",
-        "projects looking mainly for deep specialization in one framework",
+        "projects that mainly require deep specialization in one framework",
         "responsibility for outcomes without authority to make the decisions needed to deliver them",
       ],
     },
     selectedWork: {
       heading: "Selected work",
-      body: "The homepage shows the progression: a released browser extension, a private production platform for a real customer, a public website with readable documentation, small useful software, and a published coding agent benchmark with inspectable outputs.",
+      body: `The homepage links to a released browser extension, a public repository with readable documentation, a local-first utility, and a task-specific coding-agent benchmark with ${phoneticBenchmarkPublicationStats.totalRunCount} inspectable outputs.`,
       linkLabel: "See selected work",
       href: "/#projects",
     },

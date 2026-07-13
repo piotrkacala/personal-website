@@ -19,14 +19,14 @@ and commit history.
 - Tailwind CSS v4
 - English at `/`
 - Polish at `/pl/`
-- Manual deploy via FTP
+- Cloudflare Pages hosting
 
 ## Machine-readable output
 
 - `public/llms.txt` is the concise directory entry point for agents
 - `index.md`, `pl/index.md`, consulting markdown, `llms-full.txt`, `sitemap.xml`, benchmark markdown, and companion project profiles are generated during `npm run build`
 - those generated text artifacts ship from the same EN/PL source content as the site, so update `src/i18n/en.ts` and `src/i18n/pl.ts` rather than editing generated output
-- deploy the full `dist/` contents via FTP, including the generated markdown and text files
+- Cloudflare Pages serves the complete `dist/` output, including generated markdown and text files
 
 ## Scripts
 
@@ -36,7 +36,21 @@ and commit history.
 - `npm run typecheck`
 - `npm run lint`
 - `npm run format:check`
-- `npm run smoke:production` after FTP deployment
+- `npm run smoke:production` after a production deployment
+
+## Deployment
+
+The repository-verifiable Pages build contract is:
+
+- build command: `npm run build`
+- output directory: `dist/`
+- production check after deployment: `npm run smoke:production`
+
+The Cloudflare project name, owning account, connected repository and branch, runtime version,
+environment variables, preview behavior, and custom-domain/DNS ownership are dashboard settings and
+are not recorded in this public repo. Verify them in Cloudflare before changing deployment
+configuration. `public/400m/` is a checked-in, separately built utility; Astro copies it into `dist/`
+unchanged. Its refresh procedure is not owned by this Astro build and must not be guessed or replaced.
 
 ## Project Docs
 

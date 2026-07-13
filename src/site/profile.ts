@@ -6,16 +6,16 @@ export const siteProfile = {
   jobTitle: "Product Builder",
   repoUrl: "https://github.com/piotrkacala/personal-website",
   canonicalSummary:
-    "AI agents are the build interface. The differentiator is judgment across product, design, QA, and development.",
+    "AI agents are the implementation interface. I own the product decisions, system boundaries, review, and outcome.",
   description:
-    "Personal website of Piotr Kacała. AI agents are the build interface. The differentiator is judgment across product, design, QA, and development.",
+    "Personal website of Piotr Kacała, Product Builder. AI agents are the implementation interface; Piotr owns product decisions, system boundaries, review, and outcome.",
   knowsAbout: [
-    "AI agent development",
+    "AI-agent implementation workflows",
     "Product development",
     "Design",
     "Quality assurance",
+    "System architecture",
     "Documentation-driven development",
-    "Zero-code workflows",
   ],
   publicProof: [
     {
@@ -35,7 +35,7 @@ export const siteProfile = {
     },
     {
       label: "Surfaced",
-      summary: "docs-first zero-code browser extension",
+      summary: "docs-first browser extension released through store review",
       url: "https://addons.mozilla.org/firefox/addon/surfaced/",
     },
     {

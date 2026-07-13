@@ -14,8 +14,6 @@ the method, and the public evidence behind it.
   and consulting readers.
 - Output speaks first. Public artifacts should carry more weight than claims that cannot be
   inspected directly.
-- The private client audit platform remains useful private client-work proof, but it is framed as a dated
-  private-project record rather than publicly verifiable runtime evidence.
 - Phonetic Benchmark is a dedicated proof point for methodical coding-agent workflow evaluation,
   not a universal model ranking.
 - No separate sections for skills, about, or bio. Who you are is demonstrated by what you've built,
@@ -37,8 +35,7 @@ reads the focused consulting offer → optionally returns to selected work → c
 **Acceptance criteria:**
 
 - Visitor can understand what Piotr does and why it is unusual within 10 seconds of landing.
-- Projects section conveys a deliberate five-step arc, not a random collection.
-- The private client audit platform is compact, dated, and explicit about its private runtime.
+- Projects section conveys a deliberate public-proof hierarchy, not a random collection.
 - Phonetic Benchmark has a dedicated entry with report, gallery, methodology, and package links.
 - Machine-readable artifacts preserve the same framing as the HTML homepage.
 - Contact action is clear and requires no explanation.
@@ -51,8 +48,8 @@ reads the focused consulting offer → optionally returns to selected work → c
 The following must be present and working:
 
 - Section 1: Positioning — single headline, short expansion
-- Section 2: Projects — Phonetic Alphabet Trainer, Surfaced, Private client audit platform, This site, and
-  Phonetic Benchmark with an explicit narrative arc
+- Section 2: Projects — Phonetic Alphabet Trainer, Surfaced, This site, and Phonetic Benchmark with
+  an explicit narrative arc
 - Section 3: Contact — simple CTA, no form needed
 - Focused consulting route at `/consulting/` and `/pl/consulting/`, linked once from the homepage
   contact footer
@@ -63,7 +60,7 @@ The following must be present and working:
 - Generated EN/PL homepage markdown, `llms.txt`, `llms-full.txt`, sitemap, and project companion
   profiles
 - Generated EN/PL consulting markdown at `/consulting.md` and `/pl/consulting.md`
-- Deployed to production via FTP
+- Hosted as static output on Cloudflare Pages
 
 ## Non-Goals
 

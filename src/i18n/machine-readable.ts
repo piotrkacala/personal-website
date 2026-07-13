@@ -72,6 +72,8 @@ function renderHomepageBody(copy: SiteCopy, sectionLevel: number): string {
     "",
     heading(sectionLevel, copy.hero.headline),
     "",
+    copy.hero.statement,
+    "",
     copy.hero.expansion,
     "",
     heading(sectionLevel, copy.projects.heading),
@@ -100,10 +102,10 @@ function renderHomepageBody(copy: SiteCopy, sectionLevel: number): string {
   lines.push(`${copy.contact.prompt}: ${copy.contact.email}`);
   lines.push("");
   lines.push(
-    `${copy.contact.consultingLink.label}: ${new URL(
+    `[${copy.contact.consultingLink.label}](${new URL(
       copy.contact.consultingLink.href,
       siteProfile.siteUrl,
-    ).toString()}`,
+    ).toString()})`,
   );
 
   return `${lines.join("\n")}\n`;

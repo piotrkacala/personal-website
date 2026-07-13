@@ -95,6 +95,7 @@ export interface SiteCopy {
   metadata: SiteMetadata;
   hero: {
     headline: string;
+    statement: string;
     expansion: string;
   };
   projects: {

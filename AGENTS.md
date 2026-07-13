@@ -6,7 +6,7 @@ This file provides guidance to coding agents working in this repository.
 
 Personal website for Piotr Kacała — a static portfolio and public proof-artifact site. The primary
 visitor flow remains a bilingual homepage, with durable static report and machine-readable routes
-for public evidence. Built with Astro and deployed via FTP to classic shared hosting.
+for public evidence. Built with Astro and hosted on Cloudflare Pages.
 
 ## Key Invariants
 
@@ -41,9 +41,13 @@ npm run format:check
 
 ### Deploy
 
-Manual FTP upload of `dist/` to shared hosting. No CI/CD at v1.
+Cloudflare Pages serves the static `dist/` output. The repository-verifiable build contract is
+`npm run build` with `dist/` as the output directory. Project name, owning account, connected branch,
+runtime settings, environment variables, preview behavior, and DNS ownership live in the Cloudflare
+dashboard and must be verified there before changing deployment configuration; do not infer them
+from this repository.
 
-After deploy:
+After a production deploy:
 
 ```bash
 npm run smoke:production

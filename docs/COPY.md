@@ -11,7 +11,9 @@ The summary below contains everything needed to write website copy.
 
 **Background:** In IT since 2013 (building web pages since ~2000). Full stack JavaScript. Never identified as a tool-specific developer — rode every technology shift without resistance. Wore many hats: development, design, product, QA. Self-taught. Before IT: ran a business in trade — understands budgets, costs, and when to stop.
 
-**Current position:** Zero-code, full AI agent development. Not an experiment — a conclusion. More productive now than at any point in career. Building weeks of work in days, across the full product stack, solo.
+**Current position:** AI agents are the implementation interface. Piotr owns the product decisions,
+system boundaries, review, integration, and outcome. AI is the implementation method, not the
+professional identity.
 
 **The core edge:** Judgment, mental models, and vocabulary built over 13 years across multiple disciplines. Can write a design brief, a QA report, a product requirement. Can context-switch prompting registers like talking to different people on a team — a wide prompting vocabulary most people don't have. Also text-native: consumes by reading, thinks in text, always reads docs over video. AI interfaces are text interfaces — this clicks naturally.
 
@@ -21,11 +23,11 @@ The summary below contains everything needed to write website copy.
 - Prompting mirrors leading a team. Prompt in the language of the domain — like writing a Slack message to a dev, a bug report to QA, a brief to a designer. Models were trained on exactly that data.
 - "The design is visually busy, relax it" lands in one pass. "Make it pretty" is a gamble. The prompt is only as good as the thinking behind it.
 - Tool knowledge still matters — not for remembering commands, but for knowing which door to open. Experience built the map.
-- Bug rate on the private client audit platform felt the same as classically coded projects. The "AI code must be buggy" counter-argument doesn't hold.
 - AI compressed the technical timeline by an order of magnitude. But the human timeline (decisions, feedback, priorities) stayed the same. The bottleneck is no longer technical.
 - Never been precious about tools. Never tied worth to syntax. Every technology shift confirmed the strategy: depth in judgment, not tools.
 - Writes more now than ever did when coding. The interface became writing.
-- AI agents are the build interface. The differentiator is judgment across product, design, QA, and development.
+- AI agents are the implementation interface. Piotr owns the product decisions, system boundaries,
+  review, integration, and outcome.
 
 **Career direction:** The natural profile is a "mini firm" — product decisions, real problem solving, UX, design, outcome delivery, without a team. Most probable trajectory: consulting as the base, own products as the long-term bet. Employment for the right early-stage startup (founding engineer, AI product role).
 
@@ -65,7 +67,10 @@ Direct and precise. No marketing language, no LinkedIn corporate fluff, no buzzw
 
 **Translation approach:** all strings centralized in `src/i18n/en.ts` and `src/i18n/pl.ts`. No hardcoded UI text in components. Polish IT terms (agent, framework, commit, deploy) stay in English within Polish text — this is standard Polish IT writing convention.
 
-**Numeric claims:** project metrics are maintained manually, not generated automatically. Any quantitative claim shown on the site should be dated inline ("as of April 2026") and refreshed manually after material project changes or before a major copy refresh.
+**Numeric claims:** derive metrics from structured source data when it exists; benchmark counts and
+evidence totals come from `src/site/phonetic-benchmark.ts`. Maintain other project metrics manually.
+Date any manually maintained quantitative claim inline and refresh it after material project changes
+or before a major copy refresh.
 
 ---
 
@@ -73,20 +78,28 @@ Direct and precise. No marketing language, no LinkedIn corporate fluff, no buzzw
 
 **Headline:** Product Builder
 
-**Finalized expansion (EN, April 2026):**
+**Responsibility statement (EN, July 2026):**
 
-In IT since 2013, across development, design, product, and QA — never tied to a single tool, always focused on output. Since early 2026, I build entirely through AI agents, zero-code. The competitive edge isn't the tooling — it's knowing which questions to ask before the problem surfaces, and being able to prompt in the language of the domain: like a developer, a QA engineer, a designer, or a product manager. AI performs best on exactly that kind of material. The interface became writing, and I've been text-native my whole career.
+AI agents are the implementation interface. I own the product decisions, system boundaries, review,
+and outcome.
 
-> Note: "Since early 2026" is time-relative — review and update annually.
+I have worked across development, design, product, and QA since 2013. That range lets me turn
+ambiguous ideas into scoped systems, direct agents in the language of each discipline, integrate the
+result, and decide what is ready to ship.
 
-**Finalized expansion (PL, April 2026):**
+**Responsibility statement (PL, July 2026):**
 
-W IT jestem od 2013 roku, na styku developmentu, designu, produktu i QA — nigdy przywiązany do jednego narzędzia, zawsze skupiony na rezultacie. Od początku 2026 buduję w całości przez agenty AI, zero-code. Przewaga nie leży w toolingu, tylko w tym, że wiem, jakie pytania zadać, zanim problem w ogóle się ujawni, i potrafię promptować w języku danej domeny: jak developer, QA engineer, designer albo product manager. AI działa najlepiej właśnie na takim materiale. Interfejs stał się pisaniem, a ja przez całą karierę pracowałem przede wszystkim w tekście.
+Agenty AI są interfejsem implementacji. Ja odpowiadam za decyzje produktowe, granice systemu, review i
+rezultat.
+
+Od 2013 roku pracuję na styku developmentu, designu, produktu i QA. Dzięki temu potrafię zamienić
+niejasny pomysł w konkretny system, prowadzić agenty językiem każdej z tych domen, zintegrować rezultat
+i zdecydować, co jest gotowe do wdrożenia.
 
 **Original brief — should convey:**
 
-- In IT since 2013, zero-code AI development since early 2026
-- The core edge: judgment, mental models, and vocabulary built over 13 years — not syntax
+- In IT since 2013, with AI agents now used as the implementation interface
+- The core edge: product decisions, system boundaries, review, integration, and outcome ownership
 - The prompting vocabulary point: can write in the register of a developer, a QA engineer, a designer, a product manager — and AI was trained on exactly that data
 - Text-native, which is an advantage when the interface is text
 - The competitive edge is knowing which questions to ask before the problem surfaces
@@ -109,21 +122,31 @@ W IT jestem od 2013 roku, na styku developmentu, designu, produktu i QA — nigd
 
 ## Section 2 — Projects
 
-**Finalized arc framing (EN, June 2026):**
+**Finalized arc framing (EN, July 2026):**
 
-Each project marks a deliberate next step. Testing AI on an existing codebase. Building from scratch, docs-first, zero-code. Delivering a full product for a real customer. Building this site as a public artifact. Then making coding-agent evaluation public.
+The public work shows the method from different angles: an existing codebase, a released extension
+built from a written specification, this repository as an inspectable workflow artifact, and a
+task-specific benchmark with archived results.
 
-**Finalized arc framing (PL, June 2026):**
+**Finalized arc framing (PL, July 2026):**
 
-Każdy projekt to świadomie wybrany kolejny krok. Sprawdzenie AI na istniejącym codebase. Budowa od zera, docs-first, zero-code. Pełny produkt dla realnego klienta. Ta strona jako publiczny artifact. Potem publiczna ewaluacja agentów programistycznych.
+Publiczne projekty pokazują tę metodę z różnych stron: istniejący codebase, opublikowane rozszerzenie
+zbudowane z pisemnej specyfikacji, to repozytorium jako sprawdzalny artefakt workflow i zadaniowy
+benchmark z archiwalnymi wynikami.
 
-**Current brief:** The core arc must stay explicit, not implied. Phonetic Alphabet Trainer = testing whether AI understands an existing codebase. Surfaced = first docs-driven build from scratch. Private client audit platform = validation on a real product for a real customer. The site itself = public workflow artifact. Phonetic Benchmark = public evidence of methodical coding-agent workflow evaluation.
+**Current brief:** The public proof hierarchy must stay explicit, not implied. Phonetic Alphabet
+Trainer = testing an existing codebase. Surfaced = first docs-first build from scratch and public store
+review. The site itself = inspectable workflow artifact and host for public utilities. Phonetic
+Benchmark = task-specific, archived evidence of coding-agent implementation review.
 
 ### Phonetic Alphabet Trainer
 
 **Finalized description (EN, April 2026):**
 
-An existing React project, reopened to test how AI handles a real codebase — and to compare models and IDEs. Along the way, discovered missing letters in the official Polish Ministry of Defence phonetic alphabet. Ships in English and Polish with scoring, two answer modes, and streak tracking.
+I reopened an existing React project to test how AI handles a real codebase and compare models and
+IDEs. Along the way, I discovered that the published Polish Ministry of Defence phonetic alphabet
+omits some letters. The app ships in English and Polish, with scoring, two answer modes, and streak
+tracking.
 
 The project later became the product brief for Phonetic Benchmark.
 
@@ -131,7 +154,10 @@ The project later became the product brief for Phonetic Benchmark.
 
 **Finalized description (PL, April 2026):**
 
-Istniejący projekt w React, otwarty ponownie, żeby sprawdzić, jak AI radzi sobie z istniejącym codebase — i porównać modele oraz IDE. Po drodze wyszły na jaw brakujące litery w oficjalnym alfabecie fonetycznym Ministerstwa Obrony Narodowej. Działa po angielsku i po polsku, ma scoring, dwa tryby odpowiedzi i śledzenie serii.
+Otworzyłem ponownie istniejący projekt w React, żeby sprawdzić, jak AI radzi sobie z istniejącym
+codebase i porównać modele oraz IDE. Po drodze odkryłem, że opublikowany przez Ministerstwo Obrony
+Narodowej alfabet fonetyczny pomija część liter. Aplikacja działa po polsku i angielsku, ma punktację,
+dwa tryby odpowiedzi i śledzenie serii.
 
 Projekt stał się później bazą briefu produktowego dla Phonetic Benchmark.
 
@@ -141,39 +167,34 @@ Projekt stał się później bazą briefu produktowego dla Phonetic Benchmark.
 
 **Finalized description (EN, April 2026):**
 
-First project built from scratch, docs-driven, zero-code. A browser extension that tracks scroll depth and notifies you when you've gone too far — three depth zones with escalating urgency. Passed Mozilla's public review and is available from Firefox Add-ons and the Chrome Web Store.
+Surfaced was my first project built from scratch: I wrote a docs-first specification, then used AI
+agents for implementation. The browser extension tracks scroll depth and adds increasingly direct
+reminders when someone scrolls too far through an interface with no natural endpoint. It passed
+Mozilla's public review and is available from Firefox Add-ons and the Chrome Web Store.
 
-- Firefox: addons.mozilla.org/firefox/addon/surfaced/
-- Chrome: chromewebstore.google.com/detail/surfaced/bpbidikjpaffmpcbincadomhbfnoaaem
+- Firefox Add-ons: Surfaced — target: addons.mozilla.org/firefox/addon/surfaced/
+- Chrome Web Store: Surfaced — target:
+  chromewebstore.google.com/detail/surfaced/bpbidikjpaffmpcbincadomhbfnoaaem
 
 **Finalized description (PL, April 2026):**
 
-Pierwszy projekt zbudowany od zera, docs-driven, zero-code. Rozszerzenie do przeglądarki, które śledzi głębokość scrolla i powiadamia, gdy zajdziesz za daleko — trzy strefy głębokości i rosnący poziom pilności. Przeszło publiczny review Mozilli i jest dostępne w Firefox Add-ons oraz Chrome Web Store.
+Surfaced był moim pierwszym projektem zbudowanym od zera: napisałem docs-first specyfikację, a do
+implementacji wykorzystałem agenty AI. Rozszerzenie śledzi głębokość scrolla i dodaje coraz bardziej
+bezpośrednie przypomnienia w miarę zagłębiania się użytkownika w interfejs bez naturalnego końca.
+Przeszło publiczny review Mozilli i jest dostępne w Firefox Add-ons oraz Chrome Web Store.
 
-- Firefox: addons.mozilla.org/firefox/addon/surfaced/
-- Chrome: chromewebstore.google.com/detail/surfaced/bpbidikjpaffmpcbincadomhbfnoaaem
-
-### Private client audit platform
-
-**Finalized description (EN, June 2026):**
-
-First full production project, built spec-first for a real customer. As of April 2026: ~21,000 lines of production code, ~9,400 lines of tests, and 295 commits.
-
-Private client project — no public runtime link.
-
-> Note: project metrics are a dated April 2026 snapshot. Review before a later copy refresh.
-
-**Finalized description (PL, June 2026):**
-
-Pierwszy pełny projekt produkcyjny, zbudowany spec-first dla realnego klienta. Stan na kwiecień 2026: ~21,000 linii kodu produkcyjnego, ~9,400 linii testów i 295 commitów.
-
-Prywatny projekt kliencki — bez publicznego linku do działającej aplikacji.
+- Firefox Add-ons: Surfaced — target: addons.mozilla.org/firefox/addon/surfaced/
+- Chrome Web Store: Surfaced — target:
+  chromewebstore.google.com/detail/surfaced/bpbidikjpaffmpcbincadomhbfnoaaem
 
 ### This site
 
 **Finalized description (EN, May 2026):**
 
-Built the same way — spec-first, docs-driven, zero-code — but with one addition: an orchestrator agent that stepped through the implementation plan autonomously, generating prompts, reading results, handling review. The first project where the workflow managed itself. The repo is public and intentionally readable: AGENTS.md, full docs directory, clean commit history.
+This repository makes the working method inspectable. I define the product, content model, system
+boundaries, and review criteria; agents implement against the documentation; I integrate and verify
+the result. The repo is public and intentionally readable, including AGENTS.md, the docs directory,
+tests, and commit history.
 
 The site now also hosts small public utilities. The first one is `400m`, a local-first GPX track tool for runners that estimates corrected distance from lap progress instead of raw GPS length.
 
@@ -182,7 +203,10 @@ The site now also hosts small public utilities. The first one is `400m`, a local
 
 **Finalized description (PL, May 2026):**
 
-Zbudowana tak samo — spec-first, docs-driven, zero-code — ale z jednym dodatkiem: agent orkiestrujący, który samodzielnie przechodził przez plan implementacji, generował prompty, czytał wyniki i obsługiwał przegląd zmian. To pierwszy projekt, w którym workflow zarządzał samym sobą. Repo jest publiczne i celowo czytelne: AGENTS.md, pełny katalog docs, czysta historia commitów.
+To repozytorium pokazuje metodę pracy w sprawdzalnej formie. Ja definiuję produkt, model treści, granice
+systemu i kryteria review; agenty implementują według dokumentacji; ja integruję i weryfikuję rezultat.
+Repo jest publiczne i celowo czytelne — razem z AGENTS.md, katalogiem docs, testami i historią
+commitów.
 
 Strona hostuje teraz także niewielkie publiczne narzędzia. Pierwszym z nich jest `400m`: local-first narzędzie do analizy GPX z bieżni, które szacuje skorygowany dystans z postępu po okrążeniach zamiast z surowej długości śladu GPS.
 
@@ -191,18 +215,24 @@ Strona hostuje teraz także niewielkie publiczne narzędzia. Pierwszym z nich je
 
 ### Phonetic Benchmark
 
-**Finalized description (EN, June 2026):**
+**Finalized description (EN, July 2026):**
 
-A practical, task-specific evaluation of coding-agent outputs. Fifteen models received the same docs-first brief for a small browser app. I archived every result and reviewed contract compliance, UX behavior, testing, and delivery quality. This is not a universal model ranking. It is a documented comparison of how coding-agent workflows behave on the same product task.
+A practical, task-specific evaluation of coding-agent outputs. The report covers 41 archived outputs:
+26 in the current v2 batch and 15 in the original v1 snapshot. I define the contract and review each
+result for required behavior, UX, testing, and delivery evidence. This is not a universal model
+ranking.
 
 - Report: piotrkacala.pl/phonetic-benchmark/
 - Gallery: piotrkacala.pl/phonetic-benchmark/gallery/
 - Methodology: piotrkacala.pl/phonetic-benchmark/methodology/
 - Public benchmark package: github.com/piotrkacala/phonetic-benchmark
 
-**Finalized description (PL, June 2026):**
+**Finalized description (PL, July 2026):**
 
-Praktyczna, zadaniowa ewaluacja outputów agentów programistycznych. Piętnaście modeli dostało ten sam docs-first brief małej aplikacji webowej. Każdy wynik zarchiwizowałem i sprawdziłem pod kątem zgodności z kontraktem, UX, testów i jakości dostarczenia. To nie jest uniwersalny ranking modeli, tylko udokumentowane porównanie zachowania workflow agentów na tym samym zadaniu produktowym.
+Praktyczna, zadaniowa ewaluacja outputów agentów programistycznych. Raport obejmuje 41 archiwalnych
+wyników: 26 w aktualnym batchu v2 i 15 w oryginalnym snapshocie v1. Definiuję kontrakt i sprawdzam
+każdy wynik pod kątem wymaganego zachowania, UX, testów i materiałów potwierdzających sposób
+dostarczenia. To nie jest uniwersalny ranking modeli.
 
 - Raport: piotrkacala.pl/pl/phonetic-benchmark/
 - Galeria: piotrkacala.pl/pl/phonetic-benchmark/gallery/
@@ -242,7 +272,8 @@ The offer leads with product clarity and delivery:
 - direct build planning when the client already has a clear brief
 - end-to-end specification, implementation, testing, deployment, and iteration when the project
   fits
-- AI agent workflows as part of the method, with model role design included when AI belongs inside
+- AI agents as the implementation method, with human ownership of product decisions, boundaries,
+  review, integration, and outcomes; model role design is included when AI belongs inside
   the product itself
 
 The finalized localized public strings live in `src/i18n/en.ts` and `src/i18n/pl.ts`.
@@ -251,19 +282,19 @@ The finalized localized public strings live in `src/i18n/en.ts` and `src/i18n/pl
 
 ## Metadata
 
-**Finalized values (EN, June 2026):**
+**Finalized values (EN, July 2026):**
 
 - `<title>`: `Piotr Kacała`
-- `meta description`: `Personal website of Piotr Kacała. AI agents are the build interface. The differentiator is judgment across product, design, QA, and development.`
+- `meta description`: `Piotr Kacała is a Product Builder who owns product decisions, system boundaries, review, and outcomes while AI agents provide the implementation interface.`
 - `og:title`: `Piotr Kacała`
-- `og:description`: `AI agents are the build interface. The differentiator is judgment across product, design, QA, and development.`
+- `og:description`: `AI agents are the implementation interface. I own the product decisions, system boundaries, review, and outcome.`
 
-**Finalized values (PL, June 2026):**
+**Finalized values (PL, July 2026):**
 
 - `<title>`: `Piotr Kacała`
-- `meta description`: `Strona Piotra Kacały. Agenty AI są interfejsem budowy. Wyróżnikiem są ocena i decyzje na styku produktu, designu, QA i developmentu.`
+- `meta description`: `Piotr Kacała jest Product Builderem odpowiedzialnym za decyzje produktowe, granice systemu, review i rezultat; agenty AI są interfejsem implementacji.`
 - `og:title`: `Piotr Kacała`
-- `og:description`: `Agenty AI są interfejsem budowy. Wyróżnikiem są ocena i decyzje na styku produktu, designu, QA i developmentu.`
+- `og:description`: `Agenty AI są interfejsem implementacji. Ja odpowiadam za decyzje produktowe, granice systemu, review i rezultat.`
 
 **OG image direction (v1):**
 

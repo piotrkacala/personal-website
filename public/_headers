@@ -4,12 +4,20 @@
 /*.md
   Content-Type: text/markdown; charset=UTF-8
 
+/phonetic-benchmark/results.json
+  Content-Type: application/json; charset=UTF-8
+
+/phonetic-benchmark/results.csv
+  Content-Type: text/csv; charset=UTF-8
+
 # Link alternate headers for EN HTML pages
 /
   Link: </index.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
+  Vary: Accept
 
 /index.html
   Link: </index.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
+  Vary: Accept
 
 /consulting/
   Link: </consulting.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
@@ -38,9 +46,11 @@
 # Link alternate headers for PL HTML pages
 /pl/
   Link: </pl/index.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
+  Vary: Accept
 
 /pl/index.html
   Link: </pl/index.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
+  Vary: Accept
 
 /pl/consulting/
   Link: </pl/consulting.md>; rel="alternate"; type="text/markdown"; title="Markdown", </llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"
