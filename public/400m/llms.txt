@@ -1,28 +1,43 @@
 # 400m - GPX Track Laps
 
-> Local-first web tool that estimates track laps and calculates corrected running distance from GPX files.
+> Local-first web tool that estimates completed track laps and partial progress, then calculates selected-lane distance from a GPX file.
 
-## Summary
-- **No Analysis Backend, No Ads, No Monetization**: 100% client-side analysis flow. GPX processing happens in the browser.
-- **Problem**: GPS drift on standard 400m athletics tracks causes GPS watches to overestimate distance.
-- **Solution**: The runner uploads their GPX file and selects the lane. The tool calculates laps by unwrapping angular movement around the track center and computes distance via `laps * selected_lane_length`.
-- **Invariants**: Estimated distance is strictly `total_laps * lane_length`. Lane selection is manual.
+## Product Contract
+- The runner uploads a GPX file and explicitly selects lane 1-8.
+- GPX parsing and analysis happen in the browser. Coordinates, timestamps, and analysis results are not sent to an application backend.
+- Loading the hosted web page still downloads its bundled HTML, JavaScript, CSS, fonts, and images from the host.
+- Corrected distance is always `estimated total_laps * selected_lane_length`.
+- Raw GPX distance is diagnostic only.
+- Completed laps and an explicitly estimated angular final partial lap are shown separately.
+- Intentional direction changes after completed laps are supported; traveled progress in both directions is added instead of cancelling out.
+- Completed-lap time and pace are available when timestamps permit. The pace chart contains unconnected completed-lap observations and the table remains the exact-value source.
 
-## Lane Lengths (Standard Athletics Track)
-- Lane 1: 400.00 m
-- Lane 2: 407.04 m
-- Lane 3: 414.70 m
-- Lane 4: 422.37 m
-- Lane 5: 430.03 m
-- Lane 6: 437.70 m
-- Lane 7: 445.37 m
-- Lane 8: 453.03 m
+## Evidence and Limits
+- In controlled synthetic 10-lap traces, clean lane-1 and lane-6 cases had effectively zero lap-count and distance error.
+- A controlled lane-8 trace with deterministic 3 m coordinate noise had 0.00928-lap error, equivalent to 4.202 m.
+- A noisy controlled 6 + 4 direction-reversal trace was recovered as approximately 10 laps.
+- These deterministic fixtures are bounded evidence, not a universal guarantee for every device or recording.
+- Three real lane-6 recordings from one runner are regression fixtures. Their lap totals and crossing times were verified manually, and the analysis results agree with them.
+- Completed-lap topology is better supported than within-lap position. The final partial lap remains an angular estimate.
+- The product deliberately omits 200 m, 100 m, and straight-only timing.
+- Missing or invalid timestamps disable timing. Long gaps, noise, sparse traces, partial laps, discontinuous segments, and a dominant dense off-track cluster can weaken interpretation.
+- The 5 km markers use estimated within-lap position and have a known outer-lane limitation.
 
-## Measurement Method
-- Lane 1 uses the official 400.000 m measurement line 0.30 m from the inside kerb.
-- Outer lanes use the official measurement line 0.20 m from the inner lane line.
-- Distances are derived from this measurement convention, not from lane-center approximations or rounded informal values.
+## Lane Lengths
+- Lane 1: 400.000 m
+- Lane 2: 407.038 m
+- Lane 3: 414.704 m
+- Lane 4: 422.370 m
+- Lane 5: 430.034 m
+- Lane 6: 437.700 m
+- Lane 7: 445.366 m
+- Lane 8: 453.032 m
 
-## Creator & Code
-- **Author**: Piotr Kacała (https://piotrkacala.pl)
-- **URL**: https://piotrkacala.pl/400m/
+The table follows the World Athletics measurement convention for a standard 400 m track. The selected lane remains authoritative.
+
+## Delivery
+- The Vite static web build and deployment to `https://piotrkacala.pl/400m/` remain supported.
+
+## Creator
+- Author: Piotr Kacała (https://piotrkacala.pl)
+- URL: https://piotrkacala.pl/400m/

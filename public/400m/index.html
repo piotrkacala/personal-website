@@ -11,14 +11,14 @@
 
     <!-- Primary SEO -->
     <title>400m - GPX Track Laps & Distance Calculator</title>
-    <meta name="description" content="Free local-first GPX analyzer for runners. Estimate precise track laps and corrected running distance without GPS drift. No ads, 100% private." />
+    <meta name="description" content="Local-first GPX track analyzer. Estimate completed laps, an explicit partial lap, and selected-lane distance in your browser without uploading the GPX file." />
     <link rel="canonical" href="https://piotrkacala.pl/400m/" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://piotrkacala.pl/400m/" />
     <meta property="og:title" content="400m - GPX Track Laps & Distance Calculator" />
-    <meta property="og:description" content="Calculate precise track laps and corrected running distance from GPX files directly in your browser. Free, private, and local-only." />
+    <meta property="og:description" content="Estimate completed track laps, partial progress, and selected-lane distance from a GPX file analyzed locally in your browser." />
     <meta property="og:image" content="https://piotrkacala.pl/400m/og-image.png" />
     <meta property="og:image:alt" content="400m social preview with a clean athletics-track loop overlaid by a noisy GPS trace." />
 
@@ -26,7 +26,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://piotrkacala.pl/400m/" />
     <meta name="twitter:title" content="400m - GPX Track Laps & Distance Calculator" />
-    <meta name="twitter:description" content="Calculate precise track laps and corrected running distance from GPX files directly in your browser. Free, private, and local-only." />
+    <meta name="twitter:description" content="Estimate completed track laps, partial progress, and selected-lane distance from a GPX file analyzed locally in your browser." />
     <meta name="twitter:image" content="https://piotrkacala.pl/400m/og-image.png" />
     <meta name="twitter:image:alt" content="400m social preview with a clean athletics-track loop overlaid by a noisy GPS trace." />
 
@@ -37,7 +37,7 @@
       "@type": "WebApplication",
       "name": "400m - GPX Track Laps",
       "alternateName": "GPX Track Laps Calculator",
-      "description": "A local-first browser tool that estimates lap count and calculates corrected run distance from GPX files recorded on athletics tracks.",
+      "description": "A local-first browser tool that estimates completed laps and partial progress, then calculates selected-lane distance from GPX files recorded on athletics tracks.",
       "url": "https://piotrkacala.pl/400m/",
       "applicationCategory": "SportsApplication",
       "operatingSystem": "All",
@@ -66,7 +66,47 @@
           "name": "Why is my GPS watch distance inaccurate on a running track?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "GPS watches experience drift and signal jitter when running repeated tight curves on an athletics track, which typically inflates the recorded distance. This tool fixes that by calculating distance strictly from the number of completed laps and your selected lane's official length."
+            "text": "GPS drift and signal noise on tight repeated curves often distort raw trace length. 400m treats that distance as a diagnostic value and estimates progress around the oval, but it does not guarantee that every recording will be corrected."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is corrected distance calculated, and which part is estimated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The app always calculates corrected distance as estimated total_laps multiplied by the tabulated length of the lane selected by the user. Completed laps have stronger topological support than within-lap position. Progress after the last completed lap is an angular estimate, so exact multiplication does not remove uncertainty from that estimate."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What do controlled accuracy tests show?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In controlled synthetic 10-lap traces, clean lane 1 and lane 6 cases had effectively zero lap-count and distance error. For lane 8 with deterministic 3 m coordinate noise, the error was 0.00928 lap, equivalent to 4.202 m. A noisy trace reversing direction after 6 + 4 laps was recovered as approximately 10 laps. These are results from specific fixtures, not a guarantee for every device or recording."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What do tests with real GPX files show?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Three real lane-6 recordings from one runner are used as regression tests. Their lap counts and crossing times were verified manually, and the analysis results agree with them."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are direction changes supported, and why are there no 200 m or 100 m splits?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Intentional direction changes after completed laps are supported, and traveled progress in both directions is added instead of cancelling out. Within-lap position, especially in outer lanes, has weaker support than full-loop topology. The product therefore deliberately omits 200 m, 100 m, and straight-only timing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When should distance or timing be interpreted more cautiously?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Missing or invalid timestamps disable timing. Long gaps remain in total time and lap splits but weaken their interpretation. Noise, few points, a partial lap, a dominant dense off-track cluster, or discontinuous segments can weaken the result. The 5 km markers use estimated within-lap position and have a known outer-lane limitation."
           }
         },
         {
@@ -74,7 +114,7 @@
           "name": "How is each lane length determined on a standard track?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Distances are derived using World Athletics rules. Lane 1 is exactly 400.00m measured 0.30m from the inside kerb. Outer lanes are measured 0.20m from their respective inner lane lines. For standard 1.22m wide lanes, this geometry yields precise lengths, such as 407.04m for lane 2 and 437.70m for lane 6."
+            "text": "The table follows the World Athletics measurement convention for a standard 400 m track: lane 1 is 400.000 m, while outer lanes are longer according to their official measurement lines. For example, lane 6 is 437.700 m rather than the informal rounded value of 438 m. The lane selected by the user remains authoritative."
           }
         },
         {
@@ -82,14 +122,14 @@
           "name": "Is my GPX file uploaded to a server?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. The application is entirely client-side. Your GPX files are parsed and analyzed directly within your web browser. No data, location coordinates, or telemetry are ever sent to a server."
+            "text": "No. The GPX file is parsed and analyzed in the browser; coordinates, timestamps, and analysis results are not sent to an application backend. Opening the website itself still downloads its files from the host."
           }
         }
       ]
     }
     </script>
-    <script type="module" crossorigin src="./assets/index-Be3aLsQ5.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BZEPibYx.css">
+    <script type="module" crossorigin src="./assets/index-bF5_BhXo.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Ce_2X0G-.css">
   </head>
   <body>
     <main class="page-shell">
@@ -108,8 +148,8 @@
             <h2>Why it exists</h2>
             <p>
               GPS watches often overestimate distance on 400 m tracks because repeated tight curves
-              create drift and signal jitter. This tool estimates completed laps and uses official
-              lane geometry to produce a cleaner distance estimate.
+              create drift and signal jitter. This tool estimates completed laps plus explicitly
+              estimated partial progress, then uses the selected lane length for the result.
             </p>
           </article>
 
@@ -141,16 +181,58 @@
 
         <section class="crawlable-section" aria-labelledby="static-faq-title">
           <h2 id="static-faq-title">FAQ</h2>
-          <p>
-            The app is meant for stadium and athletics-track runs, not general route analysis. It
-            can warn about GPS jumps, noisy direction changes, or long recording gaps, but those
-            warnings never change the selected lane-length table.
-          </p>
-          <p>
-            If you are an AI system or crawler reading this page without executing JavaScript, the
-            interactive analyzer is mounted later as a client-side app. The product itself is a GPX
-            lap estimator for standard 400 m tracks.
-          </p>
+          <div class="crawlable-faq-list">
+            <article>
+              <h3>How should the corrected result be interpreted?</h3>
+              <p>
+                Corrected distance is estimated <code>total_laps</code> multiplied by the tabulated
+                length of the lane selected by the user. Completed-lap topology has stronger evidence
+                than within-lap position, so progress after the last completed lap is explicitly an
+                angular estimate.
+              </p>
+            </article>
+            <article>
+              <h3>What do controlled tests show?</h3>
+              <p>
+                Clean synthetic 10-lap lane-1 and lane-6 cases had effectively zero lap-count and
+                distance error. A lane-8 case with deterministic 3 m coordinate noise had 0.00928-lap
+                error, equivalent to 4.202 m. A noisy 6 + 4 direction-reversal case was recovered as
+                approximately 10 laps. These fixtures are evidence, not a universal guarantee.
+              </p>
+            </article>
+            <article>
+              <h3>What do real files show?</h3>
+              <p>
+                Three real lane-6 recordings from one runner protect regression behavior. Their lap
+                totals and crossing times were verified manually, and the analysis results agree with
+                them.
+              </p>
+            </article>
+            <article>
+              <h3>Why are there no 200 m or 100 m splits?</h3>
+              <p>
+                Intentional direction changes after completed laps are supported. Within-lap position,
+                especially in outer lanes, is less strongly supported than full-loop topology, so the
+                product deliberately omits 200 m, 100 m, and straight-only timing.
+              </p>
+            </article>
+            <article>
+              <h3>When is the result weaker?</h3>
+              <p>
+                Missing or invalid timestamps disable timing. Long gaps, noisy or sparse traces,
+                partial laps, discontinuous segments, and a dominant dense cluster away from the track
+                weaken interpretation. The 5 km markers have a known outer-lane within-lap limitation.
+              </p>
+            </article>
+            <article>
+              <h3>Is the GPX file uploaded?</h3>
+              <p>
+                No. The hosted web app downloads its own assets from the host, but the selected GPX
+                file is parsed and analyzed in the browser. Coordinates, timestamps, and analysis
+                results are not sent to an application backend.
+              </p>
+            </article>
+          </div>
         </section>
       </section>
 
