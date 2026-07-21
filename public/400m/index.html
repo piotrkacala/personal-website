@@ -82,7 +82,7 @@
           "name": "What do controlled accuracy tests show?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "In controlled synthetic 10-lap traces, clean lane 1 and lane 6 cases had effectively zero lap-count and distance error. For lane 8 with deterministic 3 m coordinate noise, the error was 0.00928 lap, equivalent to 4.202 m. A noisy trace reversing direction after 6 + 4 laps was recovered as approximately 10 laps. These are results from specific fixtures, not a guarantee for every device or recording."
+            "text": "In controlled synthetic 10-lap traces, clean lane 1 and lane 6 cases had effectively zero lap-count and distance error. For lane 8 with deterministic 3 m coordinate noise, the error was 0.00928 lap, equivalent to 4.202 m. A separate noisy fixture recovered all 20 reference half-lap boundaries inside the 10 m gate. These are synthetic fixture results, not a guarantee for every device or recording."
           }
         },
         {
@@ -98,7 +98,7 @@
           "name": "Are direction changes supported, and why are there no 200 m or 100 m splits?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Intentional direction changes after completed laps are supported, and traveled progress in both directions is added instead of cancelling out. Within-lap position, especially in outer lanes, has weaker support than full-loop topology. The product therefore deliberately omits 200 m, 100 m, and straight-only timing."
+            "text": "Intentional direction changes after completed laps are supported, and traveled progress in both directions is added instead of cancelling out. The product omits exact 200 m, 100 m, and straight-only timing. It may show estimated pace for two halves of an eligible completed lap; in outer lanes each half is longer than 200 m."
           }
         },
         {
@@ -128,8 +128,8 @@
       ]
     }
     </script>
-    <script type="module" crossorigin src="./assets/index-bF5_BhXo.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-Ce_2X0G-.css">
+    <script type="module" crossorigin src="./assets/index-DqRuqdyh.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DCry9WJ5.css">
   </head>
   <body>
     <main class="page-shell">
@@ -196,8 +196,9 @@
               <p>
                 Clean synthetic 10-lap lane-1 and lane-6 cases had effectively zero lap-count and
                 distance error. A lane-8 case with deterministic 3 m coordinate noise had 0.00928-lap
-                error, equivalent to 4.202 m. A noisy 6 + 4 direction-reversal case was recovered as
-                approximately 10 laps. These fixtures are evidence, not a universal guarantee.
+                error, equivalent to 4.202 m. A separate noisy fixture recovered all 20 reference
+                half-lap boundaries inside the 10 m gate. These synthetic fixtures are evidence,
+                not a universal guarantee for real recordings.
               </p>
             </article>
             <article>
@@ -209,11 +210,11 @@
               </p>
             </article>
             <article>
-              <h3>Why are there no 200 m or 100 m splits?</h3>
+              <h3>Why are there no exact 200 m or 100 m splits?</h3>
               <p>
-                Intentional direction changes after completed laps are supported. Within-lap position,
-                especially in outer lanes, is less strongly supported than full-loop topology, so the
-                product deliberately omits 200 m, 100 m, and straight-only timing.
+                Intentional direction changes after completed laps are supported. The product omits
+                exact 200 m, 100 m, and straight-only timing. It may show estimated pace for two
+                halves of an eligible completed lap; in outer lanes each half is longer than 200 m.
               </p>
             </article>
             <article>

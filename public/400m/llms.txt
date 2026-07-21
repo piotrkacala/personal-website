@@ -10,16 +10,18 @@
 - Raw GPX distance is diagnostic only.
 - Completed laps and an explicitly estimated angular final partial lap are shown separately.
 - Intentional direction changes after completed laps are supported; traveled progress in both directions is added instead of cancelling out.
-- Completed-lap time and pace are available when timestamps permit. The pace chart contains unconnected completed-lap observations and the table remains the exact-value source.
+- Completed-lap time and pace are available when timestamps permit. The pace chart contains unconnected completed-lap observations and the table remains their exact-value source.
+- Eligible completed laps may also show two unconnected estimated half-lap pace points. Half-lap values have no exact table, value-bearing tooltip, or fastest-half ranking; a half is half the selected lane length, not always 200 m.
 
 ## Evidence and Limits
 - In controlled synthetic 10-lap traces, clean lane-1 and lane-6 cases had effectively zero lap-count and distance error.
 - A controlled lane-8 trace with deterministic 3 m coordinate noise had 0.00928-lap error, equivalent to 4.202 m.
 - A noisy controlled 6 + 4 direction-reversal trace was recovered as approximately 10 laps.
+- A separate noisy synthetic fixture recovered all 20 reference half-lap boundaries inside the 10 m gate. It is not independent real-world validation.
 - These deterministic fixtures are bounded evidence, not a universal guarantee for every device or recording.
 - Three real lane-6 recordings from one runner are regression fixtures. Their lap totals and crossing times were verified manually, and the analysis results agree with them.
 - Completed-lap topology is better supported than within-lap position. The final partial lap remains an angular estimate.
-- The product deliberately omits 200 m, 100 m, and straight-only timing.
+- The product deliberately omits exact 200 m, 100 m, and straight-only timing.
 - Missing or invalid timestamps disable timing. Long gaps, noise, sparse traces, partial laps, discontinuous segments, and a dominant dense off-track cluster can weaken interpretation.
 - The 5 km markers use estimated within-lap position and have a known outer-lane limitation.
 
