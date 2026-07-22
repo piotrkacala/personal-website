@@ -217,8 +217,8 @@ Strona hostuje teraz także niewielkie publiczne narzędzia. Pierwszym z nich je
 
 **Finalized description (EN, July 2026):**
 
-A practical, task-specific evaluation of coding-agent outputs. The report covers 41 archived outputs:
-26 in the current v2 batch and 15 in the original v1 snapshot. I define the contract and review each
+A practical, task-specific evaluation of coding-agent outputs. The report covers 43 archived outputs:
+28 in the current v2 batch and 15 in the original v1 snapshot. I define the contract and review each
 result for required behavior, UX, testing, and delivery evidence. This is not a universal model
 ranking.
 
@@ -229,8 +229,8 @@ ranking.
 
 **Finalized description (PL, July 2026):**
 
-Praktyczna, zadaniowa ewaluacja outputów agentów programistycznych. Raport obejmuje 41 archiwalnych
-wyników: 26 w aktualnym batchu v2 i 15 w oryginalnym snapshocie v1. Definiuję kontrakt i sprawdzam
+Praktyczna, zadaniowa ewaluacja outputów agentów programistycznych. Raport obejmuje 43 archiwalne
+wyniki: 28 w aktualnym batchu v2 i 15 w oryginalnym snapshocie v1. Definiuję kontrakt i sprawdzam
 każdy wynik pod kątem wymaganego zachowania, UX, testów i materiałów potwierdzających sposób
 dostarczenia. To nie jest uniwersalny ranking modeli.
 

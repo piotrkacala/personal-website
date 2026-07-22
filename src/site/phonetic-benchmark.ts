@@ -806,6 +806,35 @@ const runData = [
     stack:
       "plain JavaScript, browser ES modules, custom Node static server, node:test",
   },
+  {
+    id: "kimi-k3-v2",
+    executionOrder: 27,
+    model: "Kimi K3",
+    runDate: "2026-07-22",
+    benchmarkVersion: "v2",
+    status: "contract-failing",
+    failureTypes: ["attribution"],
+    sourceLoc: 1959,
+    testCount: 72,
+    testEvidence:
+      "72 framework-style static cases; controlled runner reported 72 passed, 0 failed",
+    stack:
+      "plain JavaScript, browser ES modules, custom Node static server, node:test",
+  },
+  {
+    id: "grok-4-5-v2",
+    executionOrder: 28,
+    model: "Grok 4.5 High",
+    runDate: "2026-07-22",
+    benchmarkVersion: "v2",
+    status: "contract-failing",
+    failureTypes: ["core behavior"],
+    sourceLoc: 1924,
+    testCount: 33,
+    testEvidence:
+      "33 framework-style static cases; local disposable-copy run reported 33 passed, 0 failed; controlled runner blocked by review environment Docker/network limits",
+    stack: "Vite, TypeScript, plain browser DOM APIs, Vitest",
+  },
 ] as const satisfies readonly BenchmarkRunData[];
 
 export type BenchmarkRunId = (typeof runData)[number]["id"];
@@ -895,7 +924,7 @@ export const phoneticBenchmarkMetadata = {
   coveredBenchmarkVersions: ["v1", "v2"],
   currentBenchmarkVersion: "v2",
   publishedDate: "2026-05-26",
-  updatedDate: "2026-07-13",
+  updatedDate: "2026-07-22",
   coveredThroughDate: getLatestRunDate(),
 } as const satisfies BenchmarkMetadata;
 
@@ -1385,6 +1414,10 @@ const functionalReads = {
       "Comparable v2 submission with complete durable artifacts, passing controlled-runner evidence, clean suggestion-mode and final scoring probes, and a prepared nested-path demo. The main UX weakness is that keyboard focus is lost after a correct answer advances to the next symbol.",
     "gpt-5-6-luna-v2":
       "Runnable v2 submission with a compact dependency-free workflow and passing controlled-runner evidence, but formally contract-failing. Rapid repeated keyboard submits and repeated suggestion clicks can skip symbols, and the visible/submission attribution is underspecified for the recorded GPT 5.6 Luna High run.",
+    "kimi-k3-v2":
+      "Runnable zero-dependency submission with complete durable artifacts and 72 tests passing in the controlled runner, but formally contract-failing. The attribution footer remains in English after switching the interface to Polish; the checked keyboard, suggestion, hint, and scoring flows otherwise behaved cleanly.",
+    "grok-4-5-v2":
+      "Runnable Vite and TypeScript submission with complete docs and 33 passing tests in a disposable local copy, but formally contract-failing. Normal keyboard typing reverses the entered answer during re-render, so correct answers can be rejected; suggestion-mode hints also move the answer buttons.",
   },
   pl: {
     "gpt-5-4-high":
@@ -1469,6 +1502,10 @@ const functionalReads = {
       "Porównywalny run v2 z kompletnymi artefaktami, przechodzącym controlled runnerem, czystymi probe'ami trybu sugestii i finalnego scoringu oraz przygotowanym demo pod zagnieżdżoną ścieżkę. Główna słabość UX: fokus klawiatury ginie po przejściu poprawnej odpowiedzi do następnego symbolu.",
     "gpt-5-6-luna-v2":
       "Działający run v2 ze zwartym workflow bez zależności i przechodzącym controlled runnerem, ale formalnie contract-failing. Szybkie powtórne submity z klawiatury oraz kliknięcia sugestii mogą pomijać symbole, a widoczna i dostarczona atrybucja jest zbyt mało precyzyjna dla zapisanego runu GPT 5.6 Luna High.",
+    "kimi-k3-v2":
+      "Działający run bez zależności, z kompletnymi trwałymi artefaktami i 72 testami przechodzącymi w controlled runnerze, ale formalnie contract-failing. Stopka atrybucji pozostaje po angielsku po przełączeniu interfejsu na polski; sprawdzone flow klawiatury, sugestii, podpowiedzi i scoringu poza tym działały poprawnie.",
+    "grok-4-5-v2":
+      "Działający run w Vite i TypeScript z kompletną dokumentacją oraz 33 testami przechodzącymi w jednorazowej lokalnej kopii, ale formalnie contract-failing. Normalne wpisywanie klawiaturą odwraca odpowiedź podczas re-renderu, więc poprawna odpowiedź może zostać odrzucona; hint w trybie sugestii przesuwa też przyciski odpowiedzi.",
   },
 } as const satisfies Record<
   BenchmarkReportLang,
@@ -1600,9 +1637,9 @@ export const phoneticBenchmarkReports = {
         id: "strongest-current-references",
         heading: "Strongest Current References",
         paragraphs: [
-          "GPT 5.6 Sol High is the strongest newly added reference: it clears the contract, includes passing runner evidence, and has the highest published comparative score in v2 at 94. Kimi K2.7 remains a clean documented run at 90, while GPT 5.5 High combines strong direct product feel with complete artifacts, six passing tests, passing controlled-runner evidence, and a score of 89. Final human review still matters because design taste and interaction quality remain inspectable instead of being hidden behind one score.",
+          "GPT 5.6 Sol High is the strongest current reference. It clears the contract, includes passing runner evidence, and has the highest published comparative score in v2 at 94. Kimi K2.7 remains a clean documented run at 90. GPT 5.6 Terra High also clears the contract at 87, with lost keyboard focus after progression as its main observed weakness. Together they are more useful current starting points than an older model recommendation, while the archived GPT 5.5 results remain available as historical evidence.",
         ],
-        runIds: ["gpt-5-6-sol-v2", "kimi-k2-7-v2", "gpt-5-5-high-v2"],
+        runIds: ["gpt-5-6-sol-v2", "kimi-k2-7-v2", "gpt-5-6-terra-v2"],
       },
       {
         id: "positive-surprises",
@@ -1613,20 +1650,20 @@ export const phoneticBenchmarkReports = {
         runIds: ["hy3-free-v2", "deepseek-v4-flash-v2", "minimax-m3-v2"],
       },
       {
-        id: "gemini-31-vs-35",
-        heading: "Gemini 3.1 Pro vs Gemini 3.5 Flash",
+        id: "kimi-k27-vs-k3",
+        heading: "Kimi K3 Does Not Replace Kimi K2.7 In This Task",
         paragraphs: [
-          "The Gemini split is useful: Gemini 3.1 Pro High is less visually ambitious, but it follows the behavioral contract more carefully and is easier to trust in the reviewed product loop. Gemini 3.5 Flash High makes stronger design choices, yet the current run has repeated-submit behavior and attribution-localization misses that make it weaker as a spec-following implementation.",
+          "Kimi K2.7 produced a compact comparable run with a score of 90 and clean observed behavior. Kimi K3 produced a larger zero-dependency implementation with 72 passing controlled-runner tests and several good interaction decisions, but it still fails the contract because its attribution footer stays English in the Polish interface. One run per model cannot establish broad quality, but it is enough to show that a newer family name is not a reliable shortcut for task fit.",
         ],
-        runIds: ["gemini-3-1-pro-high-v2", "gemini-3-5-flash-high-v2"],
+        runIds: ["kimi-k2-7-v2", "kimi-k3-v2"],
       },
       {
-        id: "qwen-date-evidence",
-        heading: "Qwen's 2025 Date Is A Small Evidence Failure",
+        id: "grok-tests-vs-behavior",
+        heading: "Grok Shows Why Passing Tests Are Not Product Proof",
         paragraphs: [
-          "Qwen3.7 Max produced a generally solid runnable app, but the footer and documentation say 2025 while the archived run evidence is from 2026. It is a small-looking detail with a real review cost: public artifacts need stable, believable provenance.",
+          "Grok 4.5 High supplied complete documentation and 33 tests that passed in a disposable local copy. The actual keyboard flow still reverses normally typed answers because every input event replaces the active field during a full re-render. The repository looks verified until the product is used. Browser review is what turns the passing test count into an honest assessment.",
         ],
-        runIds: ["qwen-3-7-max-v2"],
+        runIds: ["grok-4-5-v2"],
       },
       {
         id: "polish-footer-declension",
@@ -1731,7 +1768,7 @@ export const phoneticBenchmarkReports = {
           "The Current Batch Separates Contract-Clearing Runs From Inspectable Failures",
         paragraphs: [
           `${formatEnglishList(phoneticBenchmarkPublicationStats.v2.comparableModels)} are the ${phoneticBenchmarkPublicationStats.v2.statusCounts.comparable} useful comparables in this batch. They clear the revised contract while still preserving visible review notes around active-run choices, Polish localization quality, interaction polish, and the strength and scope of automated-test evidence.`,
-          `The remaining ${phoneticBenchmarkPublicationStats.v2.statusCounts.contractFailing} runs are not one kind of failure. Several are inspectable applications with narrow formal misses, while Big Pickle, Qwen3.7 Max, gpt-oss-120b, and GPT 5.6 Luna High expose harder product behavior gaps. That distinction matters more than a flat pass/fail count.`,
+          `The remaining ${phoneticBenchmarkPublicationStats.v2.statusCounts.contractFailing} runs are not one kind of failure. Several are inspectable applications with narrow formal misses, while Big Pickle, Qwen3.7 Max, gpt-oss-120b, GPT 5.6 Luna High, and Grok 4.5 High expose harder product behavior gaps. That distinction matters more than a flat pass/fail count.`,
         ],
       },
       {
@@ -1753,30 +1790,37 @@ export const phoneticBenchmarkReports = {
       {
         heading: "Obvious UX Needs Still Require Product Judgment",
         paragraphs: [
-          "Keyboard focus remains the clearest repeated example, but the current batch adds more interaction-loop details: rapid repeated submits, hint state during language changes, scoring after repeated hints, and suggestion-option stability. The gaps are small in code and obvious in use.",
-          "This is one reason to inspect the actual application rather than treating a generated repository as finished when it builds.",
+          "Keyboard focus remains the clearest repeated example, but the current batch adds more interaction-loop details: rapid repeated submits, hint state during language changes, scoring after repeated hints, suggestion-option stability, and layout shifts after feedback.",
+          "Grok 4.5 High makes the boundary especially clear. Its app builds and its tests pass, yet a normal typed answer is reversed during re-render and can be rejected. This is why I inspect the actual application instead of treating a generated repository as finished when it builds.",
         ],
       },
       {
-        heading: "Public Rankings Do Not Fully Predict Workflow Fit",
+        heading: "Model Names Do Not Define A Simple Upgrade Path",
         paragraphs: [
-          "The current Gemini and Sonnet runs are useful cautions against reading general model rankings as product-workflow recommendations. Both Gemini current outputs are runnable and have controlled-runner evidence, but still fail the contract. Sonnet 4.6 Thinking has strong automated-test evidence and working core flows, yet fails on visible model identity and attribution localization.",
-          "GLM-5.2 is a good example of why I run a localized benchmark instead of trusting broad coding scores alone. It performs well in public coding benchmarks and clears this contract, but in my scenario the suggestion buttons reshuffle after wrong answers and hints. That is a small implementation detail with real interaction cost in a repetitive training app.",
+          "Kimi K2.7 clears the contract with a score of 90. Kimi K3 does not, despite 72 passing controlled-runner tests and otherwise strong checked behavior. The GPT 5.6 variants also spread from the batch-leading Sol result, through a comparable Terra run with a focus weakness, to a contract-failing Luna run with repeat-submit and attribution problems.",
+          "These are single archived runs, not proof of general model quality. They do show why I select models by task and workflow role instead of reading family names as a universal quality ladder.",
           "This is not a universal model ranking. Each result is one archived run against one benchmark version of a small product brief.",
+        ],
+      },
+      {
+        heading: "Automated Tests Are Evidence, Not The Verdict",
+        paragraphs: [
+          `The current batch contains ${phoneticBenchmarkPublicationStats.v2.staticTestCount} framework-style static test declarations across ${phoneticBenchmarkPublicationStats.v2.runCount} runs. That evidence helps distinguish an implementation with a real verification workflow from one with unsupported claims, but the count cannot establish coverage or product quality.`,
+          "Kimi K3 is a narrow contract failure with 72 passing controlled-runner tests and clean checked core behavior. Grok 4.5 High has 33 passing tests but a broken normal typing loop. Hy3 Free is usable even though its controlled test command reports five failures. The useful question is not simply whether tests pass, but what they cover and what direct product review still finds.",
         ],
       },
       {
         heading: "Localization Became A Contract-Level Signal",
         paragraphs: [
-          "A repeated miss in the current batch is not translation of the main UI, but the required attribution footer staying English after the interface switches to Polish. GPT 5.4 High clears the contract while still showing a softer version of the same theme: the Polish UI is understandable, but many diacritics are simplified away.",
+          "A repeated miss in the current batch is not translation of the main UI, but the required attribution footer staying English after the interface switches to Polish. Kimi K3 is the newest example. Its checked product loop is otherwise strong, yet one visible English footer keeps the run outside the comparable set. GPT 5.4 High clears the contract while still showing a softer version of the same theme: the Polish UI is understandable, but many diacritics are simplified away.",
           "That makes localization a product-quality signal, not a cosmetic layer to check after the main flow works.",
         ],
       },
       {
         heading: "Technical Stack Insights: Vite vs. Plain JavaScript",
         paragraphs: [
-          "Many models default to Vite and TypeScript, reflecting current frontend conventions. Several of the cleanest submissions — including Kimi K2.7, Owl Alpha v2, GPT 5.5 High v2, and GPT 5.6 Sol High — use plain browser JavaScript with no application build step or external runtime dependencies.",
-          "For small products, this is a key lesson: zero-dependency means zero vulnerability to 'dependency rot'. Applications written directly using native browser DOM APIs will run unmodified 10 years from now, whereas those reliant on specific, older bundler setups may fail to build without maintenance in the future.",
+          "Many models default to Vite and TypeScript, reflecting current frontend conventions. Kimi K2.7, Owl Alpha v2, GPT 5.6 Sol High, and Kimi K3 instead use plain browser JavaScript with a small or dependency-free runtime surface.",
+          "For a small static product, fewer dependencies can make the archived output easier to inspect and reduce future build maintenance. It is not a quality guarantee. Grok's critical typing bug comes from application rendering logic, while several Vite runs clear the contract. The benchmark supports choosing the smallest stack that fits the behavior, not declaring one stack universally better.",
         ],
       },
       {
@@ -1793,7 +1837,7 @@ export const phoneticBenchmarkReports = {
         heading: `Current Batch: ${phoneticBenchmarkPublicationStats.v2.statusCounts.comparable} Comparables And ${phoneticBenchmarkPublicationStats.v2.statusCounts.contractFailing} Contract Failures`,
         paragraphs: [
           `In my review, ${formatEnglishList(phoneticBenchmarkPublicationStats.v2.comparableModels)} are the useful comparables in this batch. GPT 5.6 Sol High is the strongest new result with a published comparative score of 94. GPT 5.6 Terra High also clears the contract, with lost keyboard focus after progression as its main observed UX weakness.`,
-          "The newest failures preserve the same distinction between formal status and product quality. Hy3 Free is usable but its controlled test command reports five failures. GPT 5.6 Luna High has passing runner evidence, yet repeated submissions can skip symbols and the recorded attribution is underspecified. Earlier current-batch failures remain inspectable through their run records and archived demos.",
+          "The newest failures sharpen the distinction between formal status and product quality. Kimi K3 is strong in the checked product loop and has 72 passing controlled-runner tests, but an English-only attribution footer in Polish UI keeps it outside the comparable set. Grok 4.5 High has 33 passing tests, yet normal typing is broken. Earlier failures remain inspectable through their run records and archived demos.",
         ],
         runIds: [
           "deepseek-v4-flash-v2",
@@ -1822,27 +1866,25 @@ export const phoneticBenchmarkReports = {
           "gpt-5-6-sol-v2",
           "gpt-5-6-terra-v2",
           "gpt-5-6-luna-v2",
+          "kimi-k3-v2",
+          "grok-4-5-v2",
         ],
       },
       {
         id: "reference-baselines",
-        heading: "Current Comparables And Historical v1 Baselines",
+        heading: "Current References And Historical Context",
         paragraphs: [
-          "The current contract-clearing references are useful in different ways. GPT 5.6 Sol High combines the highest published v2 comparative score with passing runner evidence and clean targeted probes. Kimi K2.7 remains a strong documented run. GPT 5.5 High pairs strong direct product feel with complete artifacts, six passing tests, passing controlled-runner evidence, and a published score of 89. GPT 5.6 Terra High clears the contract with a visible focus-handling weakness. Owl Alpha, GPT 5.4 High, DeepSeek V4 Pro, and GLM-5.2 remain useful comparables with different interaction or localization tradeoffs.",
-          "The earlier v1 baselines remain useful as historical references: GPT 5.5 High and Claude Sonnet 4.6 Thinking were strong in the original snapshot. Sonnet's run in the current batch is not a contract-clearing baseline because visible model identity and attribution localization fail, despite strong tests.",
+          "GPT 5.6 Sol High is the clearest current reference: the highest published v2 score, passing runner evidence, and clean targeted probes. Kimi K2.7 is a second strong reference with a score of 90 and only a minor visual note. GPT 5.6 Terra High clears the contract but loses keyboard focus after progression. Owl Alpha, GPT 5.4 High, DeepSeek V4 Pro, and GLM-5.2 remain useful comparables with different interaction and localization tradeoffs.",
+          "The v1 snapshot and older current-batch runs remain evidence, not current purchasing recommendations. They preserve what worked at the time and make changes between model generations visible without pretending that an older strong result should still lead model selection.",
         ],
         runIds: [
           "owl-alpha-v2",
           "gpt-5-4-high-v2",
-          "gpt-5-5-high-v2",
           "deepseek-v4-pro-v2",
           "glm-5-2-v2",
           "kimi-k2-7-v2",
           "gpt-5-6-sol-v2",
           "gpt-5-6-terra-v2",
-          "gpt-5-5-high",
-          "sonnet-4-6-thinking",
-          "sonnet-4-6-thinking-v2",
         ],
       },
       {
@@ -1863,17 +1905,22 @@ export const phoneticBenchmarkReports = {
         runIds: ["gpt-5-4-high"],
       },
       {
-        id: "gemini-hint-failure",
-        heading: "Gemini Improved In v2 Without Clearing The Contract",
+        id: "kimi-model-fit",
+        heading: "Kimi K2.7 And Kimi K3 Reward Different Assumptions",
         paragraphs: [
-          "The v1 Gemini 3.1 Pro High run has a hard required-behavior failure: the keyboard hint does not reveal the answer. In v2, the Gemini outputs are more usable and include controlled-runner evidence, but they still do not clear the contract.",
-          "Gemini 3.5 Flash High v2 misses attribution localization and can skip symbols on rapid repeated keyboard submit. Gemini 3.1 Pro High v2 hides a revealed hint after an active language switch and also misses attribution localization.",
+          "Kimi K2.7 is smaller, clears the contract, and scored 90. Kimi K3 writes more than twice as much source code and supplies 72 passing tests. It also makes useful product decisions such as confirming a reset and keeping wrong suggestion choices visibly marked, yet its untranslated attribution footer creates a formal failure.",
+          "For this brief, K2.7 is the better result. The broader lesson is model routing, not a universal family ranking. A model that is newer or produces more code and tests can still be a worse fit for a narrow specification.",
         ],
-        runIds: [
-          "gemini-3-1-pro-high",
-          "gemini-3-5-flash-high-v2",
-          "gemini-3-1-pro-high-v2",
+        runIds: ["kimi-k2-7-v2", "kimi-k3-v2"],
+      },
+      {
+        id: "grok-browser-review",
+        heading: "Grok 4.5 High Fails In The Interaction Loop",
+        paragraphs: [
+          "Grok 4.5 High has complete delivery documentation, a successful local build, and 33 passing tests. None of that rescues the main keyboard mode: normal typing recreates the input after each character, so the answer is reversed and a correct response can be rejected.",
+          "The same run also moves suggestion buttons when hint feedback appears. The core failure is more important than that layout shift, but both were easiest to discover by using the archived application rather than reading its repository summary.",
         ],
+        runIds: ["grok-4-5-v2"],
       },
       {
         id: "blocked-and-unrunnable",
@@ -1972,9 +2019,9 @@ export const phoneticBenchmarkReports = {
         id: "strongest-current-references",
         heading: "Najmocniejsze Aktualne Referencje",
         paragraphs: [
-          "GPT 5.6 Sol High jest najmocniejszą nową referencją: spełnia kontrakt, ma przechodzący runner i najwyższy opublikowany wynik porównawczy v2 — 94. Kimi K2.7 pozostaje czystym, dobrze udokumentowanym runem z wynikiem 90, a GPT 5.5 High łączy mocne bezpośrednie odczucie produktu z kompletnymi artefaktami, sześcioma przechodzącymi testami, przechodzącym controlled runnerem i wynikiem 89. Ostateczne review człowieka nadal ma znaczenie, bo design i jakość interakcji pozostają sprawdzalne zamiast znikać za jedną liczbą.",
+          "GPT 5.6 Sol High jest najmocniejszą aktualną referencją. Spełnia kontrakt, ma przechodzący runner i najwyższy opublikowany wynik porównawczy v2: 94. Kimi K2.7 pozostaje czystym, dobrze udokumentowanym runem z wynikiem 90. GPT 5.6 Terra High również spełnia kontrakt z wynikiem 87, a jego główną zaobserwowaną słabością jest utrata fokusu po przejściu dalej. Te wyniki są lepszym aktualnym punktem startowym niż rekomendacja starszego modelu. Zarchiwizowane wyniki GPT 5.5 pozostają dostępne jako evidence historyczne.",
         ],
-        runIds: ["gpt-5-6-sol-v2", "kimi-k2-7-v2", "gpt-5-5-high-v2"],
+        runIds: ["gpt-5-6-sol-v2", "kimi-k2-7-v2", "gpt-5-6-terra-v2"],
       },
       {
         id: "positive-surprises",
@@ -1985,20 +2032,21 @@ export const phoneticBenchmarkReports = {
         runIds: ["hy3-free-v2", "deepseek-v4-flash-v2", "minimax-m3-v2"],
       },
       {
-        id: "gemini-31-vs-35",
-        heading: "Gemini 3.1 Pro vs Gemini 3.5 Flash",
+        id: "kimi-k27-vs-k3",
+        heading: "Kimi K3 Nie Zastępuje Kimi K2.7 W Tym Zadaniu",
         paragraphs: [
-          "Podział Gemini jest użyteczny: Gemini 3.1 Pro High jest mniej ambitny wizualnie, ale dokładniej pilnuje kontraktu zachowania i łatwiej mu zaufać w sprawdzonej pętli produktu. Gemini 3.5 Flash High podejmuje mocniejsze decyzje projektowe, ale aktualny run ma problem z szybkim powtórnym submitowaniem i lokalizacją atrybucji, więc jest słabszy jako implementacja według specyfikacji.",
+          "Kimi K2.7 przygotował zwartą porównywalną implementację z wynikiem 90 i czystym sprawdzonym zachowaniem. Kimi K3 stworzył większą implementację bez zależności, z 72 testami przechodzącymi w controlled runnerze i kilkoma dobrymi decyzjami interakcji, ale nadal nie spełnia kontraktu, bo stopka atrybucji zostaje po angielsku w polskim interfejsie. Jeden run na model nie opisuje ich ogólnej jakości, ale wystarcza, by pokazać, że nowsza nazwa w rodzinie nie jest wiarygodnym skrótem do dopasowania modelu do zadania.",
         ],
-        runIds: ["gemini-3-1-pro-high-v2", "gemini-3-5-flash-high-v2"],
+        runIds: ["kimi-k2-7-v2", "kimi-k3-v2"],
       },
       {
-        id: "qwen-date-evidence",
-        heading: "Data 2025 W Qwenie To Mały Błąd Evidence",
+        id: "grok-tests-vs-behavior",
+        heading:
+          "Grok Pokazuje, Że Przechodzące Testy Nie Są Dowodem Jakości Produktu",
         paragraphs: [
-          "Qwen3.7 Max przygotował ogólnie solidną działającą aplikację, ale stopka i dokumentacja wskazują 2025 rok, podczas gdy zarchiwizowany run pochodzi z 2026 roku. To pozornie drobny detal z realnym kosztem w przeglądzie: publiczne artefakty powinny mieć stabilne i wiarygodne pochodzenie.",
+          "Grok 4.5 High dostarczył kompletną dokumentację i 33 testy przechodzące w jednorazowej lokalnej kopii. W faktycznym flow klawiatury normalnie wpisywana odpowiedź nadal odwraca się, bo każde zdarzenie input zastępuje aktywne pole podczas pełnego re-renderu. Repozytorium wygląda na zweryfikowane do chwili użycia produktu. Dopiero browser review nadaje liczbie przechodzących testów uczciwy kontekst.",
         ],
-        runIds: ["qwen-3-7-max-v2"],
+        runIds: ["grok-4-5-v2"],
       },
       {
         id: "polish-footer-declension",
@@ -2104,7 +2152,7 @@ export const phoneticBenchmarkReports = {
           "Aktualna seria oddziela wyniki spełniające kontrakt od sprawdzalnych błędów",
         paragraphs: [
           `${formatPolishList(phoneticBenchmarkPublicationStats.v2.comparableModels)} to ${phoneticBenchmarkPublicationStats.v2.statusCounts.comparable} użytecznych porównywalnych wyników w tej serii. Przechodzą zmieniony kontrakt, ale zachowują widoczne uwagi dotyczące decyzji w aktywnej próbie, jakości polskiej lokalizacji, dopracowania interakcji oraz siły i zakresu evidence z automatycznych testów.`,
-          `Pozostałe ${phoneticBenchmarkPublicationStats.v2.statusCounts.contractFailing} wyników z aktualnej serii nie tworzy jednego typu porażki. Część to sprawdzalne aplikacje z wąskimi błędami formalnymi, a Big Pickle, Qwen3.7 Max, gpt-oss-120b i GPT 5.6 Luna High pokazują twardsze braki w zachowaniu produktu. To rozróżnienie jest ważniejsze niż płaski wynik pass/fail.`,
+          `Pozostałe ${phoneticBenchmarkPublicationStats.v2.statusCounts.contractFailing} wyników z aktualnej serii nie tworzy jednego typu porażki. Część to sprawdzalne aplikacje z wąskimi błędami formalnymi, a Big Pickle, Qwen3.7 Max, gpt-oss-120b, GPT 5.6 Luna High i Grok 4.5 High pokazują twardsze braki w zachowaniu produktu. To rozróżnienie jest ważniejsze niż płaski wynik pass/fail.`,
         ],
       },
       {
@@ -2125,31 +2173,37 @@ export const phoneticBenchmarkReports = {
       {
         heading: "Oczywiste Potrzeby UX Nadal Wymagają Oceny Produktowej",
         paragraphs: [
-          "Zarządzanie fokusem przy obsłudze z klawiatury nadal jest najlepszym powtarzającym się przykładem, ale aktualny batch dodaje więcej detali pętli interakcji: szybkie powtórne submitowanie, stan podpowiedzi po zmianie języka, scoring po wielokrotnym użyciu hintu i stabilność opcji w trybie sugestii. Różnice są niewielkie w kodzie i oczywiste podczas używania aplikacji.",
-          "To jeden z powodów, dla których samo zbudowanie repozytorium nie powinno kończyć przeglądu wygenerowanego produktu.",
+          "Zarządzanie fokusem przy obsłudze z klawiatury nadal jest najlepszym powtarzającym się przykładem, ale aktualny batch dodaje więcej detali pętli interakcji: szybkie powtórne submitowanie, stan podpowiedzi po zmianie języka, scoring po wielokrotnym użyciu hintu, stabilność opcji i przesunięcia layoutu po feedbacku.",
+          "Grok 4.5 High pokazuje tę granicę szczególnie wyraźnie. Aplikacja buduje się, a testy przechodzą, ale normalnie wpisywana odpowiedź odwraca się podczas re-renderu i może zostać odrzucona. Dlatego przeglądam faktyczną aplikację zamiast uznawać wygenerowane repozytorium za gotowe po samym buildzie.",
         ],
       },
       {
-        heading:
-          "Publiczne Rankingi Nie Przewidują W Pełni Dopasowania Do Workflow",
+        heading: "Nazwy Modeli Nie Tworzą Prostej Ścieżki Upgrade'u",
         paragraphs: [
-          "Aktualne próby Gemini i Sonnet są dobrym ostrzeżeniem przed traktowaniem ogólnych rankingów modeli jako rekomendacji dla konkretnego workflow produktowego. Oba aktualne wyniki Gemini są uruchamialne i mają controlled-runner evidence, ale nadal nie spełniają kontraktu. Sonnet 4.6 Thinking ma mocne evidence z testów automatycznych i działające główne flow, a mimo to odpada na widocznej tożsamości modelu i lokalizacji atrybucji.",
-          "GLM-5.2 to dobry przykład, dlaczego wolę lokalny benchmark od samych ogólnych wyników kodowania. Model dobrze wypada w publicznych benchmarkach i spełnia ten kontrakt, ale w moim scenariuszu przyciski sugestii przetasowują się po błędnych odpowiedziach i po użyciu hintu. To drobny detal implementacyjny z realnym kosztem interakcji w powtarzalnym ćwiczeniu.",
+          "Kimi K2.7 spełnia kontrakt z wynikiem 90. Kimi K3 go nie spełnia mimo 72 testów przechodzących w controlled runnerze i poza tym mocnego sprawdzonego zachowania. Warianty GPT 5.6 także rozciągają się od prowadzącego w batchu wyniku Sol, przez porównywalny run Terra ze słabością fokusu, po niespełniający kontraktu run Luna z problemami powtórnego submitowania i atrybucji.",
+          "To pojedyncze archiwalne runy, a nie dowód ogólnej jakości modeli. Pokazują jednak, dlaczego dobieram model do zadania i roli w workflow zamiast czytać nazwę rodziny jak uniwersalną drabinę jakości.",
           "To nie jest uniwersalny ranking modeli. Każdy wynik jest jedną archiwalną próbą dla jednej wersji benchmarku i jednego niewielkiego briefu produktowego.",
+        ],
+      },
+      {
+        heading: "Automatyczne Testy Są Evidence, Nie Werdyktem",
+        paragraphs: [
+          `Aktualna seria zawiera ${phoneticBenchmarkPublicationStats.v2.staticTestCount} statycznych deklaracji testów frameworkowych w ${phoneticBenchmarkPublicationStats.v2.runCount} runach. Ten materiał pomaga odróżnić implementację z realnym workflow weryfikacji od niepopartych deklaracji, ale sama liczba nie potwierdza pokrycia ani jakości produktu.`,
+          "Kimi K3 ma wąski błąd kontraktu, 72 testy przechodzące w controlled runnerze i czyste sprawdzone główne flow. Grok 4.5 High ma 33 przechodzące testy, ale uszkodzone normalne wpisywanie. Hy3 Free jest używalny, choć jego kontrolowana komenda testowa raportuje pięć błędów. Użyteczne pytanie nie brzmi tylko, czy testy przechodzą, lecz co obejmują i co nadal znajduje bezpośredni review produktu.",
         ],
       },
       {
         heading: "Lokalizacja Stała Się Sygnałem Kontraktowym",
         paragraphs: [
-          "Powtarzający się błąd w aktualnym batchu nie dotyczy tłumaczenia głównego UI, tylko wymaganej stopki atrybucji, która zostaje po angielsku po przełączeniu interfejsu na polski. GPT 5.4 High spełnia kontrakt, ale pokazuje łagodniejszą wersję tego samego tematu: polski UI jest zrozumiały, lecz wiele znaków diakrytycznych uproszczono do ASCII.",
+          "Powtarzający się błąd w aktualnym batchu nie dotyczy tłumaczenia głównego UI, tylko wymaganej stopki atrybucji, która zostaje po angielsku po przełączeniu interfejsu na polski. Kimi K3 jest najnowszym przykładem. Jego sprawdzona pętla produktu jest poza tym mocna, ale jedna widoczna angielska stopka zatrzymuje run poza zbiorem porównywalnym. GPT 5.4 High spełnia kontrakt, lecz pokazuje łagodniejszą wersję tego samego tematu: polski UI jest zrozumiały, choć wiele znaków diakrytycznych uproszczono do ASCII.",
           "To sprawia, że lokalizacja jest sygnałem jakości produktu, a nie kosmetyczną warstwą do odhaczenia po działającym flow.",
         ],
       },
       {
         heading: "Wnioski Technologiczne: Vite kontra Plain JavaScript",
         paragraphs: [
-          "Wiele modeli domyślnie sięga po Vite i TypeScript, co odzwierciedla współczesne konwencje frontendu. Kilka najczystszych wyników — m.in. Kimi K2.7, Owl Alpha v2, GPT 5.5 High v2 i GPT 5.6 Sol High — powstało w plain JavaScripcie bez procesu budowania aplikacji i zewnętrznych zależności runtime.",
-          "Dla małych produktów to ważna lekcja: brak zależności (zero-dependency) oznacza odporność na starzenie się kodu. Aplikacje napisane bezpośrednio w DOM API przeglądarki będą działać bez zmian za 10 lat, podczas gdy te oparte na starych wersjach bundlerów mogą wymagać konserwacji przy próbie uruchomienia w przyszłości.",
+          "Wiele modeli domyślnie sięga po Vite i TypeScript, co odzwierciedla współczesne konwencje frontendu. Kimi K2.7, Owl Alpha v2, GPT 5.6 Sol High i Kimi K3 wykorzystują zamiast tego plain JavaScript w przeglądarce z małą powierzchnią runtime albo całkowicie bez zależności runtime.",
+          "W małym statycznym produkcie mniej zależności może ułatwić inspekcję archiwalnego outputu i ograniczyć przyszłe utrzymanie builda. Nie gwarantuje jakości. Krytyczny błąd wpisywania Groka wynika z logiki renderowania aplikacji, a kilka runów opartych na Vite spełnia kontrakt. Benchmark wspiera wybór najmniejszego stacku pasującego do zachowania, nie uznanie jednego stacku za zawsze lepszy.",
         ],
       },
       {
@@ -2166,7 +2220,7 @@ export const phoneticBenchmarkReports = {
         heading: `Aktualna seria: ${phoneticBenchmarkPublicationStats.v2.statusCounts.comparable} Wyników Porównywalnych I ${phoneticBenchmarkPublicationStats.v2.statusCounts.contractFailing} Contract Failure`,
         paragraphs: [
           `W moim przeglądzie ${formatPolishList(phoneticBenchmarkPublicationStats.v2.comparableModels)} to użyteczne porównywalne wyniki w aktualnym batchu. GPT 5.6 Sol High jest najmocniejszym nowym wynikiem z opublikowanym wynikiem porównawczym 94. GPT 5.6 Terra High także spełnia kontrakt, a jego główną zaobserwowaną słabością UX jest utrata fokusu po przejściu dalej.`,
-          "Najnowsze błędy zachowują to samo rozróżnienie między formalnym statusem a jakością produktu. Hy3 Free jest używalny, ale jego kontrolowana komenda testowa raportuje pięć błędów. GPT 5.6 Luna High ma przechodzący runner, jednak powtórne submity mogą pomijać symbole, a atrybucja nie identyfikuje zapisanego runu wystarczająco precyzyjnie. Wcześniejsze błędy aktualnego batcha pozostają sprawdzalne w rekordach runów i archiwalnych demo.",
+          "Najnowsze błędy wyostrzają różnicę między formalnym statusem a jakością produktu. Kimi K3 ma mocną sprawdzoną pętlę produktu i 72 testy przechodzące w controlled runnerze, ale angielska stopka atrybucji w polskim UI zatrzymuje go poza zbiorem porównywalnym. Grok 4.5 High ma 33 przechodzące testy, lecz normalne wpisywanie jest uszkodzone. Wcześniejsze błędy pozostają sprawdzalne w rekordach runów i archiwalnych demo.",
         ],
         runIds: [
           "deepseek-v4-flash-v2",
@@ -2195,27 +2249,25 @@ export const phoneticBenchmarkReports = {
           "gpt-5-6-sol-v2",
           "gpt-5-6-terra-v2",
           "gpt-5-6-luna-v2",
+          "kimi-k3-v2",
+          "grok-4-5-v2",
         ],
       },
       {
         id: "reference-baselines",
-        heading: "Aktualne Wyniki Porównywalne I Historyczne Baseline'y v1",
+        heading: "Aktualne Referencje I Kontekst Historyczny",
         paragraphs: [
-          "Aktualne referencje spełniające kontrakt są użyteczne na różne sposoby. GPT 5.6 Sol High łączy najwyższy opublikowany wynik porównawczy v2 z przechodzącym runnerem i czystymi targetowanymi probe'ami. Kimi K2.7 pozostaje mocnym udokumentowanym runem. GPT 5.5 High łączy mocne odczucie produktu z kompletnymi artefaktami, sześcioma przechodzącymi testami, przechodzącym controlled runnerem i opublikowanym wynikiem 89. GPT 5.6 Terra High spełnia kontrakt z widoczną słabością obsługi fokusu. Owl Alpha, GPT 5.4 High, DeepSeek V4 Pro i GLM-5.2 nadal są użytecznymi porównaniami z różnymi kompromisami interakcji lub lokalizacji.",
-          "Wcześniejsze baseline'y v1 pozostają użyteczne jako historyczne punkty odniesienia: GPT 5.5 High i Claude Sonnet 4.6 Thinking były mocne w oryginalnym snapshotcie. Run Sonnet v2 nie jest baseline'em spełniającym kontrakt, bo failuje widoczna tożsamość modelu i lokalizacja atrybucji, mimo mocnych testów.",
+          "GPT 5.6 Sol High jest najwyraźniejszą aktualną referencją: najwyższy opublikowany wynik v2, przechodzący runner i czyste targetowane probe'y. Kimi K2.7 jest drugą mocną referencją z wynikiem 90 i tylko drobną uwagą wizualną. GPT 5.6 Terra High spełnia kontrakt, ale traci fokus po przejściu dalej. Owl Alpha, GPT 5.4 High, DeepSeek V4 Pro i GLM-5.2 nadal są użytecznymi porównaniami z różnymi kompromisami interakcji i lokalizacji.",
+          "Snapshot v1 i starsze runy aktualnego batcha pozostają evidence, a nie aktualnymi rekomendacjami zakupowymi. Zachowują to, co działało w danym momencie, i pokazują zmiany między generacjami modeli bez udawania, że starszy mocny wynik powinien nadal prowadzić wybór modelu.",
         ],
         runIds: [
           "owl-alpha-v2",
           "gpt-5-4-high-v2",
-          "gpt-5-5-high-v2",
           "deepseek-v4-pro-v2",
           "glm-5-2-v2",
           "kimi-k2-7-v2",
           "gpt-5-6-sol-v2",
           "gpt-5-6-terra-v2",
-          "gpt-5-5-high",
-          "sonnet-4-6-thinking",
-          "sonnet-4-6-thinking-v2",
         ],
       },
       {
@@ -2236,18 +2288,22 @@ export const phoneticBenchmarkReports = {
         runIds: ["gpt-5-4-high"],
       },
       {
-        id: "gemini-hint-failure",
-        heading:
-          "Gemini Poprawia Się w Aktualnej Serii, Ale Nie Spełnia Kontraktu",
+        id: "kimi-model-fit",
+        heading: "Kimi K2.7 I Kimi K3 Nagradzają Inne Założenia",
         paragraphs: [
-          "Run v1 Gemini 3.1 Pro High ma twardy błąd wymaganego zachowania: podpowiedź klawiaturowa nie ujawnia odpowiedzi. W aktualnym batchu wyniki Gemini są bardziej używalne i mają controlled-runner evidence, ale nadal nie spełniają kontraktu.",
-          "Gemini 3.5 Flash High nie lokalizuje atrybucji i może pomijać symbole przy szybkim powtórnym submitowaniu z klawiatury. Gemini 3.1 Pro High ukrywa ujawnioną podpowiedź po zmianie języka w aktywnej próbie i również nie lokalizuje atrybucji.",
+          "Kimi K2.7 jest mniejszy, spełnia kontrakt i uzyskał wynik 90. Kimi K3 pisze ponad dwa razy więcej kodu źródłowego i dostarcza 72 przechodzące testy. Podejmuje też użyteczne decyzje produktowe, takie jak potwierdzenie resetu i trwałe oznaczanie błędnych sugestii, ale nieprzetłumaczona stopka atrybucji tworzy formalny błąd.",
+          "Dla tego briefu K2.7 jest lepszym wynikiem. Szerszy wniosek dotyczy routingu modeli, nie uniwersalnego rankingu rodziny. Model, który jest nowszy albo tworzy więcej kodu i testów, nadal może być gorzej dopasowany do wąskiej specyfikacji.",
         ],
-        runIds: [
-          "gemini-3-1-pro-high",
-          "gemini-3-5-flash-high-v2",
-          "gemini-3-1-pro-high-v2",
+        runIds: ["kimi-k2-7-v2", "kimi-k3-v2"],
+      },
+      {
+        id: "grok-browser-review",
+        heading: "Grok 4.5 High Odpada W Pętli Interakcji",
+        paragraphs: [
+          "Grok 4.5 High ma kompletną dokumentację dostarczenia, udany lokalny build i 33 przechodzące testy. Nic z tego nie ratuje głównego trybu klawiatury: normalne wpisywanie odtwarza pole po każdym znaku, więc odpowiedź zostaje odwrócona, a poprawny wpis może zostać odrzucony.",
+          "Ten sam run przesuwa też przyciski sugestii po pojawieniu się feedbacku podpowiedzi. Błąd głównego flow jest ważniejszy od przesunięcia layoutu, ale oba najłatwiej było znaleźć przez użycie archiwalnej aplikacji, nie lekturę podsumowania repozytorium.",
         ],
+        runIds: ["grok-4-5-v2"],
       },
       {
         id: "blocked-and-unrunnable",

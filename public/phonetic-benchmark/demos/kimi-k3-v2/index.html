@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Phonetic Alphabet Trainer</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <span class="site-title" id="site-title">Phonetic Alphabet Trainer</span>
+      <nav class="lang-switch" id="lang-switch" aria-label="Interface language">
+        <button type="button" data-lang="en" aria-pressed="true">English</button>
+        <button type="button" data-lang="pl" aria-pressed="false">Polski</button>
+      </nav>
+    </header>
+
+    <main id="app" class="app" aria-live="polite"></main>
+
+    <footer class="site-footer">
+      <p>
+        Phonetic Benchmark by Piotr Kacała (piotrkacala.pl). Developed by Kimi K3
+        (opencode-go/kimi-k3) on 2026-07-22.
+      </p>
+    </footer>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

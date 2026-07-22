@@ -47,6 +47,8 @@ const phoneticBenchmarkRuns = [
   { heading: "GPT 5.6 Sol High", id: "gpt-5-6-sol-v2" },
   { heading: "GPT 5.6 Terra High", id: "gpt-5-6-terra-v2" },
   { heading: "GPT 5.6 Luna High", id: "gpt-5-6-luna-v2" },
+  { heading: "Kimi K3", id: "kimi-k3-v2" },
+  { heading: "Grok 4.5 High", id: "grok-4-5-v2" },
   { heading: "GPT 5.4 High", id: "gpt-5-4-high" },
   { heading: "GPT 5.5 High", id: "gpt-5-5-high" },
   { heading: "Gemini 3.5 Flash High", id: "gemini-3-5-flash-high" },
@@ -216,7 +218,7 @@ test("English homepage markdown keeps its key structure and references", () => {
     /^- Gallery: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/gallery\/$/m,
   );
   assert.match(content, /^### 4\. Phonetic Benchmark$/m);
-  assert.match(content, /41 archived outputs: 26 in the current v2 batch/);
+  assert.match(content, /43 archived outputs: 28 in the current v2 batch/);
   assert.match(
     content,
     /^- Methodology: https:\/\/piotrkacala\.pl\/phonetic-benchmark\/methodology\/$/m,
@@ -273,7 +275,7 @@ test("Polish homepage markdown keeps its key structure and references", () => {
   );
   assert.match(content, /^### 3\. Ta strona$/m);
   assert.match(content, /^### 4\. Phonetic Benchmark$/m);
-  assert.match(content, /41 archiwalnych wyników: 26 w aktualnym batchu v2/);
+  assert.match(content, /43 archiwalnych wyników: 28 w aktualnym batchu v2/);
   assert.match(
     content,
     /^- Metodologia \(EN\): https:\/\/piotrkacala\.pl\/phonetic-benchmark\/methodology\/$/m,
@@ -494,8 +496,14 @@ test("English Phonetic Benchmark markdown publishes all runs without private wor
   assert.match(content, /^### Models That Clear The Contract$/m);
   assert.match(content, /^### Strongest Current References$/m);
   assert.match(content, /^### Positive Surprises$/m);
-  assert.match(content, /^### Gemini 3\.1 Pro vs Gemini 3\.5 Flash$/m);
-  assert.match(content, /^### Qwen's 2025 Date Is A Small Evidence Failure$/m);
+  assert.match(
+    content,
+    /^### Kimi K3 Does Not Replace Kimi K2\.7 In This Task$/m,
+  );
+  assert.match(
+    content,
+    /^### Grok Shows Why Passing Tests Are Not Product Proof$/m,
+  );
   assert.match(
     content,
     /^### Polish Footer Declension Is A Useful Localization Detail$/m,
@@ -571,8 +579,14 @@ test("Polish Phonetic Benchmark markdown carries localized narrative and all dem
   assert.match(content, /^### Modele Spełniające Kontrakt$/m);
   assert.match(content, /^### Najmocniejsze Aktualne Referencje$/m);
   assert.match(content, /^### Pozytywne Niespodzianki$/m);
-  assert.match(content, /^### Gemini 3\.1 Pro vs Gemini 3\.5 Flash$/m);
-  assert.match(content, /^### Data 2025 W Qwenie To Mały Błąd Evidence$/m);
+  assert.match(
+    content,
+    /^### Kimi K3 Nie Zastępuje Kimi K2\.7 W Tym Zadaniu$/m,
+  );
+  assert.match(
+    content,
+    /^### Grok Pokazuje, Że Przechodzące Testy Nie Są Dowodem Jakości Produktu$/m,
+  );
   assert.match(
     content,
     /^### Odmiana Nazwiska W Stopce To Dobry Sygnał Lokalizacji$/m,
@@ -690,7 +704,7 @@ test("benchmark structured data covers versioned runs and selected screenshot ca
   const statusCounts = new Map<string, number>();
   const versionCounts = new Map<string, number>();
 
-  assert.equal(report.runs.length, 41);
+  assert.equal(report.runs.length, 43);
 
   report.runs.forEach((run) => {
     statusCounts.set(run.status, (statusCounts.get(run.status) ?? 0) + 1);
@@ -709,12 +723,12 @@ test("benchmark structured data covers versioned runs and selected screenshot ca
 
   assert.deepEqual(Object.fromEntries(statusCounts), {
     comparable: 14,
-    "contract-failing": 26,
+    "contract-failing": 28,
     unrunnable: 1,
   });
   assert.deepEqual(Object.fromEntries(versionCounts), {
     v1: 15,
-    v2: 26,
+    v2: 28,
   });
   assert.deepEqual(
     report.spotlights.map((spotlight) => spotlight.id),
@@ -722,8 +736,8 @@ test("benchmark structured data covers versioned runs and selected screenshot ca
       "contract-clearing-models",
       "strongest-current-references",
       "positive-surprises",
-      "gemini-31-vs-35",
-      "qwen-date-evidence",
+      "kimi-k27-vs-k3",
+      "grok-tests-vs-behavior",
       "polish-footer-declension",
     ],
   );
@@ -762,15 +776,15 @@ test("benchmark publication metadata derives coverage and avoids inferred infere
   const results = getPhoneticBenchmarkResultsData();
 
   assert.equal(phoneticBenchmarkMetadata.publishedDate, "2026-05-26");
-  assert.equal(phoneticBenchmarkMetadata.updatedDate, "2026-07-13");
-  assert.equal(phoneticBenchmarkMetadata.coveredThroughDate, "2026-07-12");
+  assert.equal(phoneticBenchmarkMetadata.updatedDate, "2026-07-22");
+  assert.equal(phoneticBenchmarkMetadata.coveredThroughDate, "2026-07-22");
   assert.deepEqual(phoneticBenchmarkMetadata.coveredBenchmarkVersions, [
     "v1",
     "v2",
   ]);
   assert.equal(phoneticBenchmarkMetadata.currentBenchmarkVersion, "v2");
-  assert.equal(results.runs.length, 41);
-  assert.equal(results.benchmark.coveredThroughDate, "2026-07-12");
+  assert.equal(results.runs.length, 43);
+  assert.equal(results.benchmark.coveredThroughDate, "2026-07-22");
   assert.deepEqual(results.benchmark.coveredBenchmarkVersions, ["v1", "v2"]);
   assert.equal(results.benchmark.currentBenchmarkVersion, "v2");
 
@@ -788,7 +802,7 @@ test("benchmark publication metadata derives coverage and avoids inferred infere
 
 test("benchmark publication facts stay synchronized across narrative, JSON, CSV, and markdown", () => {
   assert.deepEqual(phoneticBenchmarkPublicationStats, {
-    totalRunCount: 41,
+    totalRunCount: 43,
     v1: {
       runCount: 15,
       statusCounts: {
@@ -826,23 +840,23 @@ test("benchmark publication facts stay synchronized across narrative, JSON, CSV,
       ],
     },
     v2: {
-      runCount: 26,
+      runCount: 28,
       statusCounts: {
         comparable: 8,
-        contractFailing: 18,
+        contractFailing: 20,
         unrunnable: 0,
       },
       failureTypeCounts: {
-        "core behavior": 12,
+        "core behavior": 13,
         "submission documentation": 6,
-        attribution: 14,
+        attribution: 15,
         localization: 2,
         "test workflow": 4,
         "unrunnable output": 1,
       },
-      sourceLoc: 30362,
-      staticTestCount: 612,
-      recordedTestEvidenceCount: 26,
+      sourceLoc: 34245,
+      staticTestCount: 717,
+      recordedTestEvidenceCount: 28,
       comparativeScoreCount: 8,
       comparableRunIds: [
         "owl-alpha-v2",
@@ -881,15 +895,15 @@ test("benchmark publication facts stay synchronized across narrative, JSON, CSV,
   assert.equal(csvRows.length, phoneticBenchmarkPublicationStats.totalRunCount);
   assert.match(
     phoneticBenchmarkReports.en.summary,
-    /41 archived web applications/,
+    /43 archived web applications/,
   );
   assert.match(
     phoneticBenchmarkReports.en.summary,
-    /18 other outputs remain inspectable failures/,
+    /20 other outputs remain inspectable failures/,
   );
   assert.match(
     phoneticBenchmarkReports.pl.summary,
-    /41 archiwalnych aplikacji webowych/,
+    /43 archiwalnych aplikacji webowych/,
   );
   assert.deepEqual(
     phoneticBenchmarkReports.en.spotlights[0].runIds,
@@ -985,9 +999,9 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
   );
   assert.deepEqual(results.benchmark.coveredBenchmarkVersions, ["v1", "v2"]);
   assert.equal(results.benchmark.currentBenchmarkVersion, "v2");
-  assert.equal(results.runs.length, 41);
+  assert.equal(results.runs.length, 43);
   assert.deepEqual(
-    results.runs.slice(0, 26).map((run) => run.id),
+    results.runs.slice(0, 28).map((run) => run.id),
     [
       "big-pickle-v2",
       "deepseek-v4-flash-v2",
@@ -1015,6 +1029,8 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
       "gpt-5-6-sol-v2",
       "gpt-5-6-terra-v2",
       "gpt-5-6-luna-v2",
+      "kimi-k3-v2",
+      "grok-4-5-v2",
     ],
   );
   results.runs.forEach((run) => {
@@ -1163,6 +1179,14 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
     "4 framework-style static cases; controlled runner reported 4 passed, 0 failed",
   );
   assert.equal(
+    results.runs.find((run) => run.id === "kimi-k3-v2")?.testEvidence,
+    "72 framework-style static cases; controlled runner reported 72 passed, 0 failed",
+  );
+  assert.equal(
+    results.runs.find((run) => run.id === "grok-4-5-v2")?.testEvidence,
+    "33 framework-style static cases; local disposable-copy run reported 33 passed, 0 failed; controlled runner blocked by review environment Docker/network limits",
+  );
+  assert.equal(
     results.runs.find((run) => run.id === "owl-alpha-v2")?.comparativeScore,
     87,
   );
@@ -1173,9 +1197,9 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
 
   const csvLines = csvContent.trimEnd().split("\n");
 
-  assert.equal(csvLines.length, 42);
+  assert.equal(csvLines.length, 44);
   assert.deepEqual(
-    csvLines.slice(1, 27).map((line) => line.split(",")[0]),
+    csvLines.slice(1, 29).map((line) => line.split(",")[0]),
     [
       "big-pickle-v2",
       "deepseek-v4-flash-v2",
@@ -1203,6 +1227,8 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
       "gpt-5-6-sol-v2",
       "gpt-5-6-terra-v2",
       "gpt-5-6-luna-v2",
+      "kimi-k3-v2",
+      "grok-4-5-v2",
     ],
   );
   assert.match(
@@ -1304,6 +1330,14 @@ test("benchmark JSON and CSV exports publish one neutral record per run", () => 
   assert.match(
     csvContent,
     /gpt-5-6-luna-v2,26,GPT 5\.6 Luna High,2026-07-12,v2,contract-failing,core behavior \| attribution \| submission documentation,600,4,"4 framework-style static cases; controlled runner reported 4 passed, 0 failed",,/,
+  );
+  assert.match(
+    csvContent,
+    /kimi-k3-v2,27,Kimi K3,2026-07-22,v2,contract-failing,attribution,1959,72,"72 framework-style static cases; controlled runner reported 72 passed, 0 failed",,/,
+  );
+  assert.match(
+    csvContent,
+    /grok-4-5-v2,28,Grok 4\.5 High,2026-07-22,v2,contract-failing,core behavior,1924,33,"33 framework-style static cases; local disposable-copy run reported 33 passed, 0 failed; controlled runner blocked by review environment Docker\/network limits",,/,
   );
   assert.doesNotMatch(
     csvLines[0],
@@ -1443,7 +1477,7 @@ test("methodology and every run record have generated markdown discovery surface
 
 test("benchmark galleries expose versioned screenshots and explicit demo links", () => {
   for (const gallery of Object.values(phoneticBenchmarkGalleries)) {
-    assert.equal(gallery.runs.length, 41);
+    assert.equal(gallery.runs.length, 43);
     assert.deepEqual(
       gallery.resultGroups.map((group) => group.benchmarkVersion),
       ["v2", "v1"],
@@ -1458,7 +1492,7 @@ test("benchmark galleries expose versioned screenshots and explicit demo links",
       gallery.runs
         .filter((run) => run.benchmarkVersion === "v2")
         .map((run) => run.executionOrder),
-      Array.from({ length: 26 }, (_, index) => index + 1),
+      Array.from({ length: 28 }, (_, index) => index + 1),
     );
 
     gallery.runs.forEach((run) => {

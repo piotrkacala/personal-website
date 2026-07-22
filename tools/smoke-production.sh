@@ -135,13 +135,17 @@ for file in "$tmp_dir/en.html" "$tmp_dir/pl.html" "$tmp_dir/en.md" "$tmp_dir/pl.
   fi
 done
 
-assert_contains "$tmp_dir/benchmark.html" "41 archived web applications"
+assert_contains "$tmp_dir/benchmark.html" "43 archived web applications"
 assert_contains "$tmp_dir/benchmark.html" "GPT 5.6 Sol"
 assert_contains "$tmp_dir/benchmark.html" "GPT 5.6 Terra"
 assert_contains "$tmp_dir/benchmark.html" "GPT 5.6 Luna"
+assert_contains "$tmp_dir/benchmark.html" "Kimi K3"
+assert_contains "$tmp_dir/benchmark.html" "Grok 4.5 High"
 assert_contains "$tmp_dir/results.json" '"id": "gpt-5-6-sol-v2"'
 assert_contains "$tmp_dir/results.json" '"comparativeScore": 94'
 assert_contains "$tmp_dir/results.csv" 'gpt-5-6-luna-v2'
+assert_contains "$tmp_dir/results.csv" 'kimi-k3-v2'
+assert_contains "$tmp_dir/results.csv" 'grok-4-5-v2'
 assert_matches "$tmp_dir/results-json.headers" '^content-type: application/json(; charset=(UTF-8|utf-8))?'
 assert_matches "$tmp_dir/results-csv.headers" '^content-type: text/csv; charset=(UTF-8|utf-8)'
 assert_matches "$tmp_dir/400m.headers" '^content-type: text/html; charset=(UTF-8|utf-8)'
