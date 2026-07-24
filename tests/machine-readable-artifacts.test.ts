@@ -367,12 +367,16 @@ test("consulting markdown publishes the localized offer from shared copy", () =>
 
 test("llms-full.txt carries the consolidated public references", () => {
   const content = getArtifactContent("/llms-full.txt");
+  const englishConsulting = getArtifactContent("/consulting.md").trimEnd();
+  const polishConsulting = getArtifactContent("/pl/consulting.md").trimEnd();
 
   assert.match(content, /^# Piotr Kacała — Full Public Site Context$/m);
   assert.match(content, /^## English homepage$/m);
   assert.match(content, /^## Polish homepage$/m);
   assert.match(content, /^## English consulting$/m);
   assert.match(content, /^## Polish consulting$/m);
+  assert.ok(content.includes(englishConsulting));
+  assert.ok(content.includes(polishConsulting));
   assert.match(content, /^## Public references$/m);
   assert.match(content, /^## Canonical summary$/m);
   assert.match(
@@ -1539,6 +1543,14 @@ test("static discovery files include consulting, report, and gallery paths", () 
   assert.match(
     llms,
     /^- Consulting: https:\/\/piotrkacala\.pl\/consulting\/$/m,
+  );
+  assert.match(
+    llms,
+    /^- Polish consulting: https:\/\/piotrkacala\.pl\/pl\/consulting\/$/m,
+  );
+  assert.match(
+    llms,
+    /^- Consulting markdown: https:\/\/piotrkacala\.pl\/consulting\.md$/m,
   );
   assert.match(
     llms,
