@@ -39,8 +39,9 @@ reads the focused consulting offer → optionally returns to selected work → c
 - Phonetic Benchmark has a dedicated entry with report, gallery, methodology, and package links.
 - Machine-readable artifacts preserve the same framing as the HTML homepage.
 - Contact action is clear and requires no explanation.
-- Consulting visitors can understand the low-friction scoping entry point and the path from scope
-  to delivery without turning the homepage into a services landing page.
+- Consulting visitors can understand the bounded project offer, the free-contact versus
+  paid-definition boundary, and the path to an agreed delivery point without turning the homepage
+  into a services landing page.
 - Site loads fast and reads correctly on mobile.
 
 ## Current Public Scope

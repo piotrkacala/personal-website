@@ -167,11 +167,11 @@ export const en = {
     metadata: {
       title: "Consulting | Piotr Kacała",
       description:
-        "Product consulting and software delivery for founders and small teams, with clear human ownership of product decisions, system boundaries, review, and outcomes.",
+        "Delivery of bounded web projects for founders and small teams, from first-version definition to an agreed completion point.",
       openGraph: {
         title: "Consulting | Piotr Kacała",
         description:
-          "Product consulting and software delivery with clear ownership of product decisions, system boundaries, review, and outcomes.",
+          "One accountable owner for a bounded web project, from first-version definition to an agreed completion point.",
         type: "website",
         locale: "en_US",
         siteName: "Piotr Kacała",
@@ -185,63 +185,125 @@ export const en = {
       },
     },
     eyebrow: "Consulting",
-    title: "From rough product idea to shipped software.",
+    title: "One accountable owner from definition to delivery.",
     intro:
-      "I work with founders and small teams that need to turn an idea into a usable product without assembling a full product team. I take responsibility for shaping the scope, making product decisions within it, and carrying the delivery loop: specification, system boundaries, review, integration, deployment, and iteration.",
+      "I work with founders, business owners, and small teams that have a concrete project but do not want to assemble and coordinate a temporary product team. I define a realistic first version, build and verify it, and carry the work to the delivery boundary agreed for the engagement.",
     homeLabel: "Back to homepage",
-    scope: {
-      heading: "Start with the scope",
-      paragraphs: [
-        "If the idea is still rough, the first useful step is a focused product scoping pass with a defined outcome. The goal is not to produce a large strategy document. It is to make the project concrete enough to build. It may also identify early that the project should not be built yet.",
-        "If you already have a clear brief, we can go directly to build planning.",
-      ],
-      deliverablesHeading: "The scoping pass produces:",
-      deliverables: [
-        "practical product brief",
-        "focused initial scope and explicit list of things to leave for later",
-        "key user flows, constraints, and risks",
-        "recommended next step",
-        "architecture notes and implementation outline when the idea is ready to build",
+    projectExamples: {
+      heading: "Projects this model fits",
+      intro:
+        "The best fit is a bounded web project with a concrete business purpose, accessible domain knowledge, and room to make the decisions needed for delivery.",
+      items: [
+        {
+          heading: "Internal workflow tools",
+          body: "Applications that replace spreadsheets, email coordination, repetitive administration, or other manual processes. This can include operational interfaces, dashboards, and custom data processing.",
+        },
+        {
+          heading: "Bounded web platforms",
+          body: "Client, contractor, or partner portals with accounts, roles, data storage, file exchange, and administrative views. The first version is deliberately scoped so it can be delivered and verified before the product expands.",
+        },
+        {
+          heading: "Product and company websites",
+          body: "Product, campaign, company, or service websites where delivery may also include deployment, hosting guidance, and focused support with product presentation.",
+        },
       ],
     },
-    delivery: {
-      heading: "From scope to delivery",
+    clientValue: {
+      heading: "One owner of the project context and delivery path",
       paragraphs: [
-        "If the project is a good fit, I can continue through the full delivery loop: specification, implementation, testing, deployment, and iteration. This works best for prototypes, internal tools, automations, and first production versions where one person needs to carry the product context end to end.",
+        "I keep the intended result, scope, system boundaries, implementation, and direct product verification connected throughout the project. You do not need to turn the work into a ticket queue or coordinate several contractors yourself.",
+      ],
+      items: [
+        "a realistic first version and explicit exclusions",
+        "one accountable owner of product context and delivery decisions",
+        "implementation, review, testing, and direct verification of the product",
+        "clear communication of progress, blockers, decisions, and risk",
+        "delivery to a boundary agreed before the relevant stage begins",
+      ],
+      specialistBoundary:
+        "Having one accountable owner does not mean one person replaces every specialist. Independent QA, security, reliability, infrastructure, legal, or compliance input is added when the project's risk requires it.",
+    },
+    engagement: {
+      heading: "From first contact to an agreed result",
+      steps: [
+        {
+          heading: "1. Check the fit",
+          paragraphs: [
+            "The first contact is free. You do not need a complete brief. We establish what you want to achieve, what exists today, the main uncertainties, and whether there is a responsible path to delivery.",
+          ],
+        },
+        {
+          heading: "2. Define the first version",
+          paragraphs: [
+            "If the result is already clear enough, definition can be included in the full project proposal. If substantial uncertainty must be resolved before scope and pricing can be set responsibly, I may recommend a separate paid definition stage.",
+          ],
+          deliverables: [
+            "a practical product brief",
+            "the first scope and an explicit list of things left for later",
+            "main user scenarios, constraints, exclusions, and risks",
+            "a recommended implementation and delivery path",
+          ],
+        },
+        {
+          heading: "3. Build, verify, and deliver",
+          paragraphs: [
+            "Once both sides confirm what completion means, I implement the agreed scope, review and test the result, show working software at useful points, and carry it to the agreed delivery boundary.",
+          ],
+        },
+      ],
+    },
+    pricingDelivery: {
+      heading: "Price follows a defined result",
+      paragraphs: [
+        "A project or stage can receive a fixed price when both sides have confirmed what completion means. When practical, I provide an indicative overall range before paid work begins. Later stages can become more precise after definition. New or changed requirements may affect time and price.",
+        "The agreed completion point may be working code handed to your team, a deployed application, or deployment with a short stabilization period. The engagement can also transition into continued development. Before work begins, we establish who is responsible for hosting, third-party services, deployment, access, and ongoing operation.",
+        "Maintenance and continued development are optional. They are discussed after the product's operating needs are known rather than included automatically.",
+      ],
+    },
+    collaboration: {
+      heading: "Async-first, with useful visibility",
+      paragraphs: [
+        "I work independently and provide clear progress summaries. Blocking decisions are separated from normal updates, and working versions or demonstrations are used when they help review the result.",
+        "The model works when the right decision maker is accessible, domain knowledge is available, and the client can provide the content, data, access, and feedback needed for delivery.",
       ],
     },
     ai: {
-      heading: "AI is the implementation method",
+      heading: "AI supports the delivery method",
       paragraphs: [
-        "AI agents generate implementation. I remain responsible for the product decisions, system boundaries, review, integration, and outcome. The working interface changed; the ownership did not.",
-        "If AI belongs inside the product itself, I also help define the model's role: what it should do, what it must not decide, which tools it can use, what it may persist, and which guardrails shape the experience.",
+        "AI agents are the implementation interface. I remain responsible for product decisions, system boundaries, review, and outcome. The client buys the result and the accountability behind it, not access to an internal AI workflow.",
+        "If AI belongs inside the product, its role still needs explicit boundaries: what it may do, what it must not decide, which tools it can use, what data it may retain, and how its behavior is verified.",
       ],
     },
     fit: {
       goodHeading: "Good fit",
       goodItems: [
-        "founders at an early stage with a product idea that needs structure",
-        "small companies without a full product team",
-        "prototypes, internal tools, automations, and first production versions",
-        "work where ownership and practical decisions matter more than filling a ticket queue",
+        "a concrete business objective and a bounded web project or first version",
+        "accessible decision makers and domain experts",
+        "willingness to prioritize and leave lower-value scope for later",
+        "clear responsibility for scope approval and acceptance",
+        "a result that can be delivered and verified in meaningful stages",
+        "technical and operational risk that is understood, bounded, or supported by the right specialist",
       ],
       notHeading: "Not a fit",
       notItems: [
-        "narrow staff augmentation",
-        "execution limited to tickets without product context",
-        "projects that mainly require deep specialization in one framework",
-        "responsibility for outcomes without authority to make the decisions needed to deliver them",
+        "joining an existing ticket queue as a missing developer",
+        "responsibility for the result without enough authority to make delivery decisions",
+        "projects that depend on extensive coordination across several teams",
+        "work that primarily requires specialist security, compliance, reliability, or infrastructure expertise unless the right support can be added",
       ],
     },
-    selectedWork: {
-      heading: "Selected work",
-      body: `The homepage links to a released browser extension, a public repository with readable documentation, a local-first utility, and a task-specific coding-agent benchmark with ${phoneticBenchmarkPublicationStats.totalRunCount} inspectable outputs.`,
+    evidence: {
+      heading: "Evidence behind the offer",
+      paragraphs: [
+        "I have worked in IT since 2013 across development, product, QA, design, delivery, and client work. My earlier consulting practice grew through repeat clients and referrals, including periods when I carried both the client relationship and delivery independently.",
+        `My public work provides a different kind of evidence: released browser products, useful small web applications, open repositories, tests, delivery documentation, and a published coding-agent evaluation with ${phoneticBenchmarkPublicationStats.totalRunCount} inspectable outputs.`,
+      ],
       linkLabel: "See selected work",
       href: "/#projects",
     },
     contact: {
-      heading: "Start a conversation",
-      body: "Send a short note: what needs to be built, who it is for, and what exists today.",
+      heading: "Tell me what you want to achieve",
+      body: "Write briefly what result you need and what exists today. I will tell you whether the project fits and what next step makes sense.",
       email: "kontakt@piotrkacala.pl",
     },
   },

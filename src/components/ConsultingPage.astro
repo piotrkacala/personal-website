@@ -6,11 +6,14 @@ interface Props {
 }
 
 const { copy } = Astro.props;
-const scopeHeadingId = "consulting-scope";
-const deliveryHeadingId = "consulting-delivery";
+const examplesHeadingId = "consulting-examples";
+const clientValueHeadingId = "consulting-client-value";
+const engagementHeadingId = "consulting-engagement";
+const pricingDeliveryHeadingId = "consulting-pricing-delivery";
+const collaborationHeadingId = "consulting-collaboration";
 const aiHeadingId = "consulting-ai";
 const fitHeadingId = "consulting-fit";
-const selectedWorkHeadingId = "consulting-selected-work";
+const evidenceHeadingId = "consulting-evidence";
 const contactHeadingId = "consulting-contact";
 ---
 
@@ -21,18 +24,64 @@ const contactHeadingId = "consulting-contact";
     <p class="consulting-intro">{copy.intro}</p>
   </header>
 
-  <section class="consulting-section" aria-labelledby={scopeHeadingId}>
-    <h2 id={scopeHeadingId}>{copy.scope.heading}</h2>
-    {copy.scope.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
-    <p class="list-heading"><strong>{copy.scope.deliverablesHeading}</strong></p>
-    <ul>
-      {copy.scope.deliverables.map((deliverable) => <li>{deliverable}</li>)}
-    </ul>
+  <section class="consulting-section" aria-labelledby={examplesHeadingId}>
+    <h2 id={examplesHeadingId}>{copy.projectExamples.heading}</h2>
+    <p>{copy.projectExamples.intro}</p>
+    <div class="consulting-subsections">
+      {
+        copy.projectExamples.items.map((item) => (
+          <div class="consulting-subsection">
+            <h3>{item.heading}</h3>
+            <p>{item.body}</p>
+          </div>
+        ))
+      }
+    </div>
   </section>
 
-  <section class="consulting-section" aria-labelledby={deliveryHeadingId}>
-    <h2 id={deliveryHeadingId}>{copy.delivery.heading}</h2>
-    {copy.delivery.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+  <section class="consulting-section" aria-labelledby={clientValueHeadingId}>
+    <h2 id={clientValueHeadingId}>{copy.clientValue.heading}</h2>
+    {copy.clientValue.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    <ul>
+      {copy.clientValue.items.map((item) => <li>{item}</li>)}
+    </ul>
+    <p>{copy.clientValue.specialistBoundary}</p>
+  </section>
+
+  <section class="consulting-section" aria-labelledby={engagementHeadingId}>
+    <h2 id={engagementHeadingId}>{copy.engagement.heading}</h2>
+    <div class="consulting-subsections">
+      {
+        copy.engagement.steps.map((step) => (
+          <div class="consulting-subsection">
+            <h3>{step.heading}</h3>
+            {step.paragraphs.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+            {step.deliverables && (
+              <ul>
+                {step.deliverables.map((deliverable) => (
+                  <li>{deliverable}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section
+    class="consulting-section"
+    aria-labelledby={pricingDeliveryHeadingId}
+  >
+    <h2 id={pricingDeliveryHeadingId}>{copy.pricingDelivery.heading}</h2>
+    {copy.pricingDelivery.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+  </section>
+
+  <section class="consulting-section" aria-labelledby={collaborationHeadingId}>
+    <h2 id={collaborationHeadingId}>{copy.collaboration.heading}</h2>
+    {copy.collaboration.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
   </section>
 
   <section class="consulting-section" aria-labelledby={aiHeadingId}>
@@ -51,13 +100,16 @@ const contactHeadingId = "consulting-contact";
     </ul>
   </section>
 
-  <section class="consulting-section" aria-labelledby={selectedWorkHeadingId}>
-    <h2 id={selectedWorkHeadingId}>{copy.selectedWork.heading}</h2>
-    <p>{copy.selectedWork.body}</p>
-    <p><a href={copy.selectedWork.href}>{copy.selectedWork.linkLabel}</a></p>
+  <section class="consulting-section" aria-labelledby={evidenceHeadingId}>
+    <h2 id={evidenceHeadingId}>{copy.evidence.heading}</h2>
+    {copy.evidence.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    <p><a href={copy.evidence.href}>{copy.evidence.linkLabel}</a></p>
   </section>
 
-  <section class="consulting-section consulting-contact" aria-labelledby={contactHeadingId}>
+  <section
+    class="consulting-section consulting-contact"
+    aria-labelledby={contactHeadingId}
+  >
     <h2 id={contactHeadingId}>{copy.contact.heading}</h2>
     <p>{copy.contact.body}</p>
     <p>
@@ -102,9 +154,39 @@ const contactHeadingId = "consulting-contact";
     line-height: 1.5;
   }
 
-  .list-heading,
+  .consulting-header h1 {
+    max-width: 16ch;
+    font-size: clamp(2.35rem, 1.65rem + 3.5vw, 4.35rem);
+  }
+
   .fit-subheading {
     margin-top: calc(var(--spacing-rhythm) * 1.05);
+  }
+
+  .consulting-subsections {
+    margin-top: calc(var(--spacing-rhythm) * 0.95);
+  }
+
+  .consulting-subsection > * {
+    margin: 0;
+  }
+
+  .consulting-subsection > * + * {
+    margin-top: calc(var(--spacing-rhythm) * 0.42);
+  }
+
+  .consulting-subsection + .consulting-subsection {
+    margin-top: calc(var(--spacing-rhythm) * 0.95);
+  }
+
+  .consulting-subsection h3 {
+    max-width: 28ch;
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 1.12rem + 0.35vw, 1.45rem);
+    font-weight: 600;
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
   }
 
   .consulting-section ul {

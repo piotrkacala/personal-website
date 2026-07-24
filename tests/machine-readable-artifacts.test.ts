@@ -304,40 +304,64 @@ test("consulting markdown publishes the localized offer from shared copy", () =>
   const polish = getArtifactContent("/pl/consulting.md");
 
   assert.match(english, /^# Consulting \| Piotr Kacała$/m);
-  assert.match(english, /^## From rough product idea to shipped software\.$/m);
-  assert.match(english, /^## Start with the scope$/m);
-  assert.match(english, /^- practical product brief$/m);
-  assert.match(english, /^## From scope to delivery$/m);
-  assert.match(english, /^## AI is the implementation method$/m);
-  assert.match(english, /I remain responsible for the product decisions/);
+  assert.match(
+    english,
+    /^## One accountable owner from definition to delivery\.$/m,
+  );
+  assert.match(english, /^## Projects this model fits$/m);
+  assert.match(english, /^### Internal workflow tools$/m);
+  assert.match(
+    english,
+    /^## One owner of the project context and delivery path$/m,
+  );
+  assert.match(english, /^## From first contact to an agreed result$/m);
+  assert.match(english, /^### 2\. Define the first version$/m);
+  assert.match(english, /^- a practical product brief$/m);
+  assert.match(english, /separate paid definition stage/);
+  assert.match(english, /^## Price follows a defined result$/m);
+  assert.match(english, /^## Async-first, with useful visibility$/m);
+  assert.match(english, /^## AI supports the delivery method$/m);
+  assert.match(english, /I remain responsible for product decisions/);
   assert.match(english, /^## Good fit$/m);
   assert.match(english, /^## Not a fit$/m);
-  assert.match(english, /^## Selected work$/m);
+  assert.match(english, /^## Evidence behind the offer$/m);
   assert.match(
     english,
     /^See selected work: https:\/\/piotrkacala\.pl\/#projects$/m,
   );
-  assert.match(english, /^## Start a conversation$/m);
+  assert.match(english, /^## Tell me what you want to achieve$/m);
   assert.match(english, /^Email: kontakt@piotrkacala\.pl$/m);
 
   assert.match(polish, /^# Consulting \| Piotr Kacała$/m);
   assert.match(
     polish,
-    /^## Od niejasnego pomysłu do działającego produktu\.$/m,
+    /^## Jedna osoba odpowiada za projekt od określenia zakresu po realizację\.$/m,
   );
-  assert.match(polish, /^## Zacznijmy od zakresu$/m);
-  assert.match(polish, /^- praktyczny brief produktowy$/m);
-  assert.match(polish, /^## Od zakresu do wdrożenia$/m);
-  assert.match(polish, /^## AI jest metodą implementacji$/m);
-  assert.match(polish, /Ja nadal odpowiadam za decyzje produktowe/);
+  assert.match(polish, /^## Projekty pasujące do tego modelu$/m);
+  assert.match(polish, /^### Narzędzia do wewnętrznych procesów$/m);
+  assert.match(
+    polish,
+    /^## Jedna osoba odpowiedzialna za kontekst projektu i drogę do rezultatu$/m,
+  );
+  assert.match(
+    polish,
+    /^## Od pierwszego kontaktu do uzgodnionego rezultatu$/m,
+  );
+  assert.match(polish, /^### 2\. Zdefiniowanie pierwszej wersji$/m);
+  assert.match(polish, /^- praktyczny brief produktu$/m);
+  assert.match(polish, /osobny płatny etap doprecyzowania projektu/);
+  assert.match(polish, /^## Cena wynika z jasno określonego rezultatu$/m);
+  assert.match(polish, /^## Praca asynchroniczna, z jasnym wglądem w postęp$/m);
+  assert.match(polish, /^## AI wspiera metodę realizacji$/m);
+  assert.match(polish, /Nadal odpowiadam za decyzje produktowe/);
   assert.match(polish, /^## Dobre dopasowanie$/m);
   assert.match(polish, /^## Kiedy lepiej wybrać kogoś innego$/m);
-  assert.match(polish, /^## Wybrane projekty$/m);
+  assert.match(polish, /^## Dowody stojące za ofertą$/m);
   assert.match(
     polish,
     /^Zobacz wybrane projekty: https:\/\/piotrkacala\.pl\/pl\/#projects$/m,
   );
-  assert.match(polish, /^## Porozmawiajmy$/m);
+  assert.match(polish, /^## Napisz, co chcesz osiągnąć$/m);
   assert.match(polish, /^Email: kontakt@piotrkacala\.pl$/m);
 });
 

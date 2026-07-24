@@ -170,11 +170,11 @@ export const pl = {
     metadata: {
       title: "Consulting | Piotr Kacała",
       description:
-        "Consulting produktowy i realizacja oprogramowania dla founderów i małych zespołów, z jasną odpowiedzialnością za decyzje produktowe, granice systemu, review i rezultat.",
+        "Realizacja projektów webowych dla founderów i małych zespołów, od zdefiniowania pierwszej wersji do uzgodnionego rezultatu.",
       openGraph: {
         title: "Consulting | Piotr Kacała",
         description:
-          "Consulting produktowy i realizacja oprogramowania dla founderów i małych zespołów, z jasną odpowiedzialnością za decyzje, granice systemu, review i rezultat.",
+          "Jedna odpowiedzialna osoba prowadzi projekt webowy od zdefiniowania pierwszej wersji do uzgodnionego rezultatu.",
         type: "website",
         locale: "pl_PL",
         siteName: "Piotr Kacała",
@@ -188,63 +188,127 @@ export const pl = {
       },
     },
     eyebrow: "Consulting",
-    title: "Od niejasnego pomysłu do działającego produktu.",
+    title:
+      "Jedna osoba odpowiada za projekt od określenia zakresu po realizację.",
     intro:
-      "Pracuję z founderami i małymi zespołami, które chcą zamienić pomysł w użyteczny produkt bez budowania całego zespołu produktowego. Biorę odpowiedzialność za doprecyzowanie zakresu, decyzje produktowe w jego ramach i cały cykl realizacji: specyfikację, granice systemu, review, integrację, wdrożenie i iterację.",
+      "Pracuję z founderami, właścicielami firm i małymi zespołami, które mają konkretny projekt, ale nie chcą budować i koordynować tymczasowego zespołu produktowego. Definiuję realistyczną pierwszą wersję, buduję ją i sprawdzam, a następnie doprowadzam pracę do punktu uzgodnionego dla danego projektu lub etapu.",
     homeLabel: "Wróć na stronę główną",
-    scope: {
-      heading: "Zacznijmy od zakresu",
-      paragraphs: [
-        "Jeśli pomysł jest jeszcze nieprecyzyjny, pierwszym sensownym krokiem jest doprecyzowanie produktu z jasno określonym rezultatem. Celem nie jest duży dokument strategiczny. Chodzi o to, żeby projekt stał się wystarczająco konkretny do realizacji. Ten etap może też wcześnie pokazać, że jeszcze nie warto go budować.",
-        "Jeśli masz już konkretny brief, możemy od razu przejść do planu budowy.",
-      ],
-      deliverablesHeading: "Etap doprecyzowania obejmuje:",
-      deliverables: [
-        "praktyczny brief produktowy",
-        "ograniczony zakres pierwszej wersji i jawna lista rzeczy na później",
-        "najważniejsze user flows, ograniczenia i ryzyka",
-        "rekomendowany kolejny krok",
-        "notatki architektoniczne i zarys implementacji, jeśli pomysł jest gotowy do realizacji",
+    projectExamples: {
+      heading: "Projekty pasujące do tego modelu",
+      intro:
+        "Najlepszym dopasowaniem jest projekt webowy o określonym zakresie, z konkretnym celem biznesowym, dostępną wiedzą domenową i przestrzenią do podejmowania decyzji potrzebnych do realizacji.",
+      items: [
+        {
+          heading: "Narzędzia do wewnętrznych procesów",
+          body: "Aplikacje zastępujące arkusze, koordynację przez e-mail, powtarzalną administrację lub inne ręczne procesy. Mogą to być interfejsy operacyjne, dashboardy i rozwiązania do niestandardowego przetwarzania danych.",
+        },
+        {
+          heading: "Platformy webowe o określonym zakresie",
+          body: "Portale dla klientów, wykonawców lub partnerów, zawierające konta, role, przechowywanie danych, wymianę plików oraz widoki administracyjne. Zakres pierwszej wersji jest świadomie ograniczony, aby można ją było dostarczyć i sprawdzić przed dalszym rozwojem.",
+        },
+        {
+          heading: "Strony produktowe i firmowe",
+          body: "Strony produktu, kampanii, firmy lub usługi. Realizacja może też obejmować deploy, pomoc w wyborze hostingu i ukierunkowane wsparcie w prezentacji produktu.",
+        },
       ],
     },
-    delivery: {
-      heading: "Od zakresu do wdrożenia",
+    clientValue: {
+      heading:
+        "Jedna osoba odpowiedzialna za kontekst projektu i drogę do rezultatu",
       paragraphs: [
-        "Jeśli projekt jest dobrze dopasowany, mogę przeprowadzić go przez cały proces: specyfikację, implementację, testy, deploy i iterację. To podejście najlepiej sprawdza się przy prototypach, narzędziach wewnętrznych, automatyzacjach i pierwszych wersjach produkcyjnych, kiedy jedna osoba powinna trzymać kontekst produktu od początku do końca.",
+        "Utrzymuję połączenie między zamierzonym rezultatem, zakresem, granicami systemu, implementacją i bezpośrednim sprawdzeniem produktu. Nie musisz zamieniać pracy w kolejkę ticketów ani samodzielnie koordynować kilku wykonawców.",
+      ],
+      items: [
+        "realistyczna pierwsza wersja i jasno opisane elementy poza zakresem",
+        "jedna osoba odpowiedzialna za zachowanie kontekstu produktu i decyzje dotyczące realizacji",
+        "implementacja, review, testy i bezpośrednie sprawdzenie produktu",
+        "jasna komunikacja postępu, przeszkód, decyzji i ryzyka",
+        "doprowadzenie prac do punktu uzgodnionego przed rozpoczęciem danego etapu",
+      ],
+      specialistBoundary:
+        "Jedna odpowiedzialna osoba nie zastępuje każdego specjalisty. Niezależne QA oraz wsparcie z obszaru bezpieczeństwa, niezawodności, infrastruktury, prawa lub zgodności regulacyjnej są dodawane, kiedy wymaga tego ryzyko projektu.",
+    },
+    engagement: {
+      heading: "Od pierwszego kontaktu do uzgodnionego rezultatu",
+      steps: [
+        {
+          heading: "1. Sprawdzenie dopasowania",
+          paragraphs: [
+            "Pierwszy kontakt jest bezpłatny. Nie potrzebujesz kompletnego briefu. Ustalamy, co chcesz osiągnąć, co istnieje dzisiaj, gdzie znajdują się główne niewiadome i czy projekt ma realistyczną drogę do realizacji.",
+          ],
+        },
+        {
+          heading: "2. Zdefiniowanie pierwszej wersji",
+          paragraphs: [
+            "Jeśli rezultat jest już wystarczająco jasny, określenie pierwszej wersji może zostać włączone do oferty na cały projekt. Jeżeli przed rzetelnym ustaleniem zakresu i ceny trzeba rozstrzygnąć istotne niewiadome, mogę zaproponować osobny płatny etap doprecyzowania projektu.",
+          ],
+          deliverables: [
+            "praktyczny brief produktu",
+            "zakres pierwszej wersji i jawna lista rzeczy pozostawionych na później",
+            "główne scenariusze użytkownika, ograniczenia, wyłączenia i ryzyka",
+            "rekomendowana droga implementacji i realizacji",
+          ],
+        },
+        {
+          heading: "3. Budowa, weryfikacja i przekazanie",
+          paragraphs: [
+            "Gdy obie strony potwierdzą, co oznacza ukończenie, implementuję uzgodniony zakres, wykonuję review i testy, pokazuję działające oprogramowanie w użytecznych momentach i doprowadzam projekt do uzgodnionego punktu końcowego.",
+          ],
+        },
+      ],
+    },
+    pricingDelivery: {
+      heading: "Cena wynika z jasno określonego rezultatu",
+      paragraphs: [
+        "Dla projektu lub etapu mogę podać stałą cenę, gdy obie strony potwierdzą, co oznacza jego ukończenie. Jeśli jest to możliwe, przed rozpoczęciem płatnej pracy podaję orientacyjny przedział cenowy dla całości. Kolejne etapy mogą zostać wycenione dokładniej po doprecyzowaniu projektu. Nowe lub zmienione wymagania mogą wpłynąć na czas i cenę.",
+        "Uzgodnionym punktem końcowym może być przekazanie działającego kodu zespołowi klienta, wdrożona aplikacja albo wdrożenie z krótkim okresem stabilizacji. Współpraca może też przejść w dalszy rozwój produktu. Przed rozpoczęciem pracy ustalamy odpowiedzialność za hosting, usługi zewnętrzne, deploy, dostępy i bieżące działanie systemu.",
+        "Utrzymanie i dalszy rozwój są opcjonalne. Omawiamy je po poznaniu potrzeb operacyjnych produktu, zamiast automatycznie włączać je do każdego projektu.",
+      ],
+    },
+    collaboration: {
+      heading: "Praca asynchroniczna, z jasnym wglądem w postęp",
+      paragraphs: [
+        "Pracuję samodzielnie i przekazuję jasne podsumowania postępu. Pytania blokujące oddzielam od zwykłych aktualizacji, a działające wersje i demonstracje wykorzystuję wtedy, gdy pomagają ocenić rezultat.",
+        "Ten model działa, kiedy dostępne są właściwa osoba decyzyjna i wiedza domenowa, a klient może dostarczyć treści, dane, dostępy i informacje zwrotne potrzebne do realizacji.",
       ],
     },
     ai: {
-      heading: "AI jest metodą implementacji",
+      heading: "AI wspiera metodę realizacji",
       paragraphs: [
-        "Agenty AI generują implementację. Ja nadal odpowiadam za decyzje produktowe, granice systemu, review, integrację i rezultat. Zmienił się interfejs pracy, nie odpowiedzialność.",
-        "Jeśli AI ma być częścią samego produktu, pomagam też zaprojektować rolę modelu: co powinien robić, czego nie wolno mu rozstrzygać, z jakich narzędzi może korzystać, co może zapisywać i jakie guardrails kształtują doświadczenie użytkownika.",
+        "Agenty AI są interfejsem implementacji. Nadal odpowiadam za decyzje produktowe, granice systemu, review i rezultat. Klient kupuje rezultat oraz odpowiedzialność za jego dowiezienie, a nie dostęp do mojego wewnętrznego sposobu pracy z AI.",
+        "Jeżeli AI ma być częścią produktu, jego rola nadal potrzebuje jawnych granic: co model może robić, czego nie powinien rozstrzygać, z jakich narzędzi może korzystać, co może zapisywać i jak jego zachowanie będzie sprawdzane.",
       ],
     },
     fit: {
       goodHeading: "Dobre dopasowanie",
       goodItems: [
-        "founderzy na wczesnym etapie z pomysłem, który potrzebuje struktury",
-        "małe firmy bez pełnego zespołu produktowego",
-        "prototypy, narzędzia wewnętrzne, automatyzacje i pierwsze wersje produkcyjne",
-        "praca, w której liczą się odpowiedzialność i praktyczne decyzje, a nie realizacja kolejki ticketów",
+        "konkretny cel biznesowy i projekt webowy o określonym zakresie lub pierwsza wersja",
+        "dostępne osoby decyzyjne i eksperci domenowi",
+        "gotowość do priorytetyzacji i pozostawienia mniej wartościowego zakresu na później",
+        "jasna odpowiedzialność za zatwierdzenie zakresu i odbiór rezultatu",
+        "rezultat możliwy do dostarczenia i sprawdzenia w sensownych etapach",
+        "ryzyko techniczne i operacyjne, które jest zrozumiane, ograniczone lub wsparte przez właściwego specjalistę",
       ],
       notHeading: "Kiedy lepiej wybrać kogoś innego",
       notItems: [
-        "staff augmentation bez szerszej odpowiedzialności",
-        "realizacja samych ticketów bez kontekstu produktowego",
-        "projekty wymagające przede wszystkim głębokiej specjalizacji w jednym frameworku",
-        "odpowiedzialność za rezultat bez uprawnień do podejmowania decyzji potrzebnych do jego dostarczenia",
+        "dołączenie do istniejącej kolejki ticketów w roli brakującego developera",
+        "odpowiedzialność za rezultat bez wystarczającego wpływu na decyzje dotyczące realizacji",
+        "projekty wymagające rozbudowanej koordynacji między kilkoma zespołami",
+        "praca wymagająca specjalistycznej wiedzy z obszaru bezpieczeństwa, zgodności regulacyjnej, niezawodności lub infrastruktury bez możliwości włączenia odpowiedniego wsparcia",
       ],
     },
-    selectedWork: {
-      heading: "Wybrane projekty",
-      body: `Strona główna prowadzi do opublikowanego rozszerzenia, publicznego repozytorium z czytelną dokumentacją, local-first narzędzia i zadaniowego benchmarku agentów programistycznych z ${phoneticBenchmarkPublicationStats.totalRunCount} wynikami, które można samodzielnie sprawdzić.`,
+    evidence: {
+      heading: "Dowody stojące za ofertą",
+      paragraphs: [
+        "Pracuję w IT od 2013 roku, łącząc doświadczenie w developmencie, produkcie, QA, designie, realizacji i pracy z klientem. Wcześniej moja działalność doradcza rozwijała się dzięki wracającym klientom i poleceniom, również w okresach, gdy samodzielnie odpowiadałem jednocześnie za relację z klientem i realizację.",
+        `Moje publiczne projekty pokazują ten sposób pracy z innej strony: publicznie dostępne narzędzia przeglądarkowe, małe użyteczne aplikacje webowe, otwarte repozytoria, testy, dokumentację realizacji oraz udokumentowaną ewaluację agentów programistycznych z ${phoneticBenchmarkPublicationStats.totalRunCount} rezultatami, które można samodzielnie sprawdzić.`,
+      ],
       linkLabel: "Zobacz wybrane projekty",
       href: "/pl/#projects",
     },
     contact: {
-      heading: "Porozmawiajmy",
-      body: "Napisz krótko: co chcesz zbudować, dla kogo i co istnieje dzisiaj.",
+      heading: "Napisz, co chcesz osiągnąć",
+      body: "Opisz krótko, jakiego rezultatu potrzebujesz i co istnieje dzisiaj. Powiem Ci, czy projekt jest dobrze dopasowany i jaki kolejny krok ma sens.",
       email: "kontakt@piotrkacala.pl",
     },
   },

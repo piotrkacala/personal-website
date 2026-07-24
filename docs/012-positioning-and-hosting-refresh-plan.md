@@ -36,8 +36,8 @@ exact migration date should not be stated unless it is verified.
 
 ### 1. Responsibility-first positioning
 
-- Replace hero-first or profile-first `zero-code` framing with the canonical responsibility
-  statement above.
+- Replace the earlier hero-first or profile-first absence framing with the canonical responsibility
+  statement above and describe the current delivery model as `agent-first`.
 - Explain AI as the implementation method, not the professional identity.
 - Preserve the underlying distinction: agents may generate implementation, while the human owns
   product decisions, system boundaries, review, integration, and outcome.

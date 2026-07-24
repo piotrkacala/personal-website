@@ -56,13 +56,33 @@ export interface ConsultingCopy {
   title: string;
   intro: string;
   homeLabel: string;
-  scope: {
+  projectExamples: {
+    heading: string;
+    intro: string;
+    items: readonly {
+      heading: string;
+      body: string;
+    }[];
+  };
+  clientValue: {
     heading: string;
     paragraphs: readonly string[];
-    deliverablesHeading: string;
-    deliverables: readonly string[];
+    items: readonly string[];
+    specialistBoundary: string;
   };
-  delivery: {
+  engagement: {
+    heading: string;
+    steps: readonly {
+      heading: string;
+      paragraphs: readonly string[];
+      deliverables?: readonly string[];
+    }[];
+  };
+  pricingDelivery: {
+    heading: string;
+    paragraphs: readonly string[];
+  };
+  collaboration: {
     heading: string;
     paragraphs: readonly string[];
   };
@@ -76,9 +96,9 @@ export interface ConsultingCopy {
     notHeading: string;
     notItems: readonly string[];
   };
-  selectedWork: {
+  evidence: {
     heading: string;
-    body: string;
+    paragraphs: readonly string[];
     linkLabel: string;
     href: string;
   };

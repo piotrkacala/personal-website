@@ -29,7 +29,7 @@ professional identity.
 - AI agents are the implementation interface. Piotr owns the product decisions, system boundaries,
   review, integration, and outcome.
 
-**Career direction:** The natural profile is a "mini firm" — product decisions, real problem solving, UX, design, outcome delivery, without a team. Most probable trajectory: consulting as the base, own products as the long-term bet. Employment for the right early-stage startup (founding engineer, AI product role).
+**Professional direction:** The natural profile is an accountable owner of product context and delivery decisions across product, UX, implementation, review, and release. This does not replace independent QA, security review, or specialist expertise where risk requires them. Independent project delivery through consulting and own products is the primary direction; selected early-stage founding-engineer or AI-product roles may also fit.
 
 **Job title:** Product Builder. "Engineer" implies writing code. "Builder" means someone who sees a project through to the end. AI is the method, not the identity.
 
@@ -266,15 +266,23 @@ The dedicated bilingual consulting surface lives at `/consulting/` and `/pl/cons
 focused next-step page for visitors with a relevant need, not the beginning of a general services
 section or publishing system.
 
-The offer leads with product clarity and delivery:
+The offer leads with bounded delivery rather than a standalone scoping package:
 
-- a short fixed-scope product scoping pass when the idea is still rough
-- direct build planning when the client already has a clear brief
-- end-to-end specification, implementation, testing, deployment, and iteration when the project
-  fits
-- AI agents as the implementation method, with human ownership of product decisions, boundaries,
-  review, integration, and outcomes; model role design is included when AI belongs inside
-  the product itself
+- one accountable owner retains project context and delivery decisions from first-version
+  definition to an agreed completion point
+- internal workflow tools and bounded web platforms lead the project examples; product and company
+  websites remain valid but secondary
+- the first contact is free; substantial uncertainty may require a separate paid definition stage
+- pricing follows an agreed result or stage rather than an open ticket queue
+- delivery, optional maintenance, and operational responsibility are agreed for the specific
+  project
+- project fit depends on accessible decisions and a responsible technical and operational risk
+  boundary
+- AI agents are the implementation interface, with human ownership of product decisions, system
+  boundaries, review, and outcome
+
+Do not publish a standard price range, minimum budget, delivery duration, response-time commitment,
+maintenance level, or contract mechanics until real engagement evidence supports durable defaults.
 
 The finalized localized public strings live in `src/i18n/en.ts` and `src/i18n/pl.ts`.
 

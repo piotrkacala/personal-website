@@ -138,13 +138,13 @@ A Polish version is a different audience segment, not just a translation. Polish
 **Status:** Accepted
 
 **Context:**
-The site is being built to demonstrate AI-assisted zero-code development methodology, not just to present a personal profile.
+The site is being built to demonstrate an AI-assisted, agent-first delivery methodology, not just to present a personal profile.
 
 **Decision:**
 The site and its repo are both intentionally public-facing portfolio artifacts. The repo is designed to be read: public commit history, `AGENTS.md`, spec docs in `docs/`, meaningful commit messages. The site content references the methodology; the repo shows the methodology in practice.
 
 **Reasoning:**
-A visitor who only reads the site gets a profile. A visitor who opens the repo gets a demonstration of how the work was done — docs-driven, agent-assisted, zero-code. These two layers reinforce each other. The repo must therefore be maintained to the same quality standard as the site: no `wip` commits, no placeholder files left in, `AGENTS.md` kept accurate.
+A visitor who only reads the site gets a profile. A visitor who opens the repo gets a demonstration of how the work was done: docs-driven, agent-first, and reviewable. These two layers reinforce each other. The repo must therefore be maintained to the same quality standard as the site: no `wip` commits, no placeholder files left in, `AGENTS.md` kept accurate.
 
 ---
 
@@ -400,3 +400,47 @@ case study. ADR-018 remains as the historical record of the earlier publication 
 Public proof should remain inspectable, current, and approved for publication. Removing a retired
 private project is clearer than preserving claims that readers cannot independently verify or that
 no longer belong in the public portfolio.
+
+---
+
+## ADR-021 — Consulting leads with bounded project delivery
+
+**Date:** 2026-07-24
+**Status:** Accepted
+
+**Context:**
+ADR-017 established a focused bilingual consulting surface and treated a standalone product-scoping
+pass as the default starting engagement. Further offer work showed that this made a definition phase
+look like the primary service instead of one part of delivering a bounded project.
+
+The current offer needs to explain enough for a suitable client to self-select without inventing
+standard pricing, delivery, maintenance, response-time, or contract mechanics before the offer has
+current market evidence.
+
+**Decision:**
+The consulting surface leads with delivery of bounded web projects from first-version definition to
+an agreed completion point.
+
+The public page explains:
+
+- the project shapes that fit the model
+- what the client buys from one accountable owner
+- the free first contact and the possible paid-definition boundary
+- result- or stage-based pricing without public price ranges
+- project-specific delivery, maintenance, and operational responsibility
+- the async-first collaboration model
+- good and poor fit based on decision access and technical or operational risk
+- relevant client-trust and public-work evidence
+
+Product definition remains part of the delivery path. It becomes a separate paid stage only when
+substantial uncertainty must be resolved before responsible scope or pricing. AI remains a
+supporting implementation method rather than the service category.
+
+The page stays a focused static next-step surface. It does not add a services block to the homepage,
+a pricing table, standard service packages, a contact form, a CMS, or a general content system.
+
+**Reasoning:**
+A bounded delivery offer matches the underlying responsibility model more closely than a
+scoping-first package. It gives the client one coherent result, keeps definition available when
+uncertainty makes it necessary, and preserves room to set real commercial and operating terms for
+the specific engagement.

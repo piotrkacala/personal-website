@@ -41,6 +41,9 @@ Versioned record of executable work, follow-up tasks, and ideas. This file is th
 
 ## Done
 
+- [x] Consulting surface revised around bounded project delivery, including EN/PL HTML,
+      machine-readable artifacts, project fit, paid-definition boundary, and local desktop/mobile
+      review (2026-07-24)
 - [x] Benchmark publication source reconciled across 41 runs, including the four newest v2 results,
       with cross-format JSON, CSV, Markdown, narrative, evidence, and score checks (2026-07-13)
 - [x] Homepage, consulting, and benchmark layouts inspected in Chromium at desktop and mobile sizes;
