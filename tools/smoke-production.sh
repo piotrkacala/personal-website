@@ -106,13 +106,13 @@ assert_contains "$tmp_dir/en.html" "I own the product decisions, system boundari
 assert_contains "$tmp_dir/pl.html" "Ja odpowiadam za decyzje produktowe, granice systemu, review i rezultat."
 
 for file in "$tmp_dir/consulting-en.html" "$tmp_dir/consulting-en.md" "$tmp_dir/llms-full.txt"; do
-  assert_contains "$file" "From rough product idea to shipped software."
-  assert_contains "$file" "Start with the scope"
+  assert_contains "$file" "One accountable owner from definition to delivery."
+  assert_contains "$file" "One owner of the project context and delivery path"
 done
 
 for file in "$tmp_dir/consulting-pl.html" "$tmp_dir/consulting-pl.md" "$tmp_dir/llms-full.txt"; do
-  assert_contains "$file" "Od niejasnego pomysłu do działającego produktu."
-  assert_contains "$file" "Zacznijmy od zakresu"
+  assert_contains "$file" "Jedna osoba odpowiada za projekt od określenia zakresu po realizację."
+  assert_contains "$file" "Jedna osoba odpowiedzialna za kontekst projektu i drogę do rezultatu"
 done
 
 for path in /consulting/ /pl/consulting/ /consulting.md /pl/consulting.md; do
