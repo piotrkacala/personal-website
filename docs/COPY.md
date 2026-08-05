@@ -11,7 +11,8 @@ The summary below contains everything needed to write website copy.
 
 **Background:** In IT since 2013 (building web pages since ~2000). Full stack JavaScript. Never identified as a tool-specific developer — rode every technology shift without resistance. Wore many hats: development, design, product, QA. Self-taught. Before IT: ran a business in trade — understands budgets, costs, and when to stop.
 
-**Current position:** AI agents are the implementation interface. Piotr owns the product decisions,
+**Current position:** Piotr personally implements and ships the software, using AI coding agents
+inside his engineering workflow. He works directly in the codebase and owns the product decisions,
 system boundaries, review, integration, and outcome. AI is the implementation method, not the
 professional identity.
 
@@ -26,12 +27,15 @@ professional identity.
 - AI compressed the technical timeline by an order of magnitude. But the human timeline (decisions, feedback, priorities) stayed the same. The bottleneck is no longer technical.
 - Never been precious about tools. Never tied worth to syntax. Every technology shift confirmed the strategy: depth in judgment, not tools.
 - Writes more now than ever did when coding. The interface became writing.
-- AI agents are the implementation interface. Piotr owns the product decisions, system boundaries,
+- Piotr personally implements and ships the software, using AI coding agents inside his engineering
+  workflow. He works directly in the codebase and owns the product decisions, system boundaries,
   review, integration, and outcome.
 
 **Professional direction:** The natural profile is an accountable owner of product context and delivery decisions across product, UX, implementation, review, and release. This does not replace independent QA, security review, or specialist expertise where risk requires them. Independent project delivery through consulting and own products is the primary direction; selected early-stage founding-engineer or AI-product roles may also fit.
 
-**Job title:** Product Builder. "Engineer" implies writing code. "Builder" means someone who sees a project through to the end. AI is the method, not the identity.
+**Job title:** Product Builder. "Engineer" signals direct engineering responsibility for the
+codebase and production system. "Builder" means someone who sees a project through to the end. AI
+is the method, not the identity.
 
 **Tone calibration:** The productivity claims are true but shouldn't lead — too easy to dismiss before trust is established. Let output speak first.
 
@@ -78,19 +82,21 @@ or before a major copy refresh.
 
 **Headline:** Product Builder
 
-**Responsibility statement (EN, July 2026):**
+**Responsibility statement (EN, August 2026):**
 
-AI agents are the implementation interface. I own the product decisions, system boundaries, review,
-and outcome.
+I implement and ship software myself, using AI coding agents inside my engineering workflow. I work
+directly in the codebase and own the product decisions, system boundaries, review, integration, and
+outcome.
 
 I have worked across development, design, product, and QA since 2013. That range lets me turn
 ambiguous ideas into scoped systems, direct agents in the language of each discipline, integrate the
 result, and decide what is ready to ship.
 
-**Responsibility statement (PL, July 2026):**
+**Responsibility statement (PL, August 2026):**
 
-Agenty AI są interfejsem implementacji. Ja odpowiadam za decyzje produktowe, granice systemu, review i
-rezultat.
+Sam implementuję i wdrażam oprogramowanie, korzystając z agentów AI w ramach własnego workflow
+inżynierskiego. Pracuję bezpośrednio w repozytorium i odpowiadam za decyzje produktowe, granice
+systemu, review, integrację i rezultat.
 
 Od 2013 roku pracuję na styku developmentu, designu, produktu i QA. Dzięki temu potrafię zamienić
 niejasny pomysł w konkretny system, prowadzić agenty językiem każdej z tych domen, zintegrować rezultat
@@ -98,7 +104,8 @@ i zdecydować, co jest gotowe do wdrożenia.
 
 **Original brief — should convey:**
 
-- In IT since 2013, with AI agents now used as the implementation interface
+- In IT since 2013, personally implementing and shipping software with AI coding agents inside his
+  engineering workflow
 - The core edge: product decisions, system boundaries, review, integration, and outcome ownership
 - The prompting vocabulary point: can write in the register of a developer, a QA engineer, a designer, a product manager — and AI was trained on exactly that data
 - Text-native, which is an advantage when the interface is text
@@ -167,10 +174,11 @@ Projekt stał się później bazą briefu produktowego dla Phonetic Benchmark.
 
 **Finalized description (EN, April 2026):**
 
-Surfaced was my first project built from scratch: I wrote a docs-first specification, then used AI
-agents for implementation. The browser extension tracks scroll depth and adds increasingly direct
-reminders when someone scrolls too far through an interface with no natural endpoint. It passed
-Mozilla's public review and is available from Firefox Add-ons and the Chrome Web Store.
+Surfaced was the first project I built and shipped from scratch using a docs-first specification and
+AI coding agents inside my implementation workflow. The browser extension tracks scroll depth and
+adds increasingly direct reminders when someone scrolls too far through an interface with no natural
+endpoint. It passed Mozilla's public review and is available from Firefox Add-ons and the Chrome Web
+Store.
 
 - Firefox Add-ons: Surfaced — target: addons.mozilla.org/firefox/addon/surfaced/
 - Chrome Web Store: Surfaced — target:
@@ -178,10 +186,11 @@ Mozilla's public review and is available from Firefox Add-ons and the Chrome Web
 
 **Finalized description (PL, April 2026):**
 
-Surfaced był moim pierwszym projektem zbudowanym od zera: napisałem docs-first specyfikację, a do
-implementacji wykorzystałem agenty AI. Rozszerzenie śledzi głębokość scrolla i dodaje coraz bardziej
-bezpośrednie przypomnienia w miarę zagłębiania się użytkownika w interfejs bez naturalnego końca.
-Przeszło publiczny review Mozilli i jest dostępne w Firefox Add-ons oraz Chrome Web Store.
+Surfaced był pierwszym projektem, który zbudowałem i wydałem od zera na podstawie docs-first
+specyfikacji, korzystając z agentów AI wewnątrz własnego workflow implementacyjnego. Rozszerzenie
+śledzi głębokość scrolla i dodaje coraz bardziej bezpośrednie przypomnienia w miarę zagłębiania się
+użytkownika w interfejs bez naturalnego końca. Przeszło publiczny review Mozilli i jest dostępne w
+Firefox Add-ons oraz Chrome Web Store.
 
 - Firefox Add-ons: Surfaced — target: addons.mozilla.org/firefox/addon/surfaced/
 - Chrome Web Store: Surfaced — target:
@@ -191,9 +200,10 @@ Przeszło publiczny review Mozilli i jest dostępne w Firefox Add-ons oraz Chrom
 
 **Finalized description (EN, May 2026):**
 
-This repository makes the working method inspectable. I define the product, content model, system
-boundaries, and review criteria; agents implement against the documentation; I integrate and verify
-the result. The repo is public and intentionally readable, including AGENTS.md, the docs directory,
+This repository makes my implementation workflow inspectable. I work directly in the codebase: I
+define the product, content model, system boundaries, and review criteria; direct coding agents
+against the documentation; inspect and debug changes; integrate them; run the tests; and ship the
+result. The repo is public and intentionally readable, including AGENTS.md, the docs directory,
 tests, and commit history.
 
 The site now also hosts small public utilities. The first one is `400m`, a local-first GPX track tool for runners that estimates corrected distance from lap progress instead of raw GPS length.
@@ -203,10 +213,11 @@ The site now also hosts small public utilities. The first one is `400m`, a local
 
 **Finalized description (PL, May 2026):**
 
-To repozytorium pokazuje metodę pracy w sprawdzalnej formie. Ja definiuję produkt, model treści, granice
-systemu i kryteria review; agenty implementują według dokumentacji; ja integruję i weryfikuję rezultat.
-Repo jest publiczne i celowo czytelne — razem z AGENTS.md, katalogiem docs, testami i historią
-commitów.
+To repozytorium pokazuje mój workflow implementacyjny w sprawdzalnej formie. Pracuję bezpośrednio w
+codebase: definiuję produkt, model treści, granice systemu i kryteria review; prowadzę agenty
+programistyczne według dokumentacji; sprawdzam i debuguję zmiany; integruję je; uruchamiam testy i
+wydaję rezultat. Repo jest publiczne i celowo czytelne — razem z AGENTS.md, katalogiem docs, testami
+i historią commitów.
 
 Strona hostuje teraz także niewielkie publiczne narzędzia. Pierwszym z nich jest `400m`: local-first narzędzie do analizy GPX z bieżni, które szacuje skorygowany dystans z postępu po okrążeniach zamiast z surowej długości śladu GPS.
 
@@ -278,8 +289,8 @@ The offer leads with bounded delivery rather than a standalone scoping package:
   project
 - project fit depends on accessible decisions and a responsible technical and operational risk
   boundary
-- AI agents are the implementation interface, with human ownership of product decisions, system
-  boundaries, review, and outcome
+- Piotr implements the software himself, using AI coding agents inside his engineering workflow,
+  and owns product decisions, system boundaries, code review, integration, and outcome
 
 Do not publish a standard price range, minimum budget, delivery duration, response-time commitment,
 maintenance level, or contract mechanics until real engagement evidence supports durable defaults.
@@ -290,19 +301,19 @@ The finalized localized public strings live in `src/i18n/en.ts` and `src/i18n/pl
 
 ## Metadata
 
-**Finalized values (EN, July 2026):**
+**Finalized values (EN, August 2026):**
 
 - `<title>`: `Piotr Kacała`
-- `meta description`: `Piotr Kacała is a Product Builder who owns product decisions, system boundaries, review, and outcomes while AI agents provide the implementation interface.`
+- `meta description`: `Piotr Kacała is a Product Builder who implements and ships software himself, using AI coding agents inside his engineering workflow.`
 - `og:title`: `Piotr Kacała`
-- `og:description`: `AI agents are the implementation interface. I own the product decisions, system boundaries, review, and outcome.`
+- `og:description`: `I implement and ship software myself, using AI coding agents inside my engineering workflow.`
 
-**Finalized values (PL, July 2026):**
+**Finalized values (PL, August 2026):**
 
 - `<title>`: `Piotr Kacała`
-- `meta description`: `Piotr Kacała jest Product Builderem odpowiedzialnym za decyzje produktowe, granice systemu, review i rezultat; agenty AI są interfejsem implementacji.`
+- `meta description`: `Piotr Kacała jest Product Builderem, który sam implementuje i wdraża oprogramowanie, korzystając z agentów AI w ramach własnego workflow inżynierskiego.`
 - `og:title`: `Piotr Kacała`
-- `og:description`: `Agenty AI są interfejsem implementacji. Ja odpowiadam za decyzje produktowe, granice systemu, review i rezultat.`
+- `og:description`: `Sam implementuję i wdrażam oprogramowanie, korzystając z agentów AI w ramach własnego workflow inżynierskiego.`
 
 **OG image direction (v1):**
 

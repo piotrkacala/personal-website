@@ -191,12 +191,12 @@ test("English homepage markdown keeps its key structure and references", () => {
   assert.match(content, /^# Piotr Kacała$/m);
   assert.match(
     content,
-    /^> Piotr Kacała is a Product Builder who owns product decisions, system boundaries, review, and outcomes while AI agents provide the implementation interface\.$/m,
+    /^> Piotr Kacała is a Product Builder who implements and ships software himself, using AI coding agents inside his engineering workflow\.$/m,
   );
   assert.match(content, /^## Product Builder$/m);
   assert.match(
     content,
-    /^AI agents are the implementation interface\. I own the product decisions, system boundaries, review, and outcome\.$/m,
+    /^I implement and ship software myself, using AI coding agents inside my engineering workflow\. I work directly in the codebase and own the product decisions, system boundaries, review, integration, and outcome\.$/m,
   );
   assert.match(content, /^## Projects$/m);
   assert.match(content, /^### 1\. Phonetic Alphabet Trainer$/m);
@@ -248,12 +248,12 @@ test("Polish homepage markdown keeps its key structure and references", () => {
   assert.match(content, /^# Piotr Kacała$/m);
   assert.match(
     content,
-    /^> Piotr Kacała jest Product Builderem odpowiedzialnym za decyzje produktowe, granice systemu, review i rezultat; agenty AI są interfejsem implementacji\.$/m,
+    /^> Piotr Kacała jest Product Builderem, który sam implementuje i wdraża oprogramowanie, korzystając z agentów AI w ramach własnego workflow inżynierskiego\.$/m,
   );
   assert.match(content, /^## Product Builder$/m);
   assert.match(
     content,
-    /^Agenty AI są interfejsem implementacji\. Ja odpowiadam za decyzje produktowe, granice systemu, review i rezultat\.$/m,
+    /^Sam implementuję i wdrażam oprogramowanie, korzystając z agentów AI w ramach własnego workflow inżynierskiego\. Pracuję bezpośrednio w repozytorium i odpowiadam za decyzje produktowe, granice systemu, review, integrację i rezultat\.$/m,
   );
   assert.match(content, /^## Projekty$/m);
   assert.match(content, /^### 2\. Surfaced$/m);
@@ -321,7 +321,11 @@ test("consulting markdown publishes the localized offer from shared copy", () =>
   assert.match(english, /^## Price follows a defined result$/m);
   assert.match(english, /^## Async-first, with useful visibility$/m);
   assert.match(english, /^## AI supports the delivery method$/m);
-  assert.match(english, /I remain responsible for product decisions/);
+  assert.match(english, /I implement the software myself/);
+  assert.match(
+    english,
+    /Development is not subcontracted to an external delivery team/,
+  );
   assert.match(english, /^## Good fit$/m);
   assert.match(english, /^## Not a fit$/m);
   assert.match(english, /^## Evidence behind the offer$/m);
@@ -353,7 +357,11 @@ test("consulting markdown publishes the localized offer from shared copy", () =>
   assert.match(polish, /^## Cena wynika z jasno określonego rezultatu$/m);
   assert.match(polish, /^## Praca asynchroniczna, z jasnym wglądem w postęp$/m);
   assert.match(polish, /^## AI wspiera metodę realizacji$/m);
-  assert.match(polish, /Nadal odpowiadam za decyzje produktowe/);
+  assert.match(polish, /Sam implementuję oprogramowanie/);
+  assert.match(
+    polish,
+    /Nie zlecam developmentu zewnętrznemu zespołowi developerskiemu/,
+  );
   assert.match(polish, /^## Dobre dopasowanie$/m);
   assert.match(polish, /^## Kiedy lepiej wybrać kogoś innego$/m);
   assert.match(polish, /^## Dowody stojące za ofertą$/m);
@@ -381,7 +389,7 @@ test("llms-full.txt carries the consolidated public references", () => {
   assert.match(content, /^## Canonical summary$/m);
   assert.match(
     content,
-    /^AI agents are the implementation interface\. I own the product decisions, system boundaries, review, and outcome\.$/m,
+    /^I implement and ship software myself, using AI coding agents inside my engineering workflow\. I work directly in the codebase and own the product decisions, system boundaries, review, integration, and outcome\.$/m,
   );
   assert.match(content, /^- English homepage: https:\/\/piotrkacala\.pl\/$/m);
   assert.match(

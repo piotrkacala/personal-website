@@ -6,9 +6,9 @@ export const siteProfile = {
   jobTitle: "Product Builder",
   repoUrl: "https://github.com/piotrkacala/personal-website",
   canonicalSummary:
-    "AI agents are the implementation interface. I own the product decisions, system boundaries, review, and outcome.",
+    "I implement and ship software myself, using AI coding agents inside my engineering workflow. I work directly in the codebase and own the product decisions, system boundaries, review, integration, and outcome.",
   description:
-    "Personal website of Piotr Kacała, Product Builder. AI agents are the implementation interface; Piotr owns product decisions, system boundaries, review, and outcome.",
+    "Personal website of Piotr Kacała, Product Builder. He implements and ships software himself, using AI coding agents inside his engineering workflow.",
   knowsAbout: [
     "AI-agent implementation workflows",
     "Product development",

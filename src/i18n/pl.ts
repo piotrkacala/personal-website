@@ -7,11 +7,11 @@ export const pl = {
   metadata: {
     title: "Piotr Kacała",
     description:
-      "Piotr Kacała jest Product Builderem odpowiedzialnym za decyzje produktowe, granice systemu, review i rezultat; agenty AI są interfejsem implementacji.",
+      "Piotr Kacała jest Product Builderem, który sam implementuje i wdraża oprogramowanie, korzystając z agentów AI w ramach własnego workflow inżynierskiego.",
     openGraph: {
       title: "Piotr Kacała",
       description:
-        "Agenty AI są interfejsem implementacji. Ja odpowiadam za decyzje produktowe, granice systemu, review i rezultat.",
+        "Sam implementuję i wdrażam oprogramowanie, korzystając z agentów AI w ramach własnego workflow inżynierskiego.",
       type: "website",
       locale: "pl_PL",
       siteName: "Piotr Kacała",
@@ -32,7 +32,7 @@ export const pl = {
   hero: {
     headline: "Product Builder",
     statement:
-      "Agenty AI są interfejsem implementacji. Ja odpowiadam za decyzje produktowe, granice systemu, review i rezultat.",
+      "Sam implementuję i wdrażam oprogramowanie, korzystając z agentów AI w ramach własnego workflow inżynierskiego. Pracuję bezpośrednio w repozytorium i odpowiadam za decyzje produktowe, granice systemu, review, integrację i rezultat.",
     expansion:
       "Od 2013 roku pracuję na styku developmentu, designu, produktu i QA. Dzięki temu potrafię zamienić niejasny pomysł w konkretny system, prowadzić agenty językiem każdej z tych domen, zintegrować rezultat i zdecydować, co jest gotowe do wdrożenia.",
   },
@@ -68,7 +68,7 @@ export const pl = {
         blocks: [
           {
             type: "paragraph",
-            text: "Surfaced był moim pierwszym projektem zbudowanym od zera: napisałem docs-first specyfikację, a do implementacji wykorzystałem agenty AI. Rozszerzenie śledzi głębokość scrolla i dodaje coraz bardziej bezpośrednie przypomnienia w miarę zagłębiania się użytkownika w interfejs bez naturalnego końca. Przeszło publiczny review Mozilli i jest dostępne w Firefox Add-ons oraz Chrome Web Store.",
+            text: "Surfaced był pierwszym projektem, który zbudowałem i wydałem od zera na podstawie docs-first specyfikacji, korzystając z agentów AI wewnątrz własnego workflow implementacyjnego. Rozszerzenie śledzi głębokość scrolla i dodaje coraz bardziej bezpośrednie przypomnienia w miarę zagłębiania się użytkownika w interfejs bez naturalnego końca. Przeszło publiczny review Mozilli i jest dostępne w Firefox Add-ons oraz Chrome Web Store.",
           },
           {
             type: "link",
@@ -93,7 +93,7 @@ export const pl = {
         blocks: [
           {
             type: "paragraph",
-            text: "To repozytorium pokazuje metodę pracy w sprawdzalnej formie. Ja definiuję produkt, model treści, granice systemu i kryteria review; agenty implementują według dokumentacji; ja integruję i weryfikuję rezultat. Repo jest publiczne i celowo czytelne — razem z AGENTS.md, katalogiem docs, testami i historią commitów.",
+            text: "To repozytorium pokazuje mój workflow implementacyjny w sprawdzalnej formie. Pracuję bezpośrednio w codebase: definiuję produkt, model treści, granice systemu i kryteria review; prowadzę agenty programistyczne według dokumentacji; sprawdzam i debuguję zmiany; integruję je; uruchamiam testy i wydaję rezultat. Repo jest publiczne i celowo czytelne — razem z AGENTS.md, katalogiem docs, testami i historią commitów.",
           },
           {
             type: "paragraph",
@@ -275,7 +275,7 @@ export const pl = {
     ai: {
       heading: "AI wspiera metodę realizacji",
       paragraphs: [
-        "Agenty AI są interfejsem implementacji. Nadal odpowiadam za decyzje produktowe, granice systemu, review i rezultat. Klient kupuje rezultat oraz odpowiedzialność za jego dowiezienie, a nie dostęp do mojego wewnętrznego sposobu pracy z AI.",
+        "Sam implementuję oprogramowanie, korzystając z agentów AI jako narzędzi w ramach własnego workflow inżynierskiego. Odpowiadam za decyzje produktowe, granice systemu, review kodu, integrację i rezultat. Nie zlecam developmentu zewnętrznemu zespołowi developerskiemu. Klient kupuje rezultat oraz odpowiedzialność za jego dowiezienie, a nie dostęp do mojego wewnętrznego sposobu pracy z AI.",
         "Jeżeli AI ma być częścią produktu, jego rola nadal potrzebuje jawnych granic: co model może robić, czego nie powinien rozstrzygać, z jakich narzędzi może korzystać, co może zapisywać i jak jego zachowanie będzie sprawdzane.",
       ],
     },

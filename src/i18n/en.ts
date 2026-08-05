@@ -7,11 +7,11 @@ export const en = {
   metadata: {
     title: "Piotr Kacała",
     description:
-      "Piotr Kacała is a Product Builder who owns product decisions, system boundaries, review, and outcomes while AI agents provide the implementation interface.",
+      "Piotr Kacała is a Product Builder who implements and ships software himself, using AI coding agents inside his engineering workflow.",
     openGraph: {
       title: "Piotr Kacała",
       description:
-        "AI agents are the implementation interface. I own the product decisions, system boundaries, review, and outcome.",
+        "I implement and ship software myself, using AI coding agents inside my engineering workflow.",
       type: "website",
       locale: "en_US",
       siteName: "Piotr Kacała",
@@ -32,7 +32,7 @@ export const en = {
   hero: {
     headline: "Product Builder",
     statement:
-      "AI agents are the implementation interface. I own the product decisions, system boundaries, review, and outcome.",
+      "I implement and ship software myself, using AI coding agents inside my engineering workflow. I work directly in the codebase and own the product decisions, system boundaries, review, integration, and outcome.",
     expansion:
       "I have worked across development, design, product, and QA since 2013. That range lets me turn ambiguous ideas into scoped systems, direct agents in the language of each discipline, integrate the result, and decide what is ready to ship.",
   },
@@ -66,7 +66,7 @@ export const en = {
         blocks: [
           {
             type: "paragraph",
-            text: "Surfaced was my first project built from scratch: I wrote a docs-first specification, then used AI agents for implementation. The browser extension tracks scroll depth and adds increasingly direct reminders when someone scrolls too far through an interface with no natural endpoint. It passed Mozilla's public review and is available from Firefox Add-ons and the Chrome Web Store.",
+            text: "Surfaced was the first project I built and shipped from scratch using a docs-first specification and AI coding agents inside my implementation workflow. The browser extension tracks scroll depth and adds increasingly direct reminders when someone scrolls too far through an interface with no natural endpoint. It passed Mozilla's public review and is available from Firefox Add-ons and the Chrome Web Store.",
           },
           {
             type: "link",
@@ -91,7 +91,7 @@ export const en = {
         blocks: [
           {
             type: "paragraph",
-            text: "This repository makes the working method inspectable. I define the product, content model, system boundaries, and review criteria; agents implement against the documentation; I integrate and verify the result. The repo is public and intentionally readable, including AGENTS.md, the docs directory, tests, and commit history.",
+            text: "This repository makes my implementation workflow inspectable. I work directly in the codebase: I define the product, content model, system boundaries, and review criteria; direct coding agents against the documentation; inspect and debug changes; integrate them; run the tests; and ship the result. The repo is public and intentionally readable, including AGENTS.md, the docs directory, tests, and commit history.",
           },
           {
             type: "paragraph",
@@ -270,7 +270,7 @@ export const en = {
     ai: {
       heading: "AI supports the delivery method",
       paragraphs: [
-        "AI agents are the implementation interface. I remain responsible for product decisions, system boundaries, review, and outcome. The client buys the result and the accountability behind it, not access to an internal AI workflow.",
+        "I implement the software myself, using AI coding agents as tools inside my engineering workflow. I remain responsible for product decisions, system boundaries, code review, integration, and outcome. Development is not subcontracted to an external delivery team. The client buys the result and the accountability behind it, not access to an internal AI workflow.",
         "If AI belongs inside the product, its role still needs explicit boundaries: what it may do, what it must not decide, which tools it can use, what data it may retain, and how its behavior is verified.",
       ],
     },
