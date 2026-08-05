@@ -18,11 +18,11 @@
   </g>
 
   <g transform="translate(594 86)">
-    <text x="0" y="0" fill="#A44930" font-family="Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="4">GPX TRACK LAPS</text>
-    <text x="0" y="126" fill="#10281E" font-family="Georgia, serif" font-size="128" font-weight="700">400m</text>
+    <text x="0" y="0" fill="#A44930" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="3">GPX DISTANCE CORRECTION</text>
+    <text x="0" y="112" fill="#10281E" font-family="Georgia, serif" font-size="62" font-weight="700">Track Distance Fix</text>
     <text x="0" y="186" fill="#40534A" font-family="Arial, sans-serif" font-size="22">
-      <tspan x="0" dy="0">Correct track distance from lap progress.</tspan>
-      <tspan x="0" dy="32">Not from raw GPS drift.</tspan>
+      <tspan x="0" dy="0">GPX distance correction for track runs.</tspan>
+      <tspan x="0" dy="32">Based on lap progress, not GPS drift.</tspan>
     </text>
 
     <g transform="translate(0 292)">

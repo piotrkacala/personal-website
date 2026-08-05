@@ -1,6 +1,6 @@
-# 400m - GPX Track Laps
+# Track Distance Fix
 
-> Local-first web tool that estimates completed track laps and partial progress, then calculates selected-lane distance from a GPX file.
+> GPX distance correction for track runs. This local-first web tool estimates completed track laps and partial progress, then calculates selected-lane distance from a GPX file.
 
 ## Product Contract
 - The runner uploads a GPX file and explicitly selects lane 1-8.
